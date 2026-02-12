@@ -3,7 +3,7 @@
 import { FC } from 'react';
 import { motion } from 'framer-motion';
 import { Scroll, Scale, Landmark, Flame, Shield } from 'lucide-react';
-import { TimelinePhase } from '@/data/timeline-phases';
+import { TimelinePhase } from '@/content/data/timeline-phases';
 import { cn } from '@/shared/utils';
 
 // Era-specific emblems

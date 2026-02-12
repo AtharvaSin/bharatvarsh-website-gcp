@@ -3,7 +3,7 @@
 import { FC, useRef, useState, useCallback, useEffect } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent } from 'framer-motion';
 import { TimelineEvent } from '@/types';
-import { TIMELINE_PHASES, TIMELINE_CONSTANTS } from '@/data/timeline-phases';
+import { TIMELINE_PHASES, TIMELINE_CONSTANTS } from '@/content/data/timeline-phases';
 import { getEventsForPhase } from '../utils/timeline-calculations';
 import { useHorizontalScroll } from '../hooks/use-horizontal-scroll';
 import { useDragToScroll } from '../hooks/use-drag-to-scroll';

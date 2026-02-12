@@ -1,7 +1,7 @@
 'use client';
 
 import { TimelineHorizontal } from '@/components/features/timeline';
-import timelineData from '@/data/timeline.json';
+import timelineData from '@/content/data/timeline.json';
 import type { TimelineData } from '@/types';
 
 export function TimelineContent() {

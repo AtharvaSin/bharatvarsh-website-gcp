@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import { motion } from 'framer-motion';
-import { TimelinePhase } from '@/data/timeline-phases';
+import { TimelinePhase } from '@/content/data/timeline-phases';
 import { cn } from '@/shared/utils';
 
 interface TimelinePhaseNavProps {

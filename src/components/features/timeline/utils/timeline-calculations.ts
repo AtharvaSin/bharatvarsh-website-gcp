@@ -4,7 +4,7 @@
  */
 
 import { TimelineEvent } from '@/types';
-import { TIMELINE_CONSTANTS, TIMELINE_PHASES, TimelinePhase } from '@/data/timeline-phases';
+import { TIMELINE_CONSTANTS, TIMELINE_PHASES, TimelinePhase } from '@/content/data/timeline-phases';
 
 /**
  * Calculate the total scrollable width based on number of phases

@@ -8,7 +8,7 @@ import {
   LoreCard,
   LoreModal,
 } from '@/components/features/lore';
-import loreData from '@/data/lore-items.json';
+import loreData from '@/content/data/lore-items.json';
 import type { LoreItem, LoreCategory, LoreData } from '@/types';
 
 type FilterValue = LoreCategory | 'all';

@@ -20,7 +20,7 @@ import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { GlyphWatermark, ParticleField } from '@/shared/ui';
 import { WhatAwaitsSection } from '@/components/features/lead-magnet';
-import novelData from '@/data/novel.json';
+import novelData from '@/content/data/novel.json';
 import type { NovelData, VerifiedStatus } from '@/types';
 
 const iconMap: Record<string, FC<{ className?: string }>> = {

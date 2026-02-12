@@ -2,7 +2,7 @@
 
 import { RefObject, useCallback, useRef, useState } from 'react';
 import { useScroll, useTransform, MotionValue, PanInfo } from 'framer-motion';
-import { TIMELINE_CONSTANTS } from '@/data/timeline-phases';
+import { TIMELINE_CONSTANTS } from '@/content/data/timeline-phases';
 import {
   scrollProgressToYear,
   scrollProgressToPhaseIndex,

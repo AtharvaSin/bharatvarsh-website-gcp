@@ -4,7 +4,7 @@ import { FC, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { TimelineEvent } from '@/types';
-import { TimelinePhase } from '@/data/timeline-phases';
+import { TimelinePhase } from '@/content/data/timeline-phases';
 import { cn } from '@/shared/utils';
 import { GlyphWatermark } from '@/shared/ui';
 import { useIsPortrait } from '@/shared/hooks/use-media-query';

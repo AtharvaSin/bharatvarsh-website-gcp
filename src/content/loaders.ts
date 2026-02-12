@@ -11,8 +11,8 @@
 import type { TimelineEvent, LoreItem, NovelData } from '@/types';
 
 // Import JSON data directly for sync access in client components
-import timelineJsonData from '@/data/timeline.json';
-import loreItemsJsonData from '@/data/lore-items.json';
+import timelineJsonData from '@/content/data/timeline.json';
+import loreItemsJsonData from '@/content/data/lore-items.json';
 
 // Re-export types for convenience
 export type { TimelineEvent, LoreItem, NovelData };
@@ -42,7 +42,7 @@ export interface TimelineData {
  * Returns the complete timeline including metadata and events
  */
 export async function getTimelineData(): Promise<TimelineData> {
-  const data = await import('@/data/timeline.json');
+  const data = await import('@/content/data/timeline.json');
   return data.default as TimelineData;
 }
 
@@ -60,7 +60,7 @@ export async function getTimelineEvents(): Promise<TimelineEvent[]> {
  * Combined data from lore-items.json
  */
 export async function getLoreItems(): Promise<LoreItem[]> {
-  const data = await import('@/data/lore-items.json');
+  const data = await import('@/content/data/lore-items.json');
   return (data.default as { lore: LoreItem[] }).lore;
 }
 
@@ -78,7 +78,7 @@ export async function getLoreItemsByCategory(
  * Load novel data
  */
 export async function getNovelData(): Promise<NovelData> {
-  const data = await import('@/data/novel.json');
+  const data = await import('@/content/data/novel.json');
   return data.default as NovelData;
 }
 

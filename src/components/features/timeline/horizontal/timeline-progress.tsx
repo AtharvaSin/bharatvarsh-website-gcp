@@ -3,7 +3,7 @@
 import { FC, useState } from 'react';
 import { motion, MotionValue, useTransform } from 'framer-motion';
 import { cn } from '@/shared/utils';
-import { TIMELINE_CONSTANTS } from '@/data/timeline-phases';
+import { TIMELINE_CONSTANTS } from '@/content/data/timeline-phases';
 
 interface TimelineProgressProps {
   scrollProgress: MotionValue<number>;
