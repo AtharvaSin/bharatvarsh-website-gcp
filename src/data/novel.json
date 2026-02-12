@@ -1,0 +1,142 @@
+{
+  "novel": {
+    "title": "Bharatvarsh",
+    "subtitle": "A Story of Truth and Power",
+    "tagline": "A military prince is given a case of national importance whose investigation forces him to cross boundaries of nations and generations, uncovering deep dark secrets about the military and himself.",
+    "genre": ["Alternate History", "Thriller", "Political Fiction"],
+    "status": "Coming Soon",
+    "releaseDate": null,
+    "pages": null,
+    "isbn": null
+  },
+  "synopsis": {
+    "hook": "It is the last Friday of October 2022. Bharatvarsh stands in the glow of its annual festive fortnight—until twenty bombs detonate in ten minutes.",
+    "description": "In the capital city of Lakshmanpur, crowds fill the streets for the final night of celebrations. Vendors showcase the latest tech—glide-cars floating five meters above traffic, 3D printers producing organic food, AR goggles and Brace-Comms projecting holographic interfaces. Army personnel patrol with hovercams sweeping overhead. Beneath the festivities, the Mesh watches everything. Perfect order. Perfect control. Until it shatters.",
+    "plot": "On a festive stage, a band calling themselves The Tribhuj—a terrorist organization thought extinct for decades—declares war on the military regime. Moments later, explosives tear through the arena. Across Bharatvarsh, synchronized attacks strike twenty locations in ten minutes. Meanwhile, in the ink-black Himalayan hills, a convoy carrying the East's most important figure is ambushed. A woman named Kaali fights to survive as rockets and bullets find their marks.",
+    "stakes": "Kahaan, a military prince born to privilege and trained for duty, is assigned to investigate the 20-10 bombings. What begins as hunting terrorists becomes something far more dangerous—a journey that will force him to cross boundaries of nations and generations, uncovering deep dark secrets about the military and himself. Some secrets are buried so deep they've become foundations. Exposing them might bring justice—or collapse everything the nation was built upon.",
+    "closing": "When the price of Harmony is paid by Freedom."
+  },
+  "themes": [
+    {
+      "title": "Truth vs. Stability",
+      "description": "What happens when uncovering the truth threatens the peace that millions depend on?"
+    },
+    {
+      "title": "Identity & Legacy",
+      "description": "How do the secrets of the past shape who we become?"
+    },
+    {
+      "title": "Surveillance & Freedom",
+      "description": "What is the cost of perfect security?"
+    },
+    {
+      "title": "Duty vs. Conscience",
+      "description": "When loyalty conflicts with justice, which do you choose?"
+    }
+  ],
+  "whatAwaitsYou": {
+    "heading": "WHAT AWAITS YOU",
+    "subline": "Four doors into Bharatvarsh—world, people, conspiracy… and your first sealed file."
+  },
+  "features": [
+    {
+      "icon": "globe",
+      "title": "A Nation That Learned to Whisper",
+      "description": "Bharatvarsh is an alternate India—three centuries of self-made evolution—where green-tech skylines and disciplined order sell \"harmony\" as a civic virtue… and quietly as a doctrine."
+    },
+    {
+      "icon": "users",
+      "title": "Characters with Private Wars",
+      "description": "From a military prince handed a case of national importance to those who live in the seams—operators, archivists, insurgents—everyone carries a secret. Some are personal. Some are structural."
+    },
+    {
+      "icon": "search",
+      "title": "Conspiracy, Etched in Static",
+      "description": "A thriller of false names and missing years, where every answer opens a quieter question—and the truth doesn't just hurt. It rearranges the map."
+    }
+  ],
+  "dossier": {
+    "eyebrow": "BHARATVARSH ARCHIVES • READER CLEARANCE",
+    "title": "Reader Clearance: Chapter 1 (PDF)",
+    "body": "Request the opening dossier. Share your name and location, verify your email, and Chapter 1 arrives as a clean PDF—no noise, no spam, just the first fracture in the nation's calm.",
+    "cta": "Request Access",
+    "pdfChip": "PDF",
+    "expandedTitle": "Verify to Unlock the Dossier",
+    "emailHelper": "We'll send a verification link first. The PDF is delivered only after you confirm.",
+    "submitButton": "Send verification link",
+    "submittedMessage": "Clearance link sent. Check your inbox to verify.",
+    "resendButton": "Resend link",
+    "verifiedMessage": "Access granted—your dossier is ready.",
+    "privacyNote": "We store this only to deliver the chapter and launch updates. Unsubscribe anytime.",
+    "downloadTitle": "Chapter 1: The Last Friday",
+    "downloadSubtitle": "Your clearance has been verified. The first fracture awaits.",
+    "downloadCta": "Download Chapter 1",
+    "downloadedMessage": "Downloaded successfully",
+    "pdfFileName": "Bharatvarsh Dossier - Chapter 1.pdf",
+    "pdfSize": "347 KB"
+  },
+  "quotes": [
+    {
+      "text": "In Bharatvarsh, the Mesh sees everything. Every transaction, every movement, every word spoken in the open. Peace has a price. Most have stopped counting.",
+      "context": "On the nature of control"
+    },
+    {
+      "text": "Twenty locations. Ten minutes. Someone moved unseen. Someone struck at the heart of order.",
+      "context": "The 20-10 bombings"
+    },
+    {
+      "text": "Every lead uncovers a deeper secret. Every answer spawns new questions.",
+      "context": "Kahaan's investigation"
+    }
+  ],
+  "author": {
+    "name": "Author Name",
+    "bio": "The author of Bharatvarsh has crafted a unique alternate history that explores what India might have become without colonial intervention. This debut novel combines meticulous world-building with a gripping thriller narrative.",
+    "note": "More details coming soon."
+  },
+  "preorder": {
+    "available": false,
+    "platforms": [
+      {
+        "name": "Amazon",
+        "url": "#",
+        "icon": "shopping-cart"
+      },
+      {
+        "name": "Kindle",
+        "url": "#",
+        "icon": "tablet"
+      },
+      {
+        "name": "Audible",
+        "url": "#",
+        "icon": "headphones"
+      }
+    ],
+    "newsletter": {
+      "enabled": true,
+      "headline": "Be the First to Know",
+      "description": "Sign up for release updates, exclusive content, and early access to special editions."
+    }
+  },
+  "related": [
+    {
+      "title": "Explore the World",
+      "description": "Dive deep into the universe of Bharatvarsh",
+      "href": "/lore",
+      "icon": "book-open"
+    },
+    {
+      "title": "Discover the Timeline",
+      "description": "Three centuries of alternate history",
+      "href": "/timeline",
+      "icon": "clock"
+    },
+    {
+      "title": "Meet the Characters",
+      "description": "Heroes, villains, and enigmas",
+      "href": "/lore/characters",
+      "icon": "users"
+    }
+  ]
+}

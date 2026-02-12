@@ -1,0 +1,127 @@
+{
+  "locations": [
+    {
+      "id": "indrapur-hq",
+      "name": "Indrapur HQ",
+      "type": "military",
+      "region": "Central",
+      "status": "restricted",
+      "description": "The nerve center of Bharatvarsh's military government. This fortress-like complex houses the Military Council, strategic command facilities, and the technology that coordinates the Mesh across the nation. Access is strictly controlled; surveillance here is absolute.",
+      "features": [
+        {
+          "name": "Command Suite",
+          "description": "The General's domain. A holographic war table dominates the center, projecting real-time data from across Bharatvarsh. Ambient lighting shifts with alert levels. Every surface can become a display."
+        },
+        {
+          "name": "War-Room",
+          "description": "Tactical operations center with tiered seating for analysts. Wall-spanning displays show troop movements, infrastructure status, and threat assessments. Air recycled and temperature controlled for 24-hour operations."
+        },
+        {
+          "name": "Helipad Complex",
+          "description": "Rooftop landing zone for hoverships and conventional aircraft. Automated defense systems. Direct elevator access to Command Suite. Wind barriers and all-weather capability."
+        },
+        {
+          "name": "Motorcade Interface",
+          "description": "Underground vehicle bay with direct highway access. Armored transport fleet. Real-time route optimization connected to Mesh traffic control. Blast-resistant entry points."
+        }
+      ],
+      "lighting_presets": [
+        { "name": "Parade", "description": "Full illumination for ceremonial events" },
+        { "name": "Protocol", "description": "Standard operational lighting" },
+        { "name": "Blackout", "description": "Emergency low-light mode" }
+      ],
+      "atmosphere": "Cold precision. Every surface reflects authority. The hum of systems never stops.",
+      "significance": "Heart of military power",
+      "media": {
+        "image": "/images/locations/indrapur-hq-card.webp",
+        "banner": "/images/locations/indrapur-hq-banner.webp",
+        "ambiance": "mechanical hum, distant communications, climate control"
+      }
+    },
+    {
+      "id": "lakshmanpur",
+      "name": "Lakshmanpur",
+      "type": "metropolis",
+      "region": "Northern",
+      "status": "active",
+      "description": "The industrial heartland of northern Bharatvarsh. Foundries, manufacturing plants, and research facilities spread across a planned urban grid. The Mesh infrastructure here is dense, monitoring both production quotas and worker movements. Efficiency defines daily life.",
+      "features": [
+        {
+          "name": "Industrial Corridor",
+          "description": "Kilometers of automated factories and assembly plants. Rail connections move materials around the clock. Emissions carefully monitored and controlled."
+        },
+        {
+          "name": "Worker Blocks",
+          "description": "Standardized housing for industrial workforce. Community centers, ration distribution points, and healthcare facilities integrated. Movement tracked by shift schedules."
+        },
+        {
+          "name": "Research Campus",
+          "description": "Advanced technology development. Military contracts drive most projects. Security clearances determine access levels."
+        }
+      ],
+      "atmosphere": "Smoke-tinged air. The rhythm of machinery. Pride in production.",
+      "significance": "Industrial power base",
+      "media": {
+        "image": "/images/locations/lakshmanpur-card.webp",
+        "banner": "/images/locations/lakshmanpur-banner.webp",
+        "ambiance": "factory sounds, transport vehicles, work announcements"
+      }
+    },
+    {
+      "id": "mysuru",
+      "name": "Mysuru",
+      "type": "metropolis",
+      "region": "Southern",
+      "status": "active",
+      "description": "The technological heart of the Deccan. Where Lakshmanpur builds with steel, Mysuru builds with code. Software development, communications infrastructure, and the systems that run the Mesh itself are developed here. A different kind of control—invisible but pervasive.",
+      "features": [
+        {
+          "name": "Tech Towers",
+          "description": "Glass and steel structures housing development teams. Climate-controlled, heavily surveilled, connected to the Mesh at every level."
+        },
+        {
+          "name": "Data Centers",
+          "description": "The physical infrastructure of digital control. Redundant systems, hardened against attack. The Mesh's memory lives here."
+        },
+        {
+          "name": "Old Quarter",
+          "description": "Pre-Mesh architecture preserved as heritage zone. Traditional markets operating under modern oversight. A reminder of what came before."
+        }
+      ],
+      "atmosphere": "Clean streets. Soft glow of screens. The quiet hum of servers.",
+      "significance": "Technological control center",
+      "media": {
+        "image": null,
+        "ambiance": "air conditioning, keyboards, electronic tones"
+      }
+    },
+    {
+      "id": "kolkata-corridor",
+      "name": "Kolkata Corridor",
+      "type": "metropolis",
+      "region": "Eastern",
+      "status": "monitored",
+      "description": "The Eastern trade nexus, where goods flow between Bharatvarsh and the outside world. This region never fully accepted central control; the Mesh is denser here, but so is resistance. Port facilities and trading houses operate under intense scrutiny.",
+      "features": [
+        {
+          "name": "Port Complex",
+          "description": "Massive shipping facilities handling international trade. Every container scanned, every manifest verified. The Mesh meets the outside world."
+        },
+        {
+          "name": "Trading Houses",
+          "description": "Commercial operations with pre-Mesh roots. Guild networks maintain influence here, navigating between profit and compliance."
+        },
+        {
+          "name": "Old City",
+          "description": "Dense urban fabric from before the Year-Turn. Narrow lanes challenge surveillance coverage. Checkpoint density highest in Bharatvarsh."
+        }
+      ],
+      "atmosphere": "Salt air. Commercial energy. Watchful eyes everywhere.",
+      "significance": "Eastern gateway and resistance center",
+      "media": {
+        "image": null,
+        "ambiance": "ship horns, market noise, checkpoint announcements"
+      }
+    }
+  ]
+}

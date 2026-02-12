@@ -1,0 +1,217 @@
+{
+  "lore": [
+    {
+      "id": "kahaan",
+      "name": "Kahaan",
+      "nameDevanagari": "कहान",
+      "category": "characters",
+      "classification": "declassified",
+      "subtype": "Protagonist",
+      "tagline": "A prince bound by duty, driven by truth",
+      "description": "Born into the military elite, Kahaan has spent his life upholding the order that defines Bharatvarsh. When assigned to investigate the 20-10 bombings, he expects a straightforward case. What he uncovers will challenge everything he believes about his nation, his family, and himself. His investigative drive and moral complexity make him uniquely positioned to cross boundaries—both national and generational—in pursuit of answers.",
+      "traits": ["Dutiful", "Analytical", "Conflicted", "Brave"],
+      "media": {
+        "card": "/images/characters/kahaan-card.webp",
+        "banner": "/images/characters/kahaan-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "rudra",
+      "name": "Rudra",
+      "nameDevanagari": "रुद्र",
+      "category": "characters",
+      "classification": "declassified",
+      "subtype": "Deuteragonist",
+      "tagline": "Disciplined warrior. Grey Trident legacy.",
+      "description": "A disciplined warrior forged in the traditions of dojo training and the Grey Trident legacy. Rudra stands beside Kahaan in the investigation, bringing precision and unwavering focus. His methods complement Kahaan's analytical approach, and his loyalty runs deeper than protocol. His connection to the Himalayan wilds and the non-lethal first doctrine speaks to roots that predate the current regime.",
+      "traits": ["Loyal", "Disciplined", "Intuitive", "Secretive"],
+      "media": {
+        "card": "/images/characters/rudra-card.webp",
+        "banner": "/images/characters/rudra-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 2
+    },
+    {
+      "id": "pratap",
+      "name": "General Pratap",
+      "nameDevanagari": "प्रताप",
+      "category": "characters",
+      "classification": "declassified",
+      "subtype": "Antagonist",
+      "tagline": "Order requires sacrifice. He decides who pays.",
+      "description": "High-ranking general and embodiment of military establishment authority. General Pratap views the investigation into the 20-10 bombings as both a threat and an opportunity. His definition of national security may not align with the truth—and he has the power to ensure his version prevails. Four decades of service have taught him that stability requires control, whatever the cost.",
+      "traits": ["Ruthless", "Calculating", "Patriotic", "Authoritative"],
+      "media": {
+        "card": "/images/characters/pratap-card.webp",
+        "banner": "/images/characters/pratap-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 3
+    },
+    {
+      "id": "hana",
+      "name": "Hana",
+      "nameDevanagari": "हना",
+      "category": "characters",
+      "classification": "declassified",
+      "subtype": "Ally",
+      "tagline": "The East remembers what the Mesh forgot",
+      "description": "Eastern connection and unlikely ally with ties to the resistance. Hana emerges from the shadows carrying knowledge that could reshape Kahaan's understanding of the bombings. Her motivations remain unclear—is she helping the investigation or manipulating it? Her knowledge of the treaty zones and the world beyond the Mesh's reach makes her an invaluable, if unpredictable, resource.",
+      "traits": ["Mysterious", "Knowledgeable", "Cautious", "Determined"],
+      "media": {
+        "card": "/images/characters/hana-card.webp",
+        "banner": "/images/characters/hana-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 4
+    },
+    {
+      "id": "arshi",
+      "name": "Arshi",
+      "nameDevanagari": "अर्शी",
+      "category": "characters",
+      "classification": "classified",
+      "subtype": "Mystery",
+      "tagline": "Some presences are felt before they're understood",
+      "description": "A mysterious figure whose role in events remains shrouded in secrecy. References to Arshi appear in unexpected places, connecting threads that span generations. Understanding who—or what—Arshi represents may be key to unraveling the deepest secrets. Strategic intelligence suggests significant connections, but confirmation remains elusive.",
+      "traits": ["Enigmatic", "Significant", "Connected", "Unknown"],
+      "media": {
+        "card": "/images/characters/arshi-card.webp",
+        "banner": "/images/characters/arshi-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 5
+    },
+    {
+      "id": "indrapur",
+      "name": "Indrapur HQ",
+      "category": "locations",
+      "classification": "declassified",
+      "subtype": "Military",
+      "tagline": "The nerve center of absolute authority",
+      "description": "All-glass oval command complex housing the Military Council. The tri-anchor wall dominates the central chamber—leader relief, national preamble, strategic map. Below lies a sealed shaft connecting to nuclear-hardened bunkers. The elliptical war-room features a glass map-table with real-time data projections. Every surface can become a display. The hum of systems never stops. Access is strictly controlled; surveillance is absolute.",
+      "traits": ["Fortress Architecture", "Total Surveillance", "Command Center", "Restricted Access"],
+      "media": {
+        "card": "/images/locations/indrapur-hq-card.webp",
+        "banner": "/images/locations/indrapur-hq-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 6
+    },
+    {
+      "id": "lakshmanpur",
+      "name": "Lakshmanpur",
+      "category": "locations",
+      "classification": "declassified",
+      "subtype": "Metropolis",
+      "tagline": "Industrial heartland where smoke meets surveillance",
+      "description": "Northern river-plain metropole defined by fog-prone winters and dense surveillance infrastructure. The industrial powerhouse of Bharatvarsh features foundries, manufacturing plants, and research facilities. The Mesh infrastructure here is exceptionally dense, monitoring both production quotas and worker movements. OxyPole towers stand at 60-80m intervals, scrubbing air and mounting hovercams. Efficiency defines daily life in this city of pale limestone and vertical gardens.",
+      "traits": ["Industrial Corridor", "Dense Mesh Coverage", "Worker Blocks", "Research Campus"],
+      "media": {
+        "card": "/images/locations/lakshmanpur-card.webp",
+        "banner": "/images/locations/lakshmanpur-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 7
+    },
+    {
+      "id": "akakpen-tribe",
+      "name": "Akakpen Tribe",
+      "category": "factions",
+      "classification": "declassified",
+      "subtype": "Resistance",
+      "tagline": "Where ancient ways resist modern control",
+      "description": "Semi-autonomous treaty people maintaining governance through the Queen's Council in the Eastern and Himalayan wilds. Operating under non-lethal first doctrine for tribe-versus-tribe disputes, lethal force reserved only for outside invaders. The Akakpen preserve traditions from before the Mesh, holding territories in no-fly valleys like Silent Throat and Knife-Wind Chute. Their autonomy represents a crack in the regime's absolute control—a reminder that alternatives exist.",
+      "traits": ["Treaty Rights", "Queen's Council", "Non-Lethal Doctrine", "Cultural Preservation"],
+      "media": {
+        "card": "/images/factions/akakpen-card.webp",
+        "banner": "/images/factions/akakpen-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 8
+    },
+    {
+      "id": "bharatsena",
+      "name": "Bharatsena",
+      "category": "factions",
+      "classification": "declassified",
+      "subtype": "Government",
+      "tagline": "Polite inevitability. Order through control.",
+      "description": "The ruling military directorate that has governed Bharatvarsh since the Year-Turn Decree of 1985. Operating through 'polite inevitability'—the governance philosophy that makes compliance feel natural. The Bharatsena maintains the surveillance state, controls the Mesh, and has delivered four decades of stability at the cost of civil liberties. Wrist-scans, hovercams, and checkpoint algorithms ensure total visibility. Curfew runs 21:00 to 06:00 in all metropoles.",
+      "traits": ["Absolute Authority", "Mesh Control", "Stability Through Surveillance", "Military Hierarchy"],
+      "media": {
+        "card": "/images/factions/bharatsena-card.webp",
+        "banner": "/images/factions/bharatsena-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 9
+    },
+    {
+      "id": "bracecomm",
+      "name": "Bracecomm",
+      "category": "tech",
+      "classification": "declassified",
+      "subtype": "Device",
+      "tagline": "Command at your wrist. The Mesh in your sleeve.",
+      "description": "Sleeve-tile interface standard for military command communication. Integrated biometric authentication, secure encrypted channels, and real-time tactical data display. The device that makes the Mesh personal—every officer's lifeline to the command structure. Tile displays in cyan/blue-white at 30-50% opacity, auto-dismissing on interruption. Silent band operation ensures discretion in sensitive environments.",
+      "specifications": "Under-fabric sleeve nodes | Tile sizes: 80×160mm (call), 120×240mm (map) | Biometric-locked | Encrypted comm channels",
+      "media": {
+        "card": "/images/misc/bracecomm-card.webp",
+        "banner": "/images/misc/bracecomm-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 10
+    },
+    {
+      "id": "dart",
+      "name": "Dart",
+      "category": "tech",
+      "classification": "classified",
+      "subtype": "Weapon",
+      "tagline": "Silent. Precise. Non-lethal by design.",
+      "description": "Low-draw ballista system utilizing sleep-sap ammunition. Standard issue for Akakpen treaty enforcement, designed for incapacitation rather than lethality. The weapon of choice when the goal is capture, not kill. Mounted in observation rings at 60-90m perimeters, these devices embody the non-lethal first doctrine that governs tribal conflict resolution.",
+      "specifications": "10-15m effective range | Sleep-sap payload | Red cap safety trigger | Non-lethal designation",
+      "media": {
+        "card": "/images/misc/akakpen-dart-card.webp",
+        "banner": "/images/misc/akakpen-dart-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 11
+    },
+    {
+      "id": "oxy-pole",
+      "name": "Oxy Pole",
+      "category": "tech",
+      "classification": "declassified",
+      "subtype": "Infrastructure",
+      "tagline": "They scrub the air. They see everything.",
+      "description": "Air-scrub towers standing 8.5-9.2 meters tall, spaced at 60-80 meter intervals throughout urban zones. OxyPoles serve dual purpose: atmospheric purification and surveillance platform mounting. Graphite powder-coated aluminum masts support crown vanes and wash heads. Hovercams dock at their peaks. The infrastructure that makes the Mesh possible—and inescapable.",
+      "specifications": "8.5-9.2m height | 60-80m spacing | Air purification + surveillance mounts | Tri-mount: PA node, camera nest, environmental sensor",
+      "media": {
+        "card": "/images/misc/oxy-pole-card.webp",
+        "banner": "/images/misc/oxy-pole-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 12
+    },
+    {
+      "id": "pulse-gun",
+      "name": "Pulse Gun",
+      "category": "tech",
+      "classification": "classified",
+      "subtype": "Weapon",
+      "tagline": "Air becomes wall. Crowds become controlled.",
+      "description": "Air-curtain dispersal tool for crowd control operations. Generates targeted pressure waves to direct or disperse civilian gatherings without kinetic projectiles. Standard equipment for Mesh enforcement units. Part of the permitted non-lethal device set, deployed alongside fine water mist and 48-hour expirable dye markers. The tool of polite inevitability made physical.",
+      "specifications": "Air-curtain technology | Non-projectile crowd control | Variable intensity | Directional sound sweep (max 88 dB)",
+      "media": {
+        "card": "/images/misc/pulse-gun-card.webp",
+        "banner": "/images/misc/pulse-gun-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 13
+    }
+  ]
+}

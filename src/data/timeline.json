@@ -1,0 +1,229 @@
+{
+  "timeline": {
+    "title": "History of Bharatvarsh",
+    "subtitle": "An Alternate Reality Timeline",
+    "total_events": 9,
+    "time_span": {
+      "start": 1717,
+      "end": 2025
+    }
+  },
+  "events": [
+    {
+      "id": 1,
+      "title": "East India Company Lost Magna Carta",
+      "date": {
+        "original": "1717 AD",
+        "start_year": 1717,
+        "end_year": 1717,
+        "is_range": false
+      },
+      "description": "In 1717, Delhi declined a sweeping charter that would have granted the East India Company tax exemptions and autonomous courts. Without that legal foothold, foreign firms stayed licensed guests at coastal marts, subject to guild tariffs and regional law. Capital stayed local, ports diversified, and inland caravans kept leverage over sea trade. Indigenous bankers and craft guilds expanded credit networks that funded irrigation, storage, and workshops. The result was diffusion, not extraction: resources circulated through Sindh, the Deccan, and the East, enabling each to consolidate rule while sharing a growing external commerce.",
+      "slug": "1717-east-india-company-lost-magna-carta",
+      "metadata": {
+        "event_type": "economic",
+        "impacts": ["economic", "infrastructure"],
+        "locations": ["Sindh", "Deccan", "Delhi", "Eastern Region"],
+        "significance": 3,
+        "remarks": "Point of divergence from real history - EIC denied critical charter"
+      },
+      "media": {
+        "icon": "scroll",
+        "color": "#F1C232",
+        "image": "/images/timeline/magna-carta-1717.jpg"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Era of Enlightenment",
+      "date": {
+        "original": "1790 AD to 1850 AD",
+        "start_year": 1790,
+        "end_year": 1850,
+        "is_range": true
+      },
+      "description": "From 1790 to 1850, learning spread laterally rather than from a colonial center. Court schools and guild libraries adopted vernacular primers in mathematics, astronomy, and law. Copperplate presses and traveling lectures stitched ideas across ports and plains. Mechanized looms appeared beside traditional karkhanas; canals, stepwells, and crop trials raised yields; caravanserai became hubs of accounts and arbitration. The East invested in courier relays and coded correspondences, while the Deccan promoted technical guilds, and Sindh standardized weights and measures along river routes. A shared civic vocabulary emerged, preparing society for larger experiments in collective governance.",
+      "slug": "1790-1850-era-of-enlightenment",
+      "metadata": {
+        "event_type": "era",
+        "impacts": ["political", "social"],
+        "locations": ["Sindh", "Deccan", "Eastern Region"],
+        "significance": 5,
+        "remarks": "Rise of three polities, Focus on Education, Scientific Growth and Civic Rights"
+      },
+      "media": {
+        "icon": "book-open",
+        "color": "#8B5CF6",
+        "image": "/images/timeline/enlightenment-1790-1850.jpg"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Era of Divergence",
+      "date": {
+        "original": "1850 AD to 1895 AD",
+        "start_year": 1850,
+        "end_year": 1895,
+        "is_range": true
+      },
+      "description": "Between 1850 and 1895, prosperity produced factions. Labour unions matured, then splintered into leagues anchored to faith, language, and region. Rail spines and river barges increased coal demand and sharpened competition for eastern seams. City councils expanded sanitation and night watch even as processions, boycotts, and strike funds set the rhythm of markets. In the hill country, resilient intelligence networks grew, moving messages faster than magistrates could convene. Elections within the polities hardened into rivalry. The social contract was still forming, yet the incentives of energy, rail access, and credit increasingly pointed the system toward confrontation.",
+      "slug": "1850-1895-era-of-divergence",
+      "metadata": {
+        "event_type": "era",
+        "impacts": ["economic", "political", "social", "military", "infrastructure"],
+        "locations": ["Eastern Region", "Hill Country"],
+        "significance": 5,
+        "remarks": "Unions, sects and groupism emerge. Growing discontent with monarchies"
+      },
+      "media": {
+        "icon": "git-branch",
+        "color": "#8B5CF6",
+        "image": "/images/timeline/divergence-1850-1895.jpg"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Sindhu-Dakhin Concord",
+      "date": {
+        "original": "1905 AD",
+        "start_year": 1905,
+        "end_year": 1905,
+        "is_range": false
+      },
+      "description": "In 1905, Sindh and the Deccan ratified a compact to end tariff duels and align strategy. The Concord standardized rail gauges, river-port dues, and coinage weights; it created a joint planning desk over mines, foundries, telegraph lines, and procurement; and it established a rotating command for frontier security. Differences remained, but constant bargaining yielded to scheduled negotiation with clear floors. Shared survey data and a single logistics ledger let both states project power inland without starving their workshops. The pact unlocked a coordinated corridor policy and set conditions for rapid operations in the eastern plains.",
+      "slug": "1905-sindhu-dakhin-concord",
+      "metadata": {
+        "event_type": "governance",
+        "impacts": ["military", "infrastructure"],
+        "locations": ["Sindh", "Deccan", "Eastern Region"],
+        "significance": 4,
+        "remarks": "Key alliance between Sindh and Dakhin to unite their polities"
+      },
+      "media": {
+        "icon": "handshake",
+        "color": "#10B981",
+        "image": "/images/timeline/sindhu-dakhin-concord-1905.jpg"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Democratic Republic of Bharatvarsh",
+      "date": {
+        "original": "1910 AD to 1975 AD",
+        "start_year": 1910,
+        "end_year": 1975,
+        "is_range": true
+      },
+      "description": "From 1910 to 1975, a democratic republic supervised the largest buildout in the subcontinent's history. Two national ballots established peaceful transfer of power. Wartime partnerships modernized shipyards, code bureaus, and convoy doctrine; a civilian-first atomic energy program diversified grids. Rail density doubled, primary schooling expanded, postal savings matured, and treaty corridors cooled the long insurgency in the hills. Industry moved from textiles into chemicals, machine parts, and radios. Limits were visible too: coalition paralysis, periodic unrest, and rising sectarian mobilization late in the period. By 1975, emergency debates dominated cabinet agendas.",
+      "slug": "1910-1975-democratic-republic-of-bharatvarsh",
+      "metadata": {
+        "event_type": "governance",
+        "impacts": ["economic", "political", "social", "military", "infrastructure", "technological"],
+        "locations": ["Sindh", "Deccan", "Eastern Region"],
+        "significance": 5,
+        "remarks": "Democratic era with elected leaders - largest buildout in history"
+      },
+      "media": {
+        "icon": "landmark",
+        "color": "#10B981",
+        "image": "/images/timeline/democratic-republic-1910-1975.jpg"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Decade of Civil War",
+      "date": {
+        "original": "1975 AD to 1985 AD",
+        "start_year": 1975,
+        "end_year": 1985,
+        "is_range": true
+      },
+      "description": "From 1975 to 1985, rolling riots, targeted assassinations, and sabotage campaigns overwhelmed civil policing. Sectarian fronts radicalized, black markets bloomed, and provincial administrations split between rival commands. Curfews became routine; rail timetables thinned; ministries ran on emergency decrees. Foreign meddling existed, but most damage was domestic: arson, blockades, information hoaxes, and everyday fear. Elections continued on paper while authority eroded on the ground. A cluster of bombings and mutinies near decade's end forced a reset of institutions and rules, closing the republican chapter and preparing the public for a new governing doctrine.",
+      "slug": "1975-1985-decade-of-civil-war",
+      "metadata": {
+        "event_type": "conflict",
+        "impacts": ["economic", "political", "social", "military", "infrastructure"],
+        "locations": ["Eastern Region", "All Regions"],
+        "significance": 4,
+        "remarks": "Riots and sectarian conflicts fueled by Eastern conspirators"
+      },
+      "media": {
+        "icon": "flame",
+        "color": "#DC2626",
+        "image": "/images/timeline/civil-war-1975-1985.jpg"
+      }
+    },
+    {
+      "id": 7,
+      "title": "Year-Turn Decree",
+      "date": {
+        "original": "1985 AD",
+        "start_year": 1985,
+        "end_year": 1985,
+        "is_range": false
+      },
+      "description": "At the turn of the year, two linked acts reset the state. On 31 December, civil religion and caste politics were outlawed; temples and seminaries converted to public trusts; sectarian funding and party symbols were proscribed. At dawn on 1 January, the Army Manifesto declared permanent order the governing doctrine, restructuring broadcast, education, and security under central command. Courts remained open within stricter lanes; audits tightened; petty graft fell; dissent moved to careful forums. The decree framed stability as a civic virtue and centralized the tools to enforce it, defining political life for the next generation.",
+      "slug": "1985-year-turn-decree",
+      "metadata": {
+        "event_type": "political",
+        "impacts": ["political", "social", "military"],
+        "locations": ["All Regions"],
+        "significance": 5,
+        "remarks": "Army established executive control to end bloodshed and civil war"
+      },
+      "media": {
+        "icon": "shield",
+        "color": "#0B2742",
+        "image": "/images/timeline/year-turn-decree-1985.jpg"
+      }
+    },
+    {
+      "id": 8,
+      "title": "Era of the Mesh",
+      "date": {
+        "original": "1985 AD to 2025 AD",
+        "start_year": 1985,
+        "end_year": 2025,
+        "is_range": true
+      },
+      "description": "From 1985 to 2025, governance fused with infrastructure. National ID seeded biometric wallets; ration, transit, and benefits gates authenticated in under a second; cameras and license readers formed a lattice from bazaars to expressways. Fines autodebited; subsidies arrived predictably; petty corruption collapsed. So did anonymity. The mesh optimized freight, water, and tax flow and simplified access to services, while setting thresholds on assembly and speech. Education, health, and civic records synchronized across districts. For most citizens, stability felt ordinary again, defined by reliability, queues that moved, and a constant awareness of being accounted for.",
+      "slug": "1985-2025-era-of-the-mesh",
+      "metadata": {
+        "event_type": "era",
+        "impacts": ["political", "social", "military", "infrastructure", "technological"],
+        "locations": ["All Regions"],
+        "significance": 5,
+        "remarks": "4 decades of stability under military control and surveillance infrastructure"
+      },
+      "media": {
+        "icon": "network",
+        "color": "#8B5CF6",
+        "image": "/images/timeline/mesh-era-1985-2022.jpg"
+      }
+    },
+    {
+      "id": 9,
+      "title": "20-10 Bombings",
+      "date": {
+        "original": "2025 AD",
+        "start_year": 2025,
+        "end_year": 2025,
+        "is_range": false
+      },
+      "description": "In 2025, the calm cracked. A synchronized bombing campaign, remembered for its \"20-10\" signature, struck critical sites across multiple regions within a narrow window. Decoys drew responders off-route while timed devices targeted stations, markets, and administrative hubs. Casualties were limited compared with older wars, yet the psychological rupture was profound. Commuters changed habits, offices added redundancies, and local councils revived contingency drills. The state answered with audits, tightened perimeter rules, and temporary blackouts in data corridors. The attacks exposed seams in the mesh and changed how cities measured risk in everyday routines.",
+      "slug": "2025-20-10-bombings",
+      "metadata": {
+        "event_type": "conflict",
+        "impacts": ["economic", "military", "infrastructure"],
+        "locations": ["Multiple Regions"],
+        "significance": 4,
+        "remarks": "First act of terrorism after 4 decades of peace - story catalyst"
+      },
+      "media": {
+        "icon": "alert-triangle",
+        "color": "#DC2626",
+        "image": "/images/timeline/bombings-2022.jpg"
+      }
+    }
+  ]
+}

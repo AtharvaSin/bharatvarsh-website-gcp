@@ -1,0 +1,82 @@
+{
+  "factions": [
+    {
+      "id": "military-council",
+      "name": "The Military Council",
+      "type": "government",
+      "status": "ruling",
+      "founded": 1985,
+      "description": "The governing body of Bharatvarsh since the Year-Turn Decree. The Council maintains absolute authority over all aspects of national security, infrastructure, and civic life. Operating through a network of generals and administrators, it has delivered four decades of stability—at the cost of civil liberties and dissent.",
+      "ideology": "Order through control. Stability through surveillance.",
+      "key_figures": ["General Pratap"],
+      "headquarters": "Indrapur HQ",
+      "influence": ["military", "government", "media", "education"],
+      "color": "#0B2742",
+      "icon": "shield",
+      "media": {
+        "image": "/images/factions/bharatsena-card.webp",
+        "banner": "/images/factions/bharatsena-banner.webp"
+      }
+    },
+    {
+      "id": "the-mesh",
+      "name": "The Mesh",
+      "type": "infrastructure",
+      "status": "active",
+      "founded": 1985,
+      "description": "Not a faction in the traditional sense, the Mesh is the technological-administrative apparatus that monitors and manages civilian life. National ID biometrics, surveillance networks, automated enforcement—the Mesh is the invisible hand that touches every transaction, movement, and communication in Bharatvarsh.",
+      "ideology": "Total visibility. Perfect efficiency.",
+      "key_figures": [],
+      "headquarters": "Distributed",
+      "influence": ["surveillance", "infrastructure", "commerce", "civic services"],
+      "color": "#8B5CF6",
+      "icon": "network"
+    },
+    {
+      "id": "eastern-resistance",
+      "name": "Eastern Conspirators",
+      "type": "resistance",
+      "status": "underground",
+      "founded": "Pre-1985",
+      "description": "A loose network of cells and sympathizers who oppose military rule. Their origins trace back to the civil war era, with roots in the Eastern regions that never fully accepted central control. Blamed for the 20-10 bombings, their true structure and leadership remain mysteries even to military intelligence.",
+      "ideology": "Freedom from the Mesh. Return to regional autonomy.",
+      "key_figures": ["Unknown"],
+      "headquarters": "Unknown",
+      "influence": ["underground networks", "information warfare"],
+      "color": "#DC2626",
+      "icon": "flame",
+      "media": {
+        "image": "/images/factions/akakpen-card.webp",
+        "banner": "/images/factions/akakpen-banner.webp"
+      }
+    },
+    {
+      "id": "old-republic",
+      "name": "The Old Republic",
+      "type": "historical",
+      "status": "dissolved",
+      "founded": 1910,
+      "description": "The democratic government that ruled Bharatvarsh from 1910 to 1985. Its achievements in infrastructure, education, and industry remain foundational, but its inability to contain sectarian violence ultimately led to its replacement by military rule. Some veterans of this era remain, carrying memories—and perhaps ambitions—that predate the Mesh.",
+      "ideology": "Democracy. Pluralism. Civilian governance.",
+      "key_figures": ["Historical figures"],
+      "headquarters": "Former Parliament (now ceremonial)",
+      "influence": ["memory", "legitimacy debates"],
+      "color": "#3B82F6",
+      "icon": "landmark"
+    },
+    {
+      "id": "guild-networks",
+      "name": "Guild Networks",
+      "type": "commercial",
+      "status": "regulated",
+      "founded": "Pre-colonial",
+      "description": "The commercial and craft associations that have organized trade since before the alternate timeline's divergence. Now operating under strict Mesh oversight, they retain significant economic influence and maintain traditions of internal arbitration and mutual support. Some guilds remember older ways of doing things.",
+      "ideology": "Trade. Tradition. Mutual benefit.",
+      "key_figures": [],
+      "headquarters": "Various trade centers",
+      "influence": ["commerce", "labor", "traditional crafts"],
+      "color": "#F1C232",
+      "icon": "coins"
+    }
+  ]
+}

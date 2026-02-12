@@ -1,0 +1,218 @@
+{
+  "characters": [
+    {
+      "id": "kahaan",
+      "name": {
+        "english": "Kahaan",
+        "devanagari": "कहान"
+      },
+      "role": "protagonist",
+      "archetype": "Hero",
+      "title": "Military Prince",
+      "allegiance": "military",
+      "status": "active",
+      "tagline": "A prince bound by duty, driven by truth",
+      "description": "Born into the military elite, Kahaan has spent his life upholding the order that defines Bharatvarsh. When assigned to investigate the 20-10 bombings, he expects a straightforward case. What he uncovers will challenge everything he believes about his nation, his family, and himself.",
+      "traits": ["dutiful", "analytical", "conflicted", "brave"],
+      "connections": [
+        { "character": "rudra", "relationship": "partner" },
+        { "character": "pratap", "relationship": "superior/opponent" },
+        { "character": "surya", "relationship": "unknown" }
+      ],
+      "arc": "From loyal soldier to truth-seeker",
+      "mystery_level": 1,
+      "featured": true,
+      "media": {
+        "portrait": "/images/characters/kahaan-card.webp",
+        "banner": "/images/characters/kahaan-banner.webp",
+        "silhouette": false
+      }
+    },
+    {
+      "id": "rudra",
+      "name": {
+        "english": "Rudra",
+        "devanagari": "रुद्र"
+      },
+      "role": "deuteragonist",
+      "archetype": "Second Hero",
+      "title": "Investigation Partner",
+      "allegiance": "military",
+      "status": "active",
+      "tagline": "Where Kahaan sees duty, Rudra sees possibility",
+      "description": "Rudra stands beside Kahaan in the investigation, bringing a different perspective to every lead they follow. His methods complement Kahaan's analytical approach, and his loyalty runs deeper than protocol. But in Bharatvarsh, loyalty itself can be a liability.",
+      "traits": ["loyal", "intuitive", "pragmatic", "secretive"],
+      "connections": [
+        { "character": "kahaan", "relationship": "partner" },
+        { "character": "manan", "relationship": "ally" }
+      ],
+      "arc": "The cost of standing by truth",
+      "mystery_level": 2,
+      "featured": true,
+      "media": {
+        "portrait": "/images/characters/rudra-card.webp",
+        "banner": "/images/characters/rudra-banner.webp",
+        "silhouette": false
+      }
+    },
+    {
+      "id": "pratap",
+      "name": {
+        "english": "General Pratap",
+        "devanagari": "प्रताप"
+      },
+      "role": "antagonist",
+      "archetype": "Main Opponent",
+      "title": "General of the Council",
+      "allegiance": "military",
+      "status": "active",
+      "tagline": "Order requires sacrifice. He decides who pays.",
+      "description": "General Pratap embodies the iron will that has kept Bharatvarsh stable for four decades. He views the investigation into the 20-10 bombings as both a threat and an opportunity. His definition of national security may not align with the truth—and he has the power to ensure his version prevails.",
+      "traits": ["ruthless", "calculating", "patriotic", "secretive"],
+      "connections": [
+        { "character": "kahaan", "relationship": "superior/opponent" },
+        { "character": "surya", "relationship": "hidden" }
+      ],
+      "arc": "The guardian who became the threat",
+      "mystery_level": 3,
+      "featured": true,
+      "media": {
+        "portrait": "/images/characters/pratap-card.webp",
+        "banner": "/images/characters/pratap-banner.webp",
+        "silhouette": false
+      }
+    },
+    {
+      "id": "hana",
+      "name": {
+        "english": "Hana",
+        "devanagari": "हना"
+      },
+      "role": "supporting",
+      "archetype": "Ally",
+      "title": "Eastern Connection",
+      "allegiance": "ambiguous",
+      "status": "active",
+      "tagline": "The East remembers what the Mesh forgot",
+      "description": "Hana emerges from the shadows of the Eastern conspiracy, carrying knowledge that could reshape Kahaan's understanding of the bombings. Her motivations remain unclear—is she helping the investigation or manipulating it? Her connections to the pre-Mesh era make her invaluable and dangerous.",
+      "traits": ["mysterious", "knowledgeable", "cautious", "determined"],
+      "connections": [
+        { "character": "kahaan", "relationship": "ally/informant" },
+        { "character": "kaali", "relationship": "connected" }
+      ],
+      "arc": "Bridging past and present",
+      "mystery_level": 4,
+      "featured": true,
+      "media": {
+        "portrait": "/images/characters/hana-card.webp",
+        "banner": "/images/characters/hana-banner.webp",
+        "silhouette": false
+      }
+    },
+    {
+      "id": "manan",
+      "name": {
+        "english": "Manan",
+        "devanagari": "मनन"
+      },
+      "role": "supporting",
+      "archetype": "Ally",
+      "title": "Investigative Partner",
+      "allegiance": "military",
+      "status": "active",
+      "tagline": "Some questions are more dangerous than answers",
+      "description": "Manan works alongside Kahaan and Rudra, providing technical expertise and ground-level intelligence. His methodical approach to investigation uncovers patterns others miss. But the deeper they dig, the more Manan realizes the danger of knowing too much.",
+      "traits": ["methodical", "cautious", "loyal", "observant"],
+      "connections": [
+        { "character": "rudra", "relationship": "ally" },
+        { "character": "kahaan", "relationship": "colleague" }
+      ],
+      "arc": "The cost of curiosity",
+      "mystery_level": 2,
+      "featured": false,
+      "media": {
+        "portrait": null,
+        "silhouette": true
+      }
+    },
+    {
+      "id": "kaali",
+      "name": {
+        "english": "Kaali",
+        "devanagari": "काली"
+      },
+      "role": "complex",
+      "archetype": "Morally Ambiguous",
+      "title": "The Shadow",
+      "allegiance": "unknown",
+      "status": "active",
+      "tagline": "In darkness, she finds clarity",
+      "description": "Kaali operates in the spaces between allegiances, her true loyalties known only to herself. She appears at crucial moments, offering help that comes with hidden costs. Is she a protector, a manipulator, or something else entirely? The answer may determine Bharatvarsh's future.",
+      "traits": ["enigmatic", "capable", "morally complex", "independent"],
+      "connections": [
+        { "character": "hana", "relationship": "connected" },
+        { "character": "arshi", "relationship": "linked" }
+      ],
+      "arc": "The price of playing all sides",
+      "mystery_level": 5,
+      "featured": true,
+      "media": {
+        "portrait": null,
+        "silhouette": true
+      }
+    },
+    {
+      "id": "arshi",
+      "name": {
+        "english": "Arshi",
+        "devanagari": "अर्शी"
+      },
+      "role": "mystery",
+      "archetype": "Enigmatic Presence",
+      "title": "Unknown",
+      "allegiance": "unknown",
+      "status": "unknown",
+      "tagline": "Some presences are felt before they're understood",
+      "description": "Arshi's role in the story remains shrouded in mystery. References to this figure appear in unexpected places, connecting threads that span generations. Understanding who—or what—Arshi represents may be key to unraveling the deepest secrets of Bharatvarsh.",
+      "traits": ["mysterious", "significant", "connected"],
+      "connections": [
+        { "character": "kaali", "relationship": "linked" },
+        { "character": "surya", "relationship": "unknown" }
+      ],
+      "arc": "The revelation",
+      "mystery_level": 5,
+      "featured": false,
+      "media": {
+        "portrait": "/images/characters/arshi-card.webp",
+        "banner": "/images/characters/arshi-banner.webp",
+        "silhouette": false
+      }
+    },
+    {
+      "id": "surya",
+      "name": {
+        "english": "Surya / Karna",
+        "devanagari": "सूर्य / कर्ण"
+      },
+      "role": "hidden",
+      "archetype": "Secret Identity",
+      "title": "The Hidden Truth",
+      "allegiance": "classified",
+      "status": "classified",
+      "tagline": "Every truth casts a shadow",
+      "description": "The existence of Surya—also known by another name—represents the story's deepest mystery. This figure's identity and history connect to the foundations of the current regime. When the truth emerges, it will change how Kahaan sees everything—including himself.",
+      "traits": ["hidden", "pivotal", "connected to history"],
+      "connections": [
+        { "character": "kahaan", "relationship": "unknown" },
+        { "character": "pratap", "relationship": "hidden" }
+      ],
+      "arc": "The truth revealed",
+      "mystery_level": 5,
+      "featured": false,
+      "media": {
+        "portrait": null,
+        "silhouette": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "scrollytelling": {
+    "sections": [
+      {
+        "id": 1,
+        "title": "opening",
+        "headline": null,
+        "content": "BHARATVARSH",
+        "subtext": "A Story of Truth and Power",
+        "visual": "Title reveal with atmospheric particles",
+        "animation": "fade-scale-in",
+        "duration": "full-viewport"
+      },
+      {
+        "id": 2,
+        "title": "the-world",
+        "headline": "India. But Not As You Know It.",
+        "content": "In 1717, a single decision changed everything. The East India Company was denied its charter. Without colonial extraction, the subcontinent developed on its own terms—building, learning, and eventually unifying under a different kind of power.",
+        "subtext": null,
+        "visual": "Alternate map visualization, branching timeline",
+        "animation": "parallax-reveal",
+        "duration": "1.5-viewport"
+      },
+      {
+        "id": 3,
+        "title": "the-regime",
+        "headline": "Four Decades of Order",
+        "content": "The Military Council rules with precision. After the chaos of civil war, they offered stability—and the nation accepted. Now the Mesh watches everything: every transaction, every movement, every word spoken in the open. Peace has a price. Most have stopped counting.",
+        "subtext": null,
+        "visual": "Surveillance aesthetic, hovercams, checkpoints",
+        "animation": "scroll-reveal-stagger",
+        "duration": "1.5-viewport"
+      },
+      {
+        "id": 4,
+        "title": "the-peace",
+        "headline": "Stability Feels Like Home",
+        "content": "Trains run on time. Markets function. Children attend school without fear. The older generation remembers the decade of blood—the bombings, the curfews, the friends who vanished. They teach their children to appreciate what the Council provides. Most believe them.",
+        "subtext": null,
+        "visual": "Orderly urban scenes, everyday life under surveillance",
+        "animation": "fade-sequence",
+        "duration": "1-viewport"
+      },
+      {
+        "id": 5,
+        "title": "the-crack",
+        "headline": "20-10",
+        "content": "Twenty locations. Ten minutes. A synchronized attack that shattered decades of calm. The bombings killed fewer than the old wars, but something else died that day: the certainty that the Mesh sees everything. Someone moved unseen. Someone struck at the heart of order.",
+        "subtext": "The investigation begins.",
+        "visual": "Impact visualization, news coverage aesthetic",
+        "animation": "impact-reveal",
+        "duration": "1.5-viewport"
+      },
+      {
+        "id": 6,
+        "title": "the-hero",
+        "headline": "Kahaan",
+        "content": "A military prince. Born to privilege, trained for duty, assigned to find the truth. The Council gives him the case—the bombings, the conspiracy, the threat to everything he's sworn to protect. What he doesn't know: the investigation will lead him across nations, through generations, and into the darkest corners of his own history.",
+        "subtext": null,
+        "visual": "Character silhouette, military aesthetic",
+        "animation": "character-reveal",
+        "duration": "1.5-viewport"
+      },
+      {
+        "id": 7,
+        "title": "the-question",
+        "headline": "What Would You Sacrifice for the Truth?",
+        "content": "Every lead uncovers a deeper secret. Every answer spawns new questions. Kahaan must choose: protect the order that raised him, or expose the lies at its foundation. In Bharatvarsh, some truths are more dangerous than any bomb.",
+        "subtext": "The novel awaits.",
+        "visual": "Atmospheric tension, layered imagery",
+        "animation": "tension-build",
+        "duration": "1-viewport"
+      },
+      {
+        "id": 8,
+        "title": "call-to-action",
+        "headline": null,
+        "content": "Explore the World",
+        "subtext": null,
+        "visual": "Navigation cards for Lore and Timeline",
+        "animation": "cards-reveal",
+        "cta": [
+          { "label": "Discover the Lore", "link": "/lore" },
+          { "label": "Explore the Timeline", "link": "/timeline" },
+          { "label": "Pre-order the Novel", "link": "#preorder" }
+        ],
+        "duration": "full-viewport"
+      }
+    ]
+  }
+}
