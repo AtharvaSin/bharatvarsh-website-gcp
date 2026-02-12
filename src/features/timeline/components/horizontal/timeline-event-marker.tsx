@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { TimelineEvent } from '@/types';
-import { getMarkerSize } from '../utils/timeline-calculations';
+import { getMarkerSize } from '../../utils/timeline-calculations';
 import { cn } from '@/shared/utils';
 import { TimelineEventTooltip } from './timeline-event-tooltip';
 

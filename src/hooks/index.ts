@@ -1,18 +1,18 @@
 /**
- * Hooks Barrel Export
+ * Hooks Barrel Export (legacy shim)
  *
- * Re-exports shared hooks from new location + feature-specific hooks
- * that haven't been moved yet.
+ * Re-exports all hooks from their new locations.
+ * TODO: Remove this file after all consumers are updated.
  */
 
-// Shared hooks (re-exported from new location)
+// Shared hooks
 export * from '@/shared/hooks';
 
-// Feature-specific hooks (will move to features/ in Batch C)
-export { useDossierForm } from './use-dossier-form';
+// Feature hooks (re-exported for backwards compatibility)
+export { useDossierForm } from '@/features/newsletter/hooks/use-dossier-form';
 export {
   useTimelineScroll,
   useScrollValues,
   type UseTimelineScrollOptions,
   type UseTimelineScrollReturn,
-} from './use-timeline-scroll';
+} from '@/features/timeline/hooks/use-timeline-scroll';

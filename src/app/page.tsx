@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/metadata';
-import { HomeContent } from './home-content';
+import { HomeContent } from '@/features/home/HomeContent';
 
 export const metadata: Metadata = pageMetadata.home;
 

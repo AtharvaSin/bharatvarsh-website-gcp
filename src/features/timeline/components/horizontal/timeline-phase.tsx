@@ -11,7 +11,7 @@ import { useIsPortrait } from '@/shared/hooks/use-media-query';
 import { TimelinePhaseHeader } from './timeline-phase-header';
 import { TimelineTrack } from './timeline-track';
 import { TimelineEventMarker } from './timeline-event-marker';
-import { yearToHorizontalPosition } from '../utils/timeline-calculations';
+import { yearToHorizontalPosition } from '../../utils/timeline-calculations';
 
 // Phase-specific glyph mapping for atmospheric effect
 const PHASE_GLYPHS: Record<number, 'trishul' | 'mesh' | 'treaty' | 'chakra' | 'script' | 'grid'> = {

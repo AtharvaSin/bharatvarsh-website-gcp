@@ -8,7 +8,7 @@ import {
   scrollProgressToPhaseIndex,
   calculateScrollToPhase,
   calculateScrollToEvent
-} from '@/components/features/timeline/utils/timeline-calculations';
+} from '../utils/timeline-calculations';
 
 /**
  * Options for useTimelineScroll hook

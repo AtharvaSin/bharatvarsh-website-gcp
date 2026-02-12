@@ -7,7 +7,7 @@ import {
   LoreFilters,
   LoreCard,
   LoreModal,
-} from '@/components/features/lore';
+} from '@/features/lore';
 import loreData from '@/content/data/lore-items.json';
 import type { LoreItem, LoreCategory, LoreData } from '@/types';
 

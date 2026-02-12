@@ -5,7 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import { cn } from '@/shared/utils';
 import { TimelineEvent } from '@/types';
 import { TIMELINE_PHASES } from '@/content/data/timeline-phases';
-import { getEventsForPhase } from '../utils/timeline-calculations';
+import { getEventsForPhase } from '../../utils/timeline-calculations';
 import { TimelineVerticalPhase } from './timeline-vertical-phase';
 import { TimelineEventModal } from '../horizontal/timeline-event-modal';
 

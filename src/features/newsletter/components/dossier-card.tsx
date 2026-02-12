@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FileLock2, CheckCircle2, Mail, Shield } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui/button';
-import { useDossierForm } from '@/hooks/use-dossier-form';
+import { useDossierForm } from '@/features/newsletter/hooks/use-dossier-form';
 import { useIsDesktop, usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
 import { DossierForm } from './dossier-form';
 import { DossierModal } from './dossier-modal';

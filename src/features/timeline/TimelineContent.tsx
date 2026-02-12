@@ -1,6 +1,6 @@
 'use client';
 
-import { TimelineHorizontal } from '@/components/features/timeline';
+import { TimelineHorizontal } from '@/features/timeline';
 import timelineData from '@/content/data/timeline.json';
 import type { TimelineData } from '@/types';
 

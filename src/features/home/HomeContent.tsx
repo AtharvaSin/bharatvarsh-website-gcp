@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { HeroTitle, CTASection, ScrollSection, ParallaxBackground, ContentSection } from '@/components/features/home';
+import { HeroTitle, CTASection, ScrollSection, ParallaxBackground, ContentSection } from '@/features/home';
 import { cn } from '@/shared/utils';
 
 const sections = [
