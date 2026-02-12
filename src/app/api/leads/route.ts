@@ -5,8 +5,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { findLeadByEmail, createLead, updateLeadToken } from '@/lib/airtable';
-import { sendVerificationEmail } from '@/lib/email';
+import { findLeadByEmail, createLead, updateLeadToken } from '@/server/airtable';
+import { sendVerificationEmail } from '@/server/email';
 
 interface LeadRequestBody {
   name: string;

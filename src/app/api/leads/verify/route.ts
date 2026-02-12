@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { findLeadByToken, verifyLead } from '@/lib/airtable';
+import { findLeadByToken, verifyLead } from '@/server/airtable';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 

@@ -1,14 +1,22 @@
 /**
  * Email client using Resend for verification emails
+ * Server-only module — do not import from client components.
  */
 
+import 'server-only';
 import { Resend } from 'resend';
+import { getServerEnv } from '@/config/env';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy-init: Resend client is created on first use, not at module load.
+// This prevents build failures when env vars are absent.
+let _resend: Resend | null = null;
+function getResend(): Resend {
+  if (!_resend) {
+    _resend = new Resend(getServerEnv().resend.apiKey);
+  }
+  return _resend;
+}
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-
-// Using Resend's test address until a custom domain is verified
 const FROM_EMAIL = 'Bharatvarsh <onboarding@resend.dev>';
 
 interface SendVerificationEmailParams {
@@ -27,10 +35,10 @@ export async function sendVerificationEmail({
   name,
   token,
 }: SendVerificationEmailParams): Promise<{ success: boolean; messageId?: string; error?: string }> {
-  const verificationUrl = `${BASE_URL}/api/leads/verify?token=${token}`;
+  const verificationUrl = `${getServerEnv().baseUrl}/api/leads/verify?token=${token}`;
 
   try {
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResend().emails.send({
       from: FROM_EMAIL,
       to: [to],
       subject: 'Verify Your Access to Bharatvarsh Chapter 1',
