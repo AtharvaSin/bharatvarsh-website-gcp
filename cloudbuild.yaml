@@ -1,0 +1,170 @@
+# Cloud Build CI/CD for Bharatvarsh
+# Trigger: push to main or staging branch
+# Phase 7: Canary deployment with traffic splitting
+
+steps:
+  # Step 1: Install dependencies and run checks
+  - name: 'node:20-alpine'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        npm ci
+        npx prisma generate
+        npm run build
+
+  # Step 2: Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:${SHORT_SHA}'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:latest'
+      - '.'
+
+  # Step 3: Push to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh'
+
+  # Step 4: Deploy canary revision (no traffic)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'deploy-canary'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - '${_SERVICE_NAME}'
+      - '--image'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:${SHORT_SHA}'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--add-cloudsql-instances'
+      - '${_CLOUD_SQL_INSTANCE}'
+      - '--min-instances'
+      - '0'
+      - '--max-instances'
+      - '5'
+      - '--memory'
+      - '512Mi'
+      - '--cpu'
+      - '1'
+      - '--port'
+      - '8080'
+      - '--no-traffic'
+      - '--tag'
+      - 'canary'
+
+  # Step 5: Route 10% traffic to canary
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'canary-10'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        # Get the latest revision name
+        CANARY_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --format='value(status.latestCreatedRevisionName)')
+
+        # Get the current serving revision
+        STABLE_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --format='value(status.traffic[0].revisionName)')
+
+        echo "Canary: $CANARY_REV, Stable: $STABLE_REV"
+
+        # Split traffic: 10% canary, 90% stable
+        gcloud run services update-traffic ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --to-revisions="$CANARY_REV=10,$STABLE_REV=90"
+
+        echo "10% traffic routed to canary. Waiting ${_CANARY_SOAK_SECONDS}s..."
+        sleep ${_CANARY_SOAK_SECONDS}
+
+  # Step 6: Check canary health (error rate check)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'canary-health-check'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        # Verify canary is healthy by hitting the health endpoint
+        CANARY_URL=$(gcloud run services describe ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --format='value(status.url)')
+
+        HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$CANARY_URL/api/health")
+
+        if [ "$HTTP_STATUS" != "200" ]; then
+          echo "ERROR: Canary health check failed (HTTP $HTTP_STATUS). Rolling back..."
+          # Rollback: send all traffic to stable revision
+          STABLE_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+            --region=${_REGION} --platform=managed \
+            --format='value(status.traffic[0].revisionName)')
+          gcloud run services update-traffic ${_SERVICE_NAME} \
+            --region=${_REGION} --platform=managed \
+            --to-revisions="$STABLE_REV=100"
+          exit 1
+        fi
+
+        echo "Canary health check passed (HTTP 200)."
+
+  # Step 7: Ramp to 50% traffic
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'canary-50'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        CANARY_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --format='value(status.latestCreatedRevisionName)')
+
+        STABLE_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --format='value(status.traffic[0].revisionName)')
+
+        gcloud run services update-traffic ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --to-revisions="$CANARY_REV=50,$STABLE_REV=50"
+
+        echo "50% traffic routed to canary. Waiting ${_CANARY_SOAK_SECONDS}s..."
+        sleep ${_CANARY_SOAK_SECONDS}
+
+  # Step 8: Promote canary to 100% traffic
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'promote-canary'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        CANARY_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --format='value(status.latestCreatedRevisionName)')
+
+        gcloud run services update-traffic ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --to-revisions="$CANARY_REV=100"
+
+        echo "Canary promoted to 100% traffic. Deployment complete."
+
+substitutions:
+  _REGION: us-central1
+  _REPO_NAME: bharatvarsh
+  _SERVICE_NAME: bharatvarsh-website
+  _CLOUD_SQL_INSTANCE: ''
+  _CANARY_SOAK_SECONDS: '120'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:${SHORT_SHA}'
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:latest'

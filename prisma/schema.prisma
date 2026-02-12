@@ -1,0 +1,320 @@
+// Bharatvarsh Forum — Prisma Schema
+// Run `npx prisma migrate dev --name init` to create tables
+// Run `npx prisma db seed` to populate default data
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // Phase 7: Use a separate connection pool URL when available (e.g., PgBouncer).
+  // Set DIRECT_DATABASE_URL to bypass the pooler for migrations.
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+// ─── AUTH.JS MODELS ──────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(MEMBER)
+  bio           String?
+  bannedAt      DateTime?
+  bannedUntil   DateTime?
+  bannedReason  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Auth relations
+  accounts Account[]
+  sessions Session[]
+
+  // Forum relations
+  threads           Thread[]
+  posts             Post[]
+  reactions         Reaction[]
+  reportsFiled      Report[]           @relation("ReportFiler")
+  reportsResolved   Report[]           @relation("ReportResolver")
+  moderationActions ModerationAction[] @relation("ModeratorActions")
+  auditLogs         AuditLog[]
+
+  @@index([email])
+  @@index([role])
+}
+
+enum UserRole {
+  VISITOR
+  MEMBER
+  MODERATOR
+  ADMIN
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── FORUM MODELS ────────────────────────────────────────────
+
+model Topic {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  icon        String?
+  color       String?
+  sortOrder   Int      @default(0)
+  isLocked    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  threadTags ThreadTag[]
+
+  @@index([slug])
+}
+
+model Thread {
+  id            String         @id @default(cuid())
+  title         String
+  slug          String         @unique
+  body          String         @db.Text
+  bodyHtml      String?        @db.Text
+  excerpt       String?
+  isPinned      Boolean        @default(false)
+  isLocked      Boolean        @default(false)
+  viewCount     Int            @default(0)
+  status        ContentStatus  @default(PUBLISHED)
+  aiCheckResult AiCheckResult? @default(PASS)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  posts     Post[]
+  reactions Reaction[]
+  reports   Report[]
+  tags      ThreadTag[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([authorId])
+  @@index([status, createdAt(sort: Desc)])
+  @@index([slug])
+  @@index([deletedAt])
+}
+
+model ThreadTag {
+  threadId String
+  topicId  String
+
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  topic  Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([threadId, topicId])
+}
+
+model Post {
+  id            String         @id @default(cuid())
+  body          String         @db.Text
+  bodyHtml      String?        @db.Text
+  status        ContentStatus  @default(PUBLISHED)
+  aiCheckResult AiCheckResult? @default(PASS)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  threadId String
+  thread   Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  parentId String?
+  parent   Post?   @relation("PostReplies", fields: [parentId], references: [id])
+  replies  Post[]  @relation("PostReplies")
+
+  reactions Reaction[]
+  reports   Report[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([threadId, createdAt])
+  @@index([authorId])
+  @@index([parentId])
+  @@index([deletedAt])
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  QUARANTINED
+  REMOVED
+  DELETED
+}
+
+enum AiCheckResult {
+  PASS
+  FLAGGED
+  BLOCKED
+  SKIPPED
+}
+
+model Reaction {
+  id     String       @id @default(cuid())
+  type   ReactionType
+  userId String
+  user   User         @relation(fields: [userId], references: [id])
+
+  threadId String?
+  thread   Thread? @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  postId   String?
+  post     Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, threadId, type])
+  @@unique([userId, postId, type])
+  @@index([threadId])
+  @@index([postId])
+}
+
+enum ReactionType {
+  UPVOTE
+  DOWNVOTE
+  INSIGHTFUL
+  FLAME
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  reason      ReportReason
+  description String?      @db.Text
+  status      ReportStatus @default(OPEN)
+
+  filerId String
+  filer   User   @relation("ReportFiler", fields: [filerId], references: [id])
+
+  resolverId String?
+  resolver   User?   @relation("ReportResolver", fields: [resolverId], references: [id])
+  resolution String? @db.Text
+
+  threadId String?
+  thread   Thread? @relation(fields: [threadId], references: [id])
+  postId   String?
+  post     Post?   @relation(fields: [postId], references: [id])
+
+  createdAt  DateTime  @default(now())
+  resolvedAt DateTime?
+
+  @@index([status, createdAt])
+  @@index([filerId])
+  @@index([threadId])
+  @@index([postId])
+}
+
+enum ReportReason {
+  SPAM
+  HARASSMENT
+  HATE_SPEECH
+  MISINFORMATION
+  OFF_TOPIC
+  SPOILERS
+  OTHER
+}
+
+enum ReportStatus {
+  OPEN
+  IN_REVIEW
+  RESOLVED_REMOVED
+  RESOLVED_DISMISSED
+  RESOLVED_WARNED
+}
+
+model ModerationAction {
+  id       String        @id @default(cuid())
+  action   ModActionType
+  reason   String        @db.Text
+  metadata Json?
+
+  moderatorId String
+  moderator   User   @relation("ModeratorActions", fields: [moderatorId], references: [id])
+
+  targetUserId   String?
+  targetThreadId String?
+  targetPostId   String?
+
+  createdAt DateTime @default(now())
+
+  @@index([moderatorId])
+  @@index([targetUserId])
+  @@index([createdAt(sort: Desc)])
+}
+
+enum ModActionType {
+  REMOVE_CONTENT
+  APPROVE_CONTENT
+  WARN_USER
+  TEMP_BAN
+  PERM_BAN
+  UNBAN
+  LOCK_THREAD
+  UNLOCK_THREAD
+  PIN_THREAD
+  UNPIN_THREAD
+  ROLE_CHANGE
+}
+
+model AuditLog {
+  id         String  @id @default(cuid())
+  action     String
+  entityType String
+  entityId   String
+  changes    Json?
+  ipAddress  String?
+  userAgent  String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([entityType, entityId])
+  @@index([action, createdAt(sort: Desc)])
+}

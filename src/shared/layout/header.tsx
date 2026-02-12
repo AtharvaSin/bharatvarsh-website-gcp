@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui/button';
+import { SignInButton, UserMenu } from '@/features/auth';
 
 interface HeaderProps {
   transparent?: boolean;
@@ -18,6 +19,7 @@ const navItems = [
   { label: 'The Novel', href: '/novel' },
   { label: 'Lore', href: '/lore' },
   { label: 'Timeline', href: '/timeline' },
+  { label: 'Forum', href: '/forum' },
 ];
 
 export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
@@ -83,6 +85,9 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
             <Button variant="primary" size="sm" className="ml-4">
               Pre-order
             </Button>
+
+            <SignInButton className="ml-2" />
+            <UserMenu className="ml-1" />
           </nav>
 
           {/* Mobile Menu Button */}
@@ -127,10 +132,11 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
                   {item.label}
                 </Link>
               ))}
-              <div className="pt-4">
+              <div className="pt-4 space-y-2">
                 <Button variant="primary" className="w-full">
                   Pre-order
                 </Button>
+                <SignInButton className="w-full" />
               </div>
             </nav>
           </motion.div>

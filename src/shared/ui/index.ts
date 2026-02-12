@@ -68,3 +68,41 @@ export {
   type AdaptiveBackgroundProps,
   type StaticBackgroundProps,
 } from './AdaptiveBackground';
+
+// Forum UI Components (Phase 2-3)
+export { Avatar, type AvatarProps } from './avatar';
+export { Textarea, type TextareaProps } from './textarea';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
+export { Skeleton, type SkeletonProps } from './skeleton';
+export { Pagination, type PaginationProps } from './pagination';
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from './dropdown-menu';
+export {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from './tooltip';
+export {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from './select';
+export {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from './dialog';

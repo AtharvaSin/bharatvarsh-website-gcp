@@ -109,4 +109,11 @@ export const pageMetadata = {
     path: '/novel',
     type: 'book',
   }),
+
+  forum: createPageMetadata({
+    title: 'Forum',
+    description:
+      'Join the Bharatvarsh community — discuss theories, characters, and the alternate history world.',
+    path: '/forum',
+  }),
 } as const;

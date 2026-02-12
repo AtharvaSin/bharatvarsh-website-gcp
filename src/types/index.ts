@@ -481,3 +481,24 @@ export interface LeadApiResponse {
 export interface LeadSubmitPayload extends DossierFormData {
   source: string;
 }
+
+// ========================================
+// Forum User Types (Phase 2)
+// ========================================
+
+export interface UserPublic {
+  id: string;
+  name: string | null;
+  image: string | null;
+  bio: string | null;
+  role: 'VISITOR' | 'MEMBER' | 'MODERATOR' | 'ADMIN';
+  createdAt: string;
+}
+
+export interface SessionUser {
+  id: string;
+  name: string | null;
+  email: string;
+  image: string | null;
+  role: 'VISITOR' | 'MEMBER' | 'MODERATOR' | 'ADMIN';
+}

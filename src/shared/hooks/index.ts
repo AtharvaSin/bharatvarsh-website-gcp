@@ -33,3 +33,6 @@ export {
   useShouldReduceAnimations,
   type AnimationSettings,
 } from './use-adaptive-animations';
+
+// Analytics hooks
+export { useAnalytics } from './use-analytics';

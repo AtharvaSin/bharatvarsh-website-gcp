@@ -200,3 +200,156 @@ Configure TypeScript path aliases in `tsconfig.json`:
 - **Positive:** Clean, self-documenting imports (`@/features/lore`).
 - **Positive:** Moving files within a module doesn't break external imports (via barrels).
 - **Trade-off:** IDE/tooling must support `tsconfig.json` paths (all modern editors do).
+
+---
+
+## ADR-010: Prisma as Forum ORM
+
+**Status:** Accepted
+**Date:** 2026-02-13
+
+### Context
+The Bharatvarsh website needs a database layer for the forum feature. The project currently has no database — all data is static JSON or external (Airtable). Two primary ORM options were evaluated: Prisma and Drizzle.
+
+### Decision
+Use Prisma ORM for database access.
+
+### Justification
+- Declarative schema with migration system provides safe incremental schema evolution.
+- Type-safe client generation (auto-complete, zero `any`) aligns with the repo's strict TypeScript mode.
+- Best-documented ORM for Next.js + Cloud SQL; mature Auth.js adapter (`@auth/prisma-adapter`).
+- Migration workflow and adapter ecosystem reduce Phase 1 risk for a repo that has never had a DB.
+
+### Consequences
+- **Positive:** Auto-generated types from schema — no manual type sync.
+- **Positive:** Built-in migration system with dev/deploy workflows.
+- **Positive:** First-class Auth.js adapter for session management.
+- **Trade-off:** Prisma client adds ~2MB to bundle (mitigated by server-only usage).
+- **Trade-off:** Slightly less SQL control than Drizzle for complex queries.
+
+---
+
+## ADR-011: Auth.js v5 with DB Sessions
+
+**Status:** Accepted
+**Date:** 2026-02-13
+
+### Context
+The forum requires user authentication with role-based access control (visitor/member/moderator/admin). No auth system currently exists in the project.
+
+### Decision
+Use Auth.js v5 (NextAuth) with database-backed sessions stored in Postgres via the Prisma adapter.
+
+### Justification
+- De facto standard for Next.js authentication with deep App Router integration.
+- DB-backed sessions (not JWT) allow instant session revocation for moderation (banning).
+- Email magic-link auth reuses the existing Resend integration.
+- OAuth providers (Google, GitHub) can be added incrementally.
+
+### Consequences
+- **Positive:** Session revocation enables real-time ban enforcement.
+- **Positive:** CSRF protection built-in.
+- **Positive:** Reuses existing Resend email infrastructure for magic links.
+- **Trade-off:** Requires Node.js runtime (not Edge) for all forum routes due to Prisma/pg dependency.
+- **Trade-off:** DB session lookup on every request adds ~5ms latency.
+
+---
+
+## ADR-012: Cloud SQL Built-in Connector for Demo
+
+**Status:** Accepted
+**Date:** 2026-02-13
+
+### Context
+Cloud Run needs to connect to Cloud SQL (Postgres). Options: (1) built-in Cloud Run connector via Unix socket, (2) Cloud SQL Auth Proxy sidecar, (3) VPC Connector + private IP.
+
+### Decision
+Use Cloud Run's built-in Cloud SQL connection (Unix socket proxy) for the demo phase.
+
+### Justification
+- Simplest setup: single checkbox in Cloud Run configuration.
+- No additional infrastructure (no VPC connector, no sidecar container).
+- Works with Prisma out of the box via `?host=/cloudsql/PROJECT:REGION:INSTANCE` in DATABASE_URL.
+
+### Consequences
+- **Positive:** Zero additional infra to manage.
+- **Positive:** Automatic TLS encryption on the proxy connection.
+- **Trade-off:** Public IP on Cloud SQL instance (acceptable for demo).
+- **Future:** Phase 7 hardens with Private IP + Serverless VPC Connector.
+
+---
+
+## ADR-013: Gemini 1.5 Flash for Content Moderation
+
+**Status:** Accepted
+**Date:** 2026-02-13
+
+### Context
+Forum content needs pre-publication screening for spam, hate speech, harassment, and PII. Options evaluated: (1) Vertex AI Gemini, (2) Perspective API, (3) OpenAI moderation endpoint.
+
+### Decision
+Use Gemini 1.5 Flash via Vertex AI for AI content moderation.
+
+### Justification
+- Runs on GCP (same cloud as deployment) — no cross-cloud latency or egress costs.
+- Flash model is fast (~500ms) and cheap for moderation tasks.
+- Customisable system prompt allows forum-specific context (literary discussion of violence is OK).
+- Single vendor for infra + AI simplifies billing and access management.
+
+### Consequences
+- **Positive:** Low latency from same-cloud deployment.
+- **Positive:** Customisable moderation rules via system prompt.
+- **Positive:** Structured JSON output for programmatic decisions.
+- **Trade-off:** Requires GCP credentials and Vertex AI API enablement.
+- **Trade-off:** AI decisions need human-in-the-loop override (Phase 5).
+
+---
+
+## ADR-014: Zod for API Validation
+
+**Status:** Accepted
+**Date:** 2026-02-13
+
+### Context
+Current API routes use manual `if (!field)` validation checks. The forum will have many endpoints with complex payloads that need consistent validation.
+
+### Decision
+Use Zod for schema-based validation on all forum API endpoints.
+
+### Justification
+- Type-safe schemas that infer TypeScript types — single source of truth.
+- Composable schemas (e.g., `threadCreateSchema.extend(...)` for edit).
+- Rich error messages with field-level detail.
+- Zero dependencies, small bundle size.
+
+### Consequences
+- **Positive:** Consistent error format across all endpoints.
+- **Positive:** TypeScript types derived from schemas — no type/validation drift.
+- **Positive:** Reusable schemas for client-side validation.
+- **Trade-off:** New dependency (though very lightweight at ~13KB).
+
+---
+
+## ADR-015: Soft-Delete Strategy for Forum Content
+
+**Status:** Accepted
+**Date:** 2026-02-13
+
+### Context
+Forum content (threads, posts) needs a deletion strategy that supports moderation review, undo, and audit trails.
+
+### Decision
+Use soft-delete (`deletedAt` timestamp column) for threads and posts. Hard-delete is deferred to a scheduled cleanup job that runs after a 90-day retention period.
+
+### Justification
+- Moderators can review deleted content for abuse pattern detection.
+- Authors can potentially recover accidentally deleted content (future feature).
+- Audit logs reference content that may have been deleted — soft-delete preserves referential integrity.
+- GDPR hard-delete can be triggered manually when needed.
+
+### Consequences
+- **Positive:** Complete audit trail preserved.
+- **Positive:** Moderation can review deleted content.
+- **Positive:** No orphaned references in audit logs or reports.
+- **Trade-off:** All queries must filter `WHERE deletedAt IS NULL` (handled by Prisma middleware or default scope).
+- **Trade-off:** Storage grows until cleanup job runs.
