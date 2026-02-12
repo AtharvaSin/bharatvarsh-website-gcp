@@ -11,7 +11,9 @@ src/
 ├── content/          Static data + loaders
 ├── lib/              Third-party wrappers (metadata)
 ├── config/           Environment validation
-└── types/            Global TypeScript types
+├── types/            Global TypeScript types
+├── components/       ⚠ Legacy re-export shims (forwards to shared/ & features/)
+└── hooks/            ⚠ Legacy re-export shims (forwards to shared/ & features/)
 ```
 
 ### Request Flow
@@ -43,11 +45,11 @@ Domain-grouped modules. Each feature owns its components, hooks, utilities, and 
 
 | Feature | Contents | Route |
 |---------|----------|-------|
-| `home/` | Hero, scroll sections, CTA, HomeContent | `/` |
+| `home/` | Hero, scroll sections, CTA, content-section, cta-image-card, HomeContent | `/` |
 | `novel/` | Novel page composition, NovelContent | `/novel` |
-| `lore/` | Cards, filters, hero, modal, LoreContent | `/lore` |
-| `timeline/` | Horizontal/vertical timelines, hooks, calculations | `/timeline` |
-| `newsletter/` | Dossier lead-magnet form, cards, download | Used on `/novel` |
+| `lore/` | LoreCard, LoreFilters, LoreHero, LoreModal, LoreContent | `/lore` |
+| `timeline/` | Horizontal/vertical timelines (separate sub-modules), hooks (useTimelineScroll, useDragToScroll, useHorizontalScroll), calculations, TimelineContent | `/timeline` |
+| `newsletter/` | DossierForm, DossierCard, DossierModal, DossierDownloadSection, ClassifiedFileCard, FeatureCard, WhatAwaitsSection, useDossierForm hook | Used on `/novel` |
 
 Each feature has:
 - `components/` — React components scoped to this feature
@@ -55,12 +57,28 @@ Each feature has:
 - `utils/` — Feature-specific utilities (optional)
 - `index.ts` — Barrel export (public API for the feature)
 
+#### Timeline Sub-Structure
+The timeline feature has two rendering modes with separate component directories:
+```
+features/timeline/
+├── components/
+│   ├── horizontal/    13 components (track, phases, markers, navigation, onboarding)
+│   ├── vertical/      3 components (phase, event-card, main)
+│   ├── timeline-container.tsx
+│   ├── timeline-event-card.tsx
+│   └── timeline-filter.tsx
+├── hooks/             useTimelineScroll, useDragToScroll, useHorizontalScroll
+├── utils/             timeline-calculations.ts
+├── TimelineContent.tsx
+└── index.ts
+```
+
 ### `src/shared/`
 Truly reusable code. **Must never import from `features/`.**
 
 | Subdirectory | Contents |
 |---|---|
-| `ui/` | Button, Badge, Card, ResponsiveImage, ErrorBoundary, atmospheric effects (ParticleField, FilmGrain, etc.) |
+| `ui/` | Button, Badge, Card, ResponsiveImage, ErrorBoundary, PageTransition, TextReveal, AdaptiveBackground, ParticleField, FilmGrainOverlay, GlyphWatermark, ScanlineEffect, StampAnimation (14 components) |
 | `layout/` | Header, Footer, LayoutProvider, AtmosphericProvider, TransitionProvider |
 | `hooks/` | useMediaQuery, useDeviceCapability, useAdaptiveAnimations |
 | `utils/` | `cn()`, formatters, slugify, debounce |
@@ -143,3 +161,19 @@ The modular structure is designed to accommodate a forum feature with Postgres:
 6. **Shared types**: Forum-specific types go in `src/features/forum/types.ts`; shared types (like User) go in `src/types/`
 
 No structural changes are needed — the current architecture directly supports adding these modules.
+
+## Legacy Shim Directories
+
+During the migration, re-export shims were created at the old import paths to avoid breaking existing imports:
+
+| Old Path | Forwards To |
+|----------|-------------|
+| `src/components/ui/index.ts` | `@/shared/ui` |
+| `src/components/layout/index.ts` | `@/shared/layout` |
+| `src/components/features/home/index.ts` | `@/features/home` |
+| `src/components/features/lore/index.ts` | `@/features/lore` |
+| `src/components/features/lead-magnet/index.ts` | `@/features/newsletter` |
+| `src/components/features/timeline/index.ts` | `@/features/timeline` |
+| `src/hooks/index.ts` | `@/shared/hooks` + feature hooks |
+
+These contain **only re-export barrels** — no component code remains at the old locations. They can be removed once all imports are updated to use the new `@/features/*` and `@/shared/*` paths.
