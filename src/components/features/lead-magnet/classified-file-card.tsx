@@ -3,8 +3,8 @@
 import { FC, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Users, Search, FileText, Lock, Unlock } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { usePrefersReducedMotion } from '@/hooks/use-media-query';
+import { cn } from '@/shared/utils';
+import { usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
 
 const iconMap: Record<string, FC<{ className?: string }>> = {
   globe: Globe,

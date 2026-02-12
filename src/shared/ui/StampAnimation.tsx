@@ -2,7 +2,7 @@
 
 import { FC, useState, useCallback, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 
 export type StampType =
   | 'access' // "ACCESS GRANTED" stamp

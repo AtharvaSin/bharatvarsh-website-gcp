@@ -3,8 +3,8 @@
 import { FC, useRef, ReactNode } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ResponsiveImage } from './ResponsiveImage';
-import { useAdaptiveAnimations } from '@/hooks';
-import { cn } from '@/lib/utils';
+import { useAdaptiveAnimations } from '@/shared/hooks';
+import { cn } from '@/shared/utils';
 
 /**
  * Props for AdaptiveBackground component

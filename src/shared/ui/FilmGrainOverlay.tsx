@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, FC } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 
 export interface FilmGrainOverlayProps {
   /** Opacity of the grain effect (0-1). Default: 0.05 */

@@ -3,8 +3,8 @@
 import { FC, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Users, Search, BookOpen, Map, Clock } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { usePrefersReducedMotion } from '@/hooks/use-media-query';
+import { cn } from '@/shared/utils';
+import { usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
 
 // Icon mapping for feature cards
 const iconMap: Record<string, FC<{ className?: string }>> = {

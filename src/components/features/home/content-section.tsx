@@ -2,7 +2,7 @@
 
 import { FC, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { TextReveal, GlyphWatermark } from '@/components/ui';
+import { TextReveal, GlyphWatermark } from '@/shared/ui';
 
 export interface ContentSectionProps {
   headline: string;

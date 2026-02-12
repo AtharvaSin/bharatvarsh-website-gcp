@@ -3,9 +3,9 @@
 import { FC, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
-import { StandaloneStamp, useStampTrigger } from '@/components/ui';
+import { cn } from '@/shared/utils';
+import { Badge } from '@/shared/ui/badge';
+import { StandaloneStamp, useStampTrigger } from '@/shared/ui';
 import type { LoreItem, LoreCategory, LoreClassification } from '@/types';
 
 interface LoreCardProps {

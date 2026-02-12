@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Bebas_Neue, Crimson_Pro, Noto_Sans_Devanagari } from 'next/font/google';
 import { Toaster } from 'sonner';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { LayoutProvider } from '@/components/layout/LayoutProvider';
+import { Header } from '@/shared/layout/header';
+import { Footer } from '@/shared/layout/footer';
+import { LayoutProvider } from '@/shared/layout/LayoutProvider';
 import './globals.css';
 
 const inter = Inter({

@@ -2,9 +2,9 @@
 
 import { FC, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { usePrefersReducedMotion } from '@/hooks/use-media-query';
-import { GlyphWatermark, ParticleField } from '@/components/ui';
+import { cn } from '@/shared/utils';
+import { usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
+import { GlyphWatermark, ParticleField } from '@/shared/ui';
 import { ClassifiedFileCard } from './classified-file-card';
 import { DossierCard } from './dossier-card';
 import type {

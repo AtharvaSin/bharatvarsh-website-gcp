@@ -2,8 +2,8 @@
 
 import { FC, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { TextReveal, GlyphWatermark } from '@/components/ui';
+import { cn } from '@/shared/utils';
+import { TextReveal, GlyphWatermark } from '@/shared/ui';
 
 interface HeroTitleProps {
   title: string;

@@ -3,8 +3,8 @@
 import { FC, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { ChevronDown, MapPin, Zap, Star } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import { cn } from '@/shared/utils';
+import { Badge } from '@/shared/ui/badge';
 import type { TimelineEvent, EventType } from '@/types';
 
 interface TimelineEventCardProps {

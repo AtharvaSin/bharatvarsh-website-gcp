@@ -3,8 +3,8 @@
 import { FC, useRef, ReactNode, ElementType } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
-import { useIsPortrait, useAdaptiveAnimations } from '@/hooks';
+import { cn } from '@/shared/utils';
+import { useIsPortrait, useAdaptiveAnimations } from '@/shared/hooks';
 
 interface ScrollSectionProps {
   id: string;

@@ -3,8 +3,8 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { GlyphWatermark } from '@/components/ui';
+import { cn } from '@/shared/utils';
+import { GlyphWatermark } from '@/shared/ui';
 import { TimelinePhase } from '@/data/timeline-phases';
 import { TimelineEvent } from '@/types';
 import { TimelineVerticalEventCard } from './timeline-vertical-event-card';

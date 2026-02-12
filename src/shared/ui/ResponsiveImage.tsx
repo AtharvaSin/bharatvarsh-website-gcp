@@ -2,8 +2,8 @@
 
 import { FC, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useIsPortrait, usePrefersReducedMotion } from '@/hooks';
-import { cn } from '@/lib/utils';
+import { useIsPortrait, usePrefersReducedMotion } from '@/shared/hooks';
+import { cn } from '@/shared/utils';
 
 /**
  * Props for ResponsiveImage component

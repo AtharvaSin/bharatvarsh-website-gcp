@@ -19,9 +19,9 @@ import {
   Cpu,
 } from 'lucide-react';
 import { TimelineEvent, ImpactType } from '@/types';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
-import { useIsPortrait } from '@/hooks/use-media-query';
+import { Badge } from '@/shared/ui/badge';
+import { cn } from '@/shared/utils';
+import { useIsPortrait } from '@/shared/hooks/use-media-query';
 
 // Impact type to icon mapping
 const IMPACT_ICONS: Record<ImpactType, typeof Coins> = {

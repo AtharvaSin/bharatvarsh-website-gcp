@@ -1,46 +1,15 @@
 /**
  * Hooks Barrel Export
  *
- * Central export point for all custom React hooks.
+ * Re-exports shared hooks from new location + feature-specific hooks
+ * that haven't been moved yet.
  */
 
-// Media query hooks
-export {
-  useMediaQuery,
-  useIsMobile,
-  useIsTablet,
-  useIsDesktop,
-  useIsLargeDesktop,
-  usePrefersReducedMotion,
-  usePrefersDarkMode,
-  // Orientation hooks
-  useIsPortrait,
-  useIsLandscape,
-  // Combined viewport state
-  useViewport,
-  type ViewportState,
-} from './use-media-query';
+// Shared hooks (re-exported from new location)
+export * from '@/shared/hooks';
 
-// Device capability hooks
-export {
-  useDeviceCapability,
-  useIsLowEndDevice,
-  type DeviceCapability,
-  type DeviceCapabilities,
-} from './use-device-capability';
-
-// Adaptive animation hooks
-export {
-  useAdaptiveAnimations,
-  useShouldReduceAnimations,
-  type AnimationSettings,
-} from './use-adaptive-animations';
-
-// Form hooks
+// Feature-specific hooks (will move to features/ in Batch C)
 export { useDossierForm } from './use-dossier-form';
-// Note: DossierFormData, DossierState, and DossierFormErrors types are in @/types
-
-// Timeline hooks
 export {
   useTimelineScroll,
   useScrollValues,

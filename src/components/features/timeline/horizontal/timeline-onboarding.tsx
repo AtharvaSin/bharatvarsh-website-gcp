@@ -3,8 +3,8 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GripHorizontal, ArrowRight, Keyboard, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { usePrefersReducedMotion } from '@/hooks/use-media-query';
+import { cn } from '@/shared/utils';
+import { usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
 
 interface TimelineOnboardingProps {
   visible: boolean;

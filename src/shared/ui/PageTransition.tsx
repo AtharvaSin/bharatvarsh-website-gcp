@@ -3,7 +3,7 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 
 export type TransitionVariant = 'fade' | 'slide' | 'mesh-scan' | 'reveal';
 

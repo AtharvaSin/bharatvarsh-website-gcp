@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 
 export interface ScanlineEffectProps {
   /** Opacity of the scanlines (0-1). Default: 0.03 */

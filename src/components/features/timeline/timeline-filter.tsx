@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 
 interface TimelineFilterProps {
   activeFilter: string | null;

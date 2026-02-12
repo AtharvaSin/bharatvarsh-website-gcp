@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { HeroTitle, CTASection, ScrollSection, ParallaxBackground, ContentSection } from '@/components/features/home';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 
 const sections = [
   { id: 'opening', label: 'Opening' },

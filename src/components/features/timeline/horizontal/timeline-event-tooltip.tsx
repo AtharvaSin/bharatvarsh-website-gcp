@@ -3,8 +3,8 @@
 import { FC } from 'react';
 import { motion } from 'framer-motion';
 import { TimelineEvent } from '@/types';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { Badge } from '@/shared/ui/badge';
+import { cn } from '@/shared/utils';
 
 interface TimelineEventTooltipProps {
   event: TimelineEvent;

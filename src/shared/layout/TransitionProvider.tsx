@@ -3,8 +3,8 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PageLoadingIndicator, MeshScanOverlay } from '@/components/ui';
-import { cn } from '@/lib/utils';
+import { PageLoadingIndicator, MeshScanOverlay } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 export interface TransitionProviderProps {
   children: ReactNode;

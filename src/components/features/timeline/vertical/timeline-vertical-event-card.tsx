@@ -3,8 +3,8 @@
 import { FC, memo } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Star, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import { cn } from '@/shared/utils';
+import { Badge } from '@/shared/ui/badge';
 import type { TimelineEvent, EventType } from '@/types';
 
 interface TimelineVerticalEventCardProps {

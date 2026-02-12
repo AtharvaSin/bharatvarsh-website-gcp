@@ -2,8 +2,8 @@
 
 import { FC, useState } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { GlyphWatermark, TextReveal } from '@/components/ui';
+import { cn } from '@/shared/utils';
+import { GlyphWatermark, TextReveal } from '@/shared/ui';
 
 interface LoreHeroProps {
   className?: string;

@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 import type { LoreCategory } from '@/types';
 
 type FilterValue = LoreCategory | 'all';

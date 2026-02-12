@@ -3,10 +3,10 @@
 import { FC, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileLock2, CheckCircle2, Mail, Shield } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/shared/utils';
+import { Button } from '@/shared/ui/button';
 import { useDossierForm } from '@/hooks/use-dossier-form';
-import { useIsDesktop, usePrefersReducedMotion } from '@/hooks/use-media-query';
+import { useIsDesktop, usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
 import { DossierForm } from './dossier-form';
 import { DossierModal } from './dossier-modal';
 import { DossierDownloadSection } from './dossier-download-section';

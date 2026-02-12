@@ -5,8 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { StandaloneStamp, useStampTrigger, GlyphWatermark } from '@/components/ui';
+import { cn } from '@/shared/utils';
+import { StandaloneStamp, useStampTrigger, GlyphWatermark } from '@/shared/ui';
 
 interface CTAImageCardProps {
   title: string;

@@ -2,9 +2,9 @@
 
 import { FC, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 import { CTAImageCard } from './cta-image-card';
-import { TextReveal, GlyphWatermark } from '@/components/ui';
+import { TextReveal, GlyphWatermark } from '@/shared/ui';
 
 interface CTASectionProps {
   className?: string;

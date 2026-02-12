@@ -15,10 +15,10 @@ import {
   ArrowRight,
   Mail,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { GlyphWatermark, ParticleField } from '@/components/ui';
+import { cn } from '@/shared/utils';
+import { Button } from '@/shared/ui/button';
+import { Badge } from '@/shared/ui/badge';
+import { GlyphWatermark, ParticleField } from '@/shared/ui';
 import { WhatAwaitsSection } from '@/components/features/lead-magnet';
 import novelData from '@/data/novel.json';
 import type { NovelData, VerifiedStatus } from '@/types';

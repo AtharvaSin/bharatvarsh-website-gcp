@@ -2,7 +2,7 @@
 
 import { FC, useRef, useMemo, useState } from 'react';
 import { motion, useInView, Variants } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 
 export type TextRevealVariant =
   | 'character' // Character by character reveal

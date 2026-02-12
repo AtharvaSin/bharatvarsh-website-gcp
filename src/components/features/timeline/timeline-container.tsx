@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useState, useMemo } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/utils';
 import { TimelineEventCard } from './timeline-event-card';
 import { TimelineFilter } from './timeline-filter';
 import type { TimelineEvent } from '@/types';

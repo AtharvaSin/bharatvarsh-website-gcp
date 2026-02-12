@@ -3,9 +3,9 @@
 import { FC, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Download, FileText, CheckCircle, Sparkles } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { usePrefersReducedMotion } from '@/hooks/use-media-query';
+import { cn } from '@/shared/utils';
+import { Button } from '@/shared/ui/button';
+import { usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
 
 interface DossierDownloadSectionProps {
   pdfPath: string;

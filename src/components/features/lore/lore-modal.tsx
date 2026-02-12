@@ -5,8 +5,8 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import { cn } from '@/shared/utils';
+import { Badge } from '@/shared/ui/badge';
 import type { LoreItem, LoreCategory, LoreClassification } from '@/types';
 
 interface LoreModalProps {

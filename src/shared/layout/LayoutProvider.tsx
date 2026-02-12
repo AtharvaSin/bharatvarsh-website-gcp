@@ -9,8 +9,8 @@ import {
   ScanlineEffect,
   PageLoadingIndicator,
   MeshScanOverlay,
-} from '@/components/ui';
-import { cn } from '@/lib/utils';
+} from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 export interface LayoutProviderProps {
   children: ReactNode;

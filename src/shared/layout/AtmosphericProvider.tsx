@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, ReactNode, useState, useEffect } from 'react';
-import { FilmGrainOverlay, ParticleField, ScanlineEffect } from '@/components/ui';
+import { FilmGrainOverlay, ParticleField, ScanlineEffect } from '@/shared/ui';
 
 export interface AtmosphericProviderProps {
   children: ReactNode;
