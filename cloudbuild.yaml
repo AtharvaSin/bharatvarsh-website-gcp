@@ -9,6 +9,12 @@ steps:
     args:
       - '-c'
       - |
+        # Create .env for build-time variables (Next.js inlining)
+        echo "NEXT_PUBLIC_BASE_URL=https://bharatvarsh-website-hblcdyojyq-uc.a.run.app" >> .env
+        echo "NEXT_PUBLIC_FORUM_ENABLED=true" >> .env
+        echo "NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true" >> .env
+        echo "NEXT_PUBLIC_RATE_LIMIT_ENABLED=true" >> .env
+        
         npm ci
         npx prisma generate
         npm run build
@@ -60,6 +66,8 @@ steps:
       - '--no-traffic'
       - '--tag'
       - 'canary'
+      - '--set-secrets=RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,AUTH_SECRET=AUTH_SECRET:latest,NEXTAUTH_SECRET=AUTH_SECRET:latest'
+      - '--set-env-vars=AUTH_TRUST_HOST=true,AUTH_URL=https://bharatvarsh-website-hblcdyojyq-uc.a.run.app,NEXTAUTH_URL=https://bharatvarsh-website-hblcdyojyq-uc.a.run.app'
 
   # Step 5: Route 10% traffic to canary
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -69,21 +77,21 @@ steps:
       - '-c'
       - |
         # Get the latest revision name
-        CANARY_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+        CANARY_REV=$$(gcloud run services describe ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
           --format='value(status.latestCreatedRevisionName)')
 
         # Get the current serving revision
-        STABLE_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+        STABLE_REV=$$(gcloud run services describe ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
           --format='value(status.traffic[0].revisionName)')
 
-        echo "Canary: $CANARY_REV, Stable: $STABLE_REV"
+        echo "Canary: $$CANARY_REV, Stable: $$STABLE_REV"
 
         # Split traffic: 10% canary, 90% stable
         gcloud run services update-traffic ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
-          --to-revisions="$CANARY_REV=10,$STABLE_REV=90"
+          --to-revisions="$$CANARY_REV=10,$$STABLE_REV=90"
 
         echo "10% traffic routed to canary. Waiting ${_CANARY_SOAK_SECONDS}s..."
         sleep ${_CANARY_SOAK_SECONDS}
@@ -96,21 +104,21 @@ steps:
       - '-c'
       - |
         # Verify canary is healthy by hitting the health endpoint
-        CANARY_URL=$(gcloud run services describe ${_SERVICE_NAME} \
+        CANARY_URL=$$(gcloud run services describe ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
           --format='value(status.url)')
 
-        HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$CANARY_URL/api/health")
+        HTTP_STATUS=$$(curl -s -o /dev/null -w "%{http_code}" "$$CANARY_URL/api/health")
 
-        if [ "$HTTP_STATUS" != "200" ]; then
-          echo "ERROR: Canary health check failed (HTTP $HTTP_STATUS). Rolling back..."
+        if [ "$$HTTP_STATUS" != "200" ]; then
+          echo "ERROR: Canary health check failed (HTTP $$HTTP_STATUS). Rolling back..."
           # Rollback: send all traffic to stable revision
-          STABLE_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+          STABLE_REV=$$(gcloud run services describe ${_SERVICE_NAME} \
             --region=${_REGION} --platform=managed \
             --format='value(status.traffic[0].revisionName)')
           gcloud run services update-traffic ${_SERVICE_NAME} \
             --region=${_REGION} --platform=managed \
-            --to-revisions="$STABLE_REV=100"
+            --to-revisions="$$STABLE_REV=100"
           exit 1
         fi
 
@@ -123,17 +131,17 @@ steps:
     args:
       - '-c'
       - |
-        CANARY_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+        CANARY_REV=$$(gcloud run services describe ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
           --format='value(status.latestCreatedRevisionName)')
 
-        STABLE_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+        STABLE_REV=$$(gcloud run services describe ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
           --format='value(status.traffic[0].revisionName)')
 
         gcloud run services update-traffic ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
-          --to-revisions="$CANARY_REV=50,$STABLE_REV=50"
+          --to-revisions="$$CANARY_REV=50,$$STABLE_REV=50"
 
         echo "50% traffic routed to canary. Waiting ${_CANARY_SOAK_SECONDS}s..."
         sleep ${_CANARY_SOAK_SECONDS}
@@ -145,13 +153,13 @@ steps:
     args:
       - '-c'
       - |
-        CANARY_REV=$(gcloud run services describe ${_SERVICE_NAME} \
+        CANARY_REV=$$(gcloud run services describe ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
           --format='value(status.latestCreatedRevisionName)')
 
         gcloud run services update-traffic ${_SERVICE_NAME} \
           --region=${_REGION} --platform=managed \
-          --to-revisions="$CANARY_REV=100"
+          --to-revisions="$$CANARY_REV=100"
 
         echo "Canary promoted to 100% traffic. Deployment complete."
 
