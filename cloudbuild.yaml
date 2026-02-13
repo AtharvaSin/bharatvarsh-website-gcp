@@ -68,7 +68,7 @@ steps:
       - '--no-traffic'
       - '--tag'
       - 'canary'
-      - '--set-secrets=RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,AUTH_SECRET=AUTH_SECRET:latest,NEXTAUTH_SECRET=AUTH_SECRET:latest'
+      - '--set-secrets=RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,AUTH_SECRET=AUTH_SECRET:latest,NEXTAUTH_SECRET=AUTH_SECRET:latest,DATABASE_URL=DATABASE_URL:latest,DIRECT_DATABASE_URL=DIRECT_DATABASE_URL:latest'
       - '--set-env-vars=AUTH_TRUST_HOST=true,AUTH_URL=https://welcometobharatvarsh.com,NEXTAUTH_URL=https://welcometobharatvarsh.com'
 
   # Step 5: Route 10% traffic to canary
@@ -110,21 +110,32 @@ steps:
           --region=${_REGION} --platform=managed \
           --format='value(status.url)')
 
-        HTTP_STATUS=$$(curl -s -o /dev/null -w "%{http_code}" "$$CANARY_URL/api/health")
+        # Retry loop for health check (max 5 attempts with 5s delay)
+        MAX_RETRIES=5
+        RETRY_COUNT=0
+        
+        while [ $$RETRY_COUNT -lt $$MAX_RETRIES ]; do
+          HTTP_STATUS=$$(curl -s -o /dev/null -w "%{http_code}" "$$CANARY_URL/api/health")
+          
+          if [ "$$HTTP_STATUS" == "200" ]; then
+            echo "Canary health check passed (HTTP 200)."
+            exit 0
+          fi
+          
+          echo "Health check failed (HTTP $$HTTP_STATUS). Retrying ($$((RETRY_COUNT+1))/$$MAX_RETRIES)..."
+          RETRY_COUNT=$$((RETRY_COUNT+1))
+          sleep 5
+        done
 
-        if [ "$$HTTP_STATUS" != "200" ]; then
-          echo "ERROR: Canary health check failed (HTTP $$HTTP_STATUS). Rolling back..."
-          # Rollback: send all traffic to stable revision
-          STABLE_REV=$$(gcloud run services describe ${_SERVICE_NAME} \
-            --region=${_REGION} --platform=managed \
-            --format='value(status.traffic[0].revisionName)')
-          gcloud run services update-traffic ${_SERVICE_NAME} \
-            --region=${_REGION} --platform=managed \
-            --to-revisions="$$STABLE_REV=100"
-          exit 1
-        fi
-
-        echo "Canary health check passed (HTTP 200)."
+        echo "ERROR: Canary health check failed after $$MAX_RETRIES attempts. Rolling back..."
+        # Rollback: send all traffic to stable revision
+        STABLE_REV=$$(gcloud run services describe ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --format='value(status.traffic[0].revisionName)')
+        gcloud run services update-traffic ${_SERVICE_NAME} \
+          --region=${_REGION} --platform=managed \
+          --to-revisions="$$STABLE_REV=100"
+        exit 1
 
   # Step 7: Ramp to 50% traffic
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -169,7 +180,7 @@ substitutions:
   _REGION: us-central1
   _REPO_NAME: bharatvarsh
   _SERVICE_NAME: bharatvarsh-website
-  _CLOUD_SQL_INSTANCE: ''
+  _CLOUD_SQL_INSTANCE: 'bharatvarsh-website:us-central1:bharatvarsh-db'
   _CANARY_SOAK_SECONDS: '120'
 
 options:
