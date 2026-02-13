@@ -29,14 +29,18 @@ const POOL_TIMEOUT = parseInt(process.env.DATABASE_POOL_TIMEOUT || '10', 10);
  */
 function getPrismaClient(): PrismaClient {
   if (!globalForPrisma.prisma) {
+    const datasourceUrl = process.env.DATABASE_URL;
+
+    if (datasourceUrl) {
+      console.log('Using DATABASE_URL from environment');
+    }
+
     globalForPrisma.prisma = new PrismaClient({
       log:
         process.env.NODE_ENV === 'development'
           ? ['query', 'error', 'warn']
           : ['error'],
-      datasourceUrl: process.env.DATABASE_URL
-        ? `${process.env.DATABASE_URL}${process.env.DATABASE_URL.includes('?') ? '&' : '?'}connection_limit=${POOL_SIZE}&pool_timeout=${POOL_TIMEOUT}`
-        : undefined,
+      datasourceUrl,
     });
   }
   return globalForPrisma.prisma;

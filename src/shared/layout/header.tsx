@@ -83,7 +83,7 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
             ))}
 
             <Button variant="primary" size="sm" className="ml-4">
-              Pre-order
+              Buy Now
             </Button>
 
             <SignInButton className="ml-2" />
@@ -134,7 +134,7 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
               ))}
               <div className="pt-4 space-y-2">
                 <Button variant="primary" className="w-full">
-                  Pre-order
+                  Buy Now
                 </Button>
                 <SignInButton className="w-full" />
               </div>

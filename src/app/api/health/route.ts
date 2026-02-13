@@ -18,7 +18,8 @@ export async function GET(): Promise<NextResponse> {
     await prisma.$queryRaw`SELECT 1`;
     dbLatencyMs = Date.now() - start;
     dbStatus = 'connected';
-  } catch {
+  } catch (error) {
+    console.error('Database connection error:', error);
     dbStatus = 'error';
   }
 
