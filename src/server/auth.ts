@@ -2,7 +2,7 @@
  * Auth.js v5 (NextAuth) configuration for Bharatvarsh Forum.
  *
  * - Database-backed sessions via PrismaAdapter
- * - Email magic-link authentication (Resend SMTP)
+ * - Email magic-link authentication (Resend HTTP API)
  * - Optional Google OAuth provider
  * - Role-based session augmentation (UserRole enum)
  * - Ban enforcement at sign-in time
@@ -15,7 +15,7 @@ import 'server-only';
 import NextAuth from 'next-auth';
 import type { NextAuthConfig } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import EmailProvider from 'next-auth/providers/email';
+import ResendProvider from 'next-auth/providers/resend';
 import GoogleProvider from 'next-auth/providers/google';
 import { prisma } from '@/server/db';
 
@@ -23,6 +23,56 @@ import { prisma } from '@/server/db';
  * Thirty days expressed in seconds -- used for session maxAge.
  */
 const THIRTY_DAYS_IN_SECONDS = 30 * 24 * 60 * 60;
+
+const RESEND_FROM = 'Bharatvarsh Forum <noreply@welcometobharatvarsh.com>';
+
+/**
+ * Send a magic-link email via the Resend HTTP API.
+ * Uses fetch instead of nodemailer SMTP to avoid TLS transport
+ * issues inside the Turbopack server runtime.
+ */
+async function sendVerificationRequest({
+  identifier: email,
+  url,
+}: {
+  identifier: string;
+  url: string;
+}): Promise<void> {
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: RESEND_FROM,
+      to: [email],
+      subject: 'Sign in to Bharatvarsh Forum',
+      html: `
+        <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">
+          <h2 style="color: #1a1f2e;">Sign in to Bharatvarsh Forum</h2>
+          <p style="color: #555; line-height: 1.6;">
+            Click the button below to sign in. This link expires in 24 hours.
+          </p>
+          <a href="${url}"
+             style="display: inline-block; background: #d4a843; color: #1a1f2e;
+                    padding: 12px 24px; border-radius: 6px; text-decoration: none;
+                    font-weight: 600; margin: 16px 0;">
+            Sign In
+          </a>
+          <p style="color: #999; font-size: 13px; margin-top: 24px;">
+            If you did not request this email, you can safely ignore it.
+          </p>
+        </div>
+      `,
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Resend API error (${res.status}): ${body}`);
+  }
+}
 
 /**
  * Build the NextAuth configuration object.
@@ -32,16 +82,10 @@ const THIRTY_DAYS_IN_SECONDS = 30 * 24 * 60 * 60;
  */
 function buildConfig(): NextAuthConfig {
   const providers: NextAuthConfig['providers'] = [
-    EmailProvider({
-      server: {
-        host: 'smtp.resend.com',
-        port: 465,
-        auth: {
-          user: 'resend',
-          pass: process.env.RESEND_API_KEY,
-        },
-      },
-      from: 'Bharatvarsh Forum <noreply@bharatvarsh.com>',
+    ResendProvider({
+      apiKey: process.env.RESEND_API_KEY,
+      from: RESEND_FROM,
+      sendVerificationRequest,
     }),
   ];
 
