@@ -117,7 +117,7 @@ steps:
         while [ $$RETRY_COUNT -lt $$MAX_RETRIES ]; do
           HTTP_STATUS=$$(curl -s -o /dev/null -w "%{http_code}" "$$CANARY_URL/api/health")
           
-          if [ "$$HTTP_STATUS" == "200" ]; then
+          if [ "$$HTTP_STATUS" = "200" ]; then
             echo "Canary health check passed (HTTP 200)."
             exit 0
           fi
