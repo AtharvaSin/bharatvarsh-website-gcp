@@ -164,6 +164,8 @@ function buildConfig(): NextAuthConfig {
         }
       },
     },
+    debug: true, // Enable debug logs to troubleshoot OAuth issues
+    trustHost: true, // Trust the host header (critical for Cloud Run / Vercel alike)
   };
 }
 
