@@ -15,7 +15,7 @@ async function test() {
         try {
             const res = await generateContent(q, "You are Bhoomi, consciousness of the land.");
             console.log("Response:", res);
-        } catch (e) {
+        } catch (e: any) {
             console.error("Error:", e.message);
         }
     }
