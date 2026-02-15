@@ -183,6 +183,57 @@ function buildConfig(): NextAuthConfig {
       },
     },
     debug: true, // Enable debug logs to troubleshoot OAuth issues
+    cookies: {
+      sessionToken: {
+        name: `__Secure-next-auth.session-token`,
+        options: {
+          httpOnly: true,
+          sameSite: 'lax',
+          path: '/',
+          secure: true,
+          domain: '.welcometobharatvarsh.com',
+        },
+      },
+      callbackUrl: {
+        name: `__Secure-next-auth.callback-url`,
+        options: {
+          sameSite: 'lax',
+          path: '/',
+          secure: true,
+          domain: '.welcometobharatvarsh.com',
+        },
+      },
+      csrfToken: {
+        name: `__Host-next-auth.csrf-token`,
+        options: {
+          httpOnly: true,
+          sameSite: 'lax',
+          path: '/',
+          secure: true,
+          // __Host- cookies must NOT have a domain attribute
+        },
+      },
+      pkceCodeVerifier: {
+        name: `__Secure-next-auth.pkce.code_verifier`,
+        options: {
+          httpOnly: true,
+          sameSite: 'lax',
+          path: '/',
+          secure: true,
+          domain: '.welcometobharatvarsh.com',
+        },
+      },
+      state: {
+        name: `__Secure-next-auth.state`,
+        options: {
+          httpOnly: true,
+          sameSite: 'lax',
+          path: '/',
+          secure: true,
+          domain: '.welcometobharatvarsh.com',
+        },
+      },
+    }
   };
 }
 
