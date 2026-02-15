@@ -118,6 +118,11 @@ function buildConfig(): NextAuthConfig {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     adapter: PrismaAdapter(prisma) as any,
 
+    // Explicitly trust the host (required for Cloud Run/Docker)
+    trustHost: true,
+    secret: process.env.AUTH_SECRET,
+    basePath: '/api/auth',
+
     providers,
 
     session: {
