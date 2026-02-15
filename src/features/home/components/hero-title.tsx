@@ -101,25 +101,6 @@ export const HeroTitle: FC<HeroTitleProps> = ({
         />
       </motion.div>
 
-      {/* Scroll indicator - outside backdrop */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: titleRevealed ? 1 : 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-6 h-10 border-2 border-[var(--powder-500)] rounded-full flex justify-center"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-1.5 h-3 bg-[var(--powder-500)] rounded-full mt-2"
-          />
-        </motion.div>
-      </motion.div>
     </div>
   );
 };

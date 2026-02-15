@@ -1,0 +1,345 @@
+---
+doc_type: canon_lore
+title: "Bharatvarsh Lore Canon (Safe Edition)"
+scope: "World, people, places, systems — safe for public forum + Bhoomi default mode"
+timeline_alignment: "1717–2022 website phases"
+spoiler_mode: "S1_SAFE"
+exclusions:
+  - "Surya (all details)"
+  - "Facility (all details)"
+  - "Secret twists / conspiracies / late-plot reveals"
+usage: "Seed document for Bhoomi + vector KB; supports retrieval-first, non-hallucinatory answers"
+---
+
+# Bharatvarsh Lore Canon (Safe Edition)
+
+This document is the **public-safe canon** for the Bharatvarsh story-world. It is designed to:
+- power Bhoomi’s grounded conversations,
+- populate a searchable lore library (Characters, Factions, Places, Tech),
+- remain consistent with the website’s locked timeline phases (1717–2022),
+- **avoid spoilers** (Surya, Facility, secret twists, and late-plot reveals are excluded or redacted).
+
+---
+
+## 0) Declassification rules (how Bhoomi should treat this doc)
+
+### Spoiler tiers
+- **S1 (SAFE):** Public world facts, institutions, culture, location profiles, and non-revealing character dossiers.
+- **S2 (CLASSIFIED):** Deeper motivations, operational details, hidden alliances, and unreleased lore.
+- **S3 (FULL):** Endgame truths, secret facilities, twist identities, and revelations tied to Surya.
+
+**This document is S1 SAFE only.**  
+Where necessary, entities are listed as **REDACTED** to prevent hallucinated lore.
+
+---
+
+# 1) The State: Institutions, Doctrine, and Control Surfaces
+
+## 1.1 Regime identity
+**Bharatvarsh is a continental-scale military technocracy** headed by the **General Directorate**. The state’s public posture is *benevolent competence*: spotless infrastructure, low petty crime, predictable service delivery. The hidden trade is *legibility*: citizens move through checkpoints, data trails, and compliance gates.
+
+### Governing layers (high level)
+- **General Directorate:** apex command layer; sets doctrine, security posture, declassification policy.
+- **Parliament:** ceremonial / low-leverage governance surface used for unity optics.
+- **Courts:** civil courts handle minor disputes; anything framed as “national cohesion” routes to military benches.
+
+## 1.2 Administrative blocs (the three-command structure)
+Bharatvarsh is organized into three macro-commands:
+- **Northern Plains Command:** densest population; tightest surveillance; high control intensity.
+- **Peninsular Command:** industrial + naval heart; logistics and manufacturing dominance.
+- **Eastern & Himalayan Treaty Zone:** semi-autonomous tribal regions governed via negotiated entry and consent protocols.
+
+## 1.3 “Peace-through-strength” diplomacy
+Internationally, the state projects stability and green-tech prowess while running constant counter-espionage games. Bharatvarsh is a major diplomatic player with a permanent-veto posture in global institutions.
+
+## 1.4 Core moral tension (public-safe framing)
+Bharatvarsh’s central question is simple:
+**Is engineered harmony worth the price of choice?**
+
+---
+
+# 2) Factions & Power Blocs (S1 Safe)
+
+## 2.1 The Directorate-State (Primary Power)
+**Type:** Ruling technocracy  
+**Operating logic:** stability as virtue; “order as infrastructure.”  
+**Strengths:** coordinated planning, rapid deployment, disciplined logistics, controlled innovation pipeline.  
+**Weaknesses:** legitimacy pressure, cultural suppression backlash, dependence on compliance systems.
+
+### Bharatsena (Army) as civic backbone
+The army is not merely defense; it is the organizing spine of infrastructure, classification, and civic order.
+
+---
+
+## 2.2 The Tribhuj Movement (Opposition, S1 Safe)
+**Type:** decentralized resistance ideology expressed as cells  
+**Public goal:** restore elective rule / reopen civic choice  
+**Tactics (safe summary):** propaganda artifacts, recruitment narratives, asymmetric disruptions  
+**Note:** operational rosters, named cells, and attack specifics are **CLASSIFIED** in this doc.
+
+---
+
+## 2.3 Eastern & Himalayan Treaty Communities (Treaty Zone Polities)
+**Type:** semi-autonomous tribal blocs under negotiated treaties  
+**Key dynamic:** the state cannot enter freely; legitimacy in the hills is won through consent, not force.  
+**Strategic value:** terrain control, cultural sovereignty, and a parallel legitimacy system.
+
+### Akakpen (Treaty Zone House)
+**Type:** tribal monarchy/polity (internal governance varies by era)  
+**Public posture:** sovereignty-first, dignity-first, protective isolation  
+**Note:** succession conflicts and late-arc decisions are spoiler-sensitive.
+
+---
+
+## 2.4 Licensed Culture vs Underground Culture
+- **Licensed culture:** “Neo-Bollywood” techno-optimist entertainment; state-sanctioned folk programs; curated history.
+- **Underground culture:** hush-hush rituals, banned poetry, graffiti that tags control infrastructure with old symbols.
+
+---
+
+# 3) Key Characters (Public Dossiers Only)
+
+> Format: **Role / Public optics / Core traits / Known competencies / Spoiler boundary**
+
+## 3.1 Bhoomi
+**Role:** Voice of the land; narrator-guide; conversational companion for Travelers.  
+**Public optics:** gentle, ancient-eyed teen; speaks with mythic calm.  
+**Core traits:** observant, morally sensitive, non-sensational.  
+**Competencies:** explains world structure; frames moral stakes; protects spoilers by default.  
+**Spoiler boundary:** does not reveal classified lore unless user opts in.
+
+---
+
+## 3.2 General Pratap
+**Role:** apex figure of the Directorate’s public face and command authority.  
+**Public optics:** “clean fatherly” benevolence; calm competence; stability embodied.  
+**Core traits:** controlled, decisive, emotionally unreadable under pressure.  
+**Known competencies:** strategic planning, pressure operations, institutional choreography.  
+**Signature presence (safe):** senior command spaces, high-visibility optics, disciplined messaging.  
+**Spoiler boundary:** personal history, hidden projects, and internal rivalries are classified.
+
+---
+
+## 3.3 Major Kahaan Arshad
+**Role:** senior field officer; investigation and tactical leadership profile.  
+**Public optics:** disciplined operator; “results-first” officer culture.  
+**Core traits:** vigilant, analytical, burdened by responsibility.  
+**Known competencies:** field command, operational planning, controlled escalation, team coordination.  
+**Spoiler boundary:** advanced enhancements, sensitive missions, and hidden alliances are classified.
+
+---
+
+## 3.4 Major Hana (surname suppressed)
+**Role:** tactical-operations second-in-command; investigation field-team lead.  
+**Public optics:** precise, duty-bound, unusually human in a system designed to flatten emotion.  
+**Core traits:** controlled intensity, moral friction, quiet courage.  
+**Known competencies:** field execution, risk containment, team stability under stress.  
+**Notable canon norm:** surnames are culturally/politically constrained in state systems.  
+**Spoiler boundary:** family history, “turning point” incidents, and allegiance decisions are classified.
+
+---
+
+## 3.5 Queen Kaali (Akakpen)
+**Role:** Matriarch/Queen of Akakpen; treaty-zone sovereign figure.  
+**Public optics:** steel-calm mountain authority; protector-first, ruler-always.  
+**Core traits:** stern restraint in public; tenderness reserved for the inner circle.  
+**Known competencies:** governance by presence, negotiation leverage, cultural legitimacy.  
+**Iconography (safe):** minimal, unmistakable sovereign insignia; power communicated through stillness.  
+**Spoiler boundary:** injuries, succession events, and any “facility-linked” threads are classified.
+
+---
+
+## 3.6 Arshi of Akakpen
+**Role:** Princess of Akakpen; heir-apparent in public record.  
+**Public optics:** defiant youth maturing into authority.  
+**Core traits:** directness, courage, disciplined composure.  
+**Known competencies:** leadership posture, crisis communication, de-escalation discipline.  
+**Spoiler boundary:** late-arc decisions and leadership transitions are classified.
+
+---
+
+## 3.7 Rudra Rathore
+**Role (public-safe):** legendary figure associated with resistance myths and hard freedom.  
+**Public optics:** feared and admired; “urban legend” weight.  
+**Core traits:** uncompromising, ascetic, morally intense.  
+**Known competencies:** survival doctrine, guerrilla discipline, mythic-symbol resonance.  
+**Spoiler boundary:** origins, specific operations, and connections to secret twists are classified.
+
+---
+
+## 3.8 REDACTED ENTITY: Surya
+**Status:** CLASSIFIED / SPOILER-LOCKED  
+**Safe description:** A name that appears in rumors, art fragments, and restricted archives.  
+**Rule:** no details beyond this line in S1.
+
+---
+
+## 3.9 REDACTED ENTITY: The Facility
+**Status:** CLASSIFIED / SPOILER-LOCKED  
+**Safe description:** A restricted site referenced in sealed records; purpose and location are not public.  
+**Rule:** no details beyond this line in S1.
+
+---
+
+# 4) Locations & Regions (Civic Geography Canon)
+
+> Locations are written as **experience-first**: what the air feels like, what the streets signal, how control appears.
+
+## 4.1 Lakshmanpur — Northern River-Plain Metropole
+**Region:** Northern Plains Command  
+**Geography:** broad alluvial plain; meandering river; flood terraces; dense old city transitioning into regimented new sectors.  
+**Visual signature:** pale limestone/sandstone, pale concrete, oxidized bronze rails, ceramic jali panels.  
+**Weather character:**
+- fog-prone winter mornings (“milk-glass” silhouettes),
+- harsh pre-monsoon glare (“brass heat”),
+- reflective monsoon nights (puddled streets, drone cones in reflections).  
+**Control signature:** biometric gates, hover-lane beacons, ambient checkpoints that look like architecture.
+
+---
+
+## 4.2 Mysuru — Interior Plateau Tech-Hub
+**Region:** Peninsular-linked tech corridor influence (industrial spine)  
+**Geography:** elevated granitic shelves; crisp horizons; strong sun angles.  
+**Visual signature:** granite/basalt plinths, laterite blocks, fiber-cement louvers, matte ceramics.  
+**Weather character:** hard-shadow dry season; sudden monsoon sheets off terrace eaves.  
+**Civic reading:** disciplined plazas, pergola vines, rooftop gardens engineered for shallow soils.
+
+---
+
+## 4.3 Kolkata Corridor — Deltaic Aerotropolis
+**Region:** deltaic corridor; water-logic city  
+**Geography:** lowland delta, embankments, mangrove influence, high humidity, stormy evenings.  
+**Visual signature:** corrosion-aware metals, anti-slip terracotta, sealed concrete, deep balconies with rain-chains.  
+**Weather character:** pre-monsoon squalls, wind-driven monsoon rain, sodium reflections on levees.  
+**Civic reading:** hover berths pulled back from waterline; drainage visible by design.
+
+---
+
+## 4.4 Indrapur — Headquarters Node (Command City)
+**Function:** command-and-investigation anchoring location for senior officers and tactical teams.  
+**Civic reading:** controlled access layers; high-security interiors; logistics clarity.  
+**Spoiler boundary:** specific rooms, layouts, and any classified installations are excluded here.
+
+---
+
+## 4.5 Delhi — Directorate Core (Symbolic Seat)
+**Function:** administrative and symbolic center of the regime.  
+**Visual signature:** glass-and-steel command nests; ceremonial signage; disciplined public space.
+
+---
+
+## 4.6 Eastern & Himalayan Treaty Zone
+**Function:** semi-autonomous mountain and tribal regions governed via consent protocols.  
+**Dynamics:** entry is negotiated; local legitimacy is not fully substitutable by force.  
+**Spoiler boundary:** named enclaves, operations, and internal politics beyond Akakpen are classified.
+
+---
+
+## 4.7 Cellular-Block A — Andaman Detention Threat
+**Type:** punitive / deterrence symbol  
+**Role in society:** invoked as a quiet threat underpinning compliance culture.  
+**Spoiler boundary:** internal procedures and specific cases are classified.
+
+---
+
+## 4.8 Repurposed Sacred Architecture (State Utility Doctrine)
+Across major cities, houses of worship are repurposed into civic utility structures (health institutes, senate halls, public trusts).  
+**Cultural implication:** devotion persists privately; public ritual is politically risky.
+
+---
+
+# 5) Technology & Systems (S1 Safe)
+
+## 5.1 The Mesh (Governance-as-Infrastructure)
+**Definition:** a nation-scale lattice of identity, payments, mobility, and surveillance that makes public life legible and services predictable.  
+**Citizen experience:** fast gates, reliable subsidies, instant fines, synchronized records, low petty crime.  
+**Trade:** anonymity becomes rare; dissent migrates into careful channels.
+
+### Mesh primitives (public-safe list)
+- **Biometric ID rails** (identity verification at gates and services)
+- **Central crypto-ledger e-wallets** (biometric e-money backbone)
+- **Compliance automation** (fine autodebits; instant scan-based penalties)
+- **Civic record synchronization** (district-wide and cross-district coherence)
+- **Surveillance lattice** (cameras, readers, drones; ambient checkpoint towers)
+
+---
+
+## 5.2 Economy & innovation pipeline
+**Unified marketplace:** free movement of goods, data, and labor across the three commands, with balancing transfers to reduce regional GDP drift.  
+**Defense-first declassification:** innovations are sequestered in military labs before partial civilian release.
+
+### Key sectors (public-safe)
+- **Agro-industrial mesh:** drone-aided precision farming; vertical-stack paddy near metros.
+- **Biomedical complex:** advanced prosthetics; anti-aging research; neural/memory-adjacent tech (details classified).
+- **Defense R&D:** force-shielded vehicles; EMP-class devices; drone artillery; advanced aircraft (specific models classified).
+- **Consumer spillovers:** low-altitude glide/hover cars; wrist-band holographic phones; household morph-tools (“Omni-Handle”).
+
+---
+
+# 6) Civic Architecture & Visual Language (World Design Canon)
+
+## 6.1 Tri-Script signage system
+Every public sign uses a three-line hierarchy:
+1) English (Latin)
+2) Hindi (Devanagari)
+3) State line (varies by region: e.g., Telugu for Mysuru, Bengali for Kolkata corridor)
+
+**Purpose:** legibility + unified civic identity.
+
+## 6.2 Smart-street baseline
+**OxyPole grid:** oxygen/air-quality street fixtures placed on boulevard grids; visible halos in fog; diagnostics occasionally shimmer.  
+**Hover lanes:** operational band around 0–5m; dashed beacons; curbside service bays with charging couplers.  
+**Metro gates:** always show biometric and QR prompts; non-reflective scanner panels.  
+**Checkpoint optics:** slim, ambient towers that read like architecture—not cluttered sci-fi.
+
+## 6.3 Base civic palette (world consistency)
+A consistent civic palette governs city surfaces: deep navy/graphite structures, concrete light walls, stainless hardware, oxidized bronze ceremonial rails, real-plant greens, and limited hologram cyan for tech accent.
+
+## 6.4 Heritage micro-sets (abstracted)
+Cities preserve “heritage triads” (Hindu/Muslim/Christian architectural echoes) but framed through civic buffers and controlled aerial zones.  
+**Rule of thumb:** sacred plots meet smart streets via green buffers; drone activity avoids direct-overflight optics.
+
+---
+
+# 7) Society & Culture (Public-Safe)
+
+## 7.1 Language policy
+- Hindi is mandated for broadcast and basic schooling.
+- English remains science’s lingua franca.
+- Regional tongues live in homes and sanctioned folk programs.
+
+## 7.2 Religion & caste suppression
+Public worship and caste signaling are prohibited; worship spaces are repurposed as civic utilities. Private devotion persists quietly.
+
+## 7.3 Social axis
+Officially classless, but the dominant visible divide is:
+**military employee vs civilian**  
+Service rank unlocks priority housing, medical upgrades, and early access to declassified tech.
+
+## 7.4 Education and youth pipeline
+State boarding academies funnel gifted youths into wargames, laboratories, or administrative cadres. Successful inventors receive lifetime stipends and status.
+
+## 7.5 Public festivities
+A state-sanctioned festive fortnight blends consumer expo, talent carnival, and patriotic rally—celebration as governance surface.
+
+## 7.6 Everyday texture (metropole)
+Silent glide-car commutes, biometric turnstiles, billboard holograms for civic metrics, street food mixed with ozone from portable drone chargers, children trading strategy-game meta learned in soldier academies.
+
+---
+
+# 8) KB Retrieval Tags (for search + chunking)
+
+Use these tags in the vector KB metadata for precise routing:
+
+- `type:character` `type:faction` `type:place` `type:tech` `type:architecture` `type:institution`
+- `region:northern_plains` `region:peninsular` `region:delta_corridor` `region:treaty_zone`
+- `spoiler:S1` `spoiler:REDACTED`
+- `theme:order_vs_choice` `theme:legibility` `theme:repurposed_faith` `theme:innovation_control`
+
+---
+
+# 9) Safe Answering Notes for Bhoomi (operational rules)
+- If asked for Surya, Facility, or conspiracies: respond with **“classified”** and offer safe alternatives (themes, timeline phase, public institutions).
+- When asked “how the Mesh works”: explain **primitives and trade-offs**, not secret vulnerabilities.
+- When asked about characters: provide **public optics + role + traits**, not hidden motives or future turns.
+- When asked about Tribhuj: keep it **ideology + structure**, not named rosters or operational sequences.

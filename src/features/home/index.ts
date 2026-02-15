@@ -5,3 +5,4 @@ export { CTASection } from './components/cta-section';
 export { CTAImageCard } from './components/cta-image-card';
 export { ContentSection } from './components/content-section';
 export { HomeContent } from './HomeContent';
+export { ScrollIndicator } from './components/scroll-indicator';

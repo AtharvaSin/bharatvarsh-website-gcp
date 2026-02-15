@@ -394,7 +394,7 @@ export interface NovelNewsletter {
   description: string;
 }
 
-export interface NovelPreorder {
+export interface NovelPurchase {
   available: boolean;
   platforms: NovelPlatform[];
   newsletter: NovelNewsletter;
@@ -443,7 +443,7 @@ export interface NovelData {
   dossier: DossierContent;
   quotes: NovelQuote[];
   author: NovelAuthor;
-  preorder: NovelPreorder;
+  purchase: NovelPurchase;
   related: NovelRelated[];
 }
 

@@ -5,6 +5,8 @@ import { Header } from '@/shared/layout/header';
 import { Footer } from '@/shared/layout/footer';
 import { LayoutProvider } from '@/shared/layout/LayoutProvider';
 import { Providers } from './providers';
+import { BhoomiWidget } from '@/components/bhoomi/BhoomiWidget';
+import { EventTrackingProvider } from '@/components/tracking/EventTrackingProvider';
 import './globals.css';
 
 const inter = Inter({
@@ -103,37 +105,40 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-[var(--obsidian-900)] text-[var(--text-primary)] antialiased">
         <Providers>
-          <LayoutProvider
-            atmosphericEffects={{
-              enableGrain: true,
-              enableParticles: true,
-              enableScanlines: true,
-              grainOpacity: 0.04,
-              particleCount: 40,
-            }}
-            pageTransition={{
-              enableLoadingIndicator: true,
-              enableMeshScan: false,
-              duration: 0.35,
-            }}
-          >
-            <Header />
-            <main className="pt-16 md:pt-20">
-              {children}
-            </main>
-            <Footer />
-            <Toaster
-              position="bottom-right"
-              theme="dark"
-              toastOptions={{
-                style: {
-                  background: 'var(--obsidian-800)',
-                  border: '1px solid var(--obsidian-600)',
-                  color: 'var(--text-primary)',
-                },
+          <EventTrackingProvider>
+            <LayoutProvider
+              atmosphericEffects={{
+                enableGrain: true,
+                enableParticles: true,
+                enableScanlines: true,
+                grainOpacity: 0.04,
+                particleCount: 40,
               }}
-            />
-          </LayoutProvider>
+              pageTransition={{
+                enableLoadingIndicator: true,
+                enableMeshScan: false,
+                duration: 0.35,
+              }}
+            >
+              <Header />
+              <main className="pt-16 md:pt-20">
+                {children}
+              </main>
+              <Footer />
+              <Toaster
+                position="bottom-right"
+                theme="dark"
+                toastOptions={{
+                  style: {
+                    background: 'var(--obsidian-800)',
+                    border: '1px solid var(--obsidian-600)',
+                    color: 'var(--text-primary)',
+                  },
+                }}
+              />
+            </LayoutProvider>
+            <BhoomiWidget />
+          </EventTrackingProvider>
         </Providers>
       </body>
     </html>

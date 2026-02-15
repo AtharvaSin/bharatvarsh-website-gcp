@@ -22,11 +22,6 @@ function optionalEnv(name: string): string | undefined {
 /** Server-side env vars (only call from server modules) */
 export function getServerEnv() {
   return {
-    airtable: {
-      apiKey: requireEnv('AIRTABLE_API_KEY'),
-      baseId: requireEnv('AIRTABLE_BASE_ID'),
-      tableId: requireEnv('AIRTABLE_TABLE_ID'),
-    },
     resend: {
       apiKey: requireEnv('RESEND_API_KEY'),
     },

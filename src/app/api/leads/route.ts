@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { findLeadByEmail, createLead, updateLeadToken } from '@/server/airtable';
+import { prisma } from '@/server/db';
 import { sendVerificationEmail } from '@/server/email';
 
 interface LeadRequestBody {
@@ -72,25 +72,31 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const verificationToken = generateToken();
 
     // Check if email already exists
-    const existingLead = await findLeadByEmail(email);
+    const existingLead = await prisma.lead.findUnique({
+      where: { email: email.toLowerCase().trim() }
+    });
 
     if (existingLead) {
       // Email exists - update the existing record with new token
-      // This allows users to re-verify and access the downloadable content again
-      await updateLeadToken(
-        existingLead.id,
-        verificationToken,
-        name.trim(),
-        location.trim()
-      );
+      await prisma.lead.update({
+        where: { id: existingLead.id },
+        data: {
+          verificationToken,
+          isVerified: false,
+          name: name.trim(),
+          location: location.trim()
+        }
+      });
     } else {
       // New email - create a new lead
-      await createLead({
-        name: name.trim(),
-        location: location.trim(),
-        email: email.toLowerCase().trim(),
-        verificationToken,
-        sourcePage: source || '/unknown',
+      await prisma.lead.create({
+        data: {
+          name: name.trim(),
+          location: location.trim(),
+          email: email.toLowerCase().trim(),
+          verificationToken,
+          sourcePage: source || '/unknown',
+        }
       });
     }
 

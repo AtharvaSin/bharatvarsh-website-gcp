@@ -3,15 +3,60 @@
 // Run `npx prisma db seed` to populate default data
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
   // Phase 7: Use a separate connection pool URL when available (e.g., PgBouncer).
   // Set DIRECT_DATABASE_URL to bypass the pooler for migrations.
-  directUrl = env("DIRECT_DATABASE_URL")
+  directUrl  = env("DIRECT_DATABASE_URL")
+  extensions = [vector]
+}
+
+// ─── MARKETING & AI MODELS ───────────────────────────────────
+
+model Event {
+  id        String   @id @default(cuid())
+  name      String   // e.g., "page_view", "chapter_read", "signup"
+  payload   Json?    // e.g., { chapter: 1, duration: 300 }
+  userId    String?
+  sessionId String?  // For anonymous tracking
+  createdAt DateTime @default(now())
+
+  @@index([name])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Lead {
+  id                String   @id @default(cuid())
+  name              String
+  email             String   @unique
+  location          String
+  sourcePage        String?
+  verificationToken String?  @unique // For email verification
+  isVerified        Boolean  @default(false)
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([email])
+  @@index([verificationToken])
+}
+
+model VectorStore {
+  id        String                 @id @default(cuid())
+  content   String                 @db.Text
+  metadata  Json?                  // { type: "character", year: 1717, spoiler_tier: "S1" }
+  embedding Unsupported("vector")? // 768 dimensions (Vertex AI text-embedding-004)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([metadata], type: Gin)
 }
 
 // ─── AUTH.JS MODELS ──────────────────────────────────────────
@@ -42,6 +87,9 @@ model User {
   reportsResolved   Report[]           @relation("ReportResolver")
   moderationActions ModerationAction[] @relation("ModeratorActions")
   auditLogs         AuditLog[]
+
+  // AI Agent relations
+  aiChatSessions    AiChatSession[]
 
   @@index([email])
   @@index([role])
@@ -317,4 +365,41 @@ model AuditLog {
   @@index([userId, createdAt(sort: Desc)])
   @@index([entityType, entityId])
   @@index([action, createdAt(sort: Desc)])
+}
+
+// ─── AI AGENT TRACKING ──────────────────────────────────────
+
+model AiChatSession {
+  id          String   @id @default(cuid())
+  userId      String?
+  visitorId   String?  // Cookie-based ID for anonymous tracking
+
+  spoilerMode String   @default("S1") // Spoiler mode at session start
+
+  startedAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  messages    AiChatMessage[]
+
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([startedAt(sort: Desc)])
+}
+
+model AiChatMessage {
+  id        String   @id @default(cuid())
+  sessionId String
+
+  role      String   // 'user' | 'assistant'
+  content   String   @db.Text
+
+  metadata  Json?    // Technical: latency, model, token count
+  analysis  Json?    // Analytical: sentiment, topics detected
+
+  createdAt DateTime @default(now())
+
+  session   AiChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
 }

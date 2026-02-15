@@ -1,0 +1,123 @@
+---
+doc_type: canon_publications_catalog
+title: "Bharatvarsh Publications & Products (Market Availability)"
+scope: "What is available now vs what is in development"
+spoiler_mode: "S1_SAFE"
+last_updated_local: "2026-02-15"
+owner: "Bharatvarsh Universe"
+usage:
+  - "Seed document for Bhoomi + vector KB"
+  - "Website / forum ‘Buy & Products’ page source"
+rules:
+  - "Only list items that are actually purchasable as ‘Available Now’."
+  - "All unreleased work must be explicitly marked ‘In Development’ (no dates unless confirmed)."
+  - "Do not reveal spoiler-sensitive plot details (Surya / Facility / twist content)."
+---
+
+# Bharatvarsh Publications & Products (Market Availability)
+
+This document is the single source of truth for:
+- what audiences can buy today,
+- where to buy it,
+- what’s officially in the pipeline (without spoilers or false promises).
+
+---
+
+## 1) Available Now (Published)
+
+### 1.1 Novel — Mahabharatvarsh: Price of Harmony, Paid by Freedom
+**Type:** Novel (Print)  
+**Author:** Atharva Singh  
+**Universe:** Bharatvarsh / MahaBharatvarsh  
+**Genre positioning:** Political techno-thriller (surveillance, power, civic trade-offs)  
+**Format(s):** Hardcover and Paperback (retailer availability may vary)  
+**Page count:** 374 (print)  
+**Public-safe synopsis (no spoilers):**  
+A high-control nation built on engineered harmony is shaken by coordinated attacks. As an investigation unfolds, the story explores how far a system can push “stability” before it turns into a cage—and what happens when truth becomes a threat.
+
+#### Official purchase links (canonical)
+Primary (publisher-direct):
+- Notion Press (Hardcover landing):  
+  `https://direct.notionpress.com/in/read/mahabharatvarsh-hardcover/`
+
+Also available via major retailers:
+- Amazon India (listing):  
+  `https://www.amazon.in/dp/B0GHS8127Z`
+- Flipkart (listing / short link):  
+  `https://dl.flipkart.com/s/zo1xOSuuuN`
+
+**Notes for support conversations**
+- Pricing, delivery timelines, and discounts differ by retailer and can change.
+- If a user’s retailer link fails, direct them to the Notion Press link as fallback.
+
+---
+
+## 2) In Development (Not yet purchasable)
+
+Everything in this section is **NOT released**. No launch dates should be promised unless officially announced on the website.
+
+### 2.1 Comics / Graphic Fiction (Bharatvarsh Universe)
+**Status:** In Development  
+**Public description:** Visual storytelling expansions of the Bharatvarsh world: characters, events, and factions presented via comic-format arcs.  
+**Spoiler boundary:** Do not reveal arc names, secret programs, facility threads, or twist mechanics. If asked for details, redirect to “Announcements” and “Newsletter”.
+
+### 2.2 Future Novels (Bharatvarsh Universe)
+**Status:** In Development  
+**Public description:** Continuation novels expanding the political landscape, consequences of state systems, and the moral tension of order vs freedom.  
+**Spoiler boundary:** No plot confirmations, no timeline confirmations, no character fate confirmations unless published publicly.
+
+### 2.3 Short Fiction / Side Stories
+**Status:** In Development  
+**Public description:** Smaller stories focused on districts, treaty zones, and everyday citizens living under the Mesh-era social contract.  
+**Spoiler boundary:** Keep it theme-level only.
+
+### 2.4 Companion Content (Lore-first)
+**Status:** Planned / In Development  
+**Public description:** Official lore content intended to enrich understanding of the world—timelines, faction primers, location gazetteers, and visual explainers.  
+**Spoiler boundary:** Only declassified lore.
+
+---
+
+## 3) Official channels for updates (where users should look)
+
+**Website (home / canon hub):**  
+`https://welcometobharatvarsh.com/`
+
+**Forum announcements:**  
+- Use the website forum “Announcements / Releases” category (site-controlled source of truth).
+
+**Newsletter / lead magnet (if enabled):**  
+- Use the website’s newsletter signup as the primary “notify me” path for releases.
+
+---
+
+## 4) Bhoomi: response templates (must be consistent)
+
+### 4.1 If user asks: “Where can I buy the novel?”
+**Answer template (S1 SAFE):**
+- “The novel *Mahabharatvarsh: Price of Harmony, Paid by Freedom* is available in print. You can buy it here: Notion Press (publisher-direct) — `https://direct.notionpress.com/in/read/mahabharatvarsh-hardcover/`  
+It’s also listed on Amazon India — `https://www.amazon.in/dp/B0GHS8127Z` and Flipkart — `https://dl.flipkart.com/s/zo1xOSuuuN`.”
+
+### 4.2 If user asks: “Is there a comic/next novel out yet?”
+**Answer template (S1 SAFE):**
+- “Not yet. The next wave of comics and novels is in development. The official release announcements will appear on the website and the forum announcements category.”
+
+### 4.3 If user asks: “What is coming next? Give me details.”
+**Answer template (S1 SAFE):**
+- “I can share what’s public: more comics/graphic fiction and future novels are in the pipeline. I can’t reveal classified story details until they’re officially released. If you want, tell me which format you prefer—comic, novel, or short stories—and I’ll point you to the safest public updates.”
+
+### 4.4 If user asks for spoiler topics (Surya / Facility / twists)
+**Answer template (S1 SAFE):**
+- “That is classified. I can talk about the world’s public institutions, timeline, and declassified lore—or you can opt into spoilers explicitly.”
+
+---
+
+## 5) Operational rules for your team (so catalog stays accurate)
+
+1) Only move an item from “In Development” → “Available Now” when:
+   - at least one live purchase link exists, AND
+   - the item is announced on the website/forum announcements.
+2) Keep purchase URLs in one place (this doc) and reuse everywhere (site pages, chatbot KB, marketing posts).
+3) Avoid promising dates. Use “In Development / Planned” until official announcements.
+
+---

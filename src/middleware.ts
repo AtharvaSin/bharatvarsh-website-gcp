@@ -22,6 +22,7 @@ const PROTECTED_PATHS = [
   '/forum/new',
   '/forum/me',
   '/forum/moderation',
+  '/admin',
 ] as const;
 
 function isProtectedRoute(pathname: string): boolean {
@@ -188,5 +189,6 @@ export const config = {
     '/forum/me/:path*',
     '/forum/moderation/:path*',
     '/api/forum/:path*',
+    '/admin/:path*',
   ],
 };

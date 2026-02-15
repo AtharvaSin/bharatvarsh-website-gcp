@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { HeroTitle, CTASection, ScrollSection, ParallaxBackground, ContentSection } from '@/features/home';
+import { HeroTitle, CTASection, ScrollSection, ParallaxBackground, ContentSection, ScrollIndicator } from '@/features/home';
 import { cn } from '@/shared/utils';
 
 const sections = [
@@ -94,6 +94,7 @@ export function HomeContent() {
         }
       >
         <HeroTitle title="BHARATVARSH" subtitle="A tale of truth—and the power that edits it." className="pt-16 md:pt-20" />
+        <ScrollIndicator />
       </ScrollSection>
 
       {/* Section 2: The World */}

@@ -3,10 +3,14 @@
     "title": "Bharatvarsh",
     "subtitle": "A Story of Truth and Power",
     "tagline": "A military prince is given a case of national importance whose investigation forces him to cross boundaries of nations and generations, uncovering deep dark secrets about the military and himself.",
-    "genre": ["Alternate History", "Thriller", "Political Fiction"],
-    "status": "Coming Soon",
-    "releaseDate": null,
-    "pages": null,
+    "genre": [
+      "Alternate History",
+      "Thriller",
+      "Political Fiction"
+    ],
+    "status": "Available Now",
+    "releaseDate": "2024",
+    "pages": 374,
     "isbn": null
   },
   "synopsis": {
@@ -94,28 +98,28 @@
     "bio": "The author of Bharatvarsh has crafted a unique alternate history that explores what India might have become without colonial intervention. This debut novel combines meticulous world-building with a gripping thriller narrative.",
     "note": "More details coming soon."
   },
-  "preorder": {
-    "available": false,
+  "purchase": {
+    "available": true,
     "platforms": [
       {
+        "name": "Notion Press (Direct)",
+        "url": "https://direct.notionpress.com/in/read/mahabharatvarsh-hardcover/",
+        "icon": "book-open"
+      },
+      {
         "name": "Amazon",
-        "url": "#",
+        "url": "https://www.amazon.in/dp/B0GHS8127Z",
         "icon": "shopping-cart"
       },
       {
-        "name": "Kindle",
-        "url": "#",
-        "icon": "tablet"
-      },
-      {
-        "name": "Audible",
-        "url": "#",
-        "icon": "headphones"
+        "name": "Flipkart",
+        "url": "https://dl.flipkart.com/s/zo1xOSuuuN",
+        "icon": "shopping-bag"
       }
     ],
     "newsletter": {
       "enabled": true,
-      "headline": "Be the First to Know",
+      "headline": "Join the Inner Circle",
       "description": "Sign up for release updates, exclusive content, and early access to special editions."
     }
   },

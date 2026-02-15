@@ -1,0 +1,252 @@
+---
+doc_type: canon_timeline
+title: "Bharatvarsh Canon Timeline (1717–2022)"
+divergence_year: 1717
+scope_years: "1717–2022"
+spoiler_mode_default: "SAFE"
+purpose: "Authoritative macro-history for Bhoomi + site/forum lore grounding"
+---
+
+# Bharatvarsh Canon Timeline (1717–2022)
+
+This document defines the official macro-history of Bharatvarsh from the locked divergence point of **1717 AD** through **2022 AD**. It is written to be usable as a knowledge-base seed: structured, searchable, and consistent with the website timeline phases.
+
+**Core rule:**  
+- **Pre-1717** can be framed using general historical background.  
+- **1717 onward** is **Bharatvarsh’s own canon**—facts here are the authoritative spine.
+
+---
+
+## Timeline Phases (Website Canon Structure)
+
+| Phase | Name | Years | What this era “feels like” |
+|------:|------|------:|----------------------------|
+| 1 | **The Divergence** | **1717** | A single legal refusal changes the continent’s destiny: diffusion instead of extraction |
+| 2 | **Era of Enlightenment** | **1790–1895** | Knowledge spreads laterally; prosperity creates factions; identity hardens |
+| 3 | **The Republic** | **1905–1975** | Coordination becomes doctrine; institutions scale; growth accelerates |
+| 4 | **The Collapse** | **1975–1985** | Civil order breaks; fear replaces policy; emergency becomes routine |
+| 5 | **Era of the Mesh** | **1985–2022** | Governance fuses with infrastructure; stability returns at the cost of anonymity |
+
+---
+
+# Phase 1 — The Divergence (1717)
+
+## Event 1 — East India Company: “Lost Magna Carta”
+**Date:** 1717 AD  
+**Canonical summary:**  
+Delhi declined a sweeping charter that would have granted the East India Company tax exemptions and autonomous courts. Without that legal foothold, foreign firms remained licensed guests at coastal marts, subject to regional law and guild tariffs. Capital stayed local, ports diversified, and inland caravan networks retained leverage over sea trade. Indigenous bankers and craft guilds expanded credit networks, funding irrigation, storage, and workshops. The result was **diffusion, not extraction**—resources circulated across Sindh, the Deccan, and the East, enabling each to consolidate rule while sharing a growing external commerce.
+
+**What changed immediately**
+- Foreign trade became **regulated participation**, not sovereign intrusion.
+- Local finance scaled from merchant wealth into **credit networks**.
+- Inland trade routes kept strategic relevance rather than collapsing into coastal dependency.
+
+**Long-tail effects**
+- Multiple power centers matured instead of a single colonial center.
+- Economic strength became **multi-regional**, reducing single-point capture.
+- A habit formed: **law and institutions are the first battlefield**.
+
+**Keywords / retrieval tags:** divergence, charter denial, guild tariffs, indigenous banking, diffusion economy  
+**Canonical ID:** `1717-east-india-company-lost-magna-carta`
+
+---
+
+# Phase 2 — Era of Enlightenment (1790–1895)
+
+This phase contains two linked arcs: a **knowledge bloom** followed by a **political hardening**. The story is not “progress then collapse”—it is “progress creates pressure.”
+
+## Event 2 — Era of Enlightenment
+**Date:** 1790 AD to 1850 AD  
+**Canonical summary:**  
+Learning spread laterally rather than from a colonial center. Court schools and guild libraries adopted vernacular primers in mathematics, astronomy, and law. Copperplate presses and traveling lectures stitched ideas across ports and plains. Mechanized looms appeared beside traditional karkhanas; canals, stepwells, and crop trials raised yields; caravanserai became hubs of accounts and arbitration. The East invested in courier relays and coded correspondences, while the Deccan promoted technical guilds, and Sindh standardized weights and measures along river routes. A shared civic vocabulary emerged—preparing society for larger experiments in collective life.
+
+**What changed immediately**
+- Literacy and technical knowledge became **portable** (courts, guilds, traveling instruction).
+- Infrastructure evolved as a practical philosophy: water, crops, logistics, measurement.
+- The concept of “public competence” grew: disputes could be arbitrated with records, not only force.
+
+**Long-tail effects**
+- Regions became mutually legible (standards, accounts, civic vocabulary).
+- Economic modernization arrived without a single imperial blueprint.
+- The social imagination expanded: people learned to expect systems, not just rulers.
+
+**Keywords / retrieval tags:** vernacular science, guild libraries, courier relays, standards, civic vocabulary  
+**Canonical ID:** `1790-1850-era-of-enlightenment`
+
+---
+
+## Event 3 — Era of Divergence
+**Date:** 1850 AD to 1895 AD  
+**Canonical summary:**  
+Prosperity produced factions. Labour unions matured and splintered into leagues anchored to faith, language, and region. Rail spines and river barges increased coal demand and sharpened competition for eastern seams. City councils expanded sanitation and night watch even as processions, boycotts, and strike funds set the rhythm of markets. In hill country, resilient intelligence networks grew, moving messages faster than magistrates could convene. Elections within the polities hardened into rivalry. The social contract was still forming, but incentives around energy, rail access, and credit increasingly pointed the system toward confrontation.
+
+**What changed immediately**
+- “Representation” became contested: unions → leagues → identity blocs.
+- Energy and logistics (coal, rail, barges) became political leverage.
+- Governance improved in cities (sanitation, watch) while the streets became a stage for pressure.
+
+**Long-tail effects**
+- A pattern took root: public order vs public expression, each claiming legitimacy.
+- Intelligence and counter-intelligence became civilian habits, not only state tools.
+- The continent approached a turning point where cooperation required formal architecture.
+
+**Keywords / retrieval tags:** unions, leagues, coal seams, rail politics, civic unrest, intelligence networks  
+**Canonical ID:** `1850-1895-era-of-divergence`
+
+---
+
+# Phase 3 — The Republic (1905–1975)
+
+This era is defined by a key insight: **coordination beats rivalry**. The Republic is not merely a government type; it is an operating system.
+
+## Event 4 — Sindhu–Dakhin Concord
+**Date:** 1905 AD  
+**Canonical summary:**  
+Sindh and the Deccan ratified a compact to end tariff duels and align strategy. The Concord standardized rail gauges, river-port dues, and coinage weights; created a joint planning desk over mines, foundries, telegraph lines, and procurement; and established a rotating command for frontier security. Differences remained, but constant bargaining yielded to scheduled negotiation with clear floors. Shared survey data and a single logistics ledger let both states project power inland without starving their workshops. The pact unlocked coordinated corridor policy and set conditions for rapid operations in the eastern plains.
+
+**What changed immediately**
+- Inter-regional competition moved from sabotage to scheduled negotiation.
+- Standards (gauge, dues, weights) made coordination scalable.
+- Planning became a profession: surveys, ledgers, procurement doctrine.
+
+**Long-tail effects**
+- The Concord became a template: unify infrastructure first, politics follows.
+- Frontier security evolved into “rotating command” rather than permanent occupation.
+- The Republic phase inherits this: bureaucracy as leverage, not ornament.
+
+**Keywords / retrieval tags:** concord, standardization, logistics ledger, joint planning, rotating command  
+**Canonical ID:** `1905-sindhu-dakhin-concord`
+
+---
+
+## Event 5 — Democratic Republic of Bharatvarsh
+**Date:** 1910 AD to 1975 AD  
+**Canonical summary:**  
+A democratic republic supervised the largest buildout in the subcontinent’s history. Two national ballots established peaceful transfer of power. Wartime partnerships modernized shipyards, code bureaus, and convoy doctrine; a civilian-first atomic energy program diversified grids. Rail density doubled, primary schooling expanded, postal savings matured, and treaty corridors cooled the long insurgency in the hills. Industry moved from textiles into chemicals, machine parts, and radios. Limits were visible too: coalition paralysis, periodic unrest, and rising sectarian mobilization late in the period. By 1975, emergency debates dominated cabinet agendas.
+
+**What changed immediately**
+- Elections became real: peaceful power transfer proved repeatable.
+- Infrastructure scale crossed a threshold: rails, schools, savings systems.
+- Technology and industry diversified through partnerships and doctrine.
+
+**Long-tail effects**
+- A new promise emerged: “the state can build” (and citizens expect it).
+- Treaties in the hills created semi-stable corridors rather than endless occupation.
+- Late-stage sectarian mobilization revealed a fault: institutions grew faster than cohesion.
+
+**Keywords / retrieval tags:** republic, national ballots, atomic energy, postal savings, treaty corridors, coalition paralysis  
+**Canonical ID:** `1910-1975-democratic-republic-of-bharatvarsh`
+
+---
+
+# Phase 4 — The Collapse (1975–1985)
+
+This phase is not a single war—it is a decade in which daily life becomes tactical. The state survives by shrinking its promises.
+
+## Event 6 — Decade of Civil War
+**Date:** 1975 AD to 1985 AD  
+**Canonical summary:**  
+Rolling riots, targeted assassinations, and sabotage overwhelmed civil policing. Sectarian fronts radicalized, black markets bloomed, and provincial administrations split between rival commands. Curfews became routine; rail timetables thinned; ministries ran on emergency decrees. Foreign meddling existed, but most damage was domestic: arson, blockades, information hoaxes, and everyday fear. Elections continued on paper while authority eroded on the ground. A cluster of bombings and mutinies near decade’s end forced a reset of institutions and rules—closing the republican chapter and preparing the public for a new governing doctrine.
+
+**What changed immediately**
+- Public safety became a negotiation: curfews, disrupted logistics, improvised enforcement.
+- Information became a weapon: hoaxes, blockades, retaliatory narratives.
+- Provincial splits created “rival commands”—governance fractured into competing authorities.
+
+**Long-tail effects**
+- Faith in civil policing collapsed; “order” became a political product.
+- Emergency decrees normalized executive shortcuts.
+- The public became willing to trade freedoms for predictability—if predictability returned.
+
+**Keywords / retrieval tags:** riots, assassinations, sabotage, curfews, emergency decrees, black markets, mutinies  
+**Canonical ID:** `1975-1985-decade-of-civil-war`
+
+---
+
+## Event 7 — Year-Turn Decree
+**Date:** 1985 AD  
+**Canonical summary:**  
+Two linked acts reset the state. On 31 December, civil religion and caste politics were outlawed; temples and seminaries converted to public trusts; sectarian funding and party symbols were proscribed. At dawn on 1 January, the Army Manifesto declared permanent order the governing doctrine, restructuring broadcast, education, and security under central command. Courts remained open within stricter lanes; audits tightened; petty graft fell; dissent moved to careful forums. The decree framed stability as civic virtue and centralized tools to enforce it—defining political life for the next generation.
+
+**What changed immediately**
+- Identity-politics infrastructure was dismantled by law (symbols, funding, institutional control).
+- Broadcast and education were restructured as governance surfaces.
+- Audits and centralized enforcement reduced petty corruption—and narrowed safe dissent.
+
+**Long-tail effects**
+- “Permanent order” became not only policy but moral framing: stability as virtue.
+- Power moved from electoral contest to doctrinal administration.
+- The next era builds on this: when governance becomes infrastructure, control becomes automatic.
+
+**Keywords / retrieval tags:** year-turn, decree, outlawed sectarian politics, public trusts, Army Manifesto, permanent order  
+**Canonical ID:** `1985-year-turn-decree`
+
+---
+
+# Phase 5 — Era of the Mesh (1985–2022)
+
+The Mesh is not only technology; it is a governance philosophy: **the state becomes the rails under daily life.** Corruption drops, service reliability rises, and anonymity becomes rare.
+
+## Event 8 — Era of the Mesh
+**Date:** 1985 AD to 2022 AD  
+**Canonical summary:**  
+Governance fused with infrastructure. National ID seeded biometric wallets; ration, transit, and benefits gates authenticated in under a second; cameras and license readers formed a lattice from bazaars to expressways. Fines autodebited; subsidies arrived predictably; petty corruption collapsed. So did anonymity. The Mesh optimized freight, water, and tax flow and simplified access to services, while setting thresholds on assembly and speech. Education, health, and civic records synchronized across districts. For most citizens, stability felt ordinary again—defined by reliability, queues that moved, and a constant awareness of being seen.
+
+**What changed immediately**
+- Service delivery became algorithmic: predictable subsidies, automated compliance, fast authentication.
+- Low-level corruption declined because discretion declined.
+- Civic records synchronized, reducing bureaucratic fragmentation.
+
+**Long-tail effects**
+- People internalized a new social contract: “you will be served, and you will be legible.”
+- Political friction shifted from protests to quieter channels (“careful forums”).
+- Security became ambient rather than episodic—present in gates, cameras, ledgers, and flows.
+
+**Keywords / retrieval tags:** Mesh, national ID, biometric wallets, autodebit fines, synchronized records, thresholds on assembly  
+**Canonical ID:** `1985-2022-era-of-the-mesh`
+
+---
+
+## Event 9 — 20-10 Bombings
+**Date:** 2022 AD  
+**Canonical summary:**  
+The calm cracked. A synchronized bombing campaign, remembered for its “20-10” signature, struck critical sites across multiple regions within a narrow window. Decoys drew responders off-route while timed devices targeted stations, markets, and administrative hubs. Casualties were limited compared with older wars, but the psychological rupture was profound. Commuters changed habits, offices added redundancies, and local councils revived contingency drills. The state answered with audits, tightened perimeter rules, and temporary blackouts in data corridors. The attacks exposed seams in the Mesh and changed how cities measured safety.
+
+**What changed immediately**
+- Public confidence in “automatic stability” weakened.
+- Redundancy became daily habit: reroutes, drills, layered checkpoints.
+- The state reacted by tightening perimeters and auditing systems.
+
+**Long-tail effects**
+- The Mesh’s promise shifted: from invisible convenience to visible security.
+- Infrastructure was treated as a battlefield surface (data corridors, response routing).
+- Cities began to measure risk not as crime-rate, but as system vulnerability.
+
+**Keywords / retrieval tags:** 20-10, synchronized bombings, decoys, data corridors, audits, perimeter rules  
+**Canonical ID:** `2022-20-10-bombings`
+
+---
+
+# Through-lines (What this timeline teaches)
+
+## 1) Law creates destiny (1717 → onward)
+The divergence is legal, not military: deny extraterritorial privilege, and everything after is a negotiation among local powers rather than extraction by a foreign court.
+
+## 2) Progress creates identity pressure (1790–1895)
+When systems scale—education, trade, logistics—people also scale their group identities. Prosperity gives factions resources, and resources demand representation.
+
+## 3) Coordination becomes an ideology (1905–1975)
+Standards, ledgers, and planning desks are as decisive as elections. The Republic builds by making the continent interoperable.
+
+## 4) Collapse trains the public to accept doctrine (1975–1985)
+When fear becomes daily, “freedom” and “choice” lose market value. The Year-Turn Decree succeeds because it arrives as an answer to exhaustion.
+
+## 5) The Mesh is governance-as-infrastructure (1985–2022)
+Reliability rises as discretion falls. Corruption declines as anonymity declines. Stability becomes ordinary—until one coordinated shock reveals the seams.
+
+---
+
+# Usage Notes for Bhoomi (SAFE mode alignment)
+- When asked “What happened after 1717?”, use this document’s phase structure first, then drill down to event summaries.
+- For uncertain or missing details, do not invent—offer the phase + event names and ask what the user wants to zoom into.
+- For spoiler-sensitive questions beyond 2022, acknowledge the boundary and ask if the user wants “classified” material (if enabled elsewhere).

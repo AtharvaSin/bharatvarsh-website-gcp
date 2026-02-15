@@ -8,6 +8,7 @@ import { Menu, X } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui/button';
 import { SignInButton, UserMenu } from '@/features/auth';
+import { BhoomiNavTrigger } from '@/components/bhoomi/BhoomiNavTrigger';
 
 interface HeaderProps {
   transparent?: boolean;
@@ -58,11 +59,16 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-16 safe-area-x">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className="font-display text-2xl md:text-3xl tracking-wide text-[var(--powder-300)] group-hover:text-[var(--mustard-500)] transition-colors">
-              BHARATVARSH
-            </span>
-          </Link>
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center gap-2 group">
+              <span className="font-display text-2xl md:text-3xl tracking-wide text-[var(--powder-300)] group-hover:text-[var(--mustard-500)] transition-colors">
+                BHARATVARSH
+              </span>
+            </Link>
+            <div className="hidden md:block">
+              <BhoomiNavTrigger />
+            </div>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1">

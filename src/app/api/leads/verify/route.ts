@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { findLeadByToken, verifyLead } from '@/server/airtable';
+import { prisma } from '@/server/db';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
@@ -21,7 +21,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Find lead by token
-    const lead = await findLeadByToken(token);
+    const lead = await prisma.lead.findUnique({
+      where: { verificationToken: token }
+    });
 
     if (!lead) {
       // Redirect with error - invalid or expired token
@@ -31,7 +33,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Check if already verified
-    if (lead.fields.Verified) {
+    if (lead.isVerified) {
       // Redirect with already verified status
       return NextResponse.redirect(
         `${BASE_URL}/novel?verified=already`
@@ -39,7 +41,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Verify the lead
-    await verifyLead(lead.id);
+    await prisma.lead.update({
+      where: { id: lead.id },
+      data: {
+        isVerified: true,
+        verificationToken: null,
+      }
+    });
 
     // Redirect with success
     return NextResponse.redirect(

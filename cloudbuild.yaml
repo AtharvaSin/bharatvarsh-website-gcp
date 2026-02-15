@@ -69,7 +69,7 @@ steps:
       - '--tag'
       - 'canary'
       - '--set-secrets=RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,AUTH_SECRET=AUTH_SECRET:latest,NEXTAUTH_SECRET=AUTH_SECRET:latest,DATABASE_URL=DATABASE_URL:latest,DIRECT_DATABASE_URL=DIRECT_DATABASE_URL:latest'
-      - '--set-env-vars=AUTH_TRUST_HOST=true,AUTH_URL=https://welcometobharatvarsh.com,NEXTAUTH_URL=https://welcometobharatvarsh.com'
+      - '--set-env-vars=AUTH_TRUST_HOST=true,AUTH_URL=https://welcometobharatvarsh.com,NEXTAUTH_URL=https://welcometobharatvarsh.com,VERTEX_AI_PROJECT=${PROJECT_ID},VERTEX_AI_LOCATION=${_REGION},NEXT_PUBLIC_AI_MODERATION_ENABLED=true'
 
   # Step 5: Route 10% traffic to canary
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'

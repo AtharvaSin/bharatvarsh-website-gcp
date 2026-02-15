@@ -14,6 +14,7 @@ import {
   Clock,
   ArrowRight,
   Mail,
+  ShoppingCart,
 } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui/button';
@@ -178,10 +179,30 @@ function NovelPageInner() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <Button variant="primary" size="lg">
-                  <Mail className="w-5 h-5 mr-2" />
-                  Get Notified
-                </Button>
+                {data.purchase.available ? (
+                  data.purchase.platforms.map((platform) => (
+                    <a
+                      key={platform.name}
+                      href={platform.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant={platform.name.includes('Notion') ? 'primary' : 'outline'} size="lg">
+                        {platform.name.includes('Notion') ? (
+                          <BookOpen className="w-5 h-5 mr-2" />
+                        ) : (
+                          <ShoppingCart className="w-5 h-5 mr-2" />
+                        )}
+                        Buy on {platform.name}
+                      </Button>
+                    </a>
+                  ))
+                ) : (
+                  <Button variant="primary" size="lg">
+                    <Mail className="w-5 h-5 mr-2" />
+                    Get Notified
+                  </Button>
+                )}
                 <Link href="/lore">
                   <Button variant="secondary" size="lg">
                     <BookOpen className="w-5 h-5 mr-2" />
