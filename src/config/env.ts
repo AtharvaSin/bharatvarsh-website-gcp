@@ -9,6 +9,7 @@ function requireEnv(name: string): string {
     console.error(`[FATAL] Missing environment variable: ${name}`);
     throw new Error(`Missing required environment variable: ${name}`);
   }
+  console.log(`[INFO] Loaded ${name}: Length=${value.length}, Trimmed=${value.trim().length}`);
   return value;
 }
 

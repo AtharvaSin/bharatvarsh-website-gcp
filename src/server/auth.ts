@@ -81,8 +81,18 @@ async function sendVerificationRequest({
  * can run without OAuth configured.
  */
 function buildConfig(): NextAuthConfig {
+  console.log('[AUTH_DEBUG] Building Auth.js config...');
+  console.log('[AUTH_DEBUG] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
+  console.log('[AUTH_DEBUG] AUTH_SECRET present:', !!process.env.AUTH_SECRET);
+  console.log('[AUTH_DEBUG] NEXTAUTH_SECRET present:', !!process.env.NEXTAUTH_SECRET);
+  console.log('[AUTH_DEBUG] GOOGLE_CLIENT_ID present:', !!process.env.GOOGLE_CLIENT_ID);
+  console.log('[AUTH_DEBUG] NEXTAUTH_URL present:', !!process.env.NEXTAUTH_URL);
+  console.log('[AUTH_DEBUG] AUTH_URL present:', !!process.env.AUTH_URL);
+  console.log('[AUTH_DEBUG] AUTH_TRUST_HOST:', process.env.AUTH_TRUST_HOST);
+
   const providers: NextAuthConfig['providers'] = [
     ResendProvider({
+      id: 'email', // Explicitly set ID to match sign-in page 'email' provider
       apiKey: process.env.RESEND_API_KEY,
       from: RESEND_FROM,
       sendVerificationRequest,
