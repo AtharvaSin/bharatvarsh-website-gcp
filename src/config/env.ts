@@ -6,6 +6,7 @@
 function requireEnv(name: string): string {
   const value = process.env[name];
   if (!value) {
+    console.error(`[FATAL] Missing environment variable: ${name}`);
     throw new Error(`Missing required environment variable: ${name}`);
   }
   return value;
@@ -16,7 +17,13 @@ function requireEnv(name: string): string {
  * Use for env vars that are only needed in later phases.
  */
 function optionalEnv(name: string): string | undefined {
-  return process.env[name] || undefined;
+  const value = process.env[name];
+  if (!value) {
+    console.warn(`[WARN] Optional environment variable missing: ${name}`);
+  } else {
+    console.log(`[INFO] Loaded environment variable: ${name} (Length: ${value.length})`);
+  }
+  return value || undefined;
 }
 
 /** Server-side env vars (only call from server modules) */
