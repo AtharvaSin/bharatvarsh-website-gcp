@@ -40,7 +40,7 @@ const nextConfig: NextConfig = {
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://accounts.google.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "img-src 'self' data: blob: https:",
-            "font-src 'self' https://fonts.gstatic.com",
+            "font-src 'self' https://fonts.gstatic.com data:",
             "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com https://accounts.google.com https://oauth2.googleapis.com",
             "frame-ancestors 'none'",
             "base-uri 'self'",

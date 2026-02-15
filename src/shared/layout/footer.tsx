@@ -10,7 +10,7 @@ interface FooterProps {
 
 const footerLinks = {
   explore: [
-    { label: 'Characters', href: '/lore/characters' },
+    { label: 'Characters', href: '/lore' },
     { label: 'Factions', href: '/lore/factions' },
     { label: 'Locations', href: '/lore/locations' },
     { label: 'Timeline', href: '/timeline' },
