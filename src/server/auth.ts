@@ -90,6 +90,9 @@ function buildConfig(): NextAuthConfig {
   console.log('[AUTH_DEBUG] AUTH_URL present:', !!process.env.AUTH_URL);
   console.log('[AUTH_DEBUG] AUTH_TRUST_HOST:', process.env.AUTH_TRUST_HOST);
 
+  // Fire-and-forget DB check (async)
+  checkDbConnection().catch(console.error);
+
   const providers: NextAuthConfig['providers'] = [
     ResendProvider({
       id: 'email', // Explicitly set ID to match sign-in page 'email' provider
@@ -191,3 +194,19 @@ function buildConfig(): NextAuthConfig {
 }
 
 export const { auth, handlers, signIn, signOut } = NextAuth(buildConfig());
+
+export const { GET, POST } = handlers;
+
+// Debug helper
+async function checkDbConnection() {
+  try {
+    console.log('[AUTH_DEBUG] Testing DB connection...');
+    const userCount = await prisma.user.count();
+    console.log(`[AUTH_DEBUG] DB Connection Successful! Found ${userCount} users.`);
+    return true;
+  } catch (error: any) {
+    console.error('[AUTH_DEBUG] DB Connection FAILED:', error.message);
+    if (error.code) console.error('[AUTH_DEBUG] DB Error Code:', error.code);
+    return false;
+  }
+}
