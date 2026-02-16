@@ -303,7 +303,7 @@ function NovelPageInner() {
                 const Icon = iconMap[item.icon] || BookOpen;
                 return (
                   <motion.div
-                    key={item.href}
+                    key={item.title}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

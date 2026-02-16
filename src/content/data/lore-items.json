@@ -8,8 +8,31 @@
       "classification": "declassified",
       "subtype": "Protagonist",
       "tagline": "A prince bound by duty, driven by truth",
-      "description": "Born into the military elite, Kahaan has spent his life upholding the order that defines Bharatvarsh. When assigned to investigate the 20-10 bombings, he expects a straightforward case. What he uncovers will challenge everything he believes about his nation, his family, and himself. His investigative drive and moral complexity make him uniquely positioned to cross boundaries—both national and generational—in pursuit of answers.",
-      "traits": ["Dutiful", "Analytical", "Conflicted", "Brave"],
+      "description": "Born into the military elite, Kahaan views the world through his floating HUD monocle—a distinct electric-blue tick over his left eye. He carries the state's authority in the neural mag-holsters at his ribs. When assigned the [REDACTED] case, he expects a procedural cleanup. Instead, he finds a thread that threatens to unravel the Mesh itself.",
+      "quote": "Truth is just data waiting to be verified.",
+      "quoteAuthor": "Major Kahaan",
+      "hotspots": [
+        {
+          "id": "h1",
+          "x": 65,
+          "y": 25,
+          "label": "OPTICAL HUD IMPLANT",
+          "description": "Class-4 Tactical Overlay"
+        },
+        {
+          "id": "h2",
+          "x": 30,
+          "y": 60,
+          "label": "NEURAL MAG-HOLSTER",
+          "description": "Standard Issue Sidearm Mount"
+        }
+      ],
+      "traits": [
+        "Dutiful",
+        "Analytical",
+        "Conflicted",
+        "Brave"
+      ],
       "media": {
         "card": "/images/characters/kahaan-card.webp",
         "banner": "/images/characters/kahaan-banner.webp"
@@ -25,8 +48,24 @@
       "classification": "declassified",
       "subtype": "Deuteragonist",
       "tagline": "Disciplined warrior. Grey Trident legacy.",
-      "description": "A disciplined warrior forged in the traditions of dojo training and the Grey Trident legacy. Rudra stands beside Kahaan in the investigation, bringing precision and unwavering focus. His methods complement Kahaan's analytical approach, and his loyalty runs deeper than protocol. His connection to the Himalayan wilds and the non-lethal first doctrine speaks to roots that predate the current regime.",
-      "traits": ["Loyal", "Disciplined", "Intuitive", "Secretive"],
+      "description": "The Mountain Shadow. Rudra wields the Old Trident—battered iron, heavier than sin, and utterly unlike the [REDACTED] symbols of the new terrorists. A pacifist by doctrine, he carries the silence of the Himalayas into the noise of the city. He fights not to destroy, but to correct.",
+      "quote": "The mountain does not hate the wind. It simply endures.",
+      "quoteAuthor": "Rudra",
+      "hotspots": [
+        {
+          "id": "r1",
+          "x": 80,
+          "y": 40,
+          "label": "OLD IRON TRIDENT",
+          "description": "Pre-Mesh Artifact"
+        }
+      ],
+      "traits": [
+        "Loyal",
+        "Disciplined",
+        "Intuitive",
+        "Secretive"
+      ],
       "media": {
         "card": "/images/characters/rudra-card.webp",
         "banner": "/images/characters/rudra-banner.webp"
@@ -42,8 +81,24 @@
       "classification": "declassified",
       "subtype": "Antagonist",
       "tagline": "Order requires sacrifice. He decides who pays.",
-      "description": "High-ranking general and embodiment of military establishment authority. General Pratap views the investigation into the 20-10 bombings as both a threat and an opportunity. His definition of national security may not align with the truth—and he has the power to ensure his version prevails. Four decades of service have taught him that stability requires control, whatever the cost.",
-      "traits": ["Ruthless", "Calculating", "Patriotic", "Authoritative"],
+      "description": "The Smiling Architect of Order. With a regulation-neat chevron moustache and the Director's Signet on his right hand, Pratap doesn't just enforce the Mesh—he designed it. He views the [REDACTED] bombings not as a tragedy, but as an audit. Order requires sacrifice, and he has the ledger.",
+      "quote": "Chaos is a choice. Order is a responsibility.",
+      "quoteAuthor": "General Pratap",
+      "hotspots": [
+        {
+          "id": "p1",
+          "x": 20,
+          "y": 75,
+          "label": "DIRECTOR'S SIGNET",
+          "description": "Authority Level: Absolute"
+        }
+      ],
+      "traits": [
+        "Ruthless",
+        "Calculating",
+        "Patriotic",
+        "Authoritative"
+      ],
       "media": {
         "card": "/images/characters/pratap-card.webp",
         "banner": "/images/characters/pratap-banner.webp"
@@ -59,8 +114,13 @@
       "classification": "declassified",
       "subtype": "Ally",
       "tagline": "The East remembers what the Mesh forgot",
-      "description": "Eastern connection and unlikely ally with ties to the resistance. Hana emerges from the shadows carrying knowledge that could reshape Kahaan's understanding of the bombings. Her motivations remain unclear—is she helping the investigation or manipulating it? Her knowledge of the treaty zones and the world beyond the Mesh's reach makes her an invaluable, if unpredictable, resource.",
-      "traits": ["Mysterious", "Knowledgeable", "Cautious", "Determined"],
+      "description": "The Moral Lens. Left-handed and sharp as her chin-length wedge bob, Hana bridges the gap between Indrapur's glass towers and the silent, snowy East. She knows the treaty zones better than the map-makers, and she knows that not all truth survives the upload.",
+      "traits": [
+        "Mysterious",
+        "Knowledgeable",
+        "Cautious",
+        "Determined"
+      ],
       "media": {
         "card": "/images/characters/hana-card.webp",
         "banner": "/images/characters/hana-banner.webp"
@@ -76,8 +136,13 @@
       "classification": "classified",
       "subtype": "Mystery",
       "tagline": "Some presences are felt before they're understood",
-      "description": "A mysterious figure whose role in events remains shrouded in secrecy. References to Arshi appear in unexpected places, connecting threads that span generations. Understanding who—or what—Arshi represents may be key to unraveling the deepest secrets. Strategic intelligence suggests significant connections, but confirmation remains elusive.",
-      "traits": ["Enigmatic", "Significant", "Connected", "Unknown"],
+      "description": "The Hidden Heir. Marked by the deep blue eyes of the Akakpen bloodline, she moves through the city like a glitch in the render. She carries a white-ceramic pulse gun and the weight of a broken treaty. Some presences are felt before they are understood.",
+      "traits": [
+        "Enigmatic",
+        "Significant",
+        "Connected",
+        "Unknown"
+      ],
       "media": {
         "card": "/images/characters/arshi-card.webp",
         "banner": "/images/characters/arshi-banner.webp"
@@ -92,8 +157,13 @@
       "classification": "declassified",
       "subtype": "Military",
       "tagline": "The nerve center of absolute authority",
-      "description": "All-glass oval command complex housing the Military Council. The tri-anchor wall dominates the central chamber—leader relief, national preamble, strategic map. Below lies a sealed shaft connecting to nuclear-hardened bunkers. The elliptical war-room features a glass map-table with real-time data projections. Every surface can become a display. The hum of systems never stops. Access is strictly controlled; surveillance is absolute.",
-      "traits": ["Fortress Architecture", "Total Surveillance", "Command Center", "Restricted Access"],
+      "description": "The Oval Fortress. Inside, the Elliptical Glass Map-Table glows with real-time data, watched over by the Tri-Anchor Wall. Here, in the cold light of the command panes, the silence is the ultimate luxury. Access is absolute; shadows are forbidden.",
+      "traits": [
+        "Fortress Architecture",
+        "Total Surveillance",
+        "Command Center",
+        "Restricted Access"
+      ],
       "media": {
         "card": "/images/locations/indrapur-hq-card.webp",
         "banner": "/images/locations/indrapur-hq-banner.webp"
@@ -109,7 +179,12 @@
       "subtype": "Metropolis",
       "tagline": "Industrial heartland where smoke meets surveillance",
       "description": "Northern river-plain metropole defined by fog-prone winters and dense surveillance infrastructure. The industrial powerhouse of Bharatvarsh features foundries, manufacturing plants, and research facilities. The Mesh infrastructure here is exceptionally dense, monitoring both production quotas and worker movements. OxyPole towers stand at 60-80m intervals, scrubbing air and mounting hovercams. Efficiency defines daily life in this city of pale limestone and vertical gardens.",
-      "traits": ["Industrial Corridor", "Dense Mesh Coverage", "Worker Blocks", "Research Campus"],
+      "traits": [
+        "Industrial Corridor",
+        "Dense Mesh Coverage",
+        "Worker Blocks",
+        "Research Campus"
+      ],
       "media": {
         "card": "/images/locations/lakshmanpur-card.webp",
         "banner": "/images/locations/lakshmanpur-banner.webp"
@@ -125,7 +200,12 @@
       "subtype": "Resistance",
       "tagline": "Where ancient ways resist modern control",
       "description": "Semi-autonomous treaty people maintaining governance through the Queen's Council in the Eastern and Himalayan wilds. Operating under non-lethal first doctrine for tribe-versus-tribe disputes, lethal force reserved only for outside invaders. The Akakpen preserve traditions from before the Mesh, holding territories in no-fly valleys like Silent Throat and Knife-Wind Chute. Their autonomy represents a crack in the regime's absolute control—a reminder that alternatives exist.",
-      "traits": ["Treaty Rights", "Queen's Council", "Non-Lethal Doctrine", "Cultural Preservation"],
+      "traits": [
+        "Treaty Rights",
+        "Queen's Council",
+        "Non-Lethal Doctrine",
+        "Cultural Preservation"
+      ],
       "media": {
         "card": "/images/factions/akakpen-card.webp",
         "banner": "/images/factions/akakpen-banner.webp"
@@ -141,7 +221,12 @@
       "subtype": "Government",
       "tagline": "Polite inevitability. Order through control.",
       "description": "The ruling military directorate that has governed Bharatvarsh since the Year-Turn Decree of 1985. Operating through 'polite inevitability'—the governance philosophy that makes compliance feel natural. The Bharatsena maintains the surveillance state, controls the Mesh, and has delivered four decades of stability at the cost of civil liberties. Wrist-scans, hovercams, and checkpoint algorithms ensure total visibility. Curfew runs 21:00 to 06:00 in all metropoles.",
-      "traits": ["Absolute Authority", "Mesh Control", "Stability Through Surveillance", "Military Hierarchy"],
+      "traits": [
+        "Absolute Authority",
+        "Mesh Control",
+        "Stability Through Surveillance",
+        "Military Hierarchy"
+      ],
       "media": {
         "card": "/images/factions/bharatsena-card.webp",
         "banner": "/images/factions/bharatsena-banner.webp"

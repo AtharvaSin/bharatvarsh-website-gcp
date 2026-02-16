@@ -1,8 +1,8 @@
 {
   "novel": {
-    "title": "Bharatvarsh",
+    "title": "Mahabharatvarsh",
     "subtitle": "A Story of Truth and Power",
-    "tagline": "A military prince is given a case of national importance whose investigation forces him to cross boundaries of nations and generations, uncovering deep dark secrets about the military and himself.",
+    "tagline": "A military prince. A dead rebellion. A choice between the order he protects and the freedom he demands.",
     "genre": [
       "Alternate History",
       "Thriller",
@@ -94,9 +94,9 @@
     }
   ],
   "author": {
-    "name": "Author Name",
-    "bio": "The author of Bharatvarsh has crafted a unique alternate history that explores what India might have become without colonial intervention. This debut novel combines meticulous world-building with a gripping thriller narrative.",
-    "note": "More details coming soon."
+    "name": "Atharva Singh",
+    "bio": "Atharva Singh writes at the intersection of systems thinking and street-level empathy. A management consultant by day, he specializes in digital transformation and process excellence—work that has taught him exactly how power flows through dashboards, budgets, and chains of command. By night, he breaks those systems on the page. Born in Uttar Pradesh and a migrant across six states, his stories are forged not in ivory towers but in the transit lounges of a changing nation. His promise is simple: no sermons, just choices that bruise.",
+    "note": "Connect for process notes, character polls, and the messy reality behind the draft."
   },
   "purchase": {
     "available": true,
@@ -139,7 +139,7 @@
     {
       "title": "Meet the Characters",
       "description": "Heroes, villains, and enigmas",
-      "href": "/lore/characters",
+      "href": "/lore",
       "icon": "users"
     }
   ]

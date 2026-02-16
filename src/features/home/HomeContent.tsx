@@ -114,8 +114,8 @@ export function HomeContent() {
         }
       >
         <ContentSection
-          headline="India. Familiar in silhouette. Unrecognizable in history."
-          content="In 1717, a foreign company came asking for a sweeping charter—tax-free trade, private courts, a country inside a country. Delhi refused. The coast stayed a doorway, not a wound. Wealth circulated instead of draining away. Ideas travelled by guild ledgers and caravan routes, not by conquest—and a new subcontinent learned to build itself on its own terms."
+          headline="A history rewritten by refusal."
+          content="An India that never knelt, but stood so rigid it became a cage. In 1717, Delhi declined the charter. The coast stayed a doorway, not a wound. Wealth circulated, but so did control. Three centuries later, we are a superpower of engineered calm—where the price of harmony is paid by freedom."
           glyph="chakra"
           dramaticReveal
         />
@@ -211,7 +211,7 @@ export function HomeContent() {
       >
         <ContentSection
           headline="Kahaan"
-          content={`A Major of the Bharatsena. A "military prince" raised inside the doctrine, groomed for command, fluent in the language of strategy and control. When 20–10 hits, the Council hands him the case—because he is what the state trusts most: precise, ambitious, unshakably capable.`}
+          content={`A Major of the Bharatsena. A "military prince" raised inside the doctrine, groomed for command, and viewing the world through a floating tactical lens. When 20–10 hits, the Council hands him the case—because he is what the state trusts most: precise, ambitious, unshakably capable.`}
           subtext="What he doesn't yet understand is the cost of competence in a perfect machine: every answer pulls a deeper thread, and every thread leads closer to the hands that built the cage."
           accentColor="var(--mustard-500)"
           glyph="trishul"

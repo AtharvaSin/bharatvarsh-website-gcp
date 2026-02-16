@@ -14,6 +14,7 @@ import { cn } from '@/shared/utils';
 
 export interface LayoutProviderProps {
   children: ReactNode;
+  header?: ReactNode;
   /** Atmospheric Effects Configuration */
   atmosphericEffects?: {
     /** Enable film grain overlay. Default: true */
@@ -54,6 +55,7 @@ export interface LayoutProviderProps {
  */
 export const LayoutProvider: FC<LayoutProviderProps> = ({
   children,
+  header,
   atmosphericEffects = {},
   pageTransition = {},
   className,
@@ -136,6 +138,7 @@ export const LayoutProvider: FC<LayoutProviderProps> = ({
   if (reducedMotion) {
     return (
       <div className={className}>
+        {header}
         {children}
       </div>
     );
@@ -143,6 +146,9 @@ export const LayoutProvider: FC<LayoutProviderProps> = ({
 
   return (
     <>
+      {/* Header rendered outside animation context to maintain fixed position */}
+      {header}
+
       {/* Loading indicator */}
       {shouldAnimate && enableLoadingIndicator && (
         <PageLoadingIndicator isLoading={isLoading} />

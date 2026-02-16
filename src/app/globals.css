@@ -202,8 +202,8 @@ body {
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px; /* Sleeker width */
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -211,12 +211,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--obsidian-600);
-  border-radius: var(--radius-full);
+  background: var(--obsidian-700); /* Darker thumb initially */
+  border-radius: var(--radius-sm);  /* More square, technical feel */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--obsidian-500);
+  background: var(--powder-500); /* Highlight interaction color */
 }
 
 /* Reduced motion support */

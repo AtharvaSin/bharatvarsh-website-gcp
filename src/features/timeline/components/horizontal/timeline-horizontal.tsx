@@ -140,7 +140,7 @@ export const TimelineHorizontal: FC<TimelineHorizontalProps> = ({
       )}
     >
       {/* Sticky Timeline Sub-Header (below site header) */}
-      <div className="sticky top-16 md:top-20 left-0 right-0 z-40">
+      <div className="sticky top-16 md:top-20 left-0 right-0 z-30">
         {/* Progress Bar */}
         <TimelineProgress
           scrollProgress={scrollXProgress}

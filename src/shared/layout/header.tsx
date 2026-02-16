@@ -43,7 +43,7 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  const showBackground = !transparent || isScrolled || isMobileMenuOpen;
+  const showBackground = !transparent || isScrolled || isMobileMenuOpen || pathname === '/timeline';
 
   return (
     <header

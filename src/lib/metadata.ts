@@ -104,7 +104,7 @@ export const pageMetadata = {
   novel: createPageMetadata({
     title: 'The Novel',
     description:
-      'Bharatvarsh: An alternate reality thriller where a military prince uncovers deep dark secrets about the military and himself.',
+      'Mahabharatvarsh: An alternate reality thriller where a military prince uncovers deep dark secrets about the military and himself.',
     image: '/images/landing/novel-card.webp',
     path: '/novel',
     type: 'book',

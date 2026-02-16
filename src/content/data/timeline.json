@@ -5,7 +5,7 @@
     "total_events": 9,
     "time_span": {
       "start": 1717,
-      "end": 2025
+      "end": 2022
     }
   },
   "events": [
@@ -22,8 +22,16 @@
       "slug": "1717-east-india-company-lost-magna-carta",
       "metadata": {
         "event_type": "economic",
-        "impacts": ["economic", "infrastructure"],
-        "locations": ["Sindh", "Deccan", "Delhi", "Eastern Region"],
+        "impacts": [
+          "economic",
+          "infrastructure"
+        ],
+        "locations": [
+          "Sindh",
+          "Deccan",
+          "Delhi",
+          "Eastern Region"
+        ],
         "significance": 3,
         "remarks": "Point of divergence from real history - EIC denied critical charter"
       },
@@ -46,8 +54,15 @@
       "slug": "1790-1850-era-of-enlightenment",
       "metadata": {
         "event_type": "era",
-        "impacts": ["political", "social"],
-        "locations": ["Sindh", "Deccan", "Eastern Region"],
+        "impacts": [
+          "political",
+          "social"
+        ],
+        "locations": [
+          "Sindh",
+          "Deccan",
+          "Eastern Region"
+        ],
         "significance": 5,
         "remarks": "Rise of three polities, Focus on Education, Scientific Growth and Civic Rights"
       },
@@ -70,8 +85,17 @@
       "slug": "1850-1895-era-of-divergence",
       "metadata": {
         "event_type": "era",
-        "impacts": ["economic", "political", "social", "military", "infrastructure"],
-        "locations": ["Eastern Region", "Hill Country"],
+        "impacts": [
+          "economic",
+          "political",
+          "social",
+          "military",
+          "infrastructure"
+        ],
+        "locations": [
+          "Eastern Region",
+          "Hill Country"
+        ],
         "significance": 5,
         "remarks": "Unions, sects and groupism emerge. Growing discontent with monarchies"
       },
@@ -94,8 +118,15 @@
       "slug": "1905-sindhu-dakhin-concord",
       "metadata": {
         "event_type": "governance",
-        "impacts": ["military", "infrastructure"],
-        "locations": ["Sindh", "Deccan", "Eastern Region"],
+        "impacts": [
+          "military",
+          "infrastructure"
+        ],
+        "locations": [
+          "Sindh",
+          "Deccan",
+          "Eastern Region"
+        ],
         "significance": 4,
         "remarks": "Key alliance between Sindh and Dakhin to unite their polities"
       },
@@ -118,8 +149,19 @@
       "slug": "1910-1975-democratic-republic-of-bharatvarsh",
       "metadata": {
         "event_type": "governance",
-        "impacts": ["economic", "political", "social", "military", "infrastructure", "technological"],
-        "locations": ["Sindh", "Deccan", "Eastern Region"],
+        "impacts": [
+          "economic",
+          "political",
+          "social",
+          "military",
+          "infrastructure",
+          "technological"
+        ],
+        "locations": [
+          "Sindh",
+          "Deccan",
+          "Eastern Region"
+        ],
         "significance": 5,
         "remarks": "Democratic era with elected leaders - largest buildout in history"
       },
@@ -142,8 +184,17 @@
       "slug": "1975-1985-decade-of-civil-war",
       "metadata": {
         "event_type": "conflict",
-        "impacts": ["economic", "political", "social", "military", "infrastructure"],
-        "locations": ["Eastern Region", "All Regions"],
+        "impacts": [
+          "economic",
+          "political",
+          "social",
+          "military",
+          "infrastructure"
+        ],
+        "locations": [
+          "Eastern Region",
+          "All Regions"
+        ],
         "significance": 4,
         "remarks": "Riots and sectarian conflicts fueled by Eastern conspirators"
       },
@@ -166,8 +217,14 @@
       "slug": "1985-year-turn-decree",
       "metadata": {
         "event_type": "political",
-        "impacts": ["political", "social", "military"],
-        "locations": ["All Regions"],
+        "impacts": [
+          "political",
+          "social",
+          "military"
+        ],
+        "locations": [
+          "All Regions"
+        ],
         "significance": 5,
         "remarks": "Army established executive control to end bloodshed and civil war"
       },
@@ -181,17 +238,25 @@
       "id": 8,
       "title": "Era of the Mesh",
       "date": {
-        "original": "1985 AD to 2025 AD",
+        "original": "1985 AD to 2022 AD",
         "start_year": 1985,
-        "end_year": 2025,
+        "end_year": 2022,
         "is_range": true
       },
-      "description": "From 1985 to 2025, governance fused with infrastructure. National ID seeded biometric wallets; ration, transit, and benefits gates authenticated in under a second; cameras and license readers formed a lattice from bazaars to expressways. Fines autodebited; subsidies arrived predictably; petty corruption collapsed. So did anonymity. The mesh optimized freight, water, and tax flow and simplified access to services, while setting thresholds on assembly and speech. Education, health, and civic records synchronized across districts. For most citizens, stability felt ordinary again, defined by reliability, queues that moved, and a constant awareness of being accounted for.",
+      "description": "From 1985 to 2022, governance fused with infrastructure. National ID seeded biometric wallets; ration, transit, and benefits gates authenticated in under a second; cameras and license readers formed a lattice from bazaars to expressways. Fines autodebited; subsidies arrived predictably; petty corruption collapsed. So did anonymity. The mesh optimized freight, water, and tax flow and simplified access to services, while setting thresholds on assembly and speech. Education, health, and civic records synchronized across districts. For most citizens, stability felt ordinary again, defined by reliability, queues that moved, and a constant awareness of being accounted for.",
       "slug": "1985-2025-era-of-the-mesh",
       "metadata": {
         "event_type": "era",
-        "impacts": ["political", "social", "military", "infrastructure", "technological"],
-        "locations": ["All Regions"],
+        "impacts": [
+          "political",
+          "social",
+          "military",
+          "infrastructure",
+          "technological"
+        ],
+        "locations": [
+          "All Regions"
+        ],
         "significance": 5,
         "remarks": "4 decades of stability under military control and surveillance infrastructure"
       },
@@ -205,17 +270,23 @@
       "id": 9,
       "title": "20-10 Bombings",
       "date": {
-        "original": "2025 AD",
-        "start_year": 2025,
-        "end_year": 2025,
+        "original": "2022 AD",
+        "start_year": 2022,
+        "end_year": 2022,
         "is_range": false
       },
-      "description": "In 2025, the calm cracked. A synchronized bombing campaign, remembered for its \"20-10\" signature, struck critical sites across multiple regions within a narrow window. Decoys drew responders off-route while timed devices targeted stations, markets, and administrative hubs. Casualties were limited compared with older wars, yet the psychological rupture was profound. Commuters changed habits, offices added redundancies, and local councils revived contingency drills. The state answered with audits, tightened perimeter rules, and temporary blackouts in data corridors. The attacks exposed seams in the mesh and changed how cities measured risk in everyday routines.",
+      "description": "In 2022, the calm cracked. A synchronized bombing campaign, remembered for its \"20-10\" signature, struck critical sites across multiple regions within a narrow window. Decoys drew responders off-route while timed devices targeted stations, markets, and administrative hubs. Casualties were limited compared with older wars, yet the psychological rupture was profound. Commuters changed habits, offices added redundancies, and local councils revived contingency drills. The state answered with audits, tightened perimeter rules, and temporary blackouts in data corridors. The attacks exposed seams in the mesh and changed how cities measured risk in everyday routines.",
       "slug": "2025-20-10-bombings",
       "metadata": {
         "event_type": "conflict",
-        "impacts": ["economic", "military", "infrastructure"],
-        "locations": ["Multiple Regions"],
+        "impacts": [
+          "economic",
+          "military",
+          "infrastructure"
+        ],
+        "locations": [
+          "Multiple Regions"
+        ],
         "significance": 4,
         "remarks": "First act of terrorism after 4 decades of peace - story catalyst"
       },

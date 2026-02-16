@@ -313,6 +313,14 @@ export interface LoreItemMedia {
   banner: string;
 }
 
+export interface LoreHotspot {
+  id: string;
+  x: number; // Percentage 0-100
+  y: number; // Percentage 0-100
+  label: string;
+  description?: string;
+}
+
 export interface LoreItem {
   id: string;
   name: string;
@@ -322,6 +330,11 @@ export interface LoreItem {
   subtype: string;
   tagline: string;
   description: string;
+  redactedDescription?: string; // For the "decrypt" effect
+  quote?: string;
+  quoteAuthor?: string;
+  hotspots?: LoreHotspot[]; // Visual anchors
+
   traits?: string[];
   specifications?: string;
   media: LoreItemMedia;

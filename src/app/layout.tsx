@@ -107,6 +107,7 @@ export default function RootLayout({
         <Providers>
           <EventTrackingProvider>
             <LayoutProvider
+              header={<Header />}
               atmosphericEffects={{
                 enableGrain: true,
                 enableParticles: true,
@@ -120,7 +121,6 @@ export default function RootLayout({
                 duration: 0.35,
               }}
             >
-              <Header />
               <main className="pt-16 md:pt-20">
                 {children}
               </main>
