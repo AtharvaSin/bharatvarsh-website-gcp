@@ -14,6 +14,7 @@ steps:
         echo "NEXT_PUBLIC_FORUM_ENABLED=true" >> .env
         echo "NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true" >> .env
         echo "NEXT_PUBLIC_RATE_LIMIT_ENABLED=true" >> .env
+        echo "NEXT_PUBLIC_LIVEKIT_URL=${_LIVEKIT_URL}" >> .env
         
         npm ci
         npx prisma generate
@@ -37,6 +38,23 @@ steps:
       - 'push'
       - '--all-tags'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh'
+
+  # Step 3a: Build Agent Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:${SHORT_SHA}'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:latest'
+      - 'agent-service'
+
+  # Step 3b: Push Agent Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent'
 
   # Step 4: Deploy canary revision (no traffic)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -68,7 +86,7 @@ steps:
       - '--no-traffic'
       - '--tag'
       - 'canary'
-      - '--set-secrets=RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,AUTH_SECRET=AUTH_SECRET:latest,NEXTAUTH_SECRET=AUTH_SECRET:latest,DATABASE_URL=DATABASE_URL:latest,DIRECT_DATABASE_URL=DIRECT_DATABASE_URL:latest'
+      - '--set-secrets=RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,AUTH_SECRET=AUTH_SECRET:latest,NEXTAUTH_SECRET=AUTH_SECRET:latest,DATABASE_URL=DATABASE_URL:latest,DIRECT_DATABASE_URL=DIRECT_DATABASE_URL:latest,LIVEKIT_API_KEY=LIVEKIT_API_KEY:latest,LIVEKIT_API_SECRET=LIVEKIT_API_SECRET:latest'
       - '--set-env-vars=AUTH_TRUST_HOST=true,AUTH_URL=https://welcometobharatvarsh.com,NEXTAUTH_URL=https://welcometobharatvarsh.com,VERTEX_AI_PROJECT=${PROJECT_ID},VERTEX_AI_LOCATION=${_REGION},NEXT_PUBLIC_AI_MODERATION_ENABLED=true'
 
   # Step 5: Route 10% traffic to canary
@@ -176,12 +194,42 @@ steps:
 
         echo "Canary promoted to 100% traffic. Deployment complete."
 
+  # Step 9: Deploy Agent Service
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'deploy-agent'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - '${_SERVICE_NAME}-agent'
+      - '--image'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:${SHORT_SHA}'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--min-instances'
+      - '1'
+      - '--max-instances'
+      - '1'
+      - '--memory'
+      - '512Mi'
+      - '--cpu'
+      - '1'
+      - '--no-cpu-throttling'
+      - '--set-secrets=LIVEKIT_API_KEY=LIVEKIT_API_KEY:latest,LIVEKIT_API_SECRET=LIVEKIT_API_SECRET:latest,OPENAI_API_KEY=OPENAI_API_KEY:latest,INTERNAL_API_SECRET=INTERNAL_API_SECRET:latest'
+      - '--set-env-vars=LIVEKIT_URL=${_LIVEKIT_URL},INTERNAL_API_URL=${_INTERNAL_API_URL}'
+
 substitutions:
   _REGION: us-central1
   _REPO_NAME: bharatvarsh
   _SERVICE_NAME: bharatvarsh-website
   _CLOUD_SQL_INSTANCE: 'bharatvarsh-website:us-central1:bharatvarsh-db'
+  _CLOUD_SQL_INSTANCE: 'bharatvarsh-website:us-central1:bharatvarsh-db'
   _CANARY_SOAK_SECONDS: '120'
+  _LIVEKIT_URL: 'wss://bharatvarsh-website-ljazyvnb.livekit.cloud'
+  _INTERNAL_API_URL: 'https://welcometobharatvarsh.com/api/internal/rag'
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -189,3 +237,5 @@ options:
 images:
   - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:${SHORT_SHA}'
   - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:latest'
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:${SHORT_SHA}'
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:latest'

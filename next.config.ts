@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
         },
         {
           key: 'Permissions-Policy',
-          value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+          value: 'camera=(), microphone=(self), geolocation=(), interest-cohort=()',
         },
         {
           key: 'Content-Security-Policy',
@@ -41,7 +41,7 @@ const nextConfig: NextConfig = {
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "img-src 'self' data: blob: https:",
             "font-src 'self' https://fonts.gstatic.com data:",
-            "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com https://accounts.google.com https://oauth2.googleapis.com",
+            "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com https://accounts.google.com https://oauth2.googleapis.com https://*.livekit.cloud wss://*.livekit.cloud",
             "frame-ancestors 'none'",
             "base-uri 'self'",
             "form-action 'self' https://accounts.google.com",

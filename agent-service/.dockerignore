@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+.env.local
+.env
+test_*.py
+check_*.py
+inspect_*.py
+verify_*.py

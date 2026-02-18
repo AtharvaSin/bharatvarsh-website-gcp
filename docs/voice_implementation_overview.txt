@@ -1,0 +1,45 @@
+BHOOMI VOICE AGENT IMPLEMENTATION OVERVIEW
+==========================================
+
+1. ARCHITECTURE OVERVIEW
+------------------------
+The Bhoomi Voice Agent is built using a real-time, bidirectional audio architecture powered by LiveKit Cloud and OpenAI's GPT-4o Realtime API.
+
+Components:
+- Frontend: Next.js + @livekit/components-react
+- Backend Agent: Python + livekit-agents + OpenAI Realtime Model
+- Signaling: LiveKit Cloud (Global Mesh)
+- LLM: GPT-4o-Realtime-Preview
+
+2. FRONTEND IMPLEMENTATION (Next.js)
+------------------------------------
+- VoiceWidget.tsx: The primary interface for voice interactions.
+  - useVoiceAssistant(): Custom LiveKit hook used to track agent state ('listening', 'thinking', 'speaking').
+  - BarVisualizer: Provides real-time audio waveform visualization when the agent is speaking.
+  - Animated Orb: A state-responsive UI element that changes color and pulse speed based on whether the agent is listening (green), thinking (blue), or speaking (mustard).
+  - Transcription: Displays live text segments of what the agent is saying.
+  - Permissions Handling: Configured Permissions-Policy and CSP headers in next.config.ts to allow microphone access (microphone=(self)).
+
+- API Endpoint (/api/livekit):
+  - Generates short-lived JWT access tokens for users to join a unique LiveKit room.
+  - Assigns unique room IDs (bhoomi-XXXX) and participant identities.
+
+3. BACKEND AGENT IMPLEMENTATION (Python)
+----------------------------------------
+- agent-service/main.py:
+  - Connects to the same LiveKit room as the user.
+  - Uses Silero VAD (Voice Activity Detection) to detect when the user starts/stops speaking.
+  - RealtimeModel: Connects to OpenAI's gpt-4o-realtime-preview for low-latency voice-to-voice interaction.
+  - LoreTool: Integrated RAG system that allows the voice agent to query the "Bharatvarsh" lore database (Vector DB) during conversation.
+  - Persona: Guided by BHOOMI_SYSTEM_PROMPT ("Historic Research Scholar from the Mesh Era").
+
+4. KEY FIXES & OPTIMIZATIONS
+----------------------------
+- Permissions-Policy: Updated next.config.ts to resolve "microphone not allowed" browser errors.
+- Event Handling: Migrated from enum-based event listeners to string literal listeners ('muted', 'unmuted') for better runtime stability.
+- UI Responsiveness: Implemented a manual "Click to Enable Mic" fallback for browsers that block auto-start of audio.
+
+5. SECURITY & CORS
+------------------
+- Content Security Policy (CSP): Updated to allow connections to *.livekit.cloud and wss://*.livekit.cloud.
+- Access Control: Tokens are restricted to specific rooms with participant-only permissions.

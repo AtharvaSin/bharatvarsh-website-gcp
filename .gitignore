@@ -46,3 +46,8 @@ nul
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python (agent-service)
+**/venv/
+**/__pycache__/
+*.pyc

@@ -103,7 +103,10 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${bebasNeue.variable} ${crimsonPro.variable} ${notoSansDevanagari.variable}`}
     >
-      <body className="min-h-screen bg-[var(--obsidian-900)] text-[var(--text-primary)] antialiased">
+      <body
+        className="min-h-screen bg-[var(--obsidian-900)] text-[var(--text-primary)] antialiased"
+        suppressHydrationWarning
+      >
         <Providers>
           <EventTrackingProvider>
             <LayoutProvider
