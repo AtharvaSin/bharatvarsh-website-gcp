@@ -30,6 +30,8 @@ steps:
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:latest'
       - '--build-arg'
       - 'NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_LIVEKIT_URL=${_LIVEKIT_URL}'
       - '.'
 
   # Step 3: Push to Artifact Registry
