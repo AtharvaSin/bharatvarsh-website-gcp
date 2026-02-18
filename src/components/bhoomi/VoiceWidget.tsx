@@ -9,6 +9,7 @@ import {
     AgentState,
 } from '@livekit/components-react';
 import { useCallback, useEffect, useState, useMemo } from 'react';
+import { ParticipantEvent } from 'livekit-client';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Mic, MicOff, X, Loader2, Phone } from 'lucide-react';
 import '@livekit/components-styles';
@@ -164,10 +165,10 @@ function VoiceSession({ onClose }: { onClose?: () => void }) {
         if (!localParticipant) return;
         const update = () => setIsMicEnabled(localParticipant.isMicrophoneEnabled);
         update();
-        localParticipant.on('muted', update);
-        localParticipant.on('unmuted', update);
-        localParticipant.on('localTrackPublished', update);
-        localParticipant.on('localTrackUnpublished', update);
+        localParticipant.on(ParticipantEvent.TrackMuted, update);
+        localParticipant.on(ParticipantEvent.TrackUnmuted, update);
+        localParticipant.on(ParticipantEvent.LocalTrackPublished, update);
+        localParticipant.on(ParticipantEvent.LocalTrackUnpublished, update);
 
         // Auto-enable 
         if (!localParticipant.isMicrophoneEnabled) {
@@ -175,10 +176,10 @@ function VoiceSession({ onClose }: { onClose?: () => void }) {
         }
 
         return () => {
-            localParticipant.off('muted', update);
-            localParticipant.off('unmuted', update);
-            localParticipant.off('localTrackPublished', update);
-            localParticipant.off('localTrackUnpublished', update);
+            localParticipant.off(ParticipantEvent.TrackMuted, update);
+            localParticipant.off(ParticipantEvent.TrackUnmuted, update);
+            localParticipant.off(ParticipantEvent.LocalTrackPublished, update);
+            localParticipant.off(ParticipantEvent.LocalTrackUnpublished, update);
         };
     }, [localParticipant]);
 
@@ -347,8 +348,8 @@ function VoiceSession({ onClose }: { onClose?: () => void }) {
                     whileTap={{ scale: 0.9 }}
                     onClick={toggleMic}
                     className={`p-4 rounded-full transition-all duration-300 ${isMicEnabled
-                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30'
-                            : 'bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30'
+                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30'
+                        : 'bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30'
                         }`}
                     title={isMicEnabled ? 'Mute Microphone' : 'Unmute Microphone'}
                 >
