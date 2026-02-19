@@ -7,6 +7,7 @@ import { LayoutProvider } from '@/shared/layout/LayoutProvider';
 import { Providers } from './providers';
 import { BhoomiWidget } from '@/components/bhoomi/BhoomiWidget';
 import { EventTrackingProvider } from '@/components/tracking/EventTrackingProvider';
+import { WebSiteJsonLd } from '@/components/seo/json-ld';
 import './globals.css';
 
 const inter = Inter({
@@ -44,7 +45,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://bharatvarsh-website.vercel.app'),
+  metadataBase: new URL('https://welcometobharatvarsh.com'),
   title: {
     default: 'Bharatvarsh - An Alternate Reality Thriller',
     template: '%s | Bharatvarsh',
@@ -53,19 +54,28 @@ export const metadata: Metadata = {
     'A military prince is given a case of national importance whose investigation forces him to cross boundaries of nations and generations, uncovering deep dark secrets about the military and himself.',
   keywords: [
     'Bharatvarsh',
+    'Mahabharatvarsh',
     'alternate history',
-    'thriller',
-    'India',
-    'novel',
-    'military',
-    'conspiracy',
+    'alternate history India',
+    'Indian thriller novel',
+    'political thriller',
+    'dystopian India novel',
+    'military sci-fi',
+    'techno-thriller',
+    'cyberpunk India',
+    'speculative fiction India',
+    'what if India was never colonized',
+    'Atharva Singh',
+    'Kahaan Arshad',
+    'surveillance thriller',
+    'Indian military fiction',
   ],
-  authors: [{ name: 'Bharatvarsh Author' }],
+  authors: [{ name: 'Atharva Singh', url: 'https://welcometobharatvarsh.com' }],
   openGraph: {
     title: 'Bharatvarsh - An Alternate Reality Thriller',
     description:
       'A military prince is given a case of national importance whose investigation forces him to cross boundaries of nations and generations.',
-    url: 'https://bharatvarsh-website.vercel.app',
+    url: 'https://welcometobharatvarsh.com',
     siteName: 'Bharatvarsh',
     locale: 'en_US',
     type: 'website',
@@ -109,6 +119,7 @@ export default function RootLayout({
       >
         <Providers>
           <EventTrackingProvider>
+            <WebSiteJsonLd />
             <LayoutProvider
               header={<Header />}
               atmosphericEffects={{

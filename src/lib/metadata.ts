@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
  */
 export const siteConfig = {
   name: 'Bharatvarsh',
-  url: 'https://bharatvarsh-website.vercel.app',
+  url: 'https://welcometobharatvarsh.com',
   defaultImage: '/images/novel-cover.png',
   description:
     'A military prince is given a case of national importance whose investigation forces him to cross boundaries of nations and generations, uncovering deep dark secrets about the military and himself.',
@@ -47,6 +47,9 @@ export function createPageMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: pageUrl,
+    },
     openGraph: {
       title: `${title} | ${siteConfig.name}`,
       description,

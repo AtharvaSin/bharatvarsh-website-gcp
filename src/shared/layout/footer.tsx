@@ -11,19 +11,18 @@ interface FooterProps {
 const footerLinks = {
   explore: [
     { label: 'Characters', href: '/lore' },
-    { label: 'Factions', href: '/lore/factions' },
-    { label: 'Locations', href: '/lore/locations' },
+    { label: 'Factions', href: '/lore' },
+    { label: 'Locations', href: '/lore' },
     { label: 'Timeline', href: '/timeline' },
   ],
   about: [
-    { label: 'The Novel', href: '#novel' },
-    { label: 'The Author', href: '#author' },
-    { label: 'Press Kit', href: '#press' },
+    { label: 'The Novel', href: '/novel' },
+    { label: 'The Author', href: '/novel' },
+    { label: 'Forum', href: '/forum' },
   ],
   connect: [
-    { label: 'Newsletter', href: '#newsletter' },
-    { label: 'Twitter/X', href: '#twitter' },
-    { label: 'Instagram', href: '#instagram' },
+    { label: 'Twitter/X', href: 'https://x.com/bharatvarsh_' },
+    { label: 'Instagram', href: 'https://instagram.com/bharatvarsh_official' },
   ],
 };
 
