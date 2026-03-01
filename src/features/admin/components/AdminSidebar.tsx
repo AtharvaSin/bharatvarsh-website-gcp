@@ -105,51 +105,46 @@ export const AdminSidebar: FC<AdminSidebarProps> = ({ userName }) => {
             </aside>
 
             {/* Mobile top bar */}
-            <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-[var(--obsidian-850)] border-b border-[var(--obsidian-700)] z-40 flex items-center px-4">
-                <button
-                    onClick={() => setMobileOpen(!mobileOpen)}
-                    className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                    aria-label="Toggle menu"
-                >
-                    {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                </button>
-                <div className="flex items-center gap-2 ml-2">
-                    <Shield className="w-4 h-4 text-[var(--mustard-500)]" />
-                    <span className="font-display text-lg text-[var(--powder-300)]">
+            <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-[var(--obsidian-850)] border-b border-[var(--obsidian-700)] z-40 flex items-center justify-between px-4">
+                <div className="flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-[var(--mustard-500)]" />
+                    <span className="font-display text-lg tracking-wide text-[var(--powder-300)]">
                         BHARATVARSH
                     </span>
-                    <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-[var(--mustard-500)]">
+                    <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-[var(--mustard-500)] ml-1">
                         Admin
                     </span>
                 </div>
+                <div className="w-8 h-8 rounded-full bg-[var(--obsidian-700)] flex items-center justify-center text-xs font-medium text-[var(--powder-300)]">
+                    {userName.charAt(0).toUpperCase()}
+                </div>
             </div>
 
-            {/* Mobile slide-out */}
-            <AnimatePresence>
-                {mobileOpen && (
-                    <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="md:hidden fixed inset-0 bg-black/60 z-40"
-                            onClick={() => setMobileOpen(false)}
-                        />
-                        <motion.aside
-                            initial={{ x: -240 }}
-                            animate={{ x: 0 }}
-                            exit={{ x: -240 }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="md:hidden fixed left-0 top-0 bottom-0 w-60 flex flex-col bg-[var(--obsidian-850)] border-r border-[var(--obsidian-700)] z-50"
+            {/* Mobile bottom tab bar */}
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[var(--obsidian-850)]/95 backdrop-blur-xl border-t border-[var(--obsidian-700)] z-50 flex items-center justify-around px-2 pb-safe">
+                {navItems.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActive(item.href);
+                    return (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className={cn(
+                                'flex flex-col items-center justify-center gap-1 w-full h-full transition-colors',
+                                active ? 'text-[var(--mustard-500)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                            )}
                         >
-                            <NavContent />
-                        </motion.aside>
-                    </>
-                )}
-            </AnimatePresence>
+                            <Icon className={cn("w-5 h-5", active ? "scale-110 transition-transform" : "")} />
+                            <span className="text-[10px] font-medium tracking-wide">{item.label}</span>
+                        </Link>
+                    );
+                })}
+            </nav>
 
-            {/* Mobile spacer */}
+            {/* Mobile spacers for scrolling content */}
             <div className="md:hidden h-14" />
+            {/* The bottom spacer will be needed on the main content area, but we add it here just in case AdminLayout relies on it */}
+            <div className="md:hidden h-16" />
         </>
     );
 };

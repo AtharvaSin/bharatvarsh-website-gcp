@@ -117,32 +117,40 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: '100dvh' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-[var(--obsidian-900)] border-t border-[var(--obsidian-700)] overflow-hidden"
+            className="md:hidden fixed top-0 left-0 right-0 bottom-0 z-[var(--z-header-menu)] bg-black/90 backdrop-blur-2xl overflow-y-auto pt-20"
           >
-            <nav className="px-4 py-4 space-y-1 safe-area-x">
+            <nav className="px-4 py-8 space-y-2 safe-area-x flex flex-col items-center">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'block px-4 py-3 text-base font-medium rounded-lg transition-colors',
+                    'block w-full max-w-sm text-center px-4 py-4 text-lg font-display tracking-wide rounded-lg transition-all',
                     pathname === item.href ||
                       (item.href !== '/' && pathname.startsWith(item.href))
-                      ? 'text-[var(--mustard-500)] bg-[var(--obsidian-800)]'
-                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--obsidian-800)]'
+                      ? 'text-[var(--mustard-500)] bg-[var(--obsidian-800)]/80 border border-[var(--mustard-500)]/30'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--obsidian-800)]/50'
                   )}
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="pt-4 space-y-2">
-                <Button variant="primary" className="w-full">
+              <div className="pt-8 space-y-4 w-full max-w-sm">
+                <Button variant="primary" className="w-full py-6 text-lg">
                   Buy Now
                 </Button>
-                <SignInButton className="w-full" />
+                <div className="flex justify-center">
+                  <SignInButton />
+                </div>
+              </div>
+
+              {/* Lore Accurate Watermark */}
+              <div className="mt-12 text-center pointer-events-none opacity-20">
+                <span className="font-mono text-[10px] text-[var(--powder-300)] uppercase tracking-widest block mb-1">Mesh Node Connected</span>
+                <span className="font-mono text-[10px] text-[var(--mustard-500)] uppercase tracking-widest">Order Feeds All</span>
               </div>
             </nav>
           </motion.div>

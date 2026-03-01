@@ -62,7 +62,7 @@ export function LoreContent() {
             <AnimatePresence mode="popLayout">
               {filteredItems.map((item, index) => (
                 <motion.div
-                  key={item.id}
+                  key={`${item.id}-${index}`}
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -77,9 +77,10 @@ export function LoreContent() {
 
           {/* Empty State */}
           {filteredItems.length === 0 && (
-            <div className="py-16 text-center">
+            <div className="py-16 text-center space-y-2">
+              <span className="font-mono text-[10px] text-[var(--mustard-500)] uppercase tracking-widest block">Order Feeds All</span>
               <p className="text-[var(--text-muted)]">
-                No items found in this category.
+                No active records found for this classification.
               </p>
             </div>
           )}

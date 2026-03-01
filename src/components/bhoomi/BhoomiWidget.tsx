@@ -22,7 +22,7 @@ export function BhoomiWidget() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="mb-4 w-[350px] md:w-[400px] h-[500px] shadow-2xl rounded-xl overflow-hidden backdrop-blur-sm origin-bottom-right pointer-events-auto"
+                        className="mb-4 w-[calc(100vw-3rem)] sm:w-[350px] md:w-[400px] h-[60vh] sm:h-[500px] max-h-[800px] shadow-2xl rounded-xl overflow-hidden backdrop-blur-sm origin-bottom-right pointer-events-auto"
                     >
                         {mode === 'text' ? (
                             <ChatInterface mode="widget" onClose={close} />
@@ -63,9 +63,9 @@ export function BhoomiWidget() {
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: 10 }}
-                                className="absolute right-full mr-6 top-1/2 -translate-y-1/2 w-72 pointer-events-none"
+                                className="absolute right-full mr-4 md:mr-6 top-1/2 -translate-y-1/2 w-48 md:w-72 pointer-events-none hidden sm:block"
                             >
-                                <div className="bg-[var(--obsidian-900)]/95 border border-[var(--obsidian-700)] text-[var(--text-secondary)] text-xs p-4 rounded-sm shadow-[0_0_15px_rgba(0,0,0,0.5)] relative backdrop-blur-md font-mono tracking-wide">
+                                <div className="bg-[var(--obsidian-900)]/95 border border-[var(--obsidian-700)] text-[var(--text-secondary)] text-xs p-3 md:p-4 rounded-sm shadow-[0_0_15px_rgba(0,0,0,0.5)] relative backdrop-blur-md font-mono tracking-wide">
                                     <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[var(--obsidian-800)]">
                                         <div className="w-1.5 h-1.5 bg-[var(--mustard-500)] rounded-full animate-pulse" />
                                         <span className="text-[10px] uppercase text-[var(--mustard-500)] tracking-widest">Incoming Transmission</span>

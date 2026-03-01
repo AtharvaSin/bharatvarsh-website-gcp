@@ -23,7 +23,7 @@ export const TimelineFilter: FC<TimelineFilterProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('flex flex-wrap items-center gap-2', className)}>
+    <div className={cn('flex items-center gap-2 overflow-x-auto hide-scrollbar whitespace-nowrap pb-2 w-full mask-linear-fade', className)} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
       <span className="text-sm text-[var(--text-muted)] mr-2">Filter:</span>
 
       <button

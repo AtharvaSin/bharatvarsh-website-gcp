@@ -71,16 +71,16 @@ function NovelPageInner() {
         />
 
         {/* Decorative elements - enhanced */}
-        <div className="absolute inset-0 opacity-25 pointer-events-none">
+        <div className="absolute inset-0 opacity-25 pointer-events-none overflow-hidden">
           <motion.div
             animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
             transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-20 left-10 w-72 h-72 bg-[var(--mustard-500)] rounded-full blur-[128px]"
+            className="absolute top-10 md:top-20 -left-10 md:left-10 w-48 md:w-72 h-48 md:h-72 bg-[var(--mustard-500)] rounded-full blur-[80px] md:blur-[128px]"
           />
           <motion.div
             animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
             transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-            className="absolute bottom-20 right-10 w-96 h-96 bg-[var(--powder-500)] rounded-full blur-[128px]"
+            className="absolute bottom-10 md:bottom-20 -right-10 md:right-10 w-64 md:w-96 h-64 md:h-96 bg-[var(--powder-500)] rounded-full blur-[80px] md:blur-[128px]"
           />
         </div>
 
@@ -178,7 +178,7 @@ function NovelPageInner() {
                 {data.novel.tagline}
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                 {data.purchase.available ? (
                   data.purchase.platforms.map((platform) => (
                     <a
@@ -186,8 +186,9 @@ function NovelPageInner() {
                       href={platform.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="w-full sm:w-auto"
                     >
-                      <Button variant={platform.name.includes('Notion') ? 'primary' : 'outline'} size="lg">
+                      <Button variant={platform.name.includes('Notion') ? 'primary' : 'outline'} size="lg" className="w-full">
                         {platform.name.includes('Notion') ? (
                           <BookOpen className="w-5 h-5 mr-2" />
                         ) : (
@@ -198,13 +199,13 @@ function NovelPageInner() {
                     </a>
                   ))
                 ) : (
-                  <Button variant="primary" size="lg">
+                  <Button variant="primary" size="lg" className="w-full sm:w-auto">
                     <Mail className="w-5 h-5 mr-2" />
                     Get Notified
                   </Button>
                 )}
-                <Link href="/lore">
-                  <Button variant="secondary" size="lg">
+                <Link href="/lore" className="w-full sm:w-auto">
+                  <Button variant="secondary" size="lg" className="w-full">
                     <BookOpen className="w-5 h-5 mr-2" />
                     Explore the World
                   </Button>
