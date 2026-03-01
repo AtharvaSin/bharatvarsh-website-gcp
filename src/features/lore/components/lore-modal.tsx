@@ -297,7 +297,7 @@ export const LoreModal: FC<LoreModalProps> = ({ item, isOpen, onClose }) => {
                     {(item.quote || item.tagline) && (
                       <div className="relative p-6 bg-[var(--mustard-500)]/5 border-l-2 border-[var(--mustard-500)]">
                         <p className="font-display italic text-[var(--text-primary)] text-lg leading-relaxed">
-                          "{item.quote || item.tagline}"
+                          &quot;{item.quote || item.tagline}&quot;
                         </p>
                         {item.quoteAuthor && (
                           <p className="mt-3 text-xs font-mono text-[var(--text-muted)] tracking-widest uppercase">
@@ -345,7 +345,7 @@ export const LoreModal: FC<LoreModalProps> = ({ item, isOpen, onClose }) => {
                 {/* Footer Data Bar */}
                 <div className="h-8 mt-auto bg-[var(--obsidian-950)] border-t border-[var(--obsidian-800)] flex items-center px-8 justify-between text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-widest opacity-50">
                   <span>SECURE CONNECTION ESTABLISHED</span>
-                  <span>DATALINK: {Math.random().toString(36).substr(2, 6).toUpperCase()} // NODE: INDRAPUR-01</span>
+                  <span>DATALINK: {item.id.substring(0, 6).toUpperCase()}-{item.category.substring(0, 3).toUpperCase()} // NODE: INDRAPUR-01</span>
                 </div>
               </div>
 

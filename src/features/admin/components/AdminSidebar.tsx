@@ -34,7 +34,7 @@ export const AdminSidebar: FC<AdminSidebarProps> = ({ userName }) => {
     const isActive = (href: string) =>
         href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
 
-    const NavContent = () => (
+    const renderNavContent = () => (
         <>
             {/* Logo */}
             <div className="px-5 pt-6 pb-4">
@@ -101,7 +101,7 @@ export const AdminSidebar: FC<AdminSidebarProps> = ({ userName }) => {
         <>
             {/* Desktop sidebar */}
             <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-60 flex-col bg-[var(--obsidian-850)] border-r border-[var(--obsidian-700)] z-40">
-                <NavContent />
+                {renderNavContent()}
             </aside>
 
             {/* Mobile top bar */}

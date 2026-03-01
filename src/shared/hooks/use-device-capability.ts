@@ -77,7 +77,7 @@ export function useDeviceCapability(): DeviceCapabilities {
 
       // Check for slow connection
       const slowConnection = nav.connection?.effectiveType === 'slow-2g' ||
-                            nav.connection?.effectiveType === '2g';
+        nav.connection?.effectiveType === '2g';
 
       // Determine capability level
       let capability: DeviceCapability = 'medium';
@@ -117,6 +117,7 @@ export function useDeviceCapability(): DeviceCapabilities {
       };
     };
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCapabilities(detectCapabilities());
 
     // Re-check on resize (viewport size affects capability detection)

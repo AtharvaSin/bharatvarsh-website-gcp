@@ -88,7 +88,7 @@ export function ChatInterface({ mode = 'page', onClose }: ChatInterfaceProps) {
 
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
-            let assistantMsg: Message = {
+            const assistantMsg: Message = {
                 id: (Date.now() + 1).toString(),
                 role: 'assistant',
                 content: '',

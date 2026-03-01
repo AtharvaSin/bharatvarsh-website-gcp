@@ -32,6 +32,7 @@ export const TimelineScrollHint: FC<TimelineScrollHintProps> = ({
       }, 800);
       return () => clearTimeout(showTimer);
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsVisible(false);
     }
   }, [visible]);
@@ -68,9 +69,9 @@ export const TimelineScrollHint: FC<TimelineScrollHintProps> = ({
               prefersReducedMotion
                 ? {}
                 : {
-                    scale: [1, 1.4, 1],
-                    opacity: [0.3, 0.6, 0.3],
-                  }
+                  scale: [1, 1.4, 1],
+                  opacity: [0.3, 0.6, 0.3],
+                }
             }
             transition={{
               duration: 2.5,
@@ -89,11 +90,11 @@ export const TimelineScrollHint: FC<TimelineScrollHintProps> = ({
                   prefersReducedMotion
                     ? {}
                     : {
-                        x: isLeft
-                          ? [0, -4 * (index + 1), 0]
-                          : [0, 4 * (index + 1), 0],
-                        opacity: [0.2 + index * 0.2, 0.5 + index * 0.15, 0.2 + index * 0.2],
-                      }
+                      x: isLeft
+                        ? [0, -4 * (index + 1), 0]
+                        : [0, 4 * (index + 1), 0],
+                      opacity: [0.2 + index * 0.2, 0.5 + index * 0.15, 0.2 + index * 0.2],
+                    }
                 }
                 transition={{
                   duration: 1.8,

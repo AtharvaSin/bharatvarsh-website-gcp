@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
             WHERE 1 - (embedding <=> ${vectorQuery}::vector) > 0.5
             ORDER BY embedding <=> ${vectorQuery}::vector
             LIMIT 3;
-        ` as any[];
+        ` as Array<{ id: string, content: string, metadata: { spoiler_tier?: string }, similarity: number }>;
 
         // 4. Filter Context
         const validDocs = similarDocs.filter(doc => {
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
             docCount: validDocs.length
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('[Internal RAG Error]', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }

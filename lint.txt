@@ -1,0 +1,197 @@
+﻿
+> bharatvarsh-website@0.1.0 lint
+> eslint
+
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\fetch-users.js
+  2:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\load-tests\forum-load-test.js
+   80:5  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  107:5  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  134:9  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  145:9  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  163:5  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  206:1  warning  Unexpected default export of anonymous function                        import/no-anonymous-default-export
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\repro-bhoomi-error.ts
+  18:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\scripts\ingest-bhoomi.ts
+   15:7    warning  'turndownService' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   66:23   error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  100:101  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\scripts\test-rag.ts
+  26:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\app\api\chat\route.ts
+   85:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  146:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\app\api\internal\rag\route.ts
+  30:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  48:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\components\bhoomi\BhoomiNavTrigger.tsx
+  73:41   error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  73:135  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\components\bhoomi\chat-interface.tsx
+    5:26  warning  'Shield' is defined but never used                   @typescript-eslint/no-unused-vars
+    5:34  warning  'AlertTriangle' is defined but never used            @typescript-eslint/no-unused-vars
+    5:49  warning  'Eye' is defined but never used                      @typescript-eslint/no-unused-vars
+   41:25  warning  'setSpoilerMode' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  182:47  warning  'node' is defined but never used                     @typescript-eslint/no-unused-vars
+  183:47  warning  'node' is defined but never used                     @typescript-eslint/no-unused-vars
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\admin\components\AdminSidebar.tsx
+    6:10  warning  'motion' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+    6:18  warning  'AnimatePresence' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+   12:5   warning  'Menu' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   13:5   warning  'X' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   32:12  warning  'mobileOpen' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  104:18  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\admin\components\AdminSidebar.tsx:104:18
+  102 |             {/* Desktop sidebar */}
+  103 |             <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-60 flex-col bg-[var(--obsidian-850)] border-r border-[var(--obsidian-700)] z-40">
+> 104 |                 <NavContent />
+      |                  ^^^^^^^^^^ This component is created during render
+  105 |             </aside>
+  106 |
+  107 |             {/* Mobile top bar */}
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\admin\components\AdminSidebar.tsx:37:24
+   35 |         href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
+   36 |
+>  37 |     const NavContent = () => (
+      |                        ^^^^^^^
+>  38 |         <>
+      | ^^^^^^^^^^
+>  39 |             {/* Logo */}
+      ΓÇª
+      | ^^^^^^^^^^
+>  97 |         </>
+      | ^^^^^^^^^^
+>  98 |     );
+      | ^^^^^^ The component is created during render here
+   99 |
+  100 |     return (
+  101 |         <>  react-hooks/static-components
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\auth\components\user-menu.tsx
+  55:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\home\HomeContent.tsx
+  5:84  warning  'ScrollIndicator' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\lore\components\lore-modal.tsx
+    7:44   warning  'AlertTriangle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   44:3    warning  'redactionText' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   46:10   warning  'isHovered' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   47:10   warning  'displayText' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   47:23   warning  'setDisplayText' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   81:105  warning  'description' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  122:9    warning  'audioRef' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  300:27   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react/no-unescaped-entities
+  300:56   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react/no-unescaped-entities
+  348:36   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\lore\components\lore-modal.tsx:348:36
+  346 |                 <div className="h-8 mt-auto bg-[var(--obsidian-950)] border-t border-[var(--obsidian-800)] flex items-center px-8 justify-between text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-widest opacity-50">
+  347 |                   <span>SECURE CONNECTION ESTABLISHED</span>
+> 348 |                   <span>DATALINK: {Math.random().toString(36).substr(2, 6).toUpperCase()} // NODE: INDRAPUR-01</span>
+      |                                    ^^^^^^^^^^^^^ Cannot call impure function
+  349 |                 </div>
+  350 |               </div>
+  351 |  react-hooks/purity
+  348:90   error    Comments inside children section of tag should be placed inside braces                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react/jsx-no-comment-textnodes
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\timeline\components\horizontal\timeline-scroll-hint.tsx
+  35:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\features\timeline\components\horizontal\timeline-scroll-hint.tsx:35:7
+  33 |       return () => clearTimeout(showTimer);
+  34 |     } else {
+> 35 |       setIsVisible(false);
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  36 |     }
+  37 |   }, [visible]);
+  38 |  react-hooks/set-state-in-effect
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\lib\vertex-ai.ts
+  23:5  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  54:5  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\server\auth.ts
+  251:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\server\db.ts
+  22:7  warning  'POOL_SIZE' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  23:7  warning  'POOL_TIMEOUT' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\shared\hooks\use-device-capability.ts
+  120:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\shared\hooks\use-device-capability.ts:120:5
+  118 |     };
+  119 |
+> 120 |     setCapabilities(detectCapabilities());
+      |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  121 |
+  122 |     // Re-check on resize (viewport size affects capability detection)
+  123 |     const handleResize = () => {  react-hooks/set-state-in-effect
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\shared\ui\AdaptiveBackground.tsx
+  68:3  warning  'portraitObjectPosition' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\shared\ui\ResponsiveImage.tsx
+  82:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\shared\ui\ResponsiveImage.tsx:82:7
+  80 |     const newSrc = isPortrait ? portraitSrc : landscapeSrc;
+  81 |     if (newSrc !== currentSrc) {
+> 82 |       setIsLoaded(false);
+     |       ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  83 |       setCurrentSrc(newSrc);
+  84 |     }
+  85 |   }, [isPortrait, portraitSrc, landscapeSrc, currentSrc]);  react-hooks/set-state-in-effect
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\shared\ui\skeleton.tsx
+  6:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\shared\ui\textarea.tsx
+  25:8  warning  React Hook useEffect has a missing dependency: 'handleResize'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\src\types\react-markdown.d.ts
+  15:19  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\ASR\OneDrive\Desktop\Novel\Website\Website Codebases\bharatvarsh-website-main-gcp\test-db.js
+   2:20  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  44:44  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+
+Γ£û 57 problems (25 errors, 32 warnings)
+

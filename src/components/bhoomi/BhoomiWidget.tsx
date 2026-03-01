@@ -1,16 +1,13 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Mic } from 'lucide-react';
-import { useState } from 'react';
+import { Sparkles } from 'lucide-react';
 import { useBhoomiStore } from './store';
 import { ChatInterface } from './chat-interface';
-import { VoiceWidget } from './VoiceWidget';
 import { cn } from '@/shared/utils';
 
 export function BhoomiWidget() {
     const { isOpen, toggle, close } = useBhoomiStore();
-    const [mode, setMode] = useState<'text' | 'voice'>('text');
 
     return (
         <div className="fixed bottom-8 right-6 z-50 flex flex-col items-end pointer-events-none">
@@ -24,36 +21,13 @@ export function BhoomiWidget() {
                         transition={{ duration: 0.2 }}
                         className="mb-4 w-[calc(100vw-3rem)] sm:w-[350px] md:w-[400px] h-[60vh] sm:h-[500px] max-h-[800px] shadow-2xl rounded-xl overflow-hidden backdrop-blur-sm origin-bottom-right pointer-events-auto"
                     >
-                        {mode === 'text' ? (
-                            <ChatInterface mode="widget" onClose={close} />
-                        ) : (
-                            <VoiceWidget onClose={close} />
-                        )}
+                        <ChatInterface mode="widget" onClose={close} />
                     </motion.div>
                 )}
             </AnimatePresence>
 
             {/* Controls Container */}
             <div className="flex items-center gap-4 pointer-events-auto">
-                {/* Voice Toggle (Only visible when open) */}
-                {isOpen && (
-                    <motion.button
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        onClick={() => setMode(mode === 'text' ? 'voice' : 'text')}
-                        className={cn(
-                            "w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-300 shadow-lg pointer-events-auto mr-4",
-                            mode === 'voice'
-                                ? "bg-mustard-900 border-mustard-500 text-mustard-400"
-                                : "bg-obsidian-800 border-obsidian-600 text-zinc-400 hover:text-mustard-400 hover:border-mustard-500/50"
-                        )}
-                        title={mode === 'text' ? "Switch to Voice Mode" : "Switch to Text Chat"}
-                    >
-                        {mode === 'text' ? <Mic size={20} /> : <MessageSquareText size={20} />}
-                    </motion.button>
-                )}
-
                 {/* Main Trigger Button */}
                 <div className="relative group">
                     {/* Tooltip implementation remains same, just hidden for brevity if unchanged logic desired, but including for completeness */}
@@ -70,7 +44,7 @@ export function BhoomiWidget() {
                                         <div className="w-1.5 h-1.5 bg-[var(--mustard-500)] rounded-full animate-pulse" />
                                         <span className="text-[10px] uppercase text-[var(--mustard-500)] tracking-widest">Incoming Transmission</span>
                                     </div>
-                                    <p className="italic text-[var(--powder-200)] leading-relaxed">"This reality is vast and strange. Shall I be your guide through the mysteries of Bharatvarsh?"</p>
+                                    <p className="italic text-[var(--powder-200)] leading-relaxed">&quot;This reality is vast and strange. Shall I be your guide through the mysteries of Bharatvarsh?&quot;</p>
                                     <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[var(--mustard-500)]" />
                                     <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[var(--mustard-500)]" />
                                     <div className="absolute top-1/2 -right-6 w-6 h-px bg-[var(--obsidian-700)]" />
@@ -126,25 +100,5 @@ export function BhoomiWidget() {
                 </div>
             </div>
         </div>
-    );
-}
-
-function MessageSquareText({ size }: { size: number }) {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={size}
-            height={size}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            <path d="M13 8H7" />
-            <path d="M17 12H7" />
-        </svg>
     );
 }

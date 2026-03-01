@@ -1,7 +1,7 @@
 
 import { PrismaClient } from '@prisma/client';
 import { getEmbedding, streamContent } from '../src/lib/vertex-ai';
-import { BHOOMI_SYSTEM_PROMPT } from '../src/lib/bhoomi-config';
+import { getBhoomiSystemPrompt } from '../src/lib/bhoomi-config';
 
 const prisma = new PrismaClient();
 
@@ -34,7 +34,7 @@ async function main() {
     // 3. Generation
     console.log('\nGenerating Answer...');
     const contextText = similarDocs.map((doc, i) => `[Context ${i + 1}]: ${doc.content}`).join('\n\n');
-    const fullSystemPrompt = `${BHOOMI_SYSTEM_PROMPT}\n\nRELEVANT CANON CONTEXT:\n${contextText}`;
+    const fullSystemPrompt = `${getBhoomiSystemPrompt(true)}\n\nRELEVANT CANON CONTEXT:\n${contextText}`;
 
     const stream = await streamContent(query, fullSystemPrompt);
 

@@ -82,19 +82,43 @@ export function HomeContent() {
         height="full"
         background={
           <ParallaxBackground
-            imageSrc="/images/landing/bharatvarsh.webp"
-            imagePortraitSrc="/images/landing/mobile/opening.webp"
-            imageAlt="Bharatvarsh - A nation reimagined"
+            imageSrc="/images/landing-hero.jpg"
+            imagePortraitSrc="/images/landing-hero.jpg"
+            imageAlt="Bharatvarsh - Engineered Calm"
             imagePriority
             speed={0.3}
-            overlayOpacity={0.5}
-            gradient="bottom"
-            objectPosition="center top"
+            overlayOpacity={0.75}
+            gradient="both"
+            objectPosition="center center"
           />
         }
       >
-        <HeroTitle title="BHARATVARSH" subtitle="A tale of truth—and the power that edits it." className="pt-16 md:pt-20" />
-        <ScrollIndicator />
+        <div className="flex flex-col items-center justify-center gap-6 pt-16 md:pt-20 px-4 max-w-4xl mx-auto">
+          <HeroTitle
+            title={"WELCOME TO\nBHARATVARSH"}
+            subtitle="A green-tech super-state where peace is engineered. Step into a spotless military technocracy where The Mesh records all, and order feeds all. What is the true price of harmony?"
+            className="w-full"
+          />
+
+          <motion.a
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 1 }}
+            href="#the-world"
+            className="mt-8 group px-8 py-4 border border-[var(--obsidian-600)] text-[var(--powder-300)] bg-black/40 backdrop-blur-md rounded-full font-display uppercase tracking-[0.15em] hover:bg-[var(--powder-300)] hover:text-black transition-all duration-500 flex items-center gap-3 relative overflow-hidden"
+          >
+            <span className="relative z-10">Explore the History</span>
+            <motion.div
+              animate={{ y: [0, 4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              className="relative z-10"
+            >
+              <svg className="w-5 h-5 text-[var(--mustard-500)] group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </motion.div>
+          </motion.a>
+        </div>
       </ScrollSection>
 
       {/* Section 2: The World */}
@@ -115,7 +139,7 @@ export function HomeContent() {
       >
         <ContentSection
           headline="A history rewritten by refusal."
-          content="An India that never knelt, but stood so rigid it became a cage. In 1717, Delhi declined the charter. The coast stayed a doorway, not a wound. Wealth circulated, but so did control. Three centuries later, we are a superpower of engineered calm—where the price of harmony is paid by freedom."
+          content="An India that never knelt, but stood so rigid it became a cage. In 1717, Emperor Farrukhsiyar refused to sign the Company's charter—rejecting the 'Magna Carta' of trade that would have sold a subcontinent. The coast stayed a doorway, not a wound. Wealth circulated, but so did absolute control. Three centuries later, we are a superpower of engineered calm, where the price of harmony is paid by freedom."
           glyph="chakra"
           dramaticReveal
         />
@@ -139,7 +163,7 @@ export function HomeContent() {
       >
         <ContentSection
           headline="Four decades of order. Engineered. Enforced."
-          content={`After the republic buckled under riots and paralysis, the uniform stepped in "for one year"—and never stepped out. Today the Directorate rules by doctrine and infrastructure: a nation where services arrive on time, and so do consequences. The Mesh sits everywhere—wallets, gates, streets, eyes—making convenience indistinguishable from compliance. Corruption fell. So did anonymity.`}
+          content={`After the republic buckled under riots that blazed through the 1980s and paralyzed the nation until the late 20th century, the uniform stepped in and never stepped out. Today the Directorate rules by doctrine and infrastructure: a nation where services arrive on time, and so do consequences. The Mesh sits everywhere—wallets, gates, streets, eyes—making convenience indistinguishable from compliance. Corruption fell. So did anonymity.`}
           glyph="mesh"
         />
       </ScrollSection>

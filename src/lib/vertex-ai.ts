@@ -136,3 +136,32 @@ export const streamContent = async (prompt: string, systemInstruction?: string) 
 
     return generator();
 };
+
+export const reformulateQuery = async (chatHistory: { role: string; content: string }[]): Promise<string> => {
+    if (!chatHistory || chatHistory.length === 0) return "";
+
+    // If it's just one message, no need to reformulate context
+    if (chatHistory.length === 1) return chatHistory[0].content;
+
+    const lastMessage = chatHistory[chatHistory.length - 1].content;
+    const historyContext = chatHistory.slice(0, -1).map(m => `${m.role === 'user' ? 'User' : 'Bhoomi'}: ${m.content}`).join('\n');
+
+    const prompt = `
+Given the following conversation history and the user's latest question, rewrite the user's latest question so that it is a standalone query containing all necessary context (e.g., resolving pronouns to entity names). 
+If the latest question is already standalone, just return it exactly as is.
+DO NOT answer the question. ONLY return the rewritten query.
+
+Conversation History:
+${historyContext}
+
+Latest Question: ${lastMessage}
+Rewritten Query:`;
+
+    try {
+        const reformulated = await generateContent(prompt);
+        return reformulated.trim();
+    } catch (error) {
+        console.error('[Vertex] Failed to reformulate query, falling back to original:', error);
+        return lastMessage;
+    }
+};

@@ -70,7 +70,7 @@ export function BhoomiNavTrigger() {
                                         <span className="px-1.5 py-0.5 rounded text-[9px] bg-mustard-900/30 text-mustard-300 border border-mustard-500/20">AI COPILOT</span>
                                     </div>
                                     <p className="italic text-[11px] leading-relaxed text-zinc-300">
-                                        "This reality is vast and strange. Shall I be your guide through the mysteries of Bharatvarsh?"
+                                        &quot;This reality is vast and strange. Shall I be your guide through the mysteries of Bharatvarsh?&quot;
                                     </p>
                                 </div>
                             </div>

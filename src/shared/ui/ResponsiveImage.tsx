@@ -79,6 +79,7 @@ export const ResponsiveImage: FC<ResponsiveImageProps> = ({
   useEffect(() => {
     const newSrc = isPortrait ? portraitSrc : landscapeSrc;
     if (newSrc !== currentSrc) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoaded(false);
       setCurrentSrc(newSrc);
     }

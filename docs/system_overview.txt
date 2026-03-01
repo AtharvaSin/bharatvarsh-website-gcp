@@ -1,0 +1,75 @@
+BHARATVARSH WEBSITE - SYSTEM OVERVIEW
+=======================================
+
+1. APPLICATION ARCHITECTURE & TECH STACK
+----------------------------------------
+The application is a full-stack, server-rendered React application built with the following core technologies:
+- Framework: Next.js (Version 16.1.1) utilizing the App Router.
+- Language: TypeScript.
+- Styling: Tailwind CSS v4, utilizing global CSS variables for a consistent "obsidian/powder/mustard" dark-mode color palette. Component styling is often managed with `clsx` and `tailwind-merge` for conditional class application.
+- UI Components: A custom design system built with Radix UI primitives for accessibility (Dialog, Dropdown, Select, Tabs, Tooltip, Avatar) and `lucide-react` for iconography.
+- Animations: Framer Motion provides rich, scroll-linked, and interactive physics-based animations.
+- Database ORM: Prisma (Version 6.19.2) connecting to a PostgreSQL database.
+- Authentication: NextAuth.js (v5 Beta) with the Prisma Adapter, supporting Google OAuth.
+- External Services:
+  - Google Cloud Vertex AI (for AI moderation and conversational agent processing).
+  - LiveKit (for real-time voice and video interactions in the Bhoomi Widget).
+  - Resend & Nodemailer (for transactional emails and newsletter subscriptions).
+
+2. CORE FEATURES & MODULES
+----------------------------------------
+The application codebase in `src/features/` is organized into distinct, domain-driven modules:
+
+A. Home (`src/features/home/`)
+Provides the main landing page experience. Features a highly animated, scrollytelling interface utilizing parallax backgrounds, Framer Motion for scroll-linked fades/blurs, and distinct "chapters" introducing the alternate history of Bharatvarsh.
+
+B. The Novel (`src/features/novel/`)
+A dedicated product page for the book *Mahabharatvarsh*. Highlights the synopsis, genres, purchase links (Amazon, Notion Press, Flipkart), and an interactive "What Awaits You" section that acts as a lead magnet offering a downloadable PDF dossier (Chapter 1) in exchange for email verification.
+
+C. Lore (`src/features/lore/`)
+A dynamic content hub for exploring the world of Bharatvarsh. Allows users to browse universe details, factions, and characters, likely driven by JSON content.
+
+D. Timeline (`src/features/timeline/`)
+An interactive, scrollable vertical timeline interface detailing three centuries of alternate history. Uses complex sticky positioning and intersection observers to track reading progress.
+
+E. Forum & Community (`src/features/forum/`)
+A community discussion platform. Integrates with the database to support user-generated content, comments, and interactions, with a Next.js API backend potentially moderated by Vertex AI.
+
+F. Authentication (`src/features/auth/`)
+Secure user sign-in and session management using NextAuth. It features Google OAuth login and custom `SignInButton` and `UserMenu` components for the header navigation.
+
+G. Newsletter (`src/features/newsletter/`)
+Email collection and verification system. Allows users to subscribe for updates and securely download exclusive content via verified email links (powered by Resend).
+
+H. Bhoomi AI Widget (`src/components/bhoomi/`)
+An advanced, interactive chatbot and voice assistant named "Bhoomi". It persists as a floating action button on the client side, sliding out into a chat interface. It leverages LiveKit for real-time WebRTC audio streaming, allowing users to converse vocally with an AI representing the in-universe "Directorate Mesh". 
+
+I. Admin (`src/features/admin/`)
+Internal dashboard functionality for managing the application, content, or users, gated by authorization checks.
+
+3. INFRASTRUCTURE & GCP DEPLOYMENT
+----------------------------------------
+The application is deployed on Google Cloud Platform (GCP), utilizing a robust, fully automated CI/CD pipeline via Cloud Build.
+
+A. Containerization (Docker)
+The Next.js application is built inside a multi-stage Dockerfile:
+- Stage 1 (Deps): Installs node modules and generates the Prisma Client.
+- Stage 2 (Builder): Builds the Next.js standalone application.
+- Stage 3 (Runner): Creates a minimal production image running as a non-root user (`nextjs`), copying only the `.next/standalone` output, static assets, and the Prisma engine. It includes a `HEALTHCHECK` pinging `/api/health`.
+
+B. Cloud Build Pipeline (`cloudbuild.yaml`)
+Triggered automatically on pushes to the `main` or `staging` branches. The pipeline executes the following stages:
+1. Build: Installs dependencies, generates Prisma, and builds the Next.js app.
+2. Docker Build & Push: Containerizes the main website AND a separate backend `agent-service` (for the AI voice agent), tagging them with the Git SHA, and pushes them to Google Artifact Registry.
+3. Canary Deployment: The new image is initially deployed to Cloud Run with `--no-traffic` (tagged as 'canary').
+4. Progressive Rollout:
+   - Traffic is split to 10% canary, 90% stable.
+   - The pipeline continuously queries the health endpoint of the canary revision. If it fails, it rolls back traffic to 100% stable automatically.
+   - If healthy, it rests for a soak period (120 seconds), then ramps traffic to 50%, and finally promotes to 100%.
+5. Agent Service Deployment: The `agent-service` is deployed to a separate Cloud Run instance.
+
+C. Google Cloud Run Details
+- Platform: Fully managed Serverless compute.
+- Database Connection: Connects to Cloud SQL PostgreSQL natively via the `--add-cloudsql-instances` flag through the Cloud SQL Auth Proxy infrastructure built into Cloud Run.
+- Secrets Management: Sensitive environment variables (e.g., `DATABASE_URL`, `GOOGLE_CLIENT_ID`, `RESEND_API_KEY`, `LIVEKIT_API_KEY`) are securely injected at runtime from Google Cloud Secret Manager.
+- Scaling: Scales automatically to handle traffic, with `vCPU` and memory limits configured in the build step. The `agent-service` has CPU throttling disabled (`--no-cpu-throttling`) to support low-latency streaming websocket connections via LiveKit.

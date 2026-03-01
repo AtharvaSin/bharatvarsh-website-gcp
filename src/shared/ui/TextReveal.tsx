@@ -220,7 +220,12 @@ export const TextReveal: FC<TextRevealProps> = ({
   const renderElements = () => {
     return elements.map((element, index) => {
       const isSpace = element === ' ';
+      const isNewline = element === '\n';
       const key = `${element}-${index}`;
+
+      if (isNewline) {
+        return <br key={key} />;
+      }
 
       // Handle spaces differently
       if (variant === 'word' && index < elements.length - 1) {
@@ -247,7 +252,7 @@ export const TextReveal: FC<TextRevealProps> = ({
             className={cn(
               'inline-block',
               variant === 'character' &&
-                'transition-[text-shadow] duration-300',
+              'transition-[text-shadow] duration-300',
               isSpace && 'w-[0.25em]'
             )}
             variants={elementVariants}

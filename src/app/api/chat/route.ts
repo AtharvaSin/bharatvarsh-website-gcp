@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/server/db';
 import { auth } from '@/server/auth';
-import { getEmbedding, streamContent } from '@/lib/vertex-ai';
-import { BHOOMI_SYSTEM_PROMPT } from '@/lib/bhoomi-config';
+import { getEmbedding, streamContent, reformulateQuery } from '@/lib/vertex-ai';
+import { getBhoomiSystemPrompt } from '@/lib/bhoomi-config';
 
 export async function POST(req: NextRequest) {
     try {
@@ -66,10 +66,14 @@ export async function POST(req: NextRequest) {
             }
         });
 
-        // 1. Generate Embedding
-        const embedding = await getEmbedding(userQuery);
+        // 1. Reformulate Query (Conversational Memory Fix)
+        const activeQuery = await reformulateQuery(messages);
+        console.log(`[Bhoomi Debug] Original Query: "${userQuery}" | activeQuery: "${activeQuery}"`);
 
-        // 2. Vector Search (Cosine Similarity)
+        // 2. Generate Embedding from Reformulated Query
+        const embedding = await getEmbedding(activeQuery);
+
+        // 3. Vector Search (Cosine Similarity)
         const vectorQuery = `[${embedding.join(',')}]`;
 
         const similarDocs = await prisma.$queryRaw`
@@ -77,24 +81,27 @@ export async function POST(req: NextRequest) {
       FROM "VectorStore"
       WHERE 1 - (embedding <=> ${vectorQuery}::vector) > 0.5  -- Threshold
       ORDER BY embedding <=> ${vectorQuery}::vector
-      LIMIT 5;
-    ` as any[];
+      LIMIT 10;
+    ` as Array<{ id: string, content: string, metadata: { spoiler_tier?: string }, similarity: number }>;
 
-        // 3. Filter Context
+        // 4. Filter Context
+        // Remove hard filter for unauthenticated users blocking S2.
+        // Instead, NEVER return S3. 
+        // Pass S1 and S2 to Bhoomi so she can tease S2 if unsigned.
         const validDocs = similarDocs.filter(doc => {
             const tier = doc.metadata?.spoiler_tier || 'S1';
-            if (spoilerMode === 'S3') return true;
-            if (spoilerMode === 'S2') return tier === 'S1' || tier === 'S2';
-            return tier === 'S1';
+            return tier === 'S1' || tier === 'S2'; // S3 is completely disabled for now
         });
 
-        const contextText = validDocs.map((doc, i) => `[Context ${i + 1}]: ${doc.content}`).join('\n\n');
+        // Add [Tier: XX] tag to context for Bhoomi to understand the authorization level of the data
+        const contextText = validDocs.map((doc, i) => `[Context ${i + 1}] [Tier: ${doc.metadata?.spoiler_tier || 'S1'}]: ${doc.content}`).join('\n\n');
 
-        // 4. Construct Prompt
-        const fullSystemPrompt = `${BHOOMI_SYSTEM_PROMPT}\n\nRELEVANT CANON CONTEXT:\n${contextText || "No specific canon context found for this query."}`;
+        // 5. Construct Prompt
+        const systemPrompt = getBhoomiSystemPrompt(!!userId);
+        const fullSystemPrompt = `${systemPrompt}\n\nRELEVANT CANON CONTEXT:\n${contextText || "No specific canon context found for this query."}`;
 
         // 5. Stream Response & Persist Assistant Message
-        const geminiStream = await streamContent(userQuery, fullSystemPrompt);
+        const geminiStream = await streamContent(activeQuery, fullSystemPrompt);
         const startTime = Date.now();
 
         const stream = new ReadableStream({
@@ -136,12 +143,12 @@ export async function POST(req: NextRequest) {
             }
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('[Bhoomi Error]', error);
         // Return a more descriptive error in dev if needed, or keep it generic for security
         return NextResponse.json({
             error: 'Failed to process request',
-            details: process.env.NODE_ENV === 'development' ? error.message : undefined
+            details: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined
         }, { status: 500 });
     }
 }

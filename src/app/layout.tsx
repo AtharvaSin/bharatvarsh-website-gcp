@@ -111,10 +111,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${bebasNeue.variable} ${crimsonPro.variable} ${notoSansDevanagari.variable}`}
+      className={`${inter.variable} ${bebasNeue.variable} ${crimsonPro.variable} ${notoSansDevanagari.variable} overflow-x-hidden w-full`}
     >
       <body
-        className="min-h-screen bg-[var(--obsidian-900)] text-[var(--text-primary)] antialiased"
+        className="min-h-screen bg-[var(--obsidian-900)] text-[var(--text-primary)] antialiased overflow-x-hidden w-full"
         suppressHydrationWarning
       >
         <Providers>
@@ -140,7 +140,7 @@ export default function RootLayout({
               </main>
               <Footer />
               <Toaster
-                position="bottom-right"
+                position="bottom-center"
                 theme="dark"
                 toastOptions={{
                   style: {

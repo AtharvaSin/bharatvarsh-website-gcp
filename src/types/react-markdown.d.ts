@@ -10,7 +10,7 @@
 import type { JSX as ReactJSX } from 'react';
 
 declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
+     
     namespace JSX {
         interface IntrinsicElements extends ReactJSX.IntrinsicElements { }
     }

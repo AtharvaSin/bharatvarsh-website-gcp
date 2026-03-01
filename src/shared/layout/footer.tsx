@@ -2,6 +2,7 @@
 
 import { FC } from 'react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import { cn } from '@/shared/utils';
 
 interface FooterProps {
@@ -59,7 +60,7 @@ export const Footer: FC<FooterProps> = ({ className }) => {
             </h4>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
@@ -78,7 +79,7 @@ export const Footer: FC<FooterProps> = ({ className }) => {
             </h4>
             <ul className="space-y-3">
               {footerLinks.about.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
@@ -97,13 +98,19 @@ export const Footer: FC<FooterProps> = ({ className }) => {
             </h4>
             <ul className="space-y-3">
               {footerLinks.connect.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                <li key={link.label}>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toast.info(`${link.label} handle coming soon!`, {
+                        description: "We are still setting up our social media presence. Stay tuned!",
+                        duration: 3000,
+                      });
+                    }}
+                    className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-left"
                   >
                     {link.label}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>

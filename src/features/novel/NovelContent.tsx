@@ -178,7 +178,7 @@ function NovelPageInner() {
                 {data.novel.tagline}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto">
                 {data.purchase.available ? (
                   data.purchase.platforms.map((platform) => (
                     <a
@@ -272,8 +272,13 @@ function NovelPageInner() {
               About the Author
             </h2>
 
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[var(--obsidian-800)] to-[var(--obsidian-700)] border border-[var(--obsidian-600)] flex items-center justify-center mx-auto mb-6">
-              <Users className="w-10 h-10 text-[var(--text-muted)]" />
+            <div className="relative w-24 h-24 rounded-full border border-[var(--obsidian-600)] mx-auto mb-6 overflow-hidden">
+              <Image
+                src="/images/author-avatar.jpg"
+                alt="Atharva Singh"
+                fill
+                className="object-cover"
+              />
             </div>
 
             <p className="text-[var(--text-secondary)] leading-relaxed mb-4">
