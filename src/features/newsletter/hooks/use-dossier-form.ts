@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
+import { trackEvent } from '@/lib/track';
 import type { DossierState, DossierFormData, DossierFormErrors, LeadApiResponse } from '@/types';
 
 const RESEND_COOLDOWN_SECONDS = 30;
@@ -220,6 +221,11 @@ export function useDossierForm(options: UseDossierFormOptions = {}): UseDossierF
 
       toast.success('Verification email sent!', {
         description: 'Please check your inbox and click the verification link.',
+      });
+
+      trackEvent('lead_magnet_requested', {
+        email: formData.email,
+        location: formData.location
       });
 
     } catch (error) {

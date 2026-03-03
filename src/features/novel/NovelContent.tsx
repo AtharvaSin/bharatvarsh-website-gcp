@@ -184,18 +184,21 @@ function NovelPageInner() {
                     <a
                       key={platform.name}
                       href={platform.url}
+                      data-track={`outbound_${platform.name.toLowerCase().replace(' ', '_')}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full sm:w-auto"
+                      className="flex-1 w-full relative sm:w-auto overflow-hidden
+                             bg-[#ffffff10] border-2 border-primary/40
+                             text-primary-light font-cinzel rounded-md
+                             hover:border-primary/80 transition-all duration-300
+                             flex items-center justify-center p-3 gap-3 group"
                     >
-                      <Button variant={platform.name.includes('Notion') ? 'primary' : 'outline'} size="lg" className="w-full">
-                        {platform.name.includes('Notion') ? (
-                          <BookOpen className="w-5 h-5 mr-2" />
-                        ) : (
-                          <ShoppingCart className="w-5 h-5 mr-2" />
-                        )}
-                        Buy on {platform.name}
-                      </Button>
+                      {platform.name.includes('Notion') ? (
+                        <BookOpen className="w-5 h-5 mr-2" />
+                      ) : (
+                        <ShoppingCart className="w-5 h-5 mr-2" />
+                      )}
+                      Buy on {platform.name}
                     </a>
                   ))
                 ) : (

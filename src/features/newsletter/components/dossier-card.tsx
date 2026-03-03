@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FileLock2, CheckCircle2, Mail, Shield } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui/button';
+import { trackEvent } from '@/lib/track';
 import { useDossierForm } from '@/features/newsletter/hooks/use-dossier-form';
 import { useIsDesktop, usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
 import { DossierForm } from './dossier-form';
@@ -46,6 +47,7 @@ export const DossierCard: FC<DossierCardProps> = ({
   useEffect(() => {
     if (initialState === 'verified') {
       setVerified();
+      trackEvent('email_verified');
     }
   }, [initialState, setVerified]);
 
@@ -68,20 +70,20 @@ export const DossierCard: FC<DossierCardProps> = ({
   const cardAnimationProps = prefersReducedMotion
     ? {}
     : {
-        initial: { opacity: 0, y: 20 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { duration: 0.6, delay: index * 0.1 },
-      };
+      initial: { opacity: 0, y: 20 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true },
+      transition: { duration: 0.6, delay: index * 0.1 },
+    };
 
   const contentAnimationProps = prefersReducedMotion
     ? {}
     : {
-        initial: { opacity: 0, height: 0 },
-        animate: { opacity: 1, height: 'auto' },
-        exit: { opacity: 0, height: 0 },
-        transition: { duration: 0.3, ease: [0, 0, 0.2, 1] as const },
-      };
+      initial: { opacity: 0, height: 0 },
+      animate: { opacity: 1, height: 'auto' },
+      exit: { opacity: 0, height: 0 },
+      transition: { duration: 0.3, ease: [0, 0, 0.2, 1] as const },
+    };
 
   const showModal = !isDesktop && (state === 'expanded' || state === 'submitting');
   const showInlineForm = isDesktop && (state === 'expanded' || state === 'submitting');
@@ -98,8 +100,8 @@ export const DossierCard: FC<DossierCardProps> = ({
             prefersReducedMotion
               ? {}
               : {
-                  opacity: state === 'verified' ? [0.15, 0.25, 0.15] : [0.2, 0.35, 0.2],
-                }
+                opacity: state === 'verified' ? [0.15, 0.25, 0.15] : [0.2, 0.35, 0.2],
+              }
           }
           transition={{
             duration: 3,
