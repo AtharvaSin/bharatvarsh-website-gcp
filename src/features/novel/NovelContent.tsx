@@ -178,41 +178,43 @@ function NovelPageInner() {
                 {data.novel.tagline}
               </p>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row flex-wrap items-stretch gap-4 w-full sm:w-auto">
                 {data.purchase.available ? (
                   data.purchase.platforms.map((platform) => (
-                    <a
+                    <Button
                       key={platform.name}
-                      href={platform.url}
-                      data-track={`outbound_${platform.name.toLowerCase().replace(' ', '_')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 w-full relative sm:w-auto overflow-hidden
-                             bg-[#ffffff10] border-2 border-primary/40
-                             text-primary-light font-cinzel rounded-md
-                             hover:border-primary/80 transition-all duration-300
-                             flex items-center justify-center p-3 gap-3 group"
+                      asChild
+                      variant={platform.name.includes('Direct') ? 'primary' : 'outline'}
+                      size="lg"
+                      className="flex-1 w-full sm:w-auto h-full min-h-[3rem]"
                     >
-                      {platform.name.includes('Notion') ? (
-                        <BookOpen className="w-5 h-5 mr-2" />
-                      ) : (
-                        <ShoppingCart className="w-5 h-5 mr-2" />
-                      )}
-                      Buy on {platform.name}
-                    </a>
+                      <a
+                        href={platform.url}
+                        data-track={`outbound_${platform.name.toLowerCase().replace(' ', '_')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {platform.name.includes('Notion') ? (
+                          <BookOpen className="w-5 h-5 shrink-0" />
+                        ) : (
+                          <ShoppingCart className="w-5 h-5 shrink-0" />
+                        )}
+                        <span className="leading-tight">Buy on {platform.name}</span>
+                      </a>
+                    </Button>
                   ))
                 ) : (
-                  <Button variant="primary" size="lg" className="w-full sm:w-auto">
-                    <Mail className="w-5 h-5 mr-2" />
-                    Get Notified
+                  <Button variant="primary" size="lg" className="w-full sm:w-auto h-full min-h-[3rem]">
+                    <Mail className="w-5 h-5 shrink-0" />
+                    <span className="leading-tight">Get Notified</span>
                   </Button>
                 )}
-                <Link href="/lore" className="w-full sm:w-auto">
-                  <Button variant="secondary" size="lg" className="w-full">
-                    <BookOpen className="w-5 h-5 mr-2" />
-                    Explore the World
-                  </Button>
-                </Link>
+                <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto flex-1 sm:flex-none h-full min-h-[3rem]">
+                  <Link href="/lore">
+                    <BookOpen className="w-5 h-5 shrink-0" />
+                    <span className="leading-tight">Explore the World</span>
+                  </Link>
+                </Button>
               </div>
             </motion.div>
           </div>
