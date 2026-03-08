@@ -28,6 +28,7 @@ export const DossierForm: FC<DossierFormProps> = ({
 }) => {
   const nameId = useId();
   const locationId = useId();
+  const phoneId = useId();
   const emailId = useId();
   const errorContainerId = useId();
 
@@ -125,6 +126,47 @@ export const DossierForm: FC<DossierFormProps> = ({
             role="alert"
           >
             {errors.location}
+          </p>
+        )}
+      </div>
+
+      {/* Phone Field */}
+      <div>
+        <label
+          htmlFor={phoneId}
+          className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5"
+        >
+          Phone Number
+        </label>
+        <input
+          id={phoneId}
+          type="tel"
+          value={formData.phone}
+          onChange={(e) => onFieldChange('phone', e.target.value)}
+          onBlur={() => onFieldBlur('phone')}
+          disabled={isSubmitting}
+          aria-describedby={errors.phone ? `${phoneId}-error` : undefined}
+          aria-invalid={!!errors.phone}
+          className={cn(
+            'w-full px-4 py-3 rounded-lg',
+            'bg-[var(--obsidian-800)] text-[var(--text-primary)]',
+            'border transition-colors duration-150',
+            'placeholder:text-[var(--text-muted)]',
+            'focus:outline-none focus:ring-1',
+            'disabled:opacity-50 disabled:cursor-not-allowed',
+            errors.phone
+              ? 'border-[var(--status-alert)] focus:border-[var(--status-alert)] focus:ring-[var(--status-alert)]'
+              : 'border-[var(--obsidian-600)] focus:border-[var(--powder-500)] focus:ring-[var(--powder-500)]'
+          )}
+          placeholder="+1 (555) 000-0000"
+        />
+        {errors.phone && (
+          <p
+            id={`${phoneId}-error`}
+            className="mt-1.5 text-sm text-[var(--status-alert)]"
+            role="alert"
+          >
+            {errors.phone}
           </p>
         )}
       </div>

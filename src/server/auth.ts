@@ -156,6 +156,22 @@ function buildConfig(): NextAuthConfig {
 
     events: {
       /**
+       * Enroll new users in the email campaign sequence on signup.
+       */
+      async createUser({ user }) {
+        if (user?.email) {
+          try {
+            await prisma.emailCampaign.upsert({
+              where: { targetEmail: user.email },
+              create: { targetEmail: user.email },
+              update: {} // Do nothing if already enrolled
+            });
+          } catch (err) {
+            console.error('Failed to enroll new user in email campaign:', err);
+          }
+        }
+      },
+      /**
        * Enforce bans at sign-in time.
        * If a user has an active ban (permanent or not-yet-expired), throw an
        * error to prevent the session from being created.

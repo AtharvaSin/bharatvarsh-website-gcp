@@ -50,6 +50,7 @@ export function useDossierForm(options: UseDossierFormOptions = {}): UseDossierF
     name: '',
     location: '',
     email: '',
+    phone: '',
   });
   const [errors, setErrors] = useState<DossierFormErrors>({});
   const [resendCountdown, setResendCountdown] = useState(0);
@@ -160,6 +161,14 @@ export function useDossierForm(options: UseDossierFormOptions = {}): UseDossierF
           error = 'Please enter a valid email address.';
         }
         break;
+
+      case 'phone':
+        if (!value) {
+          error = 'Please enter your phone number.';
+        } else if (value.replace(/\D/g, '').length < 10) {
+          error = 'Please enter a valid phone number.';
+        }
+        break;
     }
 
     setErrors((prev) => ({ ...prev, [field]: error }));
@@ -173,7 +182,8 @@ export function useDossierForm(options: UseDossierFormOptions = {}): UseDossierF
     const nameValid = validateField('name');
     const locationValid = validateField('location');
     const emailValid = validateField('email');
-    return nameValid && locationValid && emailValid;
+    const phoneValid = validateField('phone');
+    return nameValid && locationValid && emailValid && phoneValid;
   }, [validateField]);
 
   /**
@@ -194,6 +204,7 @@ export function useDossierForm(options: UseDossierFormOptions = {}): UseDossierF
           name: formData.name.trim(),
           location: formData.location.trim(),
           email: formData.email.toLowerCase().trim(),
+          phone: formData.phone.trim(),
           source: typeof window !== 'undefined' ? window.location.pathname : '/unknown',
         }),
       });
@@ -267,6 +278,7 @@ export function useDossierForm(options: UseDossierFormOptions = {}): UseDossierF
           name: formData.name.trim() || 'Reader',
           location: formData.location.trim() || 'Unknown, Location',
           email: emailToResend.toLowerCase().trim(),
+          phone: formData.phone.trim() || '',
           source: typeof window !== 'undefined' ? window.location.pathname : '/unknown',
         }),
       });
@@ -307,7 +319,7 @@ export function useDossierForm(options: UseDossierFormOptions = {}): UseDossierF
    */
   const reset = useCallback(() => {
     setState('idle');
-    setFormData({ name: '', location: '', email: '' });
+    setFormData({ name: '', location: '', email: '', phone: '' });
     setErrors({});
     setSubmittedEmail(null);
   }, []);

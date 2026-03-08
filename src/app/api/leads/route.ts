@@ -12,6 +12,7 @@ interface LeadRequestBody {
   name: string;
   location: string;
   email: string;
+  phone?: string;
   source?: string;
 }
 
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Parse request body
     const body: LeadRequestBody = await request.json();
-    const { name, location, email, source } = body;
+    const { name, location, email, phone, source } = body;
 
     // Validate required fields
     if (!name || !location || !email) {
@@ -84,7 +85,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           verificationToken,
           isVerified: false,
           name: name.trim(),
-          location: location.trim()
+          location: location.trim(),
+          ...(phone && { phone: phone.trim() })
         }
       });
     } else {
@@ -94,6 +96,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           name: name.trim(),
           location: location.trim(),
           email: email.toLowerCase().trim(),
+          phone: phone ? phone.trim() : null,
           verificationToken,
           sourcePage: source || '/unknown',
         }

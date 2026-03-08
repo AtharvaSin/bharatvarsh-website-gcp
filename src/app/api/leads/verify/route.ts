@@ -40,14 +40,21 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Verify the lead
-    await prisma.lead.update({
-      where: { id: lead.id },
-      data: {
-        isVerified: true,
-        verificationToken: null,
-      }
-    });
+    // Verify the lead and add to email campaign
+    await prisma.$transaction([
+      prisma.lead.update({
+        where: { id: lead.id },
+        data: {
+          isVerified: true,
+          verificationToken: null,
+        }
+      }),
+      prisma.emailCampaign.upsert({
+        where: { targetEmail: lead.email },
+        create: { targetEmail: lead.email },
+        update: {}
+      })
+    ]);
 
     // Redirect with success
     return NextResponse.redirect(

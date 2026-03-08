@@ -17,7 +17,7 @@ function getResend(): Resend {
   return _resend;
 }
 
-const FROM_EMAIL = 'Bharatvarsh <onboarding@resend.dev>';
+const FROM_EMAIL = 'Bharatvarsh <noreply@welcometobharatvarsh.com>';
 
 interface SendVerificationEmailParams {
   to: string;

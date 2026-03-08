@@ -472,12 +472,14 @@ export interface DossierFormData {
   name: string;
   location: string;
   email: string;
+  phone: string;
 }
 
 export interface DossierFormErrors {
   name?: string;
   location?: string;
   email?: string;
+  phone?: string;
 }
 
 // ========================================
