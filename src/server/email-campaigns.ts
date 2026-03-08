@@ -148,11 +148,11 @@ function getCampaignContent(campaignId: string, step: number, appUrl: string, as
           <p>Thank you for being here early.</p>
         `,
         ctaText: 'Follow on Goodreads &rarr;',
-        ctaUrl: 'https://www.goodreads.com/author/show/44059045.Atharva_Singh',
+        ctaUrl: 'https://www.goodreads.com/author/show/69262859.Atharva_Singh',
         secondaryLinksHtml: `
-          <a href="https://www.amazon.in/dp/B0DJ2X1QNZ">Amazon Author Page</a><br>
+          <a href="https://www.amazon.in/stores/author/B0GQPYLRWJ?ingress=0&visitId=df9e17ac-2e3b-4952-80c6-fc2381c7ca4f&ref_=aufs_ap_ahdr_dsk_aa">Amazon Author Page</a><br>
           <a href="${appUrl}">Website</a><br>
-          <a href="https://www.linkedin.com/in/atharvasingh/">LinkedIn / author updates</a>
+          <a href="https://www.linkedin.com/in/atharva-singh-714a9254/">LinkedIn / author updates</a>
         `,
         appUrl,
         unsubscribeUrl
