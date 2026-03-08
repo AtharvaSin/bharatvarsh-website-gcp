@@ -171,11 +171,11 @@ function getCampaignContent(campaignId: string, step: number, appUrl: string, as
           <p><em>Mahabharatvarsh: Price of Harmony, Paid by Freedom</em> is a political techno-thriller of surveillance, power, hidden programs, and buried truths—set inside an alternate India that looks stable, prosperous, and perfected from a distance.</p>
           <p>If the world you’ve explored through the dossier, the timeline, and the website has drawn you in, this is where the real journey begins.</p>
         `,
-        ctaText: 'Buy on Amazon &rarr;',
-        ctaUrl: 'https://www.amazon.in/dp/B0DJ2X1QNZ',
+        ctaText: 'Read on Amazon &rarr;',
+        ctaUrl: 'https://www.amazon.in/dp/B0GHS8127Z',
         secondaryLinksHtml: `
-          <a href="https://www.flipkart.com/">Buy on Flipkart</a><br>
-          <a href="https://notionpress.com/read/mahabharatvarsh">Buy on Notion Press</a><br>
+          <a href="https://dl.flipkart.com/s/zo1xOSuuuN">Available on Flipkart</a><br>
+          <a href="https://notionpress.com/read/mahabharatvarsh">Available on Notion Press</a><br>
           <a href="${appUrl}/novel">Visit the novel page</a>
         `,
         appUrl,
