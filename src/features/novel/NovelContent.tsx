@@ -15,6 +15,7 @@ import {
   ArrowRight,
   Mail,
   ShoppingCart,
+  Quote,
 } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui/button';
@@ -174,8 +175,16 @@ function NovelPageInner() {
                 {data.novel.subtitle}
               </p>
 
-              <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-8">
+              <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-4">
                 {data.novel.tagline}
+              </p>
+
+              <p className="text-sm text-[var(--text-muted)] mb-8 flex items-center gap-2">
+                <span>{data.novel.pages} pages</span>
+                <span className="text-[var(--obsidian-500)]">&middot;</span>
+                <span>{data.novel.releaseDate}</span>
+                <span className="text-[var(--obsidian-500)]">&middot;</span>
+                <span>Hardcover</span>
               </p>
 
               <div className="flex flex-col sm:flex-row flex-wrap items-stretch gap-4 w-full sm:w-auto">
@@ -252,6 +261,72 @@ function NovelPageInner() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Quotes Section */}
+      <section className="py-16 md:py-24 border-t border-[var(--obsidian-700)]">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-16">
+          <div className="max-w-3xl mx-auto space-y-12">
+            {data.quotes.map((quote, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="text-center"
+              >
+                <Quote className="w-6 h-6 text-[var(--mustard-500)] mx-auto mb-4 opacity-50" />
+                <p className="text-lg md:text-xl font-serif italic text-[var(--powder-400)] leading-relaxed">
+                  &ldquo;{quote.text}&rdquo;
+                </p>
+                <p className="mt-3 text-xs tracking-widest uppercase text-[var(--text-muted)]">
+                  {quote.context}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Themes Section */}
+      <section className="py-16 md:py-24 border-t border-[var(--obsidian-700)]">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="font-display text-3xl md:text-4xl text-[var(--powder-300)] mb-10 text-center">
+              Themes
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {data.themes.map((theme, index) => (
+                <motion.div
+                  key={theme.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className={cn(
+                    'p-6 rounded-lg',
+                    'bg-gradient-to-br from-[var(--obsidian-800)] to-[var(--obsidian-700)]',
+                    'border border-[var(--obsidian-600)]'
+                  )}
+                >
+                  <h3 className="font-semibold text-[var(--mustard-400)] mb-2">
+                    {theme.title}
+                  </h3>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                    {theme.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
