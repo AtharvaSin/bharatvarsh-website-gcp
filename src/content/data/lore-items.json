@@ -297,6 +297,234 @@
       },
       "featured": false,
       "sortOrder": 13
+    },
+    {
+      "id": "surya",
+      "name": "Surya",
+      "nameDevanagari": "सूर्य",
+      "category": "characters",
+      "classification": "classified",
+      "subtype": "Operative",
+      "tagline": "He trusts nothing connected to the system",
+      "description": "The Ghost Operative. You won't find Surya in any active service file. His Brace-Comm runs dark—permanently—because he learned the hard way that everything connected can be turned against you. After the Guhyakas unit erased his service record and buried the men he served with, Surya vanished into the signal gaps of Bharatvarsh. Now he moves through the country like interference on a clean feed: matte graphite jacket, hands steady at his belt, collecting evidence with the patience of a man who knows that one photograph in daylight is worth more than a hundred bullets in the dark.",
+      "quote": "Evidence doesn't need a rank. It just needs daylight.",
+      "quoteAuthor": "Surya",
+      "hotspots": [
+        {
+          "id": "s1",
+          "x": 45,
+          "y": 55,
+          "label": "DARK BRACE-COMM",
+          "description": "Display permanently OFF — trust nothing connected"
+        },
+        {
+          "id": "s2",
+          "x": 70,
+          "y": 35,
+          "label": "SUPPRESSED CARBINE",
+          "description": "Micro-rail equipped, field-stripped daily"
+        }
+      ],
+      "traits": [
+        "Forensic Precision",
+        "Moral Absolutes",
+        "Operational Stealth",
+        "Institutionally Wounded"
+      ],
+      "media": {
+        "card": "/images/characters/surya-card.webp",
+        "banner": "/images/characters/surya-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 14
+    },
+    {
+      "id": "kaali",
+      "name": "Kaali",
+      "nameDevanagari": "काली",
+      "category": "characters",
+      "classification": "declassified",
+      "subtype": "Matriarch",
+      "tagline": "Her word is binding covenant for an entire people",
+      "description": "The Wounded Queen. They brought her to the ICU on a stretcher but they could not take the throne from her voice. Kaali has led the Akakpen for decades—not from a palace, but from council fires and treaty tables, from rain-soaked mountain crossings and the quiet work of holding a multi-faith community together by sheer force of listening. Now she lies bandaged and breathing through a mask, her gold hair-ring placed carefully on the bedside tray. One emerald-green eye does all the work. When she whispers a promise to the old comrade she hasn't seen in years, the fog in the room shifts. Nations will move because of what she says next.",
+      "quote": "A queen does not command the mountain. She listens until the mountain speaks.",
+      "quoteAuthor": "Kaali",
+      "hotspots": [
+        {
+          "id": "k1",
+          "x": 55,
+          "y": 30,
+          "label": "EMERALD COMMAND EYES",
+          "description": "The 'command line' — green eyes, never blue"
+        },
+        {
+          "id": "k2",
+          "x": 30,
+          "y": 65,
+          "label": "GOLD HAIR-RING",
+          "description": "Antique gold, satin finish — authority talisman"
+        }
+      ],
+      "traits": [
+        "Steel-Calm Authority",
+        "Maternal Wisdom",
+        "Promise Keeper",
+        "Dignified Vulnerability"
+      ],
+      "media": {
+        "card": "/images/characters/kaali-card.webp",
+        "banner": "/images/characters/kaali-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 15
+    },
+    {
+      "id": "treaty-zone",
+      "name": "The Treaty Zone",
+      "category": "locations",
+      "classification": "classified",
+      "subtype": "Territory",
+      "tagline": "Where the Mesh ends and the mountains remember",
+      "description": "The Mesh ends at the treeline. Beyond it, the Treaty Zone begins—a mountainous band where state troops halt at checkpoints and wait for tribal consent that may never come. In valleys called Silent Throat and Knife-Wind Chute, drone-jammers run permanently and radar screens show nothing but weather. The architecture here is wood and stone and slate, hand-mended and honest. Prayer flags hang stiff at altitude because the wind at four thousand metres doesn't flutter—it shears. Fog shafts through pine canopy. Frost glitters on rope fibres strung between sentinel trees. This is not a rebellion. It is a proof of concept: that a world without the Mesh is not only possible, but already forty years old.",
+      "traits": [
+        "Semi-Autonomous Governance",
+        "No-Fly Sanctuaries",
+        "Natural Material Language",
+        "Drone-Jammer Networks"
+      ],
+      "media": {
+        "card": "/images/locations/treaty-zone-card.webp",
+        "banner": "/images/locations/treaty-zone-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 16
+    },
+    {
+      "id": "mysuru",
+      "name": "Mysuru",
+      "category": "locations",
+      "classification": "declassified",
+      "subtype": "Metropolis",
+      "tagline": "Plateau tech-hub where software meets surveillance",
+      "description": "Mysuru sits on a plateau where the sun hits harder and the secrets run deeper. Peninsular Command's crown jewel is a city of basalt and dark glass, where the brightest engineers in Bharatvarsh build software and optics they will not be permitted to discuss for five to fifteen years. OxyPole crowns here carry dust-mesh louvers against the red laterite haze, and the UV-resistant coatings on every surface give the architecture a faintly iridescent sheen. The campus culture is civilian in dress code, military in clearance level. Breakthroughs happen behind biometric doors. Papers are written, classified, and locked before the ink dries.",
+      "traits": [
+        "Software & Optics Hub",
+        "Military R&D Campus",
+        "Basalt Architecture",
+        "High-Altitude Climate"
+      ],
+      "media": {
+        "card": "/images/locations/mysuru-card.webp",
+        "banner": "/images/locations/mysuru-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 17
+    },
+    {
+      "id": "tribhuj",
+      "name": "Tribhuj",
+      "nameDevanagari": "त्रिभुज",
+      "category": "factions",
+      "classification": "classified",
+      "subtype": "Banned Movement",
+      "tagline": "Democracy died in 1984. Its ghost carries a trident.",
+      "description": "Before 1984, the trident was a ballot paper. Tribhuj began as a civilian movement for elected governance—peaceful, principled, and inconvenient enough to be declared treasonous alongside religion, caste, and surnames in one sweeping decree. After the ban, the symbols didn't die. They went to the walls. Grey tridents scratched into alley plaster at 3 a.m. Pamphlets folded into chapati wrappers during Festival Fortnight. Basement meetings where the word 'election' was spoken like a prayer. Then, in October 2025, seven cities burned under a flag bearing the same trident. Whether the old movement and the new violence share anything beyond a symbol is the question that will tear Bharatvarsh apart.",
+      "quote": "The trident was never a weapon. It was a ballot.",
+      "quoteAuthor": "Pre-ban Tribhuj pamphlet",
+      "traits": [
+        "Pro-Democracy Roots",
+        "Banned Since 1984",
+        "Underground Symbols",
+        "Legacy vs. New Violence"
+      ],
+      "media": {
+        "card": "/images/factions/tribhuj-card.webp",
+        "banner": "/images/factions/tribhuj-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 18
+    },
+    {
+      "id": "the-mesh",
+      "name": "The Mesh",
+      "category": "tech",
+      "classification": "declassified",
+      "subtype": "Infrastructure",
+      "tagline": "Omnipresent. Ambient. Inescapable.",
+      "description": "Nobody remembers when they stopped noticing the hovercams. The Mesh arrived in three phases over fifteen years, and by the time Phase III went live in 2015, surveillance had become weather—ambient, total, and unremarkable. Biometric wrist-scanners confirm your identity at every kiosk. Teardrop-shaped checkpoint masts read your gait at intersections. OxyPole sensor arrays cataloguing the air also cataloguing you. Micro-expression algorithms flag hesitation before you've finished the thought that caused it. The Mesh is not cruel. It is not loud. It is polite, inevitable, and everywhere. Forty years of perfect stability. The invoice is still being calculated.",
+      "specifications": "Phase I (2000-05): Biometric ID + checkpoints | Phase II (2006-10): Hovercam grid + Brace-Comm | Phase III (2011-15): Micro-expression AI + predictive routing",
+      "traits": [
+        "Three-Phase Deployment",
+        "Biometric Integration",
+        "Predictive Surveillance",
+        "Polite Inevitability"
+      ],
+      "media": {
+        "card": "/images/misc/the-mesh-card.webp",
+        "banner": "/images/misc/the-mesh-banner.webp"
+      },
+      "featured": true,
+      "sortOrder": 19
+    },
+    {
+      "id": "neural-diodes",
+      "name": "Neural Diodes",
+      "category": "tech",
+      "classification": "classified",
+      "subtype": "Augmentation",
+      "tagline": "Where the soldier ends and the weapon begins",
+      "description": "The scar behind Kahaan's right ear is small enough to miss. What it connects to is not. The neural-diode lattice lets him float twin pistols at shoulder height on faint electric-blue shimmer threads, pilot a scout motorcycle with a thought, and stream tactical data directly to his visual cortex. It is, by every military metric, a masterpiece. It is also slowly breaking him. EMPs knock out everything—weapons, vehicle, HUD—leaving him human and exposed mid-combat. Migraines arrive without warning. His nose bleeds during briefings. And in the quiet hours, he wonders whether the machine is a tool he uses or a system that is using him.",
+      "specifications": "Surgical diode scallop (right ear) | Mag-holster range: 2m | EMP-vulnerable | Side effects: migraines, tinnitus, transient paralysis",
+      "hotspots": [
+        {
+          "id": "nd1",
+          "x": 75,
+          "y": 20,
+          "label": "DIODE SCALLOP",
+          "description": "Faint surgical scar behind right ear"
+        },
+        {
+          "id": "nd2",
+          "x": 40,
+          "y": 50,
+          "label": "SHIMMER THREADS",
+          "description": "Electric-blue magnetic link to floating weapons"
+        }
+      ],
+      "traits": [
+        "Thought-Controlled Weapons",
+        "Vehicle Neural Piloting",
+        "EMP Vulnerability",
+        "Degradation Over Time"
+      ],
+      "media": {
+        "card": "/images/misc/neural-diodes-card.webp",
+        "banner": "/images/misc/neural-diodes-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 20
+    },
+    {
+      "id": "hud-monocle",
+      "name": "HUD Monocle",
+      "category": "tech",
+      "classification": "classified",
+      "subtype": "Augmentation",
+      "tagline": "The blue tick that sees what flesh cannot",
+      "description": "It floats over the left eye like a thought made visible—a curved rectangular lens with no visible apparatus, projecting tiny electric-blue arcs and ticks that scroll too fast to read. The glyphs are deliberately illegible to onlookers; what they display is classified at the point of rendering. When the HUD activates, a soft blue wash spreads across the cheekbone and the surgical scar behind the ear glows faint cyan. In headquarters, the monocle stays dark—officers are expected to think with unassisted eyes. In the field, its activation is a signal: the human layer has invited the machine layer in, and the line between the two has begun to blur.",
+      "specifications": "Curved rectangular lens | Apparatus-less floating mount | Electric-blue glow | OFF in HQ, ON in field ops",
+      "traits": [
+        "Tactical Data Overlay",
+        "Apparatus-less Float",
+        "Cyan Glow Indicator",
+        "Field-Only Activation"
+      ],
+      "media": {
+        "card": "/images/misc/hud-monocle-card.webp",
+        "banner": "/images/misc/hud-monocle-banner.webp"
+      },
+      "featured": false,
+      "sortOrder": 21
     }
   ]
 }

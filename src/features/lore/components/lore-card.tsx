@@ -2,7 +2,9 @@
 
 import { FC, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Lock } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Badge } from '@/shared/ui/badge';
 import { StandaloneStamp, useStampTrigger } from '@/shared/ui';
@@ -11,6 +13,7 @@ import type { LoreItem, LoreCategory, LoreClassification } from '@/types';
 interface LoreCardProps {
   item: LoreItem;
   onClick: () => void;
+  locked?: boolean;
   className?: string;
 }
 
@@ -34,12 +37,13 @@ const categoryColors: Record<LoreCategory, string> = {
   tech: 'var(--event-governance)',
 };
 
-export const LoreCard: FC<LoreCardProps> = ({ item, onClick, className }) => {
+export const LoreCard: FC<LoreCardProps> = ({ item, onClick, locked = false, className }) => {
   const { isTriggered, triggerStamp, resetStamp } = useStampTrigger();
   const [isHovered, setIsHovered] = useState(false);
   const isClassified = item.classification === 'classified';
 
   const handleClick = () => {
+    if (locked) return;
     triggerStamp();
     setTimeout(() => {
       resetStamp();
@@ -183,6 +187,23 @@ export const LoreCard: FC<LoreCardProps> = ({ item, onClick, className }) => {
           )}
         />
       </div>
+
+      {/* Locked overlay for classified items when unauthenticated */}
+      {locked && (
+        <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-[var(--obsidian-900)]/80 backdrop-blur-sm rounded-lg">
+          <Lock className="w-6 h-6 text-[var(--status-alert)] mb-3 opacity-70" />
+          <p className="text-xs font-mono tracking-wider text-[var(--status-alert)] uppercase mb-1">
+            Clearance Required
+          </p>
+          <Link
+            href="/auth/signin"
+            className="text-[10px] font-mono text-[var(--mustard-400)] hover:text-[var(--mustard-300)] tracking-wider transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            Sign in to access
+          </Link>
+        </div>
+      )}
 
       {/* Border glow animation */}
       <motion.div

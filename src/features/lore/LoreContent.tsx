@@ -8,6 +8,8 @@ import {
   LoreCard,
   LoreModal,
 } from '@/features/lore';
+import { useSession } from '@/features/auth';
+import { trackEvent } from '@/lib/track';
 import loreData from '@/content/data/lore-items.json';
 import type { LoreItem, LoreCategory, LoreData } from '@/types';
 
@@ -16,6 +18,7 @@ type FilterValue = LoreCategory | 'all';
 export function LoreContent() {
   const [filter, setFilter] = useState<FilterValue>('all');
   const [selectedItem, setSelectedItem] = useState<LoreItem | null>(null);
+  const { isAuthenticated } = useSession();
 
   const data = loreData as LoreData;
 
@@ -69,7 +72,15 @@ export function LoreContent() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3, delay: index * 0.03 }}
                 >
-                  <LoreCard item={item} onClick={() => setSelectedItem(item)} />
+                  <LoreCard
+                    item={item}
+                    locked={item.classification === 'classified' && !isAuthenticated}
+                    onClick={() => {
+                      if (item.classification === 'classified' && !isAuthenticated) return;
+                      trackEvent('lore_item_view', { id: item.id, name: item.name, category: item.category });
+                      setSelectedItem(item);
+                    }}
+                  />
                 </motion.div>
               ))}
             </AnimatePresence>
