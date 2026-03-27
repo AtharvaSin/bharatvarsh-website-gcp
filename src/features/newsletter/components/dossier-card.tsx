@@ -227,9 +227,23 @@ export const DossierCard: FC<DossierCardProps> = ({
                     ? {}
                     : { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } })}
                 >
-                  <p className="text-sm text-[var(--text-secondary)] mb-6 leading-relaxed">
+                  <p className="text-sm text-[var(--text-secondary)] mb-4 leading-relaxed">
                     {content.body}
                   </p>
+                  <ul className="text-xs text-[var(--text-muted)] space-y-1.5 mb-6 pl-1">
+                    <li className="flex items-start gap-2">
+                      <span className="text-[var(--mustard-500)] mt-0.5">&#9655;</span>
+                      <span>Chapter 1 PDF — delivered immediately after verification</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[var(--mustard-500)] mt-0.5">&#9655;</span>
+                      <span>5-part classified briefing series over the following weeks</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[var(--mustard-500)] mt-0.5">&#9655;</span>
+                      <span>Declassified dispatches and character dossiers as they drop</span>
+                    </li>
+                  </ul>
                   <Button
                     variant="primary"
                     size="lg"

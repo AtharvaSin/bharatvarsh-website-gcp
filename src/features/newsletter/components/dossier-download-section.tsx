@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Download, FileText, CheckCircle, Sparkles } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui/button';
+import { trackEvent } from '@/lib/track';
 import { usePrefersReducedMotion } from '@/shared/hooks/use-media-query';
 
 interface DossierDownloadSectionProps {
@@ -36,6 +37,8 @@ export const DossierDownloadSection: FC<DossierDownloadSectionProps> = ({
     if (isDownloading) return;
 
     setIsDownloading(true);
+
+    trackEvent('dossier_download', { file: fileName });
 
     // Create download link
     const link = document.createElement('a');

@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import Link from 'next/link';
-import { toast } from 'sonner';
+import { Twitter, Instagram, Facebook } from 'lucide-react';
 import { cn } from '@/shared/utils';
 
 interface FooterProps {
@@ -22,8 +22,9 @@ const footerLinks = {
     { label: 'Forum', href: '/forum' },
   ],
   connect: [
-    { label: 'Twitter/X', href: 'https://x.com/bharatvarsh_' },
-    { label: 'Instagram', href: 'https://instagram.com/bharatvarsh_official' },
+    { label: 'Twitter/X', href: 'https://x.com/bharatvarshHQ', icon: Twitter },
+    { label: 'Instagram', href: 'https://instagram.com/welcometobharatvarsh', icon: Instagram },
+    { label: 'Facebook', href: 'https://www.facebook.com/share/1CC6oYMykq/', icon: Facebook },
   ],
 };
 
@@ -97,22 +98,22 @@ export const Footer: FC<FooterProps> = ({ className }) => {
               Connect
             </h4>
             <ul className="space-y-3">
-              {footerLinks.connect.map((link) => (
-                <li key={link.label}>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toast.info(`${link.label} handle coming soon!`, {
-                        description: "We are still setting up our social media presence. Stay tuned!",
-                        duration: 3000,
-                      });
-                    }}
-                    className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-left"
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
+              {footerLinks.connect.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-2"
+                    >
+                      <Icon className="w-4 h-4" />
+                      {link.label}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
