@@ -3,9 +3,20 @@
  * Run with: npx prisma db seed
  */
 
-import { PrismaClient, UserRole } from '@prisma/client';
+import { PrismaClient, UserRole, ContentStatus, AiCheckResult } from '@prisma/client';
+import { forumSeedThreads } from './forum-seed-threads';
 
 const prisma = new PrismaClient();
+
+/** Simple slugify for seed script (avoids importing from src/) */
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-')
+    .trim();
+}
 
 const DEFAULT_TOPICS = [
   {
@@ -102,6 +113,51 @@ async function main(): Promise<void> {
     });
   }
   console.log(`  Created ${TEST_USERS.length} test users.`);
+
+  // --- Forum seed threads ---
+  console.log('Seeding forum threads...');
+
+  const adminUser = await prisma.user.findUnique({
+    where: { email: 'admin@bharatvarsh.dev' },
+  });
+  if (!adminUser) {
+    throw new Error('Admin user not found — cannot seed threads');
+  }
+
+  for (const thread of forumSeedThreads) {
+    const slug = slugify(thread.title);
+    const existing = await prisma.thread.findUnique({ where: { slug } });
+    if (existing) {
+      console.log(`  Skipped (exists): ${thread.title}`);
+      continue;
+    }
+
+    // Resolve topic IDs from slugs
+    const topics = await prisma.topic.findMany({
+      where: { slug: { in: thread.topicSlugs } },
+    });
+    if (topics.length === 0) {
+      console.warn(`  Skipped (no matching topics): ${thread.title}`);
+      continue;
+    }
+
+    await prisma.thread.create({
+      data: {
+        title: thread.title,
+        slug,
+        body: thread.body,
+        isPinned: thread.isPinned,
+        status: ContentStatus.PUBLISHED,
+        aiCheckResult: AiCheckResult.SKIPPED,
+        authorId: adminUser.id,
+        tags: {
+          create: topics.map((t) => ({ topicId: t.id })),
+        },
+      },
+    });
+    console.log(`  Created: ${thread.title} [${thread.topicSlugs.join(', ')}]${thread.isPinned ? ' (pinned)' : ''}`);
+  }
+  console.log(`  Processed ${forumSeedThreads.length} forum threads.`);
 
   console.log('Seed complete.');
 }

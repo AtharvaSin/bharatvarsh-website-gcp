@@ -1,6 +1,7 @@
 'use client';
 
 import { FC } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { MoreHorizontal, Flag } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import {
@@ -95,8 +96,26 @@ export const PostCard: FC<PostCardProps> = ({ post, className }) => {
             </DropdownMenu>
           </div>
           <QuarantineNotice status={post.status} className="mb-2" />
-          <div className="text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap">
-            {post.body}
+          <div className="max-w-none">
+            <ReactMarkdown
+              components={{
+                h3: ({ children }) => <h3 className="text-base font-semibold text-[var(--mustard-500)] mt-4 mb-2">{children}</h3>,
+                p: ({ children }) => <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-2">{children}</p>,
+                strong: ({ children }) => <strong className="font-semibold text-[var(--text-primary)]">{children}</strong>,
+                em: ({ children }) => <em className="italic text-[var(--powder-400)]">{children}</em>,
+                blockquote: ({ children }) => (
+                  <blockquote className="border-l-3 border-[var(--mustard-500)] pl-4 my-3 py-1 bg-[var(--obsidian-900)]/50 rounded-r">{children}</blockquote>
+                ),
+                ul: ({ children }) => <ul className="list-disc list-inside space-y-1 mb-2 text-sm text-[var(--text-secondary)]">{children}</ul>,
+                ol: ({ children }) => <ol className="list-decimal list-inside space-y-1 mb-2 text-sm text-[var(--text-secondary)]">{children}</ol>,
+                li: ({ children }) => <li className="text-sm text-[var(--text-secondary)]">{children}</li>,
+                code: ({ children }) => (
+                  <code className="bg-[var(--obsidian-900)] text-[var(--mustard-400)] px-1.5 py-0.5 rounded text-xs font-mono">{children}</code>
+                ),
+              }}
+            >
+              {post.body}
+            </ReactMarkdown>
           </div>
         </div>
       </div>
