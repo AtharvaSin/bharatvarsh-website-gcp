@@ -10,8 +10,8 @@ export const siteConfig = {
   description:
     'A military prince is given a case of national importance whose investigation forces him to cross boundaries of nations and generations, uncovering deep dark secrets about the military and himself.',
   twitter: {
-    site: '@bharatvarsh',
-    creator: '@bharatvarsh',
+    site: '@bharatvarshHQ',
+    creator: '@bharatvarshHQ',
   },
 } as const;
 
@@ -118,5 +118,12 @@ export const pageMetadata = {
     description:
       'Join the Bharatvarsh community — discuss theories, characters, and the alternate history world.',
     path: '/forum',
+  }),
+
+  dispatches: createPageMetadata({
+    title: 'Mesh Dispatches',
+    description:
+      'Intercepted transmissions, declassified files, and fragments from a reality that refused to fall. Content from the Bharatvarsh universe.',
+    path: '/dispatches',
   }),
 } as const;

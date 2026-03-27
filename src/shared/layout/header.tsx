@@ -20,6 +20,7 @@ const navItems = [
   { label: 'The Novel', href: '/novel' },
   { label: 'Lore', href: '/lore' },
   { label: 'Timeline', href: '/timeline' },
+  { label: 'Dispatches', href: '/dispatches' },
   { label: 'Forum', href: '/forum' },
 ];
 
