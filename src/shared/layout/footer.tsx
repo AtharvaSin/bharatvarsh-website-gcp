@@ -23,8 +23,8 @@ const footerLinks = {
   ],
   connect: [
     {
-      label: 'atharva@welcometobharatvarsh.com',
-      href: 'mailto:atharva@welcometobharatvarsh.com',
+      label: 'atharvasingh.24@gmail.com',
+      href: 'mailto:atharvasingh.24@gmail.com',
       icon: Mail,
     },
     { label: 'Twitter/X', href: 'https://x.com/bharatvarshHQ', icon: Twitter },
