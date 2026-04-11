@@ -96,7 +96,9 @@
   "author": {
     "name": "Atharva Singh",
     "bio": "Atharva Singh writes at the intersection of systems thinking and street-level empathy. A management consultant by day, he specializes in digital transformation and process excellence—work that has taught him exactly how power flows through dashboards, budgets, and chains of command. By night, he breaks those systems on the page. Born in Uttar Pradesh and a migrant across six states, his stories are forged not in ivory towers but in the transit lounges of a changing nation. His promise is simple: no sermons, just choices that bruise.",
-    "note": "Connect for process notes, character polls, and the messy reality behind the draft."
+    "note": "Connect for process notes, character polls, and the messy reality behind the draft.",
+    "contactEmail": "atharva@welcometobharatvarsh.com",
+    "goodreadsUrl": "https://www.goodreads.com/author/show/69262859.Atharva_Singh"
   },
   "purchase": {
     "available": true,

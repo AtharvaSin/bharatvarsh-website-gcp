@@ -393,6 +393,8 @@ export interface NovelAuthor {
   name: string;
   bio: string;
   note: string;
+  contactEmail: string;
+  goodreadsUrl?: string;
 }
 
 export interface NovelPlatform {

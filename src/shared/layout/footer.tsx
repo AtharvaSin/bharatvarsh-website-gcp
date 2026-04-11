@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import Link from 'next/link';
-import { Twitter, Instagram, Facebook } from 'lucide-react';
+import { Twitter, Instagram, Facebook, Mail } from 'lucide-react';
 import { cn } from '@/shared/utils';
 
 interface FooterProps {
@@ -22,6 +22,11 @@ const footerLinks = {
     { label: 'Forum', href: '/forum' },
   ],
   connect: [
+    {
+      label: 'atharva@welcometobharatvarsh.com',
+      href: 'mailto:atharva@welcometobharatvarsh.com',
+      icon: Mail,
+    },
     { label: 'Twitter/X', href: 'https://x.com/bharatvarshHQ', icon: Twitter },
     { label: 'Instagram', href: 'https://instagram.com/welcometobharatvarsh', icon: Instagram },
     { label: 'Facebook', href: 'https://www.facebook.com/share/1CC6oYMykq/', icon: Facebook },

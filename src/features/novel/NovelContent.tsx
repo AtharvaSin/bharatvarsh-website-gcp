@@ -364,9 +364,32 @@ function NovelPageInner() {
             <p className="text-[var(--text-secondary)] leading-relaxed mb-4">
               {data.author.bio}
             </p>
-            <p className="text-sm text-[var(--text-muted)] italic">
+            <p className="text-sm text-[var(--text-muted)] italic mb-6">
               {data.author.note}
             </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm">
+              <a
+                href={`mailto:${data.author.contactEmail}`}
+                className="inline-flex items-center gap-2 text-[var(--powder-400)] hover:text-[var(--powder-300)] transition-colors"
+                aria-label={`Email ${data.author.name}`}
+              >
+                <Mail className="w-4 h-4" />
+                {data.author.contactEmail}
+              </a>
+              {data.author.goodreadsUrl && (
+                <a
+                  href={data.author.goodreadsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer me author"
+                  className="inline-flex items-center gap-2 text-[var(--powder-400)] hover:text-[var(--powder-300)] transition-colors"
+                  aria-label={`${data.author.name} on Goodreads`}
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Goodreads Author Page
+                </a>
+              )}
+            </div>
           </motion.div>
         </div>
       </section>
