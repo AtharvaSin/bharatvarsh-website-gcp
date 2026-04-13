@@ -1,3 +1,4 @@
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -197,12 +198,12 @@
   --color-redaction: var(--redaction);
   --color-declassified: var(--declassified);
 
-  /* Fonts */
-  --font-sans: 'Inter', 'Noto Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Bebas Neue', 'Anton', var(--font-sans);
-  --font-serif: 'Crimson Pro', 'Noto Serif', Georgia, serif;
-  --font-devanagari: 'Noto Sans Devanagari', 'Tiro Devanagari Hindi', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  /* Fonts — Classified Chronicle Option B: Brutalist Classified Briefing (locked 2026-04-13) */
+  --font-sans: 'General Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Anton', 'General Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-devanagari: 'Rozha One', 'Noto Sans Devanagari', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
 }
 
 /* Base styles */
