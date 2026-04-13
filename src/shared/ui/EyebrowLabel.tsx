@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { cn } from '@/shared/utils';
 
 export interface EyebrowLabelProps {
@@ -12,19 +12,20 @@ export interface EyebrowLabelProps {
    */
   large?: boolean;
   className?: string;
-  children?: ReactNode;
 }
 
 /**
- * IBM Plex Sans / JetBrains Mono all-caps metadata label with mustard dot
- * separators — the signature Bharatvarsh Classified Chronicle eyebrow used
- * above every section headline, in hero meta rows, and on dossier stamps.
+ * JetBrains Mono all-caps metadata label with mustard dot separators —
+ * the signature Bharatvarsh Classified Chronicle eyebrow used above every
+ * section headline, in hero meta rows, and on dossier stamps. Semantic text
+ * is carried by the segment spans themselves; no `aria-label` is applied
+ * since the native text content is already screen-reader friendly and the
+ * `▪` separators are marked `aria-hidden`.
  */
 export const EyebrowLabel: FC<EyebrowLabelProps> = ({
   segments,
   large = false,
   className,
-  children,
 }) => {
   return (
     <div
@@ -34,7 +35,6 @@ export const EyebrowLabel: FC<EyebrowLabelProps> = ({
         'tracking-[0.18em] leading-none flex items-center gap-2 flex-wrap',
         className
       )}
-      aria-label={segments.join(' · ')}
     >
       {segments.map((segment, index) => (
         <span key={`${segment}-${index}`} className="inline-flex items-center gap-2">
@@ -49,7 +49,6 @@ export const EyebrowLabel: FC<EyebrowLabelProps> = ({
           <span>{segment}</span>
         </span>
       ))}
-      {children}
     </div>
   );
 };
