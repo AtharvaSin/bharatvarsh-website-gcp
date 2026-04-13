@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <!-- BVN 24×7 Compact Mark — corner stamp / watermark version -->
+  <defs>
+    <linearGradient id="pipe-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C41E3A"/>
+      <stop offset="100%" stop-color="#1B4F8A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- BVN -->
+  <text x="20" y="55" font-family="Bebas Neue, sans-serif" font-size="56" letter-spacing="10" fill="#FFFFFF">BVN</text>
+
+  <!-- Gradient pipe divider -->
+  <rect x="158" y="18" width="2" height="44" fill="url(#pipe-grad)"/>
+
+  <!-- 24×7 -->
+  <text x="174" y="46" font-family="Bebas Neue, sans-serif" font-size="22" letter-spacing="3" fill="#C41E3A">24×7</text>
+
+  <!-- Always Watching -->
+  <text x="174" y="60" font-family="monospace" font-size="6" letter-spacing="3" fill="#1B4F8A">ALWAYS WATCHING</text>
+</svg>
