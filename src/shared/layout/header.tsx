@@ -62,8 +62,18 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2 group">
-              <span className="font-display text-2xl md:text-3xl tracking-wide text-[var(--powder-300)] group-hover:text-[var(--mustard-500)] transition-colors">
+            <Link
+              href="/"
+              className="flex items-center gap-2 group"
+              aria-label="Bharatvarsh home"
+            >
+              <span
+                aria-hidden="true"
+                className="font-[var(--font-devanagari)] text-2xl md:text-3xl text-[var(--mustard-dossier)] opacity-90 group-hover:opacity-100 transition-opacity"
+              >
+                भा
+              </span>
+              <span className="font-display text-2xl md:text-3xl tracking-wide text-[var(--bone-text)] group-hover:text-[var(--mustard-dossier)] transition-colors">
                 BHARATVARSH
               </span>
             </Link>
@@ -79,14 +89,21 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'px-4 py-2 text-sm font-medium transition-colors rounded-lg',
+                  'relative px-4 py-2 font-mono uppercase text-[12px] tracking-[0.18em] transition-colors',
                   pathname === item.href ||
                     (item.href !== '/' && pathname.startsWith(item.href))
-                    ? 'text-[var(--mustard-500)]'
-                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--obsidian-800)]'
+                    ? 'text-[var(--bone-text)]'
+                    : 'text-[var(--shadow-text)] hover:text-[var(--bone-text)]'
                 )}
               >
-                {item.label}
+                {item.label.toUpperCase()}
+                {(pathname === item.href ||
+                  (item.href !== '/' && pathname.startsWith(item.href))) && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-4 right-4 bottom-0 h-[2px] bg-[var(--mustard-dossier)]"
+                  />
+                )}
               </Link>
             ))}
 
