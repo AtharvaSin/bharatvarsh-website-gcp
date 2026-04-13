@@ -51,3 +51,6 @@ next-env.d.ts
 **/venv/
 **/__pycache__/
 *.pyc
+
+# git worktrees (claude code isolation)
+.worktrees/
