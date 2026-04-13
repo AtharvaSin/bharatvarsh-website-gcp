@@ -37,7 +37,7 @@ The existing numeric tokens in `src/app/globals.css` stay untouched. Task 3 of t
 | Mustard Dossier | `--color-mustard-dossier` → `--mustard-500` | `#F1C232` | THE accent — CTAs, classified stamps, inline accent words |
 | Mustard Hot | `--color-mustard-hot` → `--mustard-400` | `#F5D56A` | Mustard hover/active |
 | Powder Signal | `--color-powder-signal` → `--powder-300` | `#C9DBEE` | Secondary text accent, Devanagari |
-| Bone Text | `--color-bone` → `--text-primary` | `#F0F4F8` | Primary text |
+| Bone Text | `--color-bone-text` → `--text-primary` | `#F0F4F8` | Primary text |
 | Steel Text | `--color-steel` → `--text-secondary` | `#A0AEC0` | Body text |
 | Shadow Text | `--color-shadow-text` → `--text-muted` | `#718096` | Metadata labels |
 | Redaction Red | `--color-redaction` → `--status-alert` | `#DC2626` | [REDACTED] bars, alerts only |
@@ -51,7 +51,7 @@ Bharatvarsh ships its own font stack in `globals.css` lines 171–175. No change
 - **Display:** Bebas Neue → Anton fallback → `var(--font-sans)` — all-caps, tight tracking, weight-driven hierarchy
 - **Body:** Inter → Noto Sans — 1.65 leading, max 65ch
 - **Serif italic (in-world quotes):** Crimson Pro → Noto Serif
-- **Devanagari:** Noto Sans Devanagari → Tiro Devanagari Hindi — treat Devanagari as visual ornament at 10–25% opacity behind English display
+- **Devanagari:** Noto Sans Devanagari → Tiro Devanagari Hindi — treat Devanagari as visual ornament at 10–15% opacity behind English display. Rendered via the `font-devanagari` class exposed in `src/app/globals.css`.
 - **Metadata labels:** JetBrains Mono caps, letter-spacing `0.18em`, for classification codes and timestamps
 
 ## Layout principles
@@ -70,7 +70,7 @@ Already in repo as `src/shared/ui/FilmGrainOverlay.tsx`, `ScanlineEffect.tsx`, `
 - **Primary CTA:** solid Mustard Dossier fill, Obsidian Void text, `--radius-sm` (4px) corners, tight letter-spaced label, no outer glow (inner glow on hover only)
 - **Secondary CTA:** ghost outline in Powder Signal, transparent fill; converts to Obsidian Panel fill on hover
 - **Classified Stamp:** rotated -4° diagonal label with dashed Mustard border (use existing `StampAnimation` — extend only if new props are needed)
-- **Eyebrow label (new):** IBM Plex caps 11–13px, `+0.18em` tracking, Shadow Text color, `▪` separators in Mustard — see `EyebrowLabel` primitive in Task 4
+- **Eyebrow label (new):** JetBrains Mono caps 11–13px (rendered via Tailwind's `font-mono` class which resolves to `var(--font-mono)`), `+0.18em` tracking, Shadow Text color, `▪` separators in Mustard — see `EyebrowLabel` primitive in Task 4
 - **Dossier card:** border-top only (no full card box). Created via the new `DossierDivider` primitive in Task 5.
 - **Document stamp (new):** footer corner classification sticker `DOC ID: BVR-0001 ▪ REV 27` — created in Task 6.
 - **Navigation:** sticky top bar, Obsidian Void 85% backdrop blur, 2px Mustard underline for active item (replacing the current mustard-text pattern — see Task 7)
