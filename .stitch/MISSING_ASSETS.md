@@ -12,7 +12,7 @@
 
 | Priority | Count | Category | Status |
 |---|---|---|---|
-| **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya, Kaali ☒ · Tech: HUD Monocle ☒ | 2/3 |
+| **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya ☒, Kaali ☒ · Tech: HUD Monocle ☒ | **3/3 ✅** |
 | **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone, Mysuru · Faction: Tribhuj · Tech: The Mesh | ☐ |
 | **P2** — low (optional or edge cases) | 2 pairs | Char: Bhoomi AI · Tech: Neural Diodes | ☐ |
 | **P3** — nice-to-have upgrades | 4 items | Animated hero · Kahaan dossier banner · Dispatch gap-fill · Richer operative art | ☐ |
@@ -34,7 +34,7 @@ Match the format/quality of existing production assets (e.g. `public/images/char
 
 ## P0 — Critical (required to stop rendering broken images)
 
-### ☐ 1. Surya — character
+### ☒ 1. Surya — character (DELIVERED 2026-04-14, Guhyakas ex-unit)
 - **Paths:**
   - `public/images/characters/surya-card.webp`
   - `public/images/characters/surya-banner.webp`
