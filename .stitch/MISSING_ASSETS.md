@@ -12,7 +12,7 @@
 
 | Priority | Count | Category | Status |
 |---|---|---|---|
-| **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya, Kaali · Tech: HUD Monocle ☒ | 1/3 |
+| **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya, Kaali ☒ · Tech: HUD Monocle ☒ | 2/3 |
 | **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone, Mysuru · Faction: Tribhuj · Tech: The Mesh | ☐ |
 | **P2** — low (optional or edge cases) | 2 pairs | Char: Bhoomi AI · Tech: Neural Diodes | ☐ |
 | **P3** — nice-to-have upgrades | 4 items | Animated hero · Kahaan dossier banner · Dispatch gap-fill · Richer operative art | ☐ |
@@ -46,7 +46,7 @@ Match the format/quality of existing production assets (e.g. `public/images/char
   - `/bhoomi` "Bhoomi Knows" operatives rail
   - `/novel` operatives highlights 2×2 grid (right of Kahaan's featured card)
 
-### ☐ 2. Kaali — character
+### ☒ 2. Kaali — character (DELIVERED 2026-04-14)
 - **Paths:**
   - `public/images/characters/kaali-card.webp`
   - `public/images/characters/kaali-banner.webp`
