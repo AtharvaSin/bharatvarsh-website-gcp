@@ -13,7 +13,7 @@
 | Priority | Count | Category | Status |
 |---|---|---|---|
 | **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya ☒, Kaali ☒ · Tech: HUD Monocle ☒ | **3/3 ✅** |
-| **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone, Mysuru · Faction: Tribhuj · Tech: The Mesh | ☐ |
+| **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone ☒, Mysuru · Faction: Tribhuj · Tech: The Mesh | 1/4 |
 | **P2** — low (optional or edge cases) | 2 pairs | Char: Bhoomi AI · Tech: Neural Diodes | ☐ |
 | **P3** — nice-to-have upgrades | 4 items | Animated hero · Kahaan dossier banner · Dispatch gap-fill · Richer operative art | ☐ |
 
@@ -73,7 +73,7 @@ Match the format/quality of existing production assets (e.g. `public/images/char
 
 ## P1 — Important (placeholder rendering, breaks visual density)
 
-### ☐ 4. Treaty Zone — location
+### ☒ 4. Treaty Zone — location (DELIVERED 2026-04-14)
 - **Paths:**
   - `public/images/locations/treaty-zone-card.webp`
   - `public/images/locations/treaty-zone-banner.webp`
