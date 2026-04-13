@@ -41,7 +41,7 @@ The existing numeric tokens in `src/app/globals.css` stay untouched. Task 3 of t
 | Steel Text | `--color-steel-text` → `--text-secondary` | `#A0AEC0` | Body text |
 | Shadow Text | `--color-shadow-text` → `--text-muted` | `#718096` | Metadata labels |
 | Redaction Red | `--color-redaction` → `--status-alert` | `#DC2626` | [REDACTED] bars, alerts only |
-| Confirm Green | `--color-confirm` → `--status-success` | `#10B981` | Declassify / success — minimal |
+| Declassified Green | `--color-declassified` → `--status-success` | `#10B981` | Declassify / success — minimal |
 
 **Banned:** pure `#000000`, purple/violet/cyan neon glows (no new hues outside the above). The palette is locked.
 
