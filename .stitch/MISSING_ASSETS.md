@@ -12,7 +12,7 @@
 
 | Priority | Count | Category | Status |
 |---|---|---|---|
-| **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya, Kaali · Tech: HUD Monocle | ☐ |
+| **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya, Kaali · Tech: HUD Monocle ☒ | 1/3 |
 | **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone, Mysuru · Faction: Tribhuj · Tech: The Mesh | ☐ |
 | **P2** — low (optional or edge cases) | 2 pairs | Char: Bhoomi AI · Tech: Neural Diodes | ☐ |
 | **P3** — nice-to-have upgrades | 4 items | Animated hero · Kahaan dossier banner · Dispatch gap-fill · Richer operative art | ☐ |
@@ -58,7 +58,7 @@ Match the format/quality of existing production assets (e.g. `public/images/char
   - Faction: Military Intelligence / Bharatsena command
 - **Consumers:** Same 5 routes as Surya.
 
-### ☐ 3. HUD Monocle — tech
+### ☒ 3. HUD Monocle — tech (DELIVERED 2026-04-14)
 - **Paths:**
   - `public/images/misc/hud-monocle-card.webp`
   - `public/images/misc/hud-monocle-banner.webp`
