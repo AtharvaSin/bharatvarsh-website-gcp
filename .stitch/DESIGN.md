@@ -38,7 +38,7 @@ The existing numeric tokens in `src/app/globals.css` stay untouched. Task 3 of t
 | Mustard Hot | `--color-mustard-hot` → `--mustard-400` | `#F5D56A` | Mustard hover/active |
 | Powder Signal | `--color-powder-signal` → `--powder-300` | `#C9DBEE` | Secondary text accent, Devanagari |
 | Bone Text | `--color-bone-text` → `--text-primary` | `#F0F4F8` | Primary text |
-| Steel Text | `--color-steel` → `--text-secondary` | `#A0AEC0` | Body text |
+| Steel Text | `--color-steel-text` → `--text-secondary` | `#A0AEC0` | Body text |
 | Shadow Text | `--color-shadow-text` → `--text-muted` | `#718096` | Metadata labels |
 | Redaction Red | `--color-redaction` → `--status-alert` | `#DC2626` | [REDACTED] bars, alerts only |
 | Confirm Green | `--color-confirm` → `--status-success` | `#10B981` | Declassify / success — minimal |
