@@ -112,3 +112,4 @@ export { EyebrowLabel, type EyebrowLabelProps } from './EyebrowLabel';
 
 // Layout Primitives
 export { DossierDivider, type DossierDividerProps } from './DossierDivider';
+export { DocumentStamp, type DocumentStampProps } from './DocumentStamp';
