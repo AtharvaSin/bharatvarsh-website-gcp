@@ -106,3 +106,6 @@ export {
   DialogFooter,
   DialogClose,
 } from './dialog';
+
+// Typography Primitives
+export { EyebrowLabel, type EyebrowLabelProps } from './EyebrowLabel';
