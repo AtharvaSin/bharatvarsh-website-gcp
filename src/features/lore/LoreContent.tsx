@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { LoreModal } from '@/features/lore';
 import { useSession } from '@/features/auth';
@@ -89,7 +90,22 @@ function LockedOverlay({ locked }: LockedOverlayProps) {
 export function LoreContent() {
   const [activeFilter, setActiveFilter] = useState<FilterValue>('all');
   const [selectedItem, setSelectedItem] = useState<LoreItem | null>(null);
+  const [hasHandledDeepLink, setHasHandledDeepLink] = useState(false);
   const { isAuthenticated } = useSession();
+  const searchParams = useSearchParams();
+
+  // Deep link support: /lore?item=<id> auto-opens that item's modal on mount
+  useEffect(() => {
+    if (hasHandledDeepLink) return;
+    const itemId = searchParams.get('item');
+    if (!itemId) return;
+    const target = allItems.find((i) => i.id === itemId);
+    if (target) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Initial URL param sync on mount
+      setSelectedItem(target);
+      setHasHandledDeepLink(true);
+    }
+  }, [searchParams, hasHandledDeepLink]);
 
   // ------------------------------------------------------------------
   // Derived data

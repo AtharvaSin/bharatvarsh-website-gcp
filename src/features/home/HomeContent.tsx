@@ -1,12 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
+import { HomeDossierModal } from '@/features/newsletter';
 import loreRaw from '@/content/data/lore-items.json';
-import timelineRaw from '@/content/data/timeline.json';
 import dispatchesRaw from '@/content/data/dispatches.json';
+import novelData from '@/content/data/novel.json';
 
 // ---------------------------------------------------------------------------
 // Types inferred from JSON shape
@@ -25,12 +27,6 @@ interface LoreItem {
   sortOrder?: number;
 }
 
-interface TimelineEvent {
-  id: number;
-  title: string;
-  date: { start_year: number; end_year: number; is_range: boolean };
-}
-
 interface Dispatch {
   id: string;
   topic: string;
@@ -47,7 +43,6 @@ interface Dispatch {
 // ---------------------------------------------------------------------------
 
 const loreItems: LoreItem[] = loreRaw.lore as LoreItem[];
-const timelineEvents: TimelineEvent[] = timelineRaw.events as TimelineEvent[];
 const dispatches: Dispatch[] = dispatchesRaw.dispatches as Dispatch[];
 
 const archiveIds = ['kahaan', 'rudra', 'arshi', 'hana', 'pratap', 'indrapur'];
@@ -63,9 +58,6 @@ const archiveLevels: Record<string, string> = {
   pratap: 'LVL 1',
   indrapur: 'LVL 5',
 };
-
-// Use the first 6 timeline events for the beat strip
-const beatEvents = timelineEvents.slice(0, 6);
 
 // Use 3 dispatches with real image paths
 const previewDispatches = dispatches
@@ -110,6 +102,9 @@ function FadeInSection({
 // ---------------------------------------------------------------------------
 
 export function HomeContent() {
+  const [dossierModalOpen, setDossierModalOpen] = useState(false);
+  const platforms = (novelData as { purchase: { platforms: Array<{ name: string; url: string; icon: string }> } }).purchase.platforms;
+
   return (
     <div className="relative">
       {/* ================================================================
@@ -189,35 +184,36 @@ export function HomeContent() {
                 maxWidth: '50ch',
               }}
             >
-              &ldquo;Every dossier begins with a name you were never meant to
-              read.&rdquo;
+              &ldquo;A green-tech super-state where peace is engineered. Until
+              twenty bombs rearrange the map. What is the true price of
+              harmony?&rdquo;
             </p>
 
             {/* CTA row */}
             <div className="flex flex-wrap gap-4 mt-8">
+              <button
+                type="button"
+                onClick={() => setDossierModalOpen(true)}
+                className="inline-flex items-center gap-2 font-mono uppercase transition-colors"
+                style={{
+                  background: 'var(--mustard-dossier)',
+                  color: 'var(--obsidian-void)',
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '12px',
+                  letterSpacing: '0.18em',
+                }}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLButtonElement).style.background =
+                    'var(--mustard-hot)')
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLButtonElement).style.background =
+                    'var(--mustard-dossier)')
+                }
+              >
+                READ THE FIRST CHAPTER →
+              </button>
               <Link href="/lore">
-                <button
-                  className="inline-flex items-center gap-2 font-mono uppercase transition-colors"
-                  style={{
-                    background: 'var(--mustard-dossier)',
-                    color: 'var(--obsidian-void)',
-                    padding: '0.75rem 1.5rem',
-                    fontSize: '12px',
-                    letterSpacing: '0.18em',
-                  }}
-                  onMouseEnter={(e) =>
-                    ((e.currentTarget as HTMLButtonElement).style.background =
-                      'var(--mustard-hot)')
-                  }
-                  onMouseLeave={(e) =>
-                    ((e.currentTarget as HTMLButtonElement).style.background =
-                      'var(--mustard-dossier)')
-                  }
-                >
-                  ENTER THE DOSSIER →
-                </button>
-              </Link>
-              <Link href="/novel">
                 <button
                   className="font-mono uppercase transition-colors"
                   style={{
@@ -237,10 +233,16 @@ export function HomeContent() {
                       'transparent')
                   }
                 >
-                  READ THE NOVEL
+                  EXPLORE THE WORLD
                 </button>
               </Link>
             </div>
+
+            {/* Trust signal */}
+            <EyebrowLabel
+              segments={['NO SPAM', 'VERIFY BY EMAIL', 'ONE DOSSIER, DIRECTLY TO YOU']}
+              className="mt-4 opacity-70"
+            />
           </div>
 
           {/* RIGHT — character portrait */}
@@ -370,7 +372,7 @@ export function HomeContent() {
                 READ THE NOVEL
               </h3>
               <p style={{ color: 'var(--steel-text)' }}>
-                Begin with the book. 480 pages. A locked case, a fractured
+                Begin with the book. 374 pages. A locked case, a fractured
                 nation, a prince who was never meant to rule.
               </p>
 
@@ -495,23 +497,25 @@ export function HomeContent() {
                   the resistance, and everything in between.
                 </p>
 
-                {/* Terminal preview */}
+                {/* Clearance indicator */}
                 <div
-                  className="mt-4 flex items-center px-4 py-3"
+                  className="mt-4 px-4 py-3 border-l-2 flex items-center gap-3"
                   style={{
-                    background: 'var(--obsidian-deep)',
-                    maxWidth: '320px',
+                    backgroundColor: 'var(--obsidian-void)',
+                    borderLeftColor: 'var(--mustard-dossier)',
                   }}
                 >
                   <span
-                    className="font-mono animate-pulse"
-                    style={{
-                      color: 'var(--mustard-dossier)',
-                      fontSize: '14px',
-                    }}
-                  >
-                    _
-                  </span>
+                    aria-hidden="true"
+                    className="inline-block w-2 h-2 rounded-full animate-pulse flex-shrink-0"
+                    style={{ backgroundColor: 'var(--declassified)' }}
+                  />
+                  <div className="font-mono uppercase text-[10px] tracking-[0.18em]" style={{ color: 'var(--shadow-text)' }}>
+                    <span style={{ color: 'var(--bone-text)' }}>CLEARANCE:</span> VISITOR{' '}
+                    <span style={{ color: 'var(--mustard-dossier)' }}>▪</span> SESSION READY{' '}
+                    <span style={{ color: 'var(--mustard-dossier)' }}>▪</span> BHOOMI{' '}
+                    <span style={{ color: 'var(--declassified)' }}>ONLINE</span>
+                  </div>
                 </div>
 
                 <Link href="/bhoomi" className="mt-6 inline-block">
@@ -718,9 +722,10 @@ export function HomeContent() {
             style={{ scrollbarColor: 'var(--navy-signal) transparent' }}
           >
             {archiveItems.map((item) => (
-              <div
+              <Link
                 key={item.id}
-                className="flex-shrink-0 relative overflow-hidden group"
+                href={`/lore?item=${item.id}`}
+                className="flex-shrink-0 relative overflow-hidden group block"
                 style={{
                   width: '280px',
                   background: 'var(--obsidian-panel)',
@@ -790,7 +795,7 @@ export function HomeContent() {
                     {archiveLevels[item.id] ?? 'LVL 1'}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -821,67 +826,193 @@ export function HomeContent() {
             WHEN HISTORY CRACKED.
           </h2>
 
-          {/* Beat strip */}
-          <div className="relative mt-12 pb-8">
-            {/* Connecting line */}
-            <div
-              aria-hidden="true"
-              className="absolute left-0 right-0"
-              style={{
-                top: 'calc(1.5rem + 6px)',
-                height: '1px',
-                background: 'var(--navy-signal)',
-              }}
-            />
-
-            <div className="flex justify-between items-start">
-              {beatEvents.map((event) => {
-                const yearLabel = event.date.is_range
-                  ? `${event.date.start_year}`
-                  : `${event.date.start_year}`;
-                return (
+          {/* Section 5 dual-track fracture visualization — replaces old beat strip */}
+          <div className="relative mt-16 py-12 overflow-hidden">
+            {/* Container for both tracks */}
+            <div className="relative max-w-[1200px] mx-auto px-8">
+              {/* Track labels (left side) */}
+              <div className="grid grid-cols-[140px_1fr] gap-6 items-start">
+                {/* === OUR HISTORY LABEL === */}
+                <div className="pt-2 text-right">
                   <div
-                    key={event.id}
-                    className="flex flex-col items-center"
-                    style={{ flex: 1, minWidth: 0 }}
+                    className="font-mono uppercase text-[10px] tracking-[0.18em]"
+                    style={{ color: 'var(--shadow-text)' }}
                   >
-                    {/* Year */}
-                    <span
-                      className="font-mono text-center"
-                      style={{
-                        fontSize: '10px',
-                        letterSpacing: '0.18em',
-                        color: 'var(--shadow-text)',
-                        marginBottom: '0.75rem',
-                      }}
-                    >
-                      {yearLabel}
-                    </span>
-
-                    {/* Dot */}
-                    <div
-                      className="relative z-10 rounded-full flex-shrink-0"
-                      style={{
-                        width: '12px',
-                        height: '12px',
-                        background: 'var(--mustard-dossier)',
-                      }}
-                    />
-
-                    {/* Label */}
-                    <p
-                      className="font-display text-center mt-3 px-1"
-                      style={{
-                        fontSize: '0.875rem',
-                        color: 'var(--bone-text)',
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      {event.title.toUpperCase()}
-                    </p>
+                    OUR HISTORY
                   </div>
-                );
-              })}
+                  <div
+                    className="font-mono uppercase text-[9px] tracking-[0.15em] mt-1 opacity-60"
+                    style={{ color: 'var(--shadow-text)' }}
+                  >
+                    THE TIMELINE
+                    <br />THAT HAPPENED
+                  </div>
+                </div>
+
+                {/* === OUR HISTORY TRACK === */}
+                <div className="relative h-16">
+                  {/* Dashed horizontal line */}
+                  <div
+                    className="absolute top-1/2 left-0 right-0 border-t border-dashed"
+                    style={{ borderColor: 'var(--navy-signal)', opacity: 0.4 }}
+                  />
+                  {/* Reference nodes */}
+                  {[
+                    { year: '1757', label: 'PLASSEY', x: 8 },
+                    { year: '1858', label: 'CROWN RULE', x: 28 },
+                    { year: '1947', label: 'INDEPENDENCE', x: 58 },
+                    { year: '2010s', label: 'MODERN INDIA', x: 88 },
+                  ].map((node) => (
+                    <div
+                      key={node.year}
+                      className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center"
+                      style={{ left: `${node.x}%`, opacity: 0.45 }}
+                    >
+                      <div
+                        className="w-2 h-2 rounded-full border"
+                        style={{
+                          borderColor: 'var(--shadow-text)',
+                          backgroundColor: 'transparent',
+                        }}
+                      />
+                      <div
+                        className="mt-2 font-mono uppercase text-[9px] tracking-[0.12em] whitespace-nowrap text-center"
+                        style={{ color: 'var(--shadow-text)' }}
+                      >
+                        {node.year}
+                        <br />
+                        <span className="opacity-60">{node.label}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* === FRACTURE POINT (centered origin between tracks) === */}
+              <div className="relative flex justify-start my-2 pl-[160px]">
+                <div className="relative" style={{ width: 'calc(100% - 20px)' }}>
+                  {/* 1717 crack origin */}
+                  <div className="absolute left-0 -top-2 -bottom-2 flex items-center">
+                    {/* Crack glyph */}
+                    <svg
+                      width="56"
+                      height="80"
+                      viewBox="0 0 56 80"
+                      className="overflow-visible"
+                      aria-hidden="true"
+                    >
+                      {/* Central crack vertical */}
+                      <path
+                        d="M28 0 L26 20 L30 32 L24 44 L30 56 L26 68 L28 80"
+                        stroke="var(--mustard-dossier)"
+                        strokeWidth="2"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      {/* Radiating shards */}
+                      <path
+                        d="M28 30 L14 18 M28 30 L42 18 M28 50 L14 62 M28 50 L42 62 M28 30 L10 34 M28 50 L46 46"
+                        stroke="var(--mustard-dossier)"
+                        strokeWidth="1"
+                        fill="none"
+                        opacity="0.6"
+                        strokeLinecap="round"
+                      />
+                      {/* Central impact dot */}
+                      <circle cx="28" cy="40" r="3" fill="var(--mustard-dossier)" />
+                    </svg>
+                  </div>
+                  {/* 1717 caption */}
+                  <div className="absolute left-16 top-1/2 -translate-y-1/2">
+                    <div
+                      className="font-mono uppercase text-[10px] tracking-[0.18em] whitespace-nowrap"
+                      style={{ color: 'var(--mustard-dossier)' }}
+                    >
+                      1717 ▪ DIVERGENCE POINT
+                    </div>
+                    <div
+                      className="font-mono uppercase text-[9px] tracking-[0.15em] whitespace-nowrap opacity-70"
+                      style={{ color: 'var(--shadow-text)' }}
+                    >
+                      DELHI REFUSED THE EAST INDIA COMPANY CHARTER
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* === BHARATVARSH TRACK === */}
+              <div className="grid grid-cols-[140px_1fr] gap-6 items-start mt-2">
+                {/* BHARATVARSH LABEL */}
+                <div className="pt-2 text-right">
+                  <div
+                    className="font-mono uppercase text-[10px] tracking-[0.18em]"
+                    style={{ color: 'var(--mustard-dossier)' }}
+                  >
+                    BHARATVARSH
+                  </div>
+                  <div
+                    className="font-mono uppercase text-[9px] tracking-[0.15em] mt-1 opacity-80"
+                    style={{ color: 'var(--steel-text)' }}
+                  >
+                    THE TIMELINE
+                    <br />THE WORLD NEVER SAW
+                  </div>
+                </div>
+
+                {/* BHARATVARSH TRACK */}
+                <div className="relative h-20">
+                  {/* Solid horizontal line */}
+                  <div
+                    className="absolute top-1/2 left-0 right-0 h-[2px]"
+                    style={{ backgroundColor: 'var(--mustard-dossier)' }}
+                  />
+                  {/* Beat nodes */}
+                  {[
+                    { year: '1717', label: 'FRACTURE', x: 4, significance: 5 },
+                    { year: '1790–1850', label: 'ENLIGHTENMENT', x: 22, significance: 3 },
+                    { year: '1910–1975', label: 'REPUBLIC', x: 48, significance: 4 },
+                    { year: '1975–1985', label: 'CIVIL WAR', x: 66, significance: 3 },
+                    { year: '1985–2022', label: 'JAAL YUG', x: 82, significance: 5 },
+                    { year: '2022', label: 'THE BOMBINGS', x: 96, significance: 5 },
+                  ].map((node) => (
+                    <div
+                      key={node.year}
+                      className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center"
+                      style={{ left: `${node.x}%` }}
+                    >
+                      {/* Node dot */}
+                      <div
+                        className="rounded-full"
+                        style={{
+                          width: node.significance >= 5 ? '14px' : '10px',
+                          height: node.significance >= 5 ? '14px' : '10px',
+                          backgroundColor: 'var(--mustard-dossier)',
+                          boxShadow: node.significance >= 5 ? '0 0 12px rgba(241, 194, 50, 0.6)' : 'none',
+                        }}
+                      />
+                      <div
+                        className="mt-3 font-mono uppercase text-[9px] tracking-[0.12em] whitespace-nowrap text-center"
+                        style={{ color: 'var(--bone-text)' }}
+                      >
+                        {node.year}
+                        <br />
+                        <span style={{ color: 'var(--mustard-dossier)' }}>{node.label}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Caption below both tracks */}
+              <div className="mt-10 text-center">
+                <p
+                  className="font-serif italic text-lg"
+                  style={{ color: 'var(--powder-signal)' }}
+                >
+                  &ldquo;One decree. Two centuries. A nation the world never saw.&rdquo;
+                </p>
+              </div>
             </div>
           </div>
 
@@ -924,15 +1055,14 @@ export function HomeContent() {
             WHAT THE MESH IS WATCHING.
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start mt-12">
-            {previewDispatches.map((dispatch, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mt-12">
+            {previewDispatches.map((dispatch) => (
               <div
                 key={dispatch.id}
                 className="flex flex-col border-t-2 p-6"
                 style={{
                   background: 'var(--obsidian-panel)',
                   borderColor: 'var(--navy-signal)',
-                  minHeight: idx === 0 ? '560px' : idx === 1 ? '400px' : '300px',
                 }}
               >
                 {/* Dispatch image */}
@@ -1063,7 +1193,7 @@ export function HomeContent() {
           {/* RIGHT — CTA copy */}
           <div className="col-span-12 md:col-span-7 flex flex-col gap-4">
             <EyebrowLabel
-              segments={['AVAILABLE NOW', 'PAPERBACK · EBOOK · AUDIOBOOK']}
+              segments={['AVAILABLE NOW', 'THREE CHANNELS', 'ONE CHRONICLE']}
             />
 
             <h2
@@ -1078,71 +1208,171 @@ export function HomeContent() {
             </h2>
 
             <p style={{ color: 'var(--steel-text)', maxWidth: '55ch' }}>
-              480 pages. Two factions. One case. The dossier is waiting. Your
-              clearance has been granted.
+              374 pages of alternate-history political thriller. Set in a Bharatvarsh
+              that was never colonised — a military-technocratic republic where peace
+              is engineered and every transaction lives under the Mesh.
             </p>
 
-            {/* Format pills */}
-            <div className="flex gap-3 mt-2 flex-wrap">
-              {[
-                { label: 'Paperback', active: true },
-                { label: 'eBook', active: false },
-                { label: 'Audiobook', active: false },
-              ].map(({ label, active }) => (
-                <span
-                  key={label}
-                  className="font-mono uppercase"
+            {/* Distribution channel cards — 5/3/4 split */}
+            <div className="grid grid-cols-12 gap-6 mt-10">
+              {/* Card 1 — Notion Press (Featured) */}
+              <div
+                className="col-span-12 md:col-span-5 p-6 flex flex-col justify-between relative"
+                style={{
+                  borderTop: '1px solid var(--navy-signal)',
+                  backgroundColor: 'var(--obsidian-panel)',
+                  minHeight: '280px',
+                }}
+              >
+                {/* DIRECT stamp */}
+                <div
+                  className="absolute top-4 left-4 font-mono uppercase text-[9px] tracking-[0.18em] px-2 py-1 border border-dashed"
                   style={{
-                    padding: '0.375rem 1rem',
-                    fontSize: '11px',
-                    letterSpacing: '0.18em',
-                    background: active ? 'var(--mustard-dossier)' : 'transparent',
-                    color: active ? 'var(--obsidian-void)' : 'var(--bone-text)',
-                    border: active
-                      ? 'none'
-                      : '1px solid var(--navy-signal)',
+                    color: 'var(--mustard-dossier)',
+                    borderColor: 'var(--mustard-dossier)',
+                    transform: 'rotate(-4deg)',
                   }}
                 >
-                  {label}
-                </span>
-              ))}
+                  DIRECT
+                </div>
+                <div className="mt-8">
+                  <div
+                    className="font-display"
+                    style={{ fontSize: '2.5rem', color: 'var(--bone-text)', lineHeight: 1.1 }}
+                  >
+                    NOTION PRESS
+                  </div>
+                  <p
+                    className="mt-3 text-sm leading-relaxed"
+                    style={{ color: 'var(--steel-text)' }}
+                  >
+                    Hardcover direct from the author. The cleanest path from our desk to your shelf.
+                  </p>
+                </div>
+                <a
+                  href={platforms[0]?.url ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 self-start"
+                >
+                  <button
+                    className="inline-flex items-center gap-2 font-mono uppercase"
+                    style={{
+                      background: 'var(--mustard-dossier)',
+                      color: 'var(--obsidian-void)',
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '11px',
+                      letterSpacing: '0.18em',
+                    }}
+                  >
+                    ORDER DIRECT →
+                  </button>
+                </a>
+              </div>
+
+              {/* Card 2 — Amazon */}
+              <div
+                className="col-span-12 md:col-span-3 p-6 flex flex-col justify-between"
+                style={{
+                  borderTop: '1px solid var(--navy-signal)',
+                  backgroundColor: 'var(--obsidian-panel)',
+                  minHeight: '280px',
+                }}
+              >
+                <div>
+                  <div
+                    className="font-display"
+                    style={{ fontSize: '2.5rem', color: 'var(--bone-text)', lineHeight: 1.1 }}
+                  >
+                    AMAZON
+                  </div>
+                  <p
+                    className="mt-3 text-sm leading-relaxed"
+                    style={{ color: 'var(--steel-text)' }}
+                  >
+                    Hardcover and Kindle editions. Fast delivery across India.
+                  </p>
+                </div>
+                <a
+                  href={platforms[1]?.url ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 self-start"
+                >
+                  <button
+                    className="font-mono uppercase"
+                    style={{
+                      border: '1px solid var(--powder-signal)',
+                      color: 'var(--bone-text)',
+                      padding: '0.5rem 1.25rem',
+                      fontSize: '11px',
+                      letterSpacing: '0.18em',
+                      background: 'transparent',
+                    }}
+                  >
+                    BUY ON AMAZON →
+                  </button>
+                </a>
+              </div>
+
+              {/* Card 3 — Flipkart */}
+              <div
+                className="col-span-12 md:col-span-4 p-6 flex flex-col justify-between"
+                style={{
+                  borderTop: '1px solid var(--navy-signal)',
+                  backgroundColor: 'var(--obsidian-panel)',
+                  minHeight: '280px',
+                }}
+              >
+                <div>
+                  <div
+                    className="font-display"
+                    style={{ fontSize: '2.5rem', color: 'var(--bone-text)', lineHeight: 1.1 }}
+                  >
+                    FLIPKART
+                  </div>
+                  <p
+                    className="mt-3 text-sm leading-relaxed"
+                    style={{ color: 'var(--steel-text)' }}
+                  >
+                    Hardcover edition. Pan-India shipping with Flipkart&apos;s trusted fulfilment.
+                  </p>
+                </div>
+                <a
+                  href={platforms[2]?.url ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 self-start"
+                >
+                  <button
+                    className="font-mono uppercase"
+                    style={{
+                      border: '1px solid var(--powder-signal)',
+                      color: 'var(--bone-text)',
+                      padding: '0.5rem 1.25rem',
+                      fontSize: '11px',
+                      letterSpacing: '0.18em',
+                      background: 'transparent',
+                    }}
+                  >
+                    BUY ON FLIPKART →
+                  </button>
+                </a>
+              </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4 mt-4">
-              <a
-                href="https://www.amazon.in/dp/B0GHS8127Z"
-                target="_blank"
-                rel="noopener noreferrer"
+            {/* Trust signal */}
+            <div className="mt-8 text-center">
+              <div
+                className="font-mono uppercase text-[10px] tracking-[0.18em]"
+                style={{ color: 'var(--shadow-text)' }}
               >
-                <button
-                  className="inline-flex items-center gap-2 font-mono uppercase"
-                  style={{
-                    background: 'var(--mustard-dossier)',
-                    color: 'var(--obsidian-void)',
-                    padding: '0.75rem 1.5rem',
-                    fontSize: '12px',
-                    letterSpacing: '0.18em',
-                  }}
-                >
-                  BUY NOW ON AMAZON →
-                </button>
-              </a>
-              <Link href="/novel">
-                <button
-                  className="font-mono uppercase"
-                  style={{
-                    border: '1px solid var(--powder-signal)',
-                    color: 'var(--bone-text)',
-                    padding: '0.75rem 1.5rem',
-                    fontSize: '12px',
-                    letterSpacing: '0.18em',
-                    background: 'transparent',
-                  }}
-                >
-                  READ THE FIRST CHAPTER
-                </button>
-              </Link>
+                SHIPS PAN-INDIA{' '}
+                <span style={{ color: 'var(--mustard-dossier)' }}>▪</span>{' '}
+                HARDCOVER EDITIONS{' '}
+                <span style={{ color: 'var(--mustard-dossier)' }}>▪</span>{' '}
+                DIRECT AUTHOR CHANNEL AVAILABLE
+              </div>
             </div>
           </div>
         </div>
@@ -1155,6 +1385,12 @@ export function HomeContent() {
           to   { transform: translateX(-50%); }
         }
       `}</style>
+
+      {/* Dossier lead magnet modal — triggered by hero primary CTA */}
+      <HomeDossierModal
+        isOpen={dossierModalOpen}
+        onClose={() => setDossierModalOpen(false)}
+      />
     </div>
   );
 }
