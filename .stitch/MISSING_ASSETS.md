@@ -13,7 +13,7 @@
 | Priority | Count | Category | Status |
 |---|---|---|---|
 | **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya ☒, Kaali ☒ · Tech: HUD Monocle ☒ | **3/3 ✅** |
-| **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone ☒, Mysuru · Faction: Tribhuj · Tech: The Mesh ☒ | 2/4 |
+| **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone ☒, Mysuru ☒ · Faction: Tribhuj · Tech: The Mesh ☒ | 3/4 |
 | **P2** — low (optional or edge cases) | 2 pairs | Char: Bhoomi AI · Tech: Neural Diodes | ☐ |
 | **P3** — nice-to-have upgrades | 4 items | Animated hero · Kahaan dossier banner · Dispatch gap-fill · Richer operative art | ☐ |
 
@@ -80,7 +80,7 @@ Match the format/quality of existing production assets (e.g. `public/images/char
 - **Art direction:** The contested neutral border between Bharatsena and Akakpen territories. Gritty, windblown dust, scattered evidence of past skirmishes. Dystopian checkpoint aesthetic.
 - **Consumers:** `/lore` Locations Rail, `/lore` dossier modal, `/timeline` 1850 Point of Divergence callout.
 
-### ☐ 5. Mysuru — location
+### ☒ 5. Mysuru — location (DELIVERED 2026-04-14 — Junction Mall 20/10 aftermath)
 - **Paths:**
   - `public/images/locations/mysuru-card.webp`
   - `public/images/locations/mysuru-banner.webp`
