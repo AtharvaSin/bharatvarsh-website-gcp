@@ -69,7 +69,8 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
             >
               <span
                 aria-hidden="true"
-                className="font-[var(--font-devanagari)] text-2xl md:text-3xl text-[var(--mustard-dossier)] opacity-90 group-hover:opacity-100 transition-opacity"
+                style={{ fontFamily: 'var(--font-devanagari)' }}
+                className="text-2xl md:text-3xl text-[var(--mustard-dossier)] opacity-90 group-hover:opacity-100 transition-opacity"
               >
                 भा
               </span>

@@ -53,7 +53,8 @@ export const Footer: FC<FooterProps> = ({ className }) => {
             >
               <span
                 aria-hidden="true"
-                className="font-[var(--font-devanagari)] text-2xl text-[var(--mustard-dossier)] opacity-90 group-hover:opacity-100 transition-opacity"
+                style={{ fontFamily: 'var(--font-devanagari)' }}
+                className="text-2xl text-[var(--mustard-dossier)] opacity-90 group-hover:opacity-100 transition-opacity"
               >
                 भा
               </span>
