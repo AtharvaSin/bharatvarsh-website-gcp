@@ -1,11 +1,13 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import ReactMarkdown from 'react-markdown';
 import { EyebrowLabel } from '@/shared/ui';
 import { ChatInterface } from '@/components/bhoomi/chat-interface';
 import loreData from '@/content/data/lore-items.json';
+import bhoomiContent from '@/content/data/bhoomi-vectors.json';
 
 // --------------------------------------------------------------------------
 // Local types
@@ -25,8 +27,32 @@ function getCharacters(): LoreItem[] {
 }
 
 // --------------------------------------------------------------------------
-// Static transcript stubs for Section 3
+// Vector card + transcript types — content lives in
+// src/content/data/bhoomi-vectors.json, written in Bhoomi's voice via the
+// AI OS bharatvarsh skill (BHOOMI VOICE MODE). Edit the JSON, not the page.
 // --------------------------------------------------------------------------
+type VectorTier = 'S1' | 'S2-tease' | 'S2-locked';
+
+interface VectorAnswer {
+  tease: string | null;
+  direct: string | null;
+  if_you_want_more: string;
+  explore_next: { label: string; href: string }[];
+}
+
+interface Vector {
+  id: string;
+  number: string;
+  tier: VectorTier;
+  era: string;
+  category: string;
+  lock_label: string | null;
+  question: string;
+  answer: VectorAnswer;
+  layout: { row: number; size: 'large' | 'medium' | 'small' | 'wide'; colSpan: string };
+  source_lore_ids: string[];
+}
+
 interface TranscriptMsg {
   id: string;
   role: 'bhoomi' | 'user';
@@ -35,54 +61,191 @@ interface TranscriptMsg {
   hasChips?: boolean;
 }
 
-const TRANSCRIPT_MESSAGES: TranscriptMsg[] = [
-  {
-    id: 'b1',
-    role: 'bhoomi',
-    text: 'Session established. Your clearance level has been verified. I have seventeen indexed case files matching your profile. Ask carefully.',
-  },
-  {
-    id: 'u1',
-    role: 'user',
-    text: 'What happened at the Indrapur Assembly Hall on the night of Case #0042?',
-  },
-  {
-    id: 'b2',
-    role: 'bhoomi',
-    text: 'The Assembly Hall records for that date are partially declassified. The primary incident occurred at 22:41 IST. What follows is on record:',
-    hasRedaction: true,
-  },
-  {
-    id: 'u2',
-    role: 'user',
-    text: 'Who authorized the redaction of the third witness deposition?',
-  },
-  {
-    id: 'b3',
-    role: 'bhoomi',
-    text: 'That authorization signature belongs to a clearance level above your current access. Requesting an upgrade is possible through the standard protocol.',
-    hasChips: true,
-  },
-  {
-    id: 'b4',
-    role: 'bhoomi',
-    text: 'Session logged. If you require further context, I recommend consulting Chapter 14: The Mirror Room.',
-  },
-];
+interface TranscriptSession {
+  id: string;
+  visitor: string;
+  date: string;
+  case: string;
+  level: string;
+  active: boolean;
+}
 
-const TRANSCRIPT_SESSIONS = [
-  { id: 'ses1', visitor: 'VISITOR_07X4', date: '2026.04.11', case: 'CASE #0042', level: 'LVL 1', active: true },
-  { id: 'ses2', visitor: 'VISITOR_12F2', date: '2026.04.09', case: 'CASE #0017', level: 'LVL 2', active: false },
-  { id: 'ses3', visitor: 'VISITOR_03B8', date: '2026.04.07', case: 'MESH QUERY', level: 'LVL 1', active: false },
-  { id: 'ses4', visitor: 'VISITOR_91A0', date: '2026.04.04', case: 'CASE #0055', level: 'LVL 3', active: false },
-  { id: 'ses5', visitor: 'VISITOR_77C1', date: '2026.04.01', case: 'CASE #0042', level: 'LVL 1', active: false },
-];
+const VECTORS = bhoomiContent.vectors as Vector[];
+const TRANSCRIPT_MESSAGES = bhoomiContent.transcript.messages as TranscriptMsg[];
+const TRANSCRIPT_SESSIONS = bhoomiContent.transcript.sessions as TranscriptSession[];
 
 // --------------------------------------------------------------------------
 // BhoomiPage
 // --------------------------------------------------------------------------
 const BhoomiPage: FC = () => {
   const characters = getCharacters().slice(0, 6);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
+  const toggleVector = (id: string) => {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const renderVectorCard = (vector: Vector) => {
+    const isLocked = vector.tier === 'S2-locked';
+    const isExpanded = expanded.has(vector.id);
+    const isLargeFeatured = vector.layout.size === 'large';
+    const minH = isLargeFeatured ? 'min-h-[200px]' : vector.layout.size === 'wide' ? 'min-h-[180px]' : 'min-h-[160px]';
+
+    return (
+      <div
+        key={vector.id}
+        className={`col-span-12 ${vector.layout.colSpan} border-t p-6 relative flex flex-col justify-between ${minH} transition-colors`}
+        style={{
+          backgroundColor: 'var(--obsidian-panel)',
+          borderColor: isExpanded ? 'var(--mustard-dossier)' : 'var(--navy-signal)',
+        }}
+      >
+        {/* Lock / tier stamp */}
+        {vector.lock_label && (
+          <span
+            className="absolute top-4 right-4 font-mono text-[9px] uppercase tracking-widest px-2 py-1 border"
+            style={{
+              borderColor: 'var(--redaction)',
+              color: 'var(--redaction)',
+            }}
+          >
+            {vector.lock_label}
+          </span>
+        )}
+        {vector.tier === 'S2-tease' && (
+          <span
+            className="absolute top-4 right-4 font-mono text-[9px] uppercase tracking-widest px-2 py-1 border"
+            style={{
+              borderColor: 'var(--mustard-dossier)',
+              color: 'var(--mustard-dossier)',
+            }}
+          >
+            S2 TEASE
+          </span>
+        )}
+
+        {/* Question + number */}
+        <div>
+          <div
+            className={`font-mono font-bold mb-3 ${isLargeFeatured ? 'text-3xl' : 'text-2xl'}`}
+            style={{ color: 'var(--mustard-dossier)' }}
+          >
+            {vector.number}
+          </div>
+          <p
+            className={`font-display uppercase tracking-wide ${isLargeFeatured ? 'text-xl' : 'text-lg'}`}
+            style={{ color: 'var(--bone-text)' }}
+          >
+            {vector.question}
+          </p>
+        </div>
+
+        {/* Locked tease — always visible on locked cards */}
+        {isLocked && vector.answer.tease && (
+          <p
+            className="font-serif italic text-sm mt-4 leading-relaxed"
+            style={{ color: 'var(--steel-text)' }}
+          >
+            {vector.answer.tease}
+          </p>
+        )}
+
+        {/* Expanded answer panel — for S1 + S2-tease */}
+        {!isLocked && isExpanded && vector.answer.direct && (
+          <div
+            className="mt-4 pt-4 border-t space-y-3"
+            style={{ borderColor: 'var(--navy-signal)' }}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <span style={{ color: 'var(--declassified)', fontSize: 10 }}>&#9679;</span>
+              <span
+                className="font-mono text-[9px] uppercase tracking-widest"
+                style={{ color: 'var(--declassified)' }}
+              >
+                DECLASSIFIED — TIER {vector.tier === 'S2-tease' ? 'S1 / S2 PARTIAL' : 'S1'}
+              </span>
+            </div>
+            <p
+              className="font-sans text-sm leading-relaxed"
+              style={{ color: 'var(--bone-text)' }}
+            >
+              {vector.answer.direct}
+            </p>
+            <div
+              className="font-sans text-xs italic leading-relaxed prose prose-invert prose-sm max-w-none"
+              style={{ color: 'var(--steel-text)' }}
+            >
+              <ReactMarkdown
+                components={{
+                  a: ({ href, children, ...props }) => (
+                    <a
+                      href={href}
+                      className="underline underline-offset-2 transition-colors"
+                      style={{ color: 'var(--mustard-dossier)' }}
+                      {...props}
+                    >
+                      {children}
+                    </a>
+                  ),
+                  p: ({ children }) => <p className="my-1">{children}</p>,
+                }}
+              >
+                {vector.answer.if_you_want_more}
+              </ReactMarkdown>
+            </div>
+            {vector.answer.explore_next.length > 0 && (
+              <ul className="space-y-1 pt-1">
+                {vector.answer.explore_next.map((link, i) => (
+                  <li key={i}>
+                    <Link
+                      href={link.href}
+                      className="font-mono text-[10px] uppercase tracking-widest transition-colors hover:opacity-80"
+                      style={{ color: 'var(--mustard-dossier)' }}
+                    >
+                      &rarr; {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* Action button — bottom-right */}
+        <div className="flex justify-end mt-4">
+          {isLocked ? (
+            <Link
+              href="/auth/signin"
+              className="font-mono text-[11px] uppercase tracking-widest cursor-pointer transition-colors hover:opacity-80"
+              style={{ color: 'var(--redaction)' }}
+            >
+              REQUEST CLEARANCE &rarr;
+            </Link>
+          ) : (
+            <button
+              onClick={() => toggleVector(vector.id)}
+              className="font-mono text-[11px] uppercase tracking-widest cursor-pointer transition-colors hover:opacity-80 bg-transparent border-none p-0"
+              style={{ color: 'var(--mustard-dossier)' }}
+            >
+              {isExpanded ? '[CLOSE FILE]' : 'RUN VECTOR \u2192'}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  const vectorsByRow: Record<number, Vector[]> = {};
+  VECTORS.forEach((v) => {
+    if (!vectorsByRow[v.layout.row]) vectorsByRow[v.layout.row] = [];
+    vectorsByRow[v.layout.row].push(v);
+  });
+  const sortedRowNumbers = Object.keys(vectorsByRow).map(Number).sort((a, b) => a - b);
 
   return (
     <main>
@@ -141,56 +304,64 @@ const BhoomiPage: FC = () => {
             className="col-span-12 lg:col-span-5 border-r relative h-full flex flex-col items-center justify-center py-16 gap-6"
             style={{ borderColor: 'var(--mustard-dossier)' }}
           >
-            {/* Concentric pulsing rings behind glyph */}
+            {/* Hero portrait with ghost-whisper pulsing rings behind
+                (canon locked 2026-04-14 — see memory project_bhoomi_visual_canon) */}
             <div className="relative flex items-center justify-center">
-              {/* Ring 3 — outermost */}
+              {/* Ring 3 — outermost (ghost whisper: was 0.12, now 0.07) */}
+              <span
+                className="absolute rounded-full border animate-pulse pointer-events-none"
+                style={{
+                  width: 460,
+                  height: 460,
+                  borderColor: 'var(--navy-signal)',
+                  opacity: 0.07,
+                }}
+                aria-hidden="true"
+              />
+              {/* Ring 2 (was 0.10, now 0.06) */}
               <span
                 className="absolute rounded-full border animate-pulse pointer-events-none"
                 style={{
                   width: 380,
                   height: 380,
-                  borderColor: 'var(--navy-signal)',
-                  opacity: 0.12,
+                  borderColor: 'var(--mustard-dossier)',
+                  opacity: 0.06,
+                  animationDelay: '0.4s',
                 }}
                 aria-hidden="true"
               />
-              {/* Ring 2 */}
+              {/* Ring 1 — innermost (was 0.15, now 0.09) */}
               <span
                 className="absolute rounded-full border animate-pulse pointer-events-none"
                 style={{
                   width: 300,
                   height: 300,
-                  borderColor: 'var(--mustard-dossier)',
-                  opacity: 0.1,
-                  animationDelay: '0.4s',
-                }}
-                aria-hidden="true"
-              />
-              {/* Ring 1 — innermost */}
-              <span
-                className="absolute rounded-full border animate-pulse pointer-events-none"
-                style={{
-                  width: 230,
-                  height: 230,
                   borderColor: 'var(--navy-signal)',
-                  opacity: 0.15,
+                  opacity: 0.09,
                   animationDelay: '0.8s',
                 }}
                 aria-hidden="true"
               />
 
-              {/* Giant Devanagari glyph */}
-              <span
-                className="font-devanagari leading-none select-none relative z-10"
+              {/* Hero portrait — Bhoomi on the Indrapur rooftop */}
+              <div
+                className="relative z-10 overflow-hidden"
                 style={{
-                  fontSize: 'clamp(12rem, 22vw, 22rem)',
-                  color: 'var(--mustard-dossier)',
-                  textShadow: '0 0 60px rgba(51,99,153,0.6), 0 0 30px rgba(241,194,50,0.2)',
+                  width: 'clamp(260px, 22vw, 400px)',
+                  aspectRatio: '2 / 3',
+                  boxShadow:
+                    '0 0 80px rgba(51,99,153,0.35), 0 0 40px rgba(241,194,50,0.12)',
                 }}
-                aria-label="Bhoomi in Devanagari script"
               >
-                भूमि
-              </span>
+                <Image
+                  src="/images/bhoomi/bhoomi-avatar-hero.webp"
+                  alt="Bhoomi — the consciousness of Bharatvarsh, standing at an Indrapur rooftop parapet at blue hour"
+                  fill
+                  sizes="(min-width: 1024px) 22vw, 80vw"
+                  priority
+                  className="object-cover"
+                />
+              </div>
             </div>
 
             {/* Thin mustard scanline divider */}
@@ -329,212 +500,13 @@ const BhoomiPage: FC = () => {
             WHAT VISITORS USUALLY ASK.
           </h2>
 
-          {/* Row 1: large (5) + medium (3) + medium (4) */}
-          <div className="grid grid-cols-12 gap-4 mb-4">
-            {/* 01 — Large featured */}
-            <div
-              className="col-span-12 lg:col-span-5 border-t p-6 relative flex flex-col justify-between min-h-[200px]"
-              style={{
-                backgroundColor: 'var(--obsidian-panel)',
-                borderColor: 'var(--navy-signal)',
-              }}
-            >
-              {/* Lock stamp */}
-              <span
-                className="absolute top-4 right-4 font-mono text-[9px] uppercase tracking-widest px-2 py-1 border"
-                style={{
-                  borderColor: 'var(--redaction)',
-                  color: 'var(--redaction)',
-                }}
-              >
-                LEVEL 4 REQUIRED
-              </span>
-              <div>
-                <div
-                  className="font-mono text-3xl font-bold mb-3"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  01
-                </div>
-                <p
-                  className="font-display text-xl uppercase tracking-wide"
-                  style={{ color: 'var(--bone-text)' }}
-                >
-                  WHO KILLED KAHAAN&rsquo;S FATHER?
-                </p>
+          {/* Vector cards — content lives in src/content/data/bhoomi-vectors.json */}
+          <div className="space-y-4">
+            {sortedRowNumbers.map((rowNum) => (
+              <div key={`vector-row-${rowNum}`} className="grid grid-cols-12 gap-4 items-start">
+                {vectorsByRow[rowNum].map(renderVectorCard)}
               </div>
-              <div className="flex justify-end mt-4">
-                <span
-                  className="font-mono text-[11px] uppercase tracking-widest cursor-pointer"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  RUN VECTOR &rarr;
-                </span>
-              </div>
-            </div>
-
-            {/* 02 */}
-            <div
-              className="col-span-12 lg:col-span-3 border-t p-6 relative flex flex-col justify-between min-h-[200px]"
-              style={{
-                backgroundColor: 'var(--obsidian-panel)',
-                borderColor: 'var(--navy-signal)',
-              }}
-            >
-              <div>
-                <div
-                  className="font-mono text-3xl font-bold mb-3"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  02
-                </div>
-                <p
-                  className="font-display text-xl uppercase tracking-wide"
-                  style={{ color: 'var(--bone-text)' }}
-                >
-                  WHAT IS THE MESH?
-                </p>
-              </div>
-              <div className="flex justify-end mt-4">
-                <span
-                  className="font-mono text-[11px] uppercase tracking-widest cursor-pointer"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  RUN VECTOR &rarr;
-                </span>
-              </div>
-            </div>
-
-            {/* 03 */}
-            <div
-              className="col-span-12 lg:col-span-4 border-t p-6 relative flex flex-col justify-between min-h-[200px]"
-              style={{
-                backgroundColor: 'var(--obsidian-panel)',
-                borderColor: 'var(--navy-signal)',
-              }}
-            >
-              <div>
-                <div
-                  className="font-mono text-3xl font-bold mb-3"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  03
-                </div>
-                <p
-                  className="font-display text-xl uppercase tracking-wide"
-                  style={{ color: 'var(--bone-text)' }}
-                >
-                  EXPLAIN CASE FILE #0042
-                </p>
-              </div>
-              <div className="flex justify-end mt-4">
-                <span
-                  className="font-mono text-[11px] uppercase tracking-widest cursor-pointer"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  RUN VECTOR &rarr;
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Row 2: small (2) + small (2) + small (2) = 6 total small cards using flex  */}
-          <div className="grid grid-cols-12 gap-4">
-            {/* 04 */}
-            <div
-              className="col-span-12 sm:col-span-6 lg:col-span-4 border-t p-6 relative flex flex-col justify-between min-h-[160px]"
-              style={{
-                backgroundColor: 'var(--obsidian-panel)',
-                borderColor: 'var(--navy-signal)',
-              }}
-            >
-              <div>
-                <div
-                  className="font-mono text-2xl font-bold mb-3"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  04
-                </div>
-                <p
-                  className="font-display text-lg uppercase tracking-wide"
-                  style={{ color: 'var(--bone-text)' }}
-                >
-                  WHO IS AKAKPEN?
-                </p>
-              </div>
-              <div className="flex justify-end mt-4">
-                <span
-                  className="font-mono text-[11px] uppercase tracking-widest cursor-pointer"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  RUN VECTOR &rarr;
-                </span>
-              </div>
-            </div>
-
-            {/* 05 */}
-            <div
-              className="col-span-12 sm:col-span-6 lg:col-span-4 border-t p-6 relative flex flex-col justify-between min-h-[160px]"
-              style={{
-                backgroundColor: 'var(--obsidian-panel)',
-                borderColor: 'var(--navy-signal)',
-              }}
-            >
-              <div>
-                <div
-                  className="font-mono text-2xl font-bold mb-3"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  05
-                </div>
-                <p
-                  className="font-display text-lg uppercase tracking-wide"
-                  style={{ color: 'var(--bone-text)' }}
-                >
-                  WHAT DID THE 1850 DIVERGENCE CHANGE?
-                </p>
-              </div>
-              <div className="flex justify-end mt-4">
-                <span
-                  className="font-mono text-[11px] uppercase tracking-widest cursor-pointer"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  RUN VECTOR &rarr;
-                </span>
-              </div>
-            </div>
-
-            {/* 06 */}
-            <div
-              className="col-span-12 sm:col-span-6 lg:col-span-4 border-t p-6 relative flex flex-col justify-between min-h-[160px]"
-              style={{
-                backgroundColor: 'var(--obsidian-panel)',
-                borderColor: 'var(--navy-signal)',
-              }}
-            >
-              <div>
-                <div
-                  className="font-mono text-2xl font-bold mb-3"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  06
-                </div>
-                <p
-                  className="font-display text-lg uppercase tracking-wide"
-                  style={{ color: 'var(--bone-text)' }}
-                >
-                  DECRYPT LEAK-0017
-                </p>
-              </div>
-              <div className="flex justify-end mt-4">
-                <span
-                  className="font-mono text-[11px] uppercase tracking-widest cursor-pointer"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  RUN VECTOR &rarr;
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

@@ -40,14 +40,19 @@ export function ChatInterface({ mode = 'page', onClose }: ChatInterfaceProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [spoilerMode, setSpoilerMode] = useState<SpoilerMode>('S1');
     const [sessionId, setSessionId] = useState<string | null>(null);
-    const messagesEndRef = useRef<HTMLDivElement>(null);
-
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
+    const messagesContainerRef = useRef<HTMLDivElement>(null);
+    const isFirstRender = useRef(true);
 
     useEffect(() => {
-        scrollToBottom();
+        // Skip the mount-time effect entirely so the page viewport never moves.
+        // Without this guard, scrollIntoView/scrollTop on the welcome message
+        // bubbles up and yanks the page down ~388px on /bhoomi.
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+        const c = messagesContainerRef.current;
+        if (c) c.scrollTop = c.scrollHeight;
     }, [messages]);
 
     const handleSend = async () => {
@@ -153,7 +158,7 @@ export function ChatInterface({ mode = 'page', onClose }: ChatInterfaceProps) {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
+            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
                 <AnimatePresence>
                     {messages.map((msg) => (
                         <motion.div
@@ -240,7 +245,6 @@ export function ChatInterface({ mode = 'page', onClose }: ChatInterfaceProps) {
                         </div>
                     </motion.div>
                 )}
-                <div ref={messagesEndRef} />
             </div>
 
             {/* Input */}
