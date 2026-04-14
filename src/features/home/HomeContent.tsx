@@ -45,13 +45,13 @@ interface Dispatch {
 const loreItems: LoreItem[] = loreRaw.lore as LoreItem[];
 const dispatches: Dispatch[] = dispatchesRaw.dispatches as Dispatch[];
 
-const archiveIds = ['kahaan', 'rudra', 'arshi', 'hana', 'pratap', 'indrapur'];
+// Kahaan is featured in his own dossier spotlight section above — don't duplicate him here.
+const archiveIds = ['rudra', 'arshi', 'hana', 'pratap', 'indrapur'];
 const archiveItems = archiveIds
   .map((id) => loreItems.find((item) => item.id === id))
   .filter((item): item is LoreItem => Boolean(item));
 
 const archiveLevels: Record<string, string> = {
-  kahaan: 'LVL 4',
   rudra: 'LVL 2',
   arshi: 'LVL 1',
   hana: 'LVL 3',
@@ -664,7 +664,7 @@ export function HomeContent() {
             </p>
 
             <Link
-              href="/lore"
+              href="/lore?item=kahaan"
               className="font-mono uppercase mt-2 inline-block"
               style={{
                 color: 'var(--mustard-dossier)',
@@ -802,235 +802,390 @@ export function HomeContent() {
       </FadeInSection>
 
       {/* ================================================================
-          Section 5 — Timeline Teaser Beat Strip
+          Section 5 — Fracture Timeline (refined 2026-04-14)
+          Single shared 1717→2032 axis. Crack is the hero. Headline paired
+          with a Crack Specification mini-dossier to kill the right-side
+          dead zone. Pullquote + CTA resolve as a centered closing pyramid.
       ================================================================ */}
       <FadeInSection
-        className="py-24 border-t"
+        className="py-28 border-t relative overflow-hidden"
         style={{
           background: 'var(--obsidian-deep)',
           borderColor: 'var(--navy-signal)',
         } as React.CSSProperties}
       >
-        <div className="max-w-[1440px] mx-auto px-8">
-          <EyebrowLabel
-            segments={[
-              'CHRONOLOGY',
-              '1717 → 2032',
-              'POINT OF DIVERGENCE INSIDE',
-            ]}
-          />
-          <h2
-            className="font-display mt-4"
-            style={{ fontSize: '3.75rem', color: 'var(--bone-text)', lineHeight: 1 }}
-          >
-            WHEN HISTORY CRACKED.
-          </h2>
+        {/* Radial spotlight — anchored roughly over the 1717 fracture column */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute z-0"
+          style={{
+            left: '18%',
+            top: '58%',
+            width: '520px',
+            height: '520px',
+            transform: 'translate(-50%, -50%)',
+            background:
+              'radial-gradient(circle, rgba(241,194,50,0.12) 0%, rgba(241,194,50,0.05) 28%, transparent 62%)',
+            filter: 'blur(8px)',
+          }}
+        />
 
-          {/* Section 5 dual-track fracture visualization — replaces old beat strip */}
-          <div className="relative mt-16 py-12 overflow-hidden">
-            {/* Container for both tracks */}
-            <div className="relative max-w-[1200px] mx-auto px-8">
-              {/* Track labels (left side) */}
-              <div className="grid grid-cols-[140px_1fr] gap-6 items-start">
-                {/* === OUR HISTORY LABEL === */}
-                <div className="pt-2 text-right">
-                  <div
-                    className="font-mono uppercase text-[10px] tracking-[0.18em]"
-                    style={{ color: 'var(--shadow-text)' }}
-                  >
-                    OUR HISTORY
-                  </div>
-                  <div
-                    className="font-mono uppercase text-[9px] tracking-[0.15em] mt-1 opacity-60"
-                    style={{ color: 'var(--shadow-text)' }}
-                  >
-                    THE TIMELINE
-                    <br />THAT HAPPENED
-                  </div>
-                </div>
+        <div className="relative z-10 max-w-[1240px] mx-auto px-8">
 
-                {/* === OUR HISTORY TRACK === */}
-                <div className="relative h-16">
-                  {/* Dashed horizontal line */}
-                  <div
-                    className="absolute top-1/2 left-0 right-0 border-t border-dashed"
-                    style={{ borderColor: 'var(--navy-signal)', opacity: 0.4 }}
-                  />
-                  {/* Reference nodes */}
-                  {[
-                    { year: '1757', label: 'PLASSEY', x: 8 },
-                    { year: '1858', label: 'CROWN RULE', x: 28 },
-                    { year: '1947', label: 'INDEPENDENCE', x: 58 },
-                    { year: '2010s', label: 'MODERN INDIA', x: 88 },
-                  ].map((node) => (
-                    <div
-                      key={node.year}
-                      className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center"
-                      style={{ left: `${node.x}%`, opacity: 0.45 }}
-                    >
-                      <div
-                        className="w-2 h-2 rounded-full border"
-                        style={{
-                          borderColor: 'var(--shadow-text)',
-                          backgroundColor: 'transparent',
-                        }}
-                      />
-                      <div
-                        className="mt-2 font-mono uppercase text-[9px] tracking-[0.12em] whitespace-nowrap text-center"
-                        style={{ color: 'var(--shadow-text)' }}
-                      >
-                        {node.year}
-                        <br />
-                        <span className="opacity-60">{node.label}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* === HEADLINE ROW — split into headline + spec card === */}
+          <div className="grid grid-cols-12 gap-8 items-end">
+            <div className="col-span-12 md:col-span-8">
+              <EyebrowLabel
+                segments={[
+                  'CHRONOLOGY',
+                  '1717 → 2032',
+                  'POINT OF DIVERGENCE INSIDE',
+                ]}
+              />
+              <h2
+                className="font-display mt-4"
+                style={{
+                  fontSize: 'clamp(3.5rem, 7vw, 5.75rem)',
+                  color: 'var(--bone-text)',
+                  lineHeight: 0.92,
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                WHEN HISTORY
+                <br />CRACKED.
+              </h2>
+            </div>
 
-              {/* === FRACTURE POINT (centered origin between tracks) === */}
-              <div className="relative flex justify-start my-2 pl-[160px]">
-                <div className="relative" style={{ width: 'calc(100% - 20px)' }}>
-                  {/* 1717 crack origin */}
-                  <div className="absolute left-0 -top-2 -bottom-2 flex items-center">
-                    {/* Crack glyph */}
-                    <svg
-                      width="56"
-                      height="80"
-                      viewBox="0 0 56 80"
-                      className="overflow-visible"
-                      aria-hidden="true"
-                    >
-                      {/* Central crack vertical */}
-                      <path
-                        d="M28 0 L26 20 L30 32 L24 44 L30 56 L26 68 L28 80"
-                        stroke="var(--mustard-dossier)"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      {/* Radiating shards */}
-                      <path
-                        d="M28 30 L14 18 M28 30 L42 18 M28 50 L14 62 M28 50 L42 62 M28 30 L10 34 M28 50 L46 46"
-                        stroke="var(--mustard-dossier)"
-                        strokeWidth="1"
-                        fill="none"
-                        opacity="0.6"
-                        strokeLinecap="round"
-                      />
-                      {/* Central impact dot */}
-                      <circle cx="28" cy="40" r="3" fill="var(--mustard-dossier)" />
-                    </svg>
-                  </div>
-                  {/* 1717 caption */}
-                  <div className="absolute left-16 top-1/2 -translate-y-1/2">
-                    <div
-                      className="font-mono uppercase text-[10px] tracking-[0.18em] whitespace-nowrap"
-                      style={{ color: 'var(--mustard-dossier)' }}
-                    >
-                      1717 ▪ DIVERGENCE POINT
-                    </div>
-                    <div
-                      className="font-mono uppercase text-[9px] tracking-[0.15em] whitespace-nowrap opacity-70"
-                      style={{ color: 'var(--shadow-text)' }}
-                    >
-                      DELHI REFUSED THE EAST INDIA COMPANY CHARTER
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* === BHARATVARSH TRACK === */}
-              <div className="grid grid-cols-[140px_1fr] gap-6 items-start mt-2">
-                {/* BHARATVARSH LABEL */}
-                <div className="pt-2 text-right">
-                  <div
-                    className="font-mono uppercase text-[10px] tracking-[0.18em]"
-                    style={{ color: 'var(--mustard-dossier)' }}
-                  >
-                    BHARATVARSH
-                  </div>
-                  <div
-                    className="font-mono uppercase text-[9px] tracking-[0.15em] mt-1 opacity-80"
-                    style={{ color: 'var(--steel-text)' }}
-                  >
-                    THE TIMELINE
-                    <br />THE WORLD NEVER SAW
-                  </div>
-                </div>
-
-                {/* BHARATVARSH TRACK */}
-                <div className="relative h-20">
-                  {/* Solid horizontal line */}
-                  <div
-                    className="absolute top-1/2 left-0 right-0 h-[2px]"
-                    style={{ backgroundColor: 'var(--mustard-dossier)' }}
-                  />
-                  {/* Beat nodes */}
-                  {[
-                    { year: '1717', label: 'FRACTURE', x: 4, significance: 5 },
-                    { year: '1790–1850', label: 'ENLIGHTENMENT', x: 22, significance: 3 },
-                    { year: '1910–1975', label: 'REPUBLIC', x: 48, significance: 4 },
-                    { year: '1975–1985', label: 'CIVIL WAR', x: 66, significance: 3 },
-                    { year: '1985–2022', label: 'JAAL YUG', x: 82, significance: 5 },
-                    { year: '2022', label: 'THE BOMBINGS', x: 96, significance: 5 },
-                  ].map((node) => (
-                    <div
-                      key={node.year}
-                      className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center"
-                      style={{ left: `${node.x}%` }}
-                    >
-                      {/* Node dot */}
-                      <div
-                        className="rounded-full"
-                        style={{
-                          width: node.significance >= 5 ? '14px' : '10px',
-                          height: node.significance >= 5 ? '14px' : '10px',
-                          backgroundColor: 'var(--mustard-dossier)',
-                          boxShadow: node.significance >= 5 ? '0 0 12px rgba(241, 194, 50, 0.6)' : 'none',
-                        }}
-                      />
-                      <div
-                        className="mt-3 font-mono uppercase text-[9px] tracking-[0.12em] whitespace-nowrap text-center"
-                        style={{ color: 'var(--bone-text)' }}
-                      >
-                        {node.year}
-                        <br />
-                        <span style={{ color: 'var(--mustard-dossier)' }}>{node.label}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Caption below both tracks */}
-              <div className="mt-10 text-center">
-                <p
-                  className="font-serif italic text-lg"
-                  style={{ color: 'var(--powder-signal)' }}
+            {/* Crack Specification mini-dossier — fills the right-side void */}
+            <div className="col-span-12 md:col-span-4 md:justify-self-end w-full md:w-auto">
+              <div
+                className="relative border-l-2 pl-5 py-3"
+                style={{ borderColor: 'var(--mustard-dossier)' }}
+              >
+                <div
+                  className="font-mono uppercase text-[10px] tracking-[0.22em] mb-4"
+                  style={{ color: 'var(--mustard-dossier)' }}
                 >
-                  &ldquo;One decree. Two centuries. A nation the world never saw.&rdquo;
-                </p>
+                  CRACK SPECIFICATION
+                </div>
+                <dl className="space-y-2">
+                  {[
+                    { k: 'POD', v: '1717 CE' },
+                    { k: 'CAUSE', v: 'CHARTER REFUSED' },
+                    { k: 'DELTA', v: '315 YEARS' },
+                    { k: 'BEATS', v: '5 MARKERS' },
+                  ].map((row) => (
+                    <div
+                      key={row.k}
+                      className="flex justify-between gap-6 font-mono uppercase text-[10px] tracking-[0.15em]"
+                    >
+                      <dt style={{ color: 'var(--shadow-text)' }}>{row.k}</dt>
+                      <dd style={{ color: 'var(--bone-text)' }}>{row.v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             </div>
           </div>
 
-          <Link href="/timeline" className="mt-4 inline-block">
-            <button
-              className="font-mono uppercase mt-6"
-              style={{
-                border: '1px solid var(--powder-signal)',
-                color: 'var(--bone-text)',
-                padding: '0.5rem 1.25rem',
-                fontSize: '12px',
-                letterSpacing: '0.18em',
-                background: 'transparent',
-              }}
-            >
-              OPEN THE FULL TIMELINE →
-            </button>
-          </Link>
+          {/* === DUAL TRACK TIMELINE (both locked to shared 1717→2032 axis) === */}
+          <div className="relative mt-20">
+            {/* Upper OUR HISTORY track */}
+            <div className="grid grid-cols-[140px_1fr] gap-8 items-start">
+              <div className="pt-1 text-right">
+                <div
+                  className="font-mono uppercase text-[10px] tracking-[0.2em]"
+                  style={{ color: 'var(--steel-text)' }}
+                >
+                  OUR HISTORY
+                </div>
+                <div
+                  className="font-mono uppercase text-[9px] tracking-[0.16em] mt-1"
+                  style={{ color: 'var(--shadow-text)' }}
+                >
+                  THE TIMELINE
+                  <br />THAT HAPPENED
+                </div>
+              </div>
+
+              <div className="relative h-28">
+                {/* Dashed line */}
+                <div
+                  className="absolute top-1/2 left-0 right-0 border-t border-dashed"
+                  style={{ borderColor: 'var(--steel-text)', opacity: 0.55 }}
+                />
+                {/* Reference nodes on shared 1717→2032 axis.
+                    Wrapper `top` is (50% − dot_radius) so the DOT (not the
+                    wrapper center) sits on the line, and text below gets a
+                    generous marginTop for breathing room. */}
+                {[
+                  { year: '1757', label: 'PLASSEY', x: 12.7 },
+                  { year: '1858', label: 'CROWN RULE', x: 44.8 },
+                  { year: '1947', label: 'INDEPENDENCE', x: 73.0 },
+                  { year: '2010', label: 'MODERN INDIA', x: 93.0 },
+                ].map((node) => (
+                  <div
+                    key={node.year}
+                    className="absolute -translate-x-1/2 flex flex-col items-center"
+                    style={{ left: `${node.x}%`, top: 'calc(50% - 5px)', opacity: 0.72 }}
+                  >
+                    <div
+                      className="w-2.5 h-2.5 rounded-full border"
+                      style={{
+                        borderColor: 'var(--steel-text)',
+                        backgroundColor: 'var(--obsidian-deep)',
+                      }}
+                    />
+                    <div
+                      className="font-mono uppercase text-[10px] tracking-[0.14em] whitespace-nowrap text-center"
+                      style={{ color: 'var(--steel-text)', marginTop: '20px' }}
+                    >
+                      {node.year}
+                      <br />
+                      <span className="opacity-85">{node.label}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* === FRACTURE ZONE — the hero beat, aligned at x=0% === */}
+            <div className="grid grid-cols-[140px_1fr] gap-8">
+              <div />
+              <div className="relative" style={{ height: '132px' }}>
+                {/* Crack cluster at left=0% (shared-axis origin) */}
+                <div
+                  className="absolute flex flex-col items-center"
+                  style={{
+                    left: '0%',
+                    top: '0',
+                    transform: 'translateX(-50%)',
+                    width: '160px',
+                  }}
+                >
+                  {/* Halo behind crack */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute pointer-events-none"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '220px',
+                      height: '180px',
+                      background:
+                        'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(241,194,50,0.28) 0%, rgba(241,194,50,0.08) 35%, transparent 70%)',
+                      filter: 'blur(6px)',
+                    }}
+                  />
+                  {/* Big crack SVG */}
+                  <svg
+                    width="160"
+                    height="120"
+                    viewBox="0 0 160 120"
+                    className="relative overflow-visible"
+                    aria-hidden="true"
+                    style={{
+                      filter: 'drop-shadow(0 0 10px rgba(241,194,50,0.55))',
+                    }}
+                  >
+                    {/* Main vertical fracture — reaches past top and bottom */}
+                    <path
+                      d="M80 -18 L74 12 L88 30 L66 50 L92 68 L70 86 L80 138"
+                      stroke="var(--mustard-dossier)"
+                      strokeWidth="3"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    {/* Secondary hairline doubled for glow */}
+                    <path
+                      d="M80 -18 L74 12 L88 30 L66 50 L92 68 L70 86 L80 138"
+                      stroke="var(--mustard-dossier)"
+                      strokeWidth="1"
+                      fill="none"
+                      opacity="0.85"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    {/* Radiating shards */}
+                    <path
+                      d="M80 30 L40 6 M80 30 L120 6 M80 86 L36 110 M80 86 L124 110 M80 40 L12 44 M80 70 L148 66 M80 20 L20 12 M80 96 L140 108"
+                      stroke="var(--mustard-dossier)"
+                      strokeWidth="1"
+                      fill="none"
+                      opacity="0.42"
+                      strokeLinecap="round"
+                    />
+                    {/* Impact epicenter */}
+                    <circle cx="80" cy="58" r="5" fill="var(--mustard-dossier)" />
+                    <circle
+                      cx="80"
+                      cy="58"
+                      r="12"
+                      fill="none"
+                      stroke="var(--mustard-dossier)"
+                      strokeWidth="0.75"
+                      opacity="0.55"
+                    />
+                    <circle
+                      cx="80"
+                      cy="58"
+                      r="20"
+                      fill="none"
+                      stroke="var(--mustard-dossier)"
+                      strokeWidth="0.5"
+                      opacity="0.28"
+                    />
+                  </svg>
+                  {/* Caption cluster — single hero label, single sub-caption */}
+                  <div className="mt-1 text-center">
+                    <div
+                      className="font-mono uppercase"
+                      style={{
+                        color: 'var(--mustard-dossier)',
+                        fontSize: '11px',
+                        letterSpacing: '0.22em',
+                      }}
+                    >
+                      1717 ▪ DIVERGENCE
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Lower BHARATVARSH track */}
+            <div className="grid grid-cols-[140px_1fr] gap-8 items-start">
+              <div className="pt-1 text-right">
+                <div
+                  className="font-mono uppercase text-[10px] tracking-[0.2em]"
+                  style={{ color: 'var(--mustard-dossier)' }}
+                >
+                  BHARATVARSH
+                </div>
+                <div
+                  className="font-mono uppercase text-[9px] tracking-[0.16em] mt-1"
+                  style={{ color: 'var(--steel-text)' }}
+                >
+                  THE TIMELINE
+                  <br />THE WORLD NEVER SAW
+                </div>
+              </div>
+
+              <div className="relative h-32">
+                {/* Solid mustard line with soft edge fade at the right */}
+                <div
+                  className="absolute top-1/2 left-0 right-0 h-[2px]"
+                  style={{
+                    background:
+                      'linear-gradient(to right, var(--mustard-dossier) 0%, var(--mustard-dossier) 92%, rgba(241,194,50,0.35) 100%)',
+                    boxShadow: '0 0 10px rgba(241, 194, 50, 0.28)',
+                  }}
+                />
+                {/* Beat nodes — shared 1717→2032 axis, Civil War merged into Jaal Yug for teaser clarity.
+                    Wrapper `top` is (50% − dot_radius) so the DOT sits on the line
+                    rather than the wrapper center; generous marginTop gives breathing room to the text. */}
+                {[
+                  { year: '1790', label: 'ENLIGHTENMENT', x: 23.2, hero: false },
+                  { year: '1910', label: 'REPUBLIC', x: 61.3, hero: false },
+                  { year: '1985', label: 'JAAL YUG', x: 85.1, hero: true },
+                  { year: '2022', label: 'THE BOMBINGS', x: 96.8, hero: true },
+                ].map((node) => (
+                  <div
+                    key={node.year}
+                    className="absolute -translate-x-1/2 flex flex-col items-center"
+                    style={{
+                      left: `${node.x}%`,
+                      top: `calc(50% - ${node.hero ? 8 : 6}px)`,
+                    }}
+                  >
+                    <div
+                      className="rounded-full"
+                      style={{
+                        width: node.hero ? '16px' : '12px',
+                        height: node.hero ? '16px' : '12px',
+                        backgroundColor: 'var(--mustard-dossier)',
+                        boxShadow: node.hero
+                          ? '0 0 18px rgba(241, 194, 50, 0.85), 0 0 36px rgba(241, 194, 50, 0.32)'
+                          : '0 0 10px rgba(241, 194, 50, 0.55)',
+                      }}
+                    />
+                    <div
+                      className="font-mono uppercase text-[10px] tracking-[0.14em] whitespace-nowrap text-center"
+                      style={{ color: 'var(--bone-text)', marginTop: '22px' }}
+                    >
+                      {node.year}
+                      <br />
+                      <span style={{ color: 'var(--mustard-dossier)' }}>{node.label}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Long-form charter caption below both tracks — moved out of the crack cluster */}
+            <div className="mt-8 text-center">
+              <div
+                className="font-mono uppercase text-[10px] tracking-[0.24em]"
+                style={{ color: 'var(--steel-text)' }}
+              >
+                DELHI REFUSED THE EAST INDIA COMPANY CHARTER ▪ THE FORK BEGAN HERE
+              </div>
+            </div>
+          </div>
+
+          {/* === CLOSING PYRAMID — pullquote + CTA, centered === */}
+          <div className="mt-20 flex flex-col items-center gap-10">
+            {/* Pullquote framed as redacted field report */}
+            <div className="relative max-w-[620px] text-center px-6">
+              <div
+                aria-hidden="true"
+                className="absolute left-1/2 -translate-x-1/2 -top-8 font-mono"
+                style={{
+                  color: 'var(--mustard-dossier)',
+                  fontSize: '32px',
+                  opacity: 0.35,
+                  lineHeight: 1,
+                }}
+              >
+                ❝
+              </div>
+              <p
+                className="font-serif italic"
+                style={{
+                  color: 'var(--powder-signal)',
+                  fontSize: '1.375rem',
+                  lineHeight: 1.55,
+                }}
+              >
+                One decree. Two centuries.
+                <br />A nation the world never saw.
+              </p>
+              <div
+                className="mt-5 font-mono uppercase text-[10px] tracking-[0.22em]"
+                style={{ color: 'var(--shadow-text)' }}
+              >
+                — FIELD REPORT ▪ REDACTION 1717-B
+              </div>
+            </div>
+
+            <Link href="/timeline" className="inline-block">
+              <button
+                className="font-mono uppercase"
+                style={{
+                  border: '1px solid var(--mustard-dossier)',
+                  color: 'var(--mustard-dossier)',
+                  padding: '0.875rem 2.25rem',
+                  fontSize: '12px',
+                  letterSpacing: '0.22em',
+                  background: 'transparent',
+                }}
+              >
+                OPEN THE FULL TIMELINE →
+              </button>
+            </Link>
+          </div>
         </div>
       </FadeInSection>
 

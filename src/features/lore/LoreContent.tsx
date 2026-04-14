@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { LoreModal } from '@/features/lore';
 import { useSession } from '@/features/auth';
@@ -91,7 +91,12 @@ export function LoreContent() {
   const [activeFilter, setActiveFilter] = useState<FilterValue>('all');
   const [selectedItem, setSelectedItem] = useState<LoreItem | null>(null);
   const [hasHandledDeepLink, setHasHandledDeepLink] = useState(false);
+  // Flag set when the modal was auto-opened from a /lore?item=<id> deep link.
+  // Used on close to route the user back to the originating page (Home, Novel, etc.)
+  // instead of stranding them on /lore.
+  const [openedViaDeepLink, setOpenedViaDeepLink] = useState(false);
   const { isAuthenticated } = useSession();
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   // Deep link support: /lore?item=<id> auto-opens that item's modal on mount
@@ -103,6 +108,7 @@ export function LoreContent() {
     if (target) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- Initial URL param sync on mount
       setSelectedItem(target);
+      setOpenedViaDeepLink(true);
       setHasHandledDeepLink(true);
     }
   }, [searchParams, hasHandledDeepLink]);
@@ -171,6 +177,25 @@ export function LoreContent() {
     if (item.classification === 'classified' && !isAuthenticated) return;
     trackEvent('lore_item_view', { id: item.id, name: item.name, category: item.category });
     setSelectedItem(item);
+    // In-page card click isn't a deep link — close should stay on /lore.
+    setOpenedViaDeepLink(false);
+  }
+
+  function handleModalClose() {
+    if (openedViaDeepLink) {
+      setOpenedViaDeepLink(false);
+      // Only router.back() when we have a same-origin referrer — guards against
+      // direct URL loads where back() would navigate away from our site.
+      const sameOriginReferrer =
+        typeof document !== 'undefined' &&
+        document.referrer !== '' &&
+        document.referrer.startsWith(window.location.origin);
+      if (sameOriginReferrer) {
+        router.back();
+        return;
+      }
+    }
+    setSelectedItem(null);
   }
 
   // ------------------------------------------------------------------
@@ -1206,7 +1231,7 @@ export function LoreContent() {
       <LoreModal
         item={selectedItem}
         isOpen={!!selectedItem}
-        onClose={() => setSelectedItem(null)}
+        onClose={handleModalClose}
       />
     </div>
   );
