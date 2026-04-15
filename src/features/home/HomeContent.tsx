@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import { HomeDossierModal } from '@/features/newsletter';
+import { useSession } from '@/features/auth';
 import loreRaw from '@/content/data/lore-items.json';
 import dispatchesRaw from '@/content/data/dispatches.json';
 import novelData from '@/content/data/novel.json';
@@ -103,6 +104,7 @@ function FadeInSection({
 
 export function HomeContent() {
   const [dossierModalOpen, setDossierModalOpen] = useState(false);
+  const { isAuthenticated } = useSession();
   const platforms = (novelData as { purchase: { platforms: Array<{ name: string; url: string; icon: string }> } }).purchase.platforms;
 
   return (
@@ -451,7 +453,9 @@ export function HomeContent() {
                   </div>
                   {/* 3 character thumbnails */}
                   <div className="flex gap-2 flex-shrink-0">
-                    {['kahaan', 'rudra', 'arshi'].map((id) => {
+                    {/* Decorative thumbnails — only declassified operatives so we don't
+                        leak classified faces on the home page. */}
+                    {['kahaan', 'rudra', 'hana'].map((id) => {
                       const item = loreItems.find((i) => i.id === id);
                       if (!item) return null;
                       return (
@@ -660,7 +664,7 @@ export function HomeContent() {
               className="font-serif italic mt-2"
               style={{ color: 'var(--powder-signal)', fontSize: '1.125rem' }}
             >
-              &ldquo;The dossier on my father came with my uniform.&rdquo;
+              &ldquo;They handed me the uniform. The questions came with the case.&rdquo;
             </p>
 
             <Link
@@ -721,82 +725,195 @@ export function HomeContent() {
             className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory"
             style={{ scrollbarColor: 'var(--navy-signal) transparent' }}
           >
-            {archiveItems.map((item) => (
-              <Link
-                key={item.id}
-                href={`/lore?item=${item.id}`}
-                className="flex-shrink-0 relative overflow-hidden group block"
-                style={{
-                  width: '280px',
-                  background: 'var(--obsidian-panel)',
-                  border: '1px solid var(--navy-signal)',
-                  borderLeft: '4px solid var(--mustard-dossier)',
-                  scrollSnapAlign: 'start',
-                }}
-              >
-                {/* Card image */}
-                <div className="relative overflow-hidden" style={{ aspectRatio: '3/4' }}>
-                  <Image
-                    src={item.media.card}
-                    alt={item.name}
-                    width={280}
-                    height={373}
-                    className="w-full object-cover transition-transform duration-300 group-hover:-translate-y-1"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
+            {archiveItems.map((item) => {
+              const isLocked =
+                item.classification === 'classified' && !isAuthenticated;
 
-                  {/* Devanagari ghost */}
-                  {item.nameDevanagari && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute bottom-16 left-4 pointer-events-none select-none"
+              // Classified variant — silhouette card + sign-in CTA, no face leak.
+              if (isLocked) {
+                return (
+                  <Link
+                    key={item.id}
+                    href="/auth/signin?callbackUrl=/%23archive"
+                    className="flex-shrink-0 relative overflow-hidden group block"
+                    style={{
+                      width: '280px',
+                      background: 'var(--obsidian-panel)',
+                      border: '1px solid var(--mustard-dossier)',
+                      borderLeft: '4px solid var(--mustard-dossier)',
+                      scrollSnapAlign: 'start',
+                    }}
+                    aria-label={`${item.name} — classified. Sign in to unseal.`}
+                  >
+                    <div className="relative overflow-hidden" style={{ aspectRatio: '3/4' }}>
+                      <Image
+                        src={item.media.card}
+                        alt=""
+                        width={280}
+                        height={373}
+                        className="w-full h-full object-cover"
+                        style={{
+                          filter:
+                            'grayscale(100%) brightness(0.18) contrast(1.3) blur(2px)',
+                        }}
+                        aria-hidden="true"
+                      />
+                      {/* Redaction wash */}
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-0"
+                        style={{
+                          background:
+                            'radial-gradient(ellipse at 50% 35%, rgba(11,39,66,0.55) 0%, rgba(15,20,25,0.9) 70%)',
+                        }}
+                      />
+                      {/* Rotated CLASSIFIED stamp */}
+                      <div
+                        className="absolute top-3 left-3 font-mono uppercase tracking-[0.22em] text-[9px] px-2 py-1 border border-dashed"
+                        style={{
+                          color: 'var(--mustard-dossier)',
+                          borderColor: 'var(--mustard-dossier)',
+                          transform: 'rotate(-4deg)',
+                          backgroundColor: 'rgba(15,20,25,0.65)',
+                        }}
+                      >
+                        CLASSIFIED
+                      </div>
+                      {/* Center redaction block */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center">
+                        <div
+                          className="font-mono uppercase tracking-[0.22em] text-[9px]"
+                          style={{ color: 'var(--mustard-dossier)', opacity: 0.9 }}
+                        >
+                          CLEARANCE · LVL 5
+                        </div>
+                        <div
+                          className="font-display text-xl leading-none"
+                          style={{
+                            color: 'var(--bone-text)',
+                            backgroundColor: 'var(--redaction)',
+                            padding: '0.2rem 0.6rem',
+                            letterSpacing: '0.1em',
+                          }}
+                        >
+                          [REDACTED]
+                        </div>
+                        <div
+                          className="font-mono uppercase tracking-[0.18em] text-[8px] max-w-[80%] leading-relaxed mt-1"
+                          style={{ color: 'var(--powder-signal)' }}
+                        >
+                          IDENTITY WITHHELD
+                        </div>
+                      </div>
+                      {/* Bottom strip — name placeholder + sign-in CTA */}
+                      <div
+                        className="absolute bottom-0 left-0 right-0 p-4 border-t"
+                        style={{
+                          borderColor: 'var(--mustard-dossier)',
+                          background:
+                            'linear-gradient(to top, var(--obsidian-void) 40%, transparent)',
+                        }}
+                      >
+                        <p
+                          className="font-display uppercase"
+                          style={{
+                            fontSize: '1.125rem',
+                            color: 'var(--shadow-text)',
+                            letterSpacing: '0.12em',
+                          }}
+                        >
+                          ????????
+                        </p>
+                        <p
+                          className="mt-1 font-mono text-[9px] tracking-[0.18em] uppercase"
+                          style={{ color: 'var(--mustard-dossier)' }}
+                        >
+                          SIGN IN TO UNSEAL &rarr;
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              }
+
+              // Declassified variant — standard card.
+              return (
+                <Link
+                  key={item.id}
+                  href={`/lore?item=${item.id}`}
+                  className="flex-shrink-0 relative overflow-hidden group block"
+                  style={{
+                    width: '280px',
+                    background: 'var(--obsidian-panel)',
+                    border: '1px solid var(--navy-signal)',
+                    borderLeft: '4px solid var(--mustard-dossier)',
+                    scrollSnapAlign: 'start',
+                  }}
+                >
+                  {/* Card image */}
+                  <div className="relative overflow-hidden" style={{ aspectRatio: '3/4' }}>
+                    <Image
+                      src={item.media.card}
+                      alt={item.name}
+                      width={280}
+                      height={373}
+                      className="w-full object-cover transition-transform duration-300 group-hover:-translate-y-1"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+
+                    {/* Devanagari ghost */}
+                    {item.nameDevanagari && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute bottom-16 left-4 pointer-events-none select-none"
+                        style={{
+                          fontFamily: 'var(--font-devanagari)',
+                          fontSize: '1.375rem',
+                          color: 'var(--powder-signal)',
+                          opacity: 0.22,
+                        }}
+                      >
+                        {item.nameDevanagari}
+                      </span>
+                    )}
+
+                    {/* Bottom gradient overlay + name */}
+                    <div
+                      className="absolute bottom-0 left-0 right-0 p-4"
                       style={{
-                        fontFamily: 'var(--font-devanagari)',
-                        fontSize: '1.375rem',
-                        color: 'var(--powder-signal)',
-                        opacity: 0.22,
+                        background:
+                          'linear-gradient(to top, var(--obsidian-void), transparent)',
                       }}
                     >
-                      {item.nameDevanagari}
-                    </span>
-                  )}
+                      <p
+                        className="font-display uppercase"
+                        style={{
+                          fontSize: '1.25rem',
+                          color: 'var(--bone-text)',
+                          letterSpacing: '0.08em',
+                        }}
+                      >
+                        {item.name.toUpperCase()}
+                      </p>
+                    </div>
 
-                  {/* Bottom gradient overlay + name */}
-                  <div
-                    className="absolute bottom-0 left-0 right-0 p-4"
-                    style={{
-                      background:
-                        'linear-gradient(to top, var(--obsidian-void), transparent)',
-                    }}
-                  >
-                    <p
-                      className="font-display uppercase"
+                    {/* Classification chip */}
+                    <div
+                      className="absolute top-3 right-3 font-mono"
                       style={{
-                        fontSize: '1.25rem',
-                        color: 'var(--bone-text)',
-                        letterSpacing: '0.08em',
+                        background: 'var(--mustard-dossier)',
+                        color: 'var(--obsidian-void)',
+                        padding: '0.2rem 0.4rem',
+                        fontSize: '9px',
+                        letterSpacing: '0.18em',
                       }}
                     >
-                      {item.name.toUpperCase()}
-                    </p>
+                      {archiveLevels[item.id] ?? 'LVL 1'}
+                    </div>
                   </div>
-
-                  {/* Classification chip */}
-                  <div
-                    className="absolute top-3 right-3 font-mono"
-                    style={{
-                      background: 'var(--mustard-dossier)',
-                      color: 'var(--obsidian-void)',
-                      padding: '0.2rem 0.4rem',
-                      fontSize: '9px',
-                      letterSpacing: '0.18em',
-                    }}
-                  >
-                    {archiveLevels[item.id] ?? 'LVL 1'}
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </FadeInSection>

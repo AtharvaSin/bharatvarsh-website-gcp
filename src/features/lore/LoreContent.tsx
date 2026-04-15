@@ -8,13 +8,7 @@ import { useSession } from '@/features/auth';
 import { trackEvent } from '@/lib/track';
 import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import loreRaw from '@/content/data/lore-items.json';
-import type { LoreItem, LoreCategory, LoreData } from '@/types';
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-type FilterValue = LoreCategory | 'all';
+import type { LoreItem, LoreData } from '@/types';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -88,7 +82,6 @@ function LockedOverlay({ locked }: LockedOverlayProps) {
 // ---------------------------------------------------------------------------
 
 export function LoreContent() {
-  const [activeFilter, setActiveFilter] = useState<FilterValue>('all');
   const [selectedItem, setSelectedItem] = useState<LoreItem | null>(null);
   const [hasHandledDeepLink, setHasHandledDeepLink] = useState(false);
   // Flag set when the modal was auto-opened from a /lore?item=<id> deep link.
@@ -148,24 +141,6 @@ export function LoreContent() {
       allItems
         .filter((i) => i.category === 'characters' && i.id !== 'kahaan')
         .sort((a, b) => a.sortOrder - b.sortOrder),
-    []
-  );
-
-  const filteredItems = useMemo(() => {
-    if (activeFilter === 'all') return allItems.sort((a, b) => a.sortOrder - b.sortOrder);
-    return allItems
-      .filter((i) => i.category === activeFilter)
-      .sort((a, b) => a.sortOrder - b.sortOrder);
-  }, [activeFilter]);
-
-  const counts = useMemo(
-    () => ({
-      all: allItems.length,
-      characters: allItems.filter((i) => i.category === 'characters').length,
-      factions: allItems.filter((i) => i.category === 'factions').length,
-      locations: allItems.filter((i) => i.category === 'locations').length,
-      tech: allItems.filter((i) => i.category === 'tech').length,
-    }),
     []
   );
 
@@ -279,11 +254,11 @@ export function LoreContent() {
 
               <EyebrowLabel
                 segments={[
-                  `${counts.all} FILES INDEXED`,
-                  `${counts.characters} OPERATIVES`,
-                  `${counts.factions} FACTIONS`,
-                  `${counts.locations} LOCATIONS`,
-                  `${counts.tech} TECH`,
+                  `${allItems.length} FILES INDEXED`,
+                  `${allItems.filter((i) => i.category === 'characters').length} OPERATIVES`,
+                  `${allItems.filter((i) => i.category === 'factions').length} FACTIONS`,
+                  `${allItems.filter((i) => i.category === 'locations').length} LOCATIONS`,
+                  `${allItems.filter((i) => i.category === 'tech').length} TECH`,
                 ]}
                 className="mt-8"
               />
@@ -337,57 +312,9 @@ export function LoreContent() {
       </section>
 
       {/* ================================================================
-          SECTION 2 — Filter Rail
+          SECTION 2 — Featured Operative Showcase (Kahaan)
       ================================================================ */}
-      <section
-        className="py-6 border-y relative z-10"
-        style={{
-          backgroundColor: 'var(--obsidian-deep)',
-          borderColor: 'var(--navy-signal)',
-        }}
-      >
-        <div className="max-w-[1440px] mx-auto px-8 flex items-center gap-6 flex-wrap">
-          <EyebrowLabel segments={['FILTER ARCHIVE BY CATEGORY']} />
-
-          {(
-            [
-              { value: 'all', label: `ALL FILES (${counts.all})` },
-              { value: 'characters', label: `OPERATIVES (${counts.characters})` },
-              { value: 'factions', label: `FACTIONS (${counts.factions})` },
-              { value: 'locations', label: `LOCATIONS (${counts.locations})` },
-              { value: 'tech', label: `TECH (${counts.tech})` },
-            ] as Array<{ value: FilterValue; label: string }>
-          ).map(({ value, label }) => {
-            const isActive = activeFilter === value;
-            return (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setActiveFilter(value)}
-                className="px-4 py-2 font-mono uppercase text-[11px] tracking-[0.18em] inline-flex items-center gap-2 transition-colors"
-                style={
-                  isActive
-                    ? { backgroundColor: 'var(--mustard-dossier)', color: 'var(--obsidian-void)' }
-                    : {
-                        color: 'var(--powder-signal)',
-                        borderColor: 'var(--navy-signal)',
-                        border: '1px solid var(--navy-signal)',
-                      }
-                }
-              >
-                <span>{isActive ? '●' : '○'}</span>
-                {label}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ================================================================
-          SECTION 3 — Featured Operative Showcase (Kahaan)
-          Only when filter is 'all' or 'characters'
-      ================================================================ */}
-      {(activeFilter === 'all' || activeFilter === 'characters') && kahaanItem && (
+      {kahaanItem && (
         <section
           className="py-24 relative overflow-hidden"
           style={{ backgroundColor: 'var(--obsidian-void)' }}
@@ -450,7 +377,7 @@ export function LoreContent() {
                   className="font-serif italic text-xl leading-relaxed mt-6 max-w-[50ch]"
                   style={{ color: 'var(--powder-signal)' }}
                 >
-                  &ldquo;The dossier on my father came with my uniform.&rdquo;
+                  &ldquo;They handed me the uniform. The questions came with the case.&rdquo;
                 </p>
 
                 {/* Trait chips */}
@@ -521,7 +448,7 @@ export function LoreContent() {
       >
         <div className="max-w-[1440px] mx-auto px-8">
           <EyebrowLabel
-            segments={['OPERATIVES', `${counts.characters} FILES`, 'CHARACTERS OF BHARATVARSH']}
+            segments={['OPERATIVES', `${operativeItems.length + 1} FILES`, 'CHARACTERS OF BHARATVARSH']}
             className="mb-4"
           />
 
@@ -533,192 +460,101 @@ export function LoreContent() {
               color: 'var(--bone-text)',
             }}
           >
-            THE PEOPLE OF THE DOSSIER.
+            THE HANDS OF ORDER.
           </h2>
 
-          {/* ------------- MASONRY (all or characters filter) ------------- */}
-          {(activeFilter === 'all' || activeFilter === 'characters') ? (
-            <div className="grid grid-cols-4 gap-6 auto-rows-[140px]">
-              {operativeItems.map((item) => {
-                const gridClass = CHAR_GRID_CLASSES[item.id] ?? 'col-span-1 row-span-2';
-                const locked = item.classification === 'classified' && !isAuthenticated;
+          {/* ------------- OPERATIVES MASONRY ------------- */}
+          <div className="grid grid-cols-4 gap-6 auto-rows-[140px]">
+            {operativeItems.map((item) => {
+              const gridClass = CHAR_GRID_CLASSES[item.id] ?? 'col-span-1 row-span-2';
+              const locked = item.classification === 'classified' && !isAuthenticated;
 
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => handleCardClick(item)}
-                    className={`${gridClass} group relative overflow-hidden border transition-transform hover:-translate-y-1 text-left`}
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => handleCardClick(item)}
+                  className={`${gridClass} group relative overflow-hidden border transition-transform hover:-translate-y-1 text-left`}
+                  style={{
+                    backgroundColor: 'var(--obsidian-panel)',
+                    borderColor: 'var(--navy-signal)',
+                    borderLeft: '4px solid var(--mustard-dossier)',
+                  }}
+                >
+                  <LockedOverlay locked={locked} />
+
+                  {item.media?.card && (
+                    <Image
+                      src={item.media.card}
+                      alt={item.name}
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  )}
+
+                  {/* Scan hover line */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ backgroundColor: 'var(--mustard-dossier)' }}
+                  />
+
+                  {/* Bottom gradient + metadata */}
+                  <div
+                    className="absolute inset-x-0 bottom-0 p-4"
                     style={{
-                      backgroundColor: 'var(--obsidian-panel)',
-                      borderColor: 'var(--navy-signal)',
-                      borderLeft: '4px solid var(--mustard-dossier)',
+                      background: 'linear-gradient(to top, var(--obsidian-void), transparent)',
                     }}
                   >
-                    <LockedOverlay locked={locked} />
-
-                    {item.media?.card && (
-                      <Image
-                        src={item.media.card}
-                        alt={item.name}
-                        fill
-                        className="object-cover object-center"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                    )}
-
-                    {/* Scan hover line */}
                     <div
-                      className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ backgroundColor: 'var(--mustard-dossier)' }}
-                    />
-
-                    {/* Bottom gradient + metadata */}
+                      className="font-mono uppercase text-[10px] tracking-[0.18em]"
+                      style={{ color: 'var(--shadow-text)' }}
+                    >
+                      {item.subtype ?? item.category?.toUpperCase()}
+                    </div>
                     <div
-                      className="absolute inset-x-0 bottom-0 p-4"
+                      className="font-display text-xl mt-1"
+                      style={{ color: 'var(--bone-text)' }}
+                    >
+                      {item.name}
+                    </div>
+                  </div>
+
+                  {/* Devanagari overlay */}
+                  {item.nameDevanagari && (
+                    <div
+                      className="absolute bottom-16 left-4 text-3xl pointer-events-none"
                       style={{
-                        background: 'linear-gradient(to top, var(--obsidian-void), transparent)',
+                        fontFamily: 'var(--font-devanagari)',
+                        color: 'var(--powder-signal)',
+                        opacity: 0.22,
                       }}
                     >
-                      <div
-                        className="font-mono uppercase text-[10px] tracking-[0.18em]"
-                        style={{ color: 'var(--shadow-text)' }}
-                      >
-                        {item.subtype ?? item.category?.toUpperCase()}
-                      </div>
-                      <div
-                        className="font-display text-xl mt-1"
-                        style={{ color: 'var(--bone-text)' }}
-                      >
-                        {item.name}
-                      </div>
+                      {item.nameDevanagari}
                     </div>
-
-                    {/* Devanagari overlay */}
-                    {item.nameDevanagari && (
-                      <div
-                        className="absolute bottom-16 left-4 text-3xl pointer-events-none"
-                        style={{
-                          fontFamily: 'var(--font-devanagari)',
-                          color: 'var(--powder-signal)',
-                          opacity: 0.22,
-                        }}
-                      >
-                        {item.nameDevanagari}
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          ) : (
-            /* ------------- SIMPLE 4-COL GRID (factions / locations / tech) ------------- */
-            <div className="grid grid-cols-4 gap-6">
-              {filteredItems.map((item) => {
-                const locked = item.classification === 'classified' && !isAuthenticated;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => handleCardClick(item)}
-                    className="group relative overflow-hidden border transition-transform hover:-translate-y-1 aspect-[3/4] text-left"
-                    style={{
-                      backgroundColor: 'var(--obsidian-panel)',
-                      borderColor: 'var(--navy-signal)',
-                      borderLeft: '4px solid var(--mustard-dossier)',
-                    }}
-                  >
-                    <LockedOverlay locked={locked} />
-
-                    {item.media?.card && (
-                      <Image
-                        src={item.media.card}
-                        alt={item.name}
-                        fill
-                        className="object-cover object-center"
-                        sizes="(max-width: 768px) 100vw, 25vw"
-                      />
-                    )}
-
-                    <div
-                      className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ backgroundColor: 'var(--mustard-dossier)' }}
-                    />
-
-                    <div
-                      className="absolute inset-x-0 bottom-0 p-4"
-                      style={{
-                        background: 'linear-gradient(to top, var(--obsidian-void), transparent)',
-                      }}
-                    >
-                      <div
-                        className="font-mono uppercase text-[10px] tracking-[0.18em]"
-                        style={{ color: 'var(--shadow-text)' }}
-                      >
-                        {item.subtype ?? item.category?.toUpperCase()}
-                      </div>
-                      <div
-                        className="font-display text-xl mt-1"
-                        style={{ color: 'var(--bone-text)' }}
-                      >
-                        {item.name}
-                      </div>
-                    </div>
-
-                    {item.nameDevanagari && (
-                      <div
-                        className="absolute bottom-16 left-4 text-3xl pointer-events-none"
-                        style={{
-                          fontFamily: 'var(--font-devanagari)',
-                          color: 'var(--powder-signal)',
-                          opacity: 0.22,
-                        }}
-                      >
-                        {item.nameDevanagari}
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-
-              {filteredItems.length === 0 && (
-                <div className="col-span-4 py-16 text-center">
-                  <span
-                    className="font-mono text-[10px] uppercase tracking-widest block"
-                    style={{ color: 'var(--mustard-dossier)' }}
-                  >
-                    Order Feeds All
-                  </span>
-                  <p
-                    className="mt-2 font-sans text-sm"
-                    style={{ color: 'var(--steel-text)' }}
-                  >
-                    No active records found for this classification.
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* ================================================================
-          SECTION 5 — Factions Split (7/5 asymmetric)
-          Only when filter is 'all' or 'factions'
+          SECTION 4 — Factions Split (7/5 asymmetric)
       ================================================================ */}
-      {(activeFilter === 'all' || activeFilter === 'factions') && (
-        <section
-          className="py-24 border-t"
-          style={{
-            backgroundColor: 'var(--obsidian-deep)',
-            borderColor: 'var(--navy-signal)',
-          }}
-        >
-          <div className="max-w-[1440px] mx-auto px-8">
-            <EyebrowLabel
-              segments={['FACTIONS', '02 POWER BLOCS', 'THE LINE DOWN THE MIDDLE']}
-              className="mb-4"
-            />
+      <section
+        className="py-24 border-t"
+        style={{
+          backgroundColor: 'var(--obsidian-deep)',
+          borderColor: 'var(--navy-signal)',
+        }}
+      >
+        <div className="max-w-[1440px] mx-auto px-8">
+          <EyebrowLabel
+            segments={['FACTIONS', '02 POWER BLOCS', 'THE LINE DOWN THE MIDDLE']}
+            className="mb-4"
+          />
 
             <h2
               className="font-display mb-12"
@@ -882,17 +718,14 @@ export function LoreContent() {
             </div>
           </div>
         </section>
-      )}
 
       {/* ================================================================
-          SECTION 6 — Locations Rail (horizontal scroll)
-          Only when filter is 'all' or 'locations'
+          SECTION 5 — Locations Rail (horizontal scroll)
       ================================================================ */}
-      {(activeFilter === 'all' || activeFilter === 'locations') && (
-        <section
-          className="py-24 border-t"
-          style={{
-            backgroundColor: 'var(--obsidian-void)',
+      <section
+        className="py-24 border-t"
+        style={{
+          backgroundColor: 'var(--obsidian-void)',
             borderColor: 'var(--navy-signal)',
           }}
         >
@@ -914,7 +747,7 @@ export function LoreContent() {
                 color: 'var(--bone-text)',
               }}
             >
-              THE PLACES YOU WEREN&apos;T MEANT TO SEE.
+              THE GEOGRAPHY OF ORDER.
             </h2>
 
             {/* Horizontal scroll rail */}
@@ -995,45 +828,28 @@ export function LoreContent() {
                 );
               })}
             </div>
-
-            {/* CTA */}
-            <div className="mt-8">
-              <a
-                href="/lore?filter=locations"
-                className="font-mono uppercase text-[11px] tracking-[0.18em] border px-6 py-3 inline-flex items-center gap-2 transition-colors hover:opacity-80"
-                style={{
-                  borderColor: 'var(--navy-signal)',
-                  color: 'var(--powder-signal)',
-                }}
-              >
-                OPEN WORLD ATLAS →
-              </a>
-            </div>
           </div>
         </section>
-      )}
 
       {/* ================================================================
-          SECTION 7 — Tech Files Grid (tossed-evidence rotation)
-          Only when filter is 'all' or 'tech'
+          SECTION 6 — Tech Files Grid (tossed-evidence rotation)
       ================================================================ */}
-      {(activeFilter === 'all' || activeFilter === 'tech') && (
-        <section
-          className="py-24 border-t"
-          style={{
-            backgroundColor: 'var(--obsidian-deep)',
-            borderColor: 'var(--navy-signal)',
-          }}
-        >
-          <div className="max-w-[1440px] mx-auto px-8">
-            <EyebrowLabel
-              segments={[
-                'CLASSIFIED TECH',
-                `${counts.tech} ITEMS`,
-                'WEAPONS ▪ SURVEILLANCE ▪ COMMS',
-              ]}
-              className="mb-4"
-            />
+      <section
+        className="py-24 border-t"
+        style={{
+          backgroundColor: 'var(--obsidian-deep)',
+          borderColor: 'var(--navy-signal)',
+        }}
+      >
+        <div className="max-w-[1440px] mx-auto px-8">
+          <EyebrowLabel
+            segments={[
+              'CLASSIFIED TECH',
+              `${techItems.length} ITEMS`,
+              'WEAPONS ▪ SURVEILLANCE ▪ COMMS',
+            ]}
+            className="mb-4"
+          />
 
             <h2
               className="font-display mb-12"
@@ -1043,7 +859,7 @@ export function LoreContent() {
                 color: 'var(--bone-text)',
               }}
             >
-              HARDWARE THE REGIME PREFERS YOU FORGET.
+              THE ARSENAL OF ORDER.
             </h2>
 
             <div className="grid grid-cols-3 gap-6">
@@ -1118,26 +934,11 @@ export function LoreContent() {
               })}
             </div>
 
-            {/* CTA */}
-            <div className="mt-10">
-              <button
-                type="button"
-                onClick={() => setActiveFilter('tech')}
-                className="font-mono uppercase text-[11px] tracking-[0.18em] border px-6 py-3 inline-flex items-center gap-2 transition-colors hover:opacity-80"
-                style={{
-                  borderColor: 'var(--navy-signal)',
-                  color: 'var(--powder-signal)',
-                }}
-              >
-                UNSEAL ALL TECH →
-              </button>
-            </div>
           </div>
         </section>
-      )}
 
       {/* ================================================================
-          SECTION 8 — Classified Invitation Strip
+          SECTION 7 — Classified Invitation Strip
       ================================================================ */}
       <section
         className="py-20 border-t relative overflow-hidden"
@@ -1193,18 +994,6 @@ export function LoreContent() {
               >
                 REQUEST CLEARANCE →
               </a>
-
-              <button
-                type="button"
-                onClick={() => setActiveFilter('all')}
-                className="px-8 py-4 font-mono uppercase text-[11px] tracking-[0.18em] border inline-flex items-center gap-2 transition-opacity hover:opacity-80 w-full justify-center"
-                style={{
-                  borderColor: 'var(--navy-signal)',
-                  color: 'var(--powder-signal)',
-                }}
-              >
-                BROWSE AS VISITOR
-              </button>
 
               {/* Decorative redaction bar */}
               <div className="flex items-center gap-2 mt-2">

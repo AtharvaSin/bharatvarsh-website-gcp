@@ -1,12 +1,13 @@
 'use client';
 
-import { FC, Suspense } from 'react';
+import { FC, Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { cn } from '@/shared/utils';
 import { EyebrowLabel } from '@/shared/ui';
-import { WhatAwaitsSection } from '@/features/newsletter';
+import { HomeDossierModal } from '@/features/newsletter';
+import { useSession } from '@/features/auth';
 import novelData from '@/content/data/novel.json';
 import loreData from '@/content/data/lore-items.json';
 import type { NovelData, VerifiedStatus } from '@/types';
@@ -21,6 +22,10 @@ import type { NovelData, VerifiedStatus } from '@/types';
 // --------------------------------------------------------------------------
 
 const AMAZON_URL = 'https://www.amazon.in/dp/B0GHS8127Z';
+const FLIPKART_URL = 'https://dl.flipkart.com/s/zo1xOSuuuN';
+const NOTION_PRESS_URL = 'https://direct.notionpress.com/in/read/mahabharatvarsh-hardcover/';
+const SAMPLE_PDF_URL = '/downloads/Bharatvarsh-Dossier-Chapter-1.pdf';
+const AUTHOR_WEBSITE_URL = 'https://atharva-singh-profile.vercel.app/';
 
 // --------------------------------------------------------------------------
 // Local types
@@ -29,6 +34,7 @@ interface LoreCharacter {
   id: string;
   name: string;
   tagline: string;
+  classification?: 'classified' | 'declassified';
   media: { card: string; banner: string };
 }
 
@@ -99,7 +105,7 @@ function HeroSection({ data }: { data: NovelData }) {
                 'THE NOVEL',
                 'PUBLISHED 2026',
                 `${data.novel.pages} PAGES`,
-                'HARDCOVER \u25AA PAPERBACK \u25AA EBOOK \u25AA AUDIOBOOK',
+                'HARDCOVER \u25AA PAPERBACK \u25AA EBOOK',
               ]}
             />
 
@@ -116,7 +122,7 @@ function HeroSection({ data }: { data: NovelData }) {
               <div>CHRONICLE.</div>
             </div>
 
-            {/* Italic pullquote */}
+            {/* Italic pullquote — author voice pulling from the novel's core premise */}
             <blockquote
               className="font-serif italic max-w-[52ch]"
               style={{
@@ -126,13 +132,13 @@ function HeroSection({ data }: { data: NovelData }) {
               }}
             >
               <p>
-                &ldquo;Every dossier begins with a name you were never meant to read.&rdquo;
+                &ldquo;I wrote a nation that engineered peace. This is the file where it shattered.&rdquo;
               </p>
               <footer
                 className="font-mono not-italic mt-2 text-[10px] tracking-widest uppercase"
                 style={{ color: 'var(--shadow-text)' }}
               >
-                &mdash; ATHARVA SINGH, CHAPTER 1
+                &mdash; ATHARVA SINGH, ON CHAPTER 1
               </footer>
             </blockquote>
 
@@ -142,26 +148,50 @@ function HeroSection({ data }: { data: NovelData }) {
               style={{ color: 'var(--steel-text)' }}
             >
               {data.synopsis.hook ||
-                'Four hundred and eighty pages. Twenty-two chapters. A military prince, a buried case, and the alternate-history dossier your nation never kept. The file is already open.'}
+                'Three hundred and seventy-four pages. Twenty-two chapters. A military prince, a buried case, and the alternate-history dossier your nation never kept. The file is already open.'}
             </p>
 
-            {/* Primary + ghost CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* CTAs — 2x2 grid: Amazon / Flipkart / Notion Press / ghost Read-First-Chapter */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[560px]">
               <a
                 href={AMAZON_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-8 py-4 font-mono text-sm tracking-widest uppercase font-bold transition-all duration-200 hover:brightness-110"
+                className="inline-block px-6 py-4 font-mono text-sm tracking-widest uppercase font-bold text-center transition-all duration-200 hover:brightness-110"
                 style={{
                   backgroundColor: 'var(--mustard-dossier)',
                   color: 'var(--obsidian-void)',
                 }}
               >
-                BUY NOW ON AMAZON &rarr;
+                BUY ON AMAZON &rarr;
+              </a>
+              <a
+                href={FLIPKART_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-6 py-4 font-mono text-sm tracking-widest uppercase font-bold text-center transition-all duration-200 hover:brightness-110"
+                style={{
+                  backgroundColor: 'var(--mustard-dossier)',
+                  color: 'var(--obsidian-void)',
+                }}
+              >
+                BUY ON FLIPKART &rarr;
+              </a>
+              <a
+                href={NOTION_PRESS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-6 py-4 font-mono text-sm tracking-widest uppercase font-bold text-center transition-all duration-200 hover:brightness-110"
+                style={{
+                  backgroundColor: 'var(--mustard-dossier)',
+                  color: 'var(--obsidian-void)',
+                }}
+              >
+                BUY ON NOTION PRESS &rarr;
               </a>
               <a
                 href="#opening"
-                className="inline-block px-8 py-4 font-mono text-sm tracking-widest uppercase border transition-all duration-200 hover:opacity-80"
+                className="inline-block px-6 py-4 font-mono text-sm tracking-widest uppercase text-center border transition-all duration-200 hover:opacity-80"
                 style={{
                   borderColor: 'var(--powder-signal)',
                   color: 'var(--powder-signal)',
@@ -170,30 +200,6 @@ function HeroSection({ data }: { data: NovelData }) {
                 READ THE FIRST CHAPTER FREE
               </a>
             </div>
-
-            {/* Retailer chip strip */}
-            <p
-              className="font-mono text-[10px] tracking-widest uppercase"
-              style={{ color: 'var(--shadow-text)' }}
-            >
-              {'AMAZON '}
-              <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>
-                &bull;
-              </span>
-              {' KINDLE '}
-              <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>
-                &bull;
-              </span>
-              {' AUDIBLE '}
-              <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>
-                &bull;
-              </span>
-              {' KOBO '}
-              <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>
-                &bull;
-              </span>
-              {' APPLE BOOKS'}
-            </p>
           </div>
 
           {/* RIGHT col-span-6 — 3D book cover */}
@@ -236,13 +242,17 @@ function HeroSection({ data }: { data: NovelData }) {
 // Section 2 — Anatomy Spec Ribbon (6 cells)
 // --------------------------------------------------------------------------
 function AnatomyRibbon({ data }: { data: NovelData }) {
+  // Values verified against lore-items.json on 2026-04-14:
+  // 3 factions (Bharatsena, Akakpen, Tribhuj), 4 locations
+  // (Indrapur, Lakshmanpur, Treaty Zone, Mysuru). 6 operatives
+  // are the novel's investigation principals — Kahaan, Rudra, Pratap,
+  // Hana, Arshi, Surya. "Years covered" removed per page refinement.
   const cells = [
     { label: 'TOTAL PAGES', value: String(data.novel.pages) },
     { label: 'CHAPTERS', value: '22' },
     { label: 'OPERATIVES', value: '06' },
-    { label: 'FACTIONS', value: '02' },
+    { label: 'FACTIONS', value: '03' },
     { label: 'LOCATIONS', value: '04' },
-    { label: 'YEARS COVERED', value: '315' },
   ] as const;
 
   return (
@@ -253,11 +263,11 @@ function AnatomyRibbon({ data }: { data: NovelData }) {
         borderColor: 'var(--navy-signal)',
       }}
     >
-      <div className="max-w-[1440px] mx-auto px-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="max-w-[1440px] mx-auto px-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {cells.map((cell, i) => (
           <div
             key={cell.label}
-            className={cn('px-6 py-4 flex flex-col gap-2', i < 5 && 'border-r')}
+            className={cn('px-6 py-4 flex flex-col gap-2', i < cells.length - 1 && 'border-r')}
             style={{ borderColor: 'var(--navy-signal)' }}
           >
             <span
@@ -354,14 +364,14 @@ function PremiseSection({ data }: { data: NovelData }) {
                     }}
                   >
                     <p>
-                      &ldquo;The dossier on my father came with my uniform. I signed for
-                      both.&rdquo;
+                      &ldquo;They handed me the uniform. The questions came with the
+                      case.&rdquo;
                     </p>
                     <footer
                       className="font-mono not-italic mt-3 text-[10px] tracking-widest uppercase"
                       style={{ color: 'var(--shadow-text)' }}
                     >
-                      &mdash; CHAPTER 1, PAGE 14
+                      &mdash; KAHAAN, CHAPTER 1
                     </footer>
                   </blockquote>
                   <p
@@ -391,8 +401,14 @@ function PremiseSection({ data }: { data: NovelData }) {
 
 // --------------------------------------------------------------------------
 // Section 4 — The Opening (chapter sample panel)
+// Continue Reading → HomeDossierModal (lead capture) for unauthenticated users.
+// Signed-in users skip the lead capture entirely and download the sample PDF
+// directly. Button visibility is gated on isAuthenticated.
 // --------------------------------------------------------------------------
 function OpeningSection() {
+  const { isAuthenticated } = useSession();
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <section
       id="opening"
@@ -464,135 +480,253 @@ function OpeningSection() {
           </div>
         </div>
 
-        {/* CTA row */}
+        {/* CTA row — auth-aware.
+            Not signed in: Continue Reading (opens HomeDossierModal) + disabled Download PDF.
+            Signed in:     Download PDF (direct) — Continue Reading is hidden. */}
         <div className="flex flex-col sm:flex-row gap-4 mt-10 max-w-[800px] mx-auto">
-          <a
-            href="#awaits"
-            className="inline-block px-8 py-4 font-mono text-sm tracking-widest uppercase font-bold transition-all duration-200 hover:brightness-110"
-            style={{
-              backgroundColor: 'var(--mustard-dossier)',
-              color: 'var(--obsidian-void)',
-            }}
-          >
-            CONTINUE READING (SIGN IN) &rarr;
-          </a>
-          <a
-            href="#awaits"
-            className="inline-block px-8 py-4 font-mono text-sm tracking-widest uppercase border transition-all duration-200 hover:opacity-80"
-            style={{
-              borderColor: 'var(--powder-signal)',
-              color: 'var(--powder-signal)',
-            }}
-          >
-            DOWNLOAD PDF SAMPLE
-          </a>
+          {!isAuthenticated && (
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="inline-block px-8 py-4 font-mono text-sm tracking-widest uppercase font-bold transition-all duration-200 hover:brightness-110"
+              style={{
+                backgroundColor: 'var(--mustard-dossier)',
+                color: 'var(--obsidian-void)',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              CONTINUE READING &rarr;
+            </button>
+          )}
+          {isAuthenticated ? (
+            <a
+              href={SAMPLE_PDF_URL}
+              download
+              className="inline-block px-8 py-4 font-mono text-sm tracking-widest uppercase font-bold transition-all duration-200 hover:brightness-110"
+              style={{
+                backgroundColor: 'var(--mustard-dossier)',
+                color: 'var(--obsidian-void)',
+              }}
+            >
+              DOWNLOAD PDF SAMPLE &rarr;
+            </a>
+          ) : (
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              title="Sign in to download the PDF sample"
+              className="inline-block px-8 py-4 font-mono text-sm tracking-widest uppercase border"
+              style={{
+                borderColor: 'var(--shadow-text)',
+                color: 'var(--shadow-text)',
+                backgroundColor: 'transparent',
+                cursor: 'not-allowed',
+                opacity: 0.55,
+              }}
+            >
+              DOWNLOAD PDF SAMPLE (SIGN IN)
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Lead-capture modal — same wrapper as Home page */}
+      <HomeDossierModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </section>
   );
 }
 
 // --------------------------------------------------------------------------
-// Section 5 — The Operatives (5/7 Kahaan tall card + 4-grid)
+// Section 5 — The Operatives (6 equal cards in a 3×2 grid).
+// Declassified cards are <Link> → /lore?item=<id>, which opens that character's
+// dossier modal via the LoreContent deep-link handler. The LoreContent modal
+// close handler will router.back() the user to /novel when they came via deep
+// link, preserving the return journey.
+//
+// Classified operatives (Surya, Arshi) render a shadowy silhouette variant for
+// unauthenticated visitors: image heavily darkened + desaturated, name redacted,
+// CLASSIFIED stamp, and a SIGN IN TO UNSEAL CTA that links to /auth/signin with
+// callbackUrl=/novel. Once signed in, the normal dossier card renders.
 // --------------------------------------------------------------------------
+const OPERATIVE_IDS = ['kahaan', 'rudra', 'pratap', 'hana', 'arshi', 'surya'] as const;
+
 interface OperativeCardProps {
   character: LoreCharacter;
-  featured?: boolean;
+  isAuthenticated: boolean;
 }
 
-const OperativeCard: FC<OperativeCardProps> = ({ character, featured = false }) => {
-  if (featured) {
+const OperativeCard: FC<OperativeCardProps> = ({ character, isAuthenticated }) => {
+  const isLocked =
+    character.classification === 'classified' && !isAuthenticated;
+
+  if (isLocked) {
     return (
-      <div
-        className="relative h-full min-h-[520px] flex flex-col overflow-hidden border border-l-4"
+      <Link
+        href="/auth/signin?callbackUrl=/novel#operatives"
+        className="group relative flex flex-col border overflow-hidden transition-colors"
         style={{
           backgroundColor: 'var(--obsidian-deep)',
-          borderColor: 'var(--navy-signal)',
-          borderLeftColor: 'var(--mustard-dossier)',
+          borderColor: 'var(--mustard-dossier)',
         }}
+        aria-label={`${character.name} — classified. Sign in to unseal.`}
       >
-        <div className="relative flex-1 min-h-[360px]">
+        <div className="relative aspect-[3/4] overflow-hidden">
+          {/* Silhouette: real image under a heavy darken + desaturate + blur filter.
+              Authenticated users see the full-color version in the other branch. */}
           <Image
             src={character.media.card}
-            alt={character.name}
+            alt=""
             fill
             className="object-cover object-top"
+            style={{
+              filter: 'grayscale(100%) brightness(0.18) contrast(1.3) blur(2px)',
+            }}
+            aria-hidden="true"
           />
+
+          {/* Navy-mustard redaction wash over the silhouette */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(ellipse at 50% 35%, rgba(11,39,66,0.55) 0%, rgba(15,20,25,0.9) 70%)',
+            }}
+          />
+
+          {/* Diagonal classified stamp — rotated, dashed mustard border */}
+          <div
+            className="absolute top-4 left-4 font-mono uppercase tracking-[0.22em] text-[10px] px-2 py-1 border border-dashed"
+            style={{
+              color: 'var(--mustard-dossier)',
+              borderColor: 'var(--mustard-dossier)',
+              transform: 'rotate(-4deg)',
+              backgroundColor: 'rgba(15,20,25,0.65)',
+            }}
+          >
+            CLASSIFIED
+          </div>
+
+          {/* Center — redaction bar + big REDACTED label */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-4 text-center">
+            <div
+              className="font-mono uppercase tracking-[0.22em] text-[10px]"
+              style={{ color: 'var(--mustard-dossier)', opacity: 0.9 }}
+            >
+              CLEARANCE · LVL 5
+            </div>
+            <div
+              className="font-display text-2xl leading-none"
+              style={{
+                color: 'var(--bone-text)',
+                backgroundColor: 'var(--redaction)',
+                padding: '0.25rem 0.75rem',
+                letterSpacing: '0.12em',
+              }}
+            >
+              [REDACTED]
+            </div>
+            <div
+              className="font-mono uppercase tracking-[0.22em] text-[9px] max-w-[80%] leading-relaxed"
+              style={{ color: 'var(--powder-signal)' }}
+            >
+              IDENTITY WITHHELD PENDING VERIFICATION
+            </div>
+          </div>
         </div>
-        <div className="p-6 flex flex-col gap-2">
+
+        {/* Footer strip — sign-in CTA */}
+        <div
+          className="p-4 flex flex-col gap-2 border-t"
+          style={{ borderColor: 'var(--mustard-dossier)' }}
+        >
           <span
-            className="font-display text-4xl"
-            style={{ color: 'var(--bone-text)' }}
+            className="font-display text-2xl leading-none"
+            style={{ color: 'var(--shadow-text)', letterSpacing: '0.08em' }}
           >
-            {character.name.toUpperCase()}
+            ????????
           </span>
-          <span
-            className="font-devanagari text-xl"
-            style={{ color: 'var(--powder-signal)' }}
-          >
-            कहान
-          </span>
-          <EyebrowLabel segments={['PROTAGONIST', 'BHARATSENA CAPTAIN']} className="mt-1" />
           <p
-            className="font-serif italic text-sm mt-2"
-            style={{ color: 'var(--steel-text)' }}
+            className="font-sans text-[11px] leading-snug"
+            style={{ color: 'var(--shadow-text)' }}
           >
-            &ldquo;{character.tagline}&rdquo;
+            This operative&rsquo;s file is sealed. Clearance required to
+            review identity, background, and mission record.
           </p>
-          <Link
-            href="/lore/kahaan"
-            className="font-mono text-[10px] tracking-widest uppercase mt-3 transition-opacity hover:opacity-70"
-            style={{ color: 'var(--mustard-dossier)' }}
+          <span
+            className="mt-1 font-mono text-[10px] tracking-[0.18em] uppercase transition-opacity group-hover:opacity-100"
+            style={{ color: 'var(--mustard-dossier)', opacity: 0.95 }}
           >
-            SEE HIS FILE &rarr;
-          </Link>
+            SIGN IN TO UNSEAL &rarr;
+          </span>
         </div>
-      </div>
+      </Link>
     );
   }
 
   return (
-    <div
-      className="flex flex-col border overflow-hidden"
+    <Link
+      href={`/lore?item=${character.id}`}
+      className="group flex flex-col border overflow-hidden transition-colors"
       style={{
         backgroundColor: 'var(--obsidian-deep)',
         borderColor: 'var(--navy-signal)',
       }}
     >
-      <div className="relative aspect-square">
+      <div className="relative aspect-[3/4] overflow-hidden">
         <Image
           src={character.media.card}
           alt={character.name}
           fill
-          className="object-cover object-top"
+          className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+        />
+        {/* Gradient bottom for legibility of name overlay */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(to top, var(--obsidian-deep) 0%, rgba(26,31,46,0.55) 55%, transparent 100%)',
+          }}
         />
       </div>
-      <div className="p-4 flex flex-col gap-1">
+      <div className="p-4 flex flex-col gap-2">
         <span
-          className="font-mono text-xs tracking-widest uppercase font-bold"
+          className="font-display text-2xl leading-none"
           style={{ color: 'var(--bone-text)' }}
         >
           {character.name.toUpperCase()}
         </span>
         <p
-          className="font-sans text-[11px] leading-snug"
+          className="font-sans text-[11px] leading-snug line-clamp-2"
           style={{ color: 'var(--powder-signal)' }}
         >
           {character.tagline}
         </p>
+        <span
+          className="mt-1 font-mono text-[10px] tracking-[0.18em] uppercase transition-opacity group-hover:opacity-100"
+          style={{ color: 'var(--mustard-dossier)', opacity: 0.85 }}
+        >
+          OPEN FILE &rarr;
+        </span>
       </div>
-    </div>
+    </Link>
   );
 };
 
 function OperativesSection() {
+  const { isAuthenticated } = useSession();
   const characters = getCharacters();
-  const kahaan = characters.find((c) => c.id === 'kahaan');
-  const supporting = characters.filter((c) =>
-    ['rudra', 'arshi', 'hana', 'pratap'].includes(c.id)
-  );
+  const operatives = OPERATIVE_IDS
+    .map((id) => characters.find((c) => c.id === id))
+    .filter((c): c is LoreCharacter => Boolean(c));
 
-  if (!kahaan) return null;
+  if (operatives.length === 0) return null;
 
   return (
     <section
@@ -613,21 +747,17 @@ function OperativesSection() {
           SIX OPERATIVES. ONE CASE.
         </h2>
 
-        <div className="grid grid-cols-12 gap-6">
-          {/* LEFT — featured Kahaan tall card */}
-          <div className="col-span-12 lg:col-span-5">
-            <OperativeCard character={kahaan} featured />
-          </div>
-
-          {/* RIGHT — 2×2 supporting grid */}
-          <div className="col-span-12 lg:col-span-7 grid grid-cols-2 gap-4 content-start">
-            {supporting.slice(0, 4).map((character) => (
-              <OperativeCard key={character.id} character={character} />
-            ))}
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          {operatives.map((character) => (
+            <OperativeCard
+              key={character.id}
+              character={character}
+              isAuthenticated={isAuthenticated}
+            />
+          ))}
         </div>
 
-        <div className="mt-10">
+        <div className="mt-12">
           <Link
             href="/lore"
             className="inline-block px-8 py-4 font-mono text-sm tracking-widest uppercase border transition-all duration-200 hover:opacity-80"
@@ -645,126 +775,16 @@ function OperativesSection() {
 }
 
 // --------------------------------------------------------------------------
-// Section 6 — What Awaits You
-// WhatAwaitsSection is preserved EXACTLY — not reimplemented.
-// verifiedStatus is passed through from the outer Suspense-aware component.
-// The promise cards above it are outer framing; the email capture lives inside
-// WhatAwaitsSection itself.
+// Section 6 — Inside the Dossier
+// Replaces the old "Press & Praise / What the Archive is Saying" section,
+// which relied on fabricated press blurbs from non-existent publications.
+// This section is fully honest — every line is either a canonical quote from
+// the novel itself (novel.json → quotes) or a confirmed thematic pillar
+// (novel.json → themes). No fake sources, no invented endorsements.
 // --------------------------------------------------------------------------
-const PROMISE_CARDS = [
-  { num: '01', text: 'A PRINCE WHO WAS NEVER MEANT TO RULE', col: 'col-span-12 md:col-span-4' },
-  { num: '02', text: 'A CASE FILE THAT REWRITES A NATION', col: 'col-span-12 md:col-span-4' },
-  { num: '03', text: 'A SURVEILLANCE MESH THAT DREAMS', col: 'col-span-12 md:col-span-4' },
-  {
-    num: '04',
-    text: 'A DOSSIER YOU WILL NOT CLOSE',
-    col: 'col-span-12 md:col-span-8 md:col-start-3',
-  },
-] as const;
-
-interface WhatAwaitsWrapperProps {
-  data: NovelData;
-  verifiedStatus: VerifiedStatus;
-}
-
-function WhatAwaitsWrapper({ data, verifiedStatus }: WhatAwaitsWrapperProps) {
-  return (
-    <section
-      id="awaits"
-      className="py-24 border-t"
-      style={{
-        backgroundColor: 'var(--obsidian-deep)',
-        borderColor: 'var(--navy-signal)',
-      }}
-    >
-      <div className="max-w-[1440px] mx-auto px-8">
-        <EyebrowLabel segments={['WHAT AWAITS YOU INSIDE']} />
-
-        <h2
-          className="font-display text-5xl mt-4 mb-12"
-          style={{ color: 'var(--bone-text)' }}
-        >
-          FOUR THINGS YOU WILL NOT EXPECT.
-        </h2>
-
-        {/* Promise cards — outer framing for the email capture below */}
-        <div className="grid grid-cols-12 gap-4 mb-16">
-          {PROMISE_CARDS.map((card) => (
-            <div
-              key={card.num}
-              className={cn('border p-6 flex flex-col gap-3', card.col)}
-              style={{
-                backgroundColor: 'var(--obsidian-void)',
-                borderColor: 'var(--navy-signal)',
-              }}
-            >
-              <span
-                className="font-mono text-[10px] tracking-widest uppercase"
-                style={{ color: 'var(--mustard-dossier)' }}
-              >
-                {card.num}
-              </span>
-              <span
-                className="font-display text-xl leading-tight"
-                style={{ color: 'var(--bone-text)' }}
-              >
-                {card.text}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/*
-        WhatAwaitsSection — PRESERVED INTACT.
-        Renders the dossier email capture form, ClassifiedFileCards, and handles
-        the verified/success PDF download state internally via verifiedStatus.
-        Do NOT reimplement or unwrap this component.
-      */}
-      <WhatAwaitsSection
-        features={data.features}
-        dossierContent={data.dossier}
-        sectionContent={data.whatAwaitsYou}
-        verifiedStatus={verifiedStatus}
-      />
-    </section>
-  );
-}
-
-// --------------------------------------------------------------------------
-// Section 7 — Press & Praise (masonry testimonials)
-// Uses novelData.quotes if present; otherwise falls back to in-world blurbs.
-// NO star ratings. NO emojis.
-// --------------------------------------------------------------------------
-const FALLBACK_PRAISE = [
-  {
-    quote: 'A dossier you won\'t put down. Literary thriller of the year.',
-    attribution: 'LITERARY FIELD REPORT',
-  },
-  {
-    quote: 'Three-act architecture executed with military precision.',
-    attribution: 'THE ARCHIVE REVIEW',
-  },
-  {
-    quote: 'The alternate-history India that should have been.',
-    attribution: 'CLASSIFIED READING CIRCLE',
-  },
-  {
-    quote: 'Every chapter is a declassified file. Every file is a wound.',
-    attribution: 'SOUTH ASIAN LITERARY JOURNAL',
-  },
-  {
-    quote: 'Singh has written the great novel of an India that never was.',
-    attribution: 'THE REDACTED CHRONICLE',
-  },
-] as const;
-
-function PressSection({ data }: { data: NovelData }) {
-  // novelData.quotes are in-world context quotes, not press blurbs — use fallbacks for press
-  const useDataQuotes = data.quotes && data.quotes.length >= 5;
-  const displayQuotes = useDataQuotes
-    ? data.quotes.slice(0, 5).map((q) => ({ quote: q.text, attribution: q.context }))
-    : FALLBACK_PRAISE.map((p) => ({ quote: p.quote, attribution: p.attribution }));
+function InsideTheDossierSection({ data }: { data: NovelData }) {
+  const quotes = data.quotes ?? [];
+  const themes = data.themes ?? [];
 
   return (
     <section
@@ -774,44 +794,117 @@ function PressSection({ data }: { data: NovelData }) {
         borderColor: 'var(--navy-signal)',
       }}
     >
-      <div className="max-w-[1440px] mx-auto px-8">
-        <EyebrowLabel segments={['PRESS & PRAISE', 'EARLY READERS']} />
+      <div className="max-w-[1240px] mx-auto px-8">
+        <EyebrowLabel
+          segments={['INSIDE THE DOSSIER', 'FROM THE CHRONICLE ITSELF']}
+        />
 
         <h2
-          className="font-display text-5xl mt-4 mb-12"
+          className="font-display text-5xl mt-4 mb-4"
           style={{ color: 'var(--bone-text)' }}
         >
-          WHAT THE ARCHIVE IS SAYING.
+          THE BOOK SPEAKS FOR ITSELF.
         </h2>
+        <p
+          className="font-serif italic text-lg max-w-[58ch] mb-16"
+          style={{ color: 'var(--powder-signal)' }}
+        >
+          No press blurbs. No invented endorsements. These are excerpts from
+          the dossier itself — what you will actually read on the page.
+        </p>
 
-        {/* CSS columns masonry */}
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
-          {displayQuotes.map((item, i) => (
-            <div
-              key={i}
-              className="relative break-inside-avoid mb-6 p-8 border"
-              style={{
-                backgroundColor: 'var(--obsidian-deep)',
-                borderColor: 'var(--navy-signal)',
-              }}
-            >
-              <InlineStamp label="VERIFIED READER" rotate={-2} className="top-4 right-4" />
-
-              <blockquote
-                className="font-serif italic text-lg leading-relaxed mt-4"
-                style={{ color: 'var(--powder-signal)' }}
+        {/* In-world fragments — stacked, alternating left/right for rhythm */}
+        <div className="flex flex-col gap-14 mb-24">
+          {quotes.slice(0, 3).map((q, i) => {
+            const isAlignRight = i % 2 === 1;
+            return (
+              <div
+                key={i}
+                className={cn(
+                  'relative px-8 py-2 border-l-2 max-w-[780px]',
+                  isAlignRight && 'md:ml-auto md:border-l-0 md:border-r-2 md:pl-8 md:pr-8 md:text-right'
+                )}
+                style={{ borderColor: 'var(--mustard-dossier)' }}
               >
-                &ldquo;{item.quote}&rdquo;
-              </blockquote>
+                <div
+                  className="font-mono uppercase text-[10px] tracking-[0.22em] mb-4"
+                  style={{ color: 'var(--mustard-dossier)' }}
+                >
+                  FRAGMENT {String(i + 1).padStart(2, '0')}
+                  <span
+                    aria-hidden="true"
+                    className="mx-2"
+                    style={{ color: 'var(--shadow-text)' }}
+                  >
+                    ▪
+                  </span>
+                  <span style={{ color: 'var(--shadow-text)' }}>
+                    MAHABHARATVARSH
+                  </span>
+                </div>
+                <blockquote
+                  className="font-serif italic"
+                  style={{
+                    color: 'var(--bone-text)',
+                    fontSize: 'clamp(1.375rem, 2.4vw, 2rem)',
+                    lineHeight: 1.45,
+                  }}
+                >
+                  &ldquo;{q.text}&rdquo;
+                </blockquote>
+                <footer
+                  className="mt-5 font-mono text-[10px] tracking-[0.22em] uppercase"
+                  style={{ color: 'var(--shadow-text)' }}
+                >
+                  &mdash; {q.context}
+                </footer>
+              </div>
+            );
+          })}
+        </div>
 
-              <footer
-                className="font-mono text-[10px] tracking-widest uppercase mt-4"
-                style={{ color: 'var(--shadow-text)' }}
+        {/* Themes strip — 4 canonical thematic pillars from novel.json */}
+        <div
+          className="pt-12 border-t"
+          style={{ borderColor: 'var(--navy-signal)' }}
+        >
+          <EyebrowLabel
+            segments={['KEY THEMES', 'WHAT THIS FILE IS ABOUT']}
+            className="mb-8"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {themes.slice(0, 4).map((theme, i) => (
+              <div
+                key={theme.title}
+                className="flex gap-5 p-6 border"
+                style={{
+                  backgroundColor: 'var(--obsidian-deep)',
+                  borderColor: 'var(--navy-signal)',
+                }}
               >
-                &mdash; {item.attribution}
-              </footer>
-            </div>
-          ))}
+                <div
+                  className="font-mono text-[10px] tracking-[0.22em] pt-1 flex-shrink-0"
+                  style={{ color: 'var(--mustard-dossier)' }}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <div className="flex flex-col gap-2">
+                  <span
+                    className="font-display text-2xl leading-tight"
+                    style={{ color: 'var(--bone-text)' }}
+                  >
+                    {theme.title.toUpperCase()}
+                  </span>
+                  <p
+                    className="font-sans text-sm leading-relaxed"
+                    style={{ color: 'var(--steel-text)' }}
+                  >
+                    {theme.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -886,7 +979,7 @@ function AuthorSection({ data }: { data: NovelData }) {
                 lineHeight: '1.5',
               }}
             >
-              &ldquo;I wrote the history they wouldn&rsquo;t print.&rdquo;
+              &ldquo;I wrote the India we almost had. Come walk through it with me.&rdquo;
             </blockquote>
 
             {/* Social links row */}
@@ -913,24 +1006,15 @@ function AuthorSection({ data }: { data: NovelData }) {
                 </a>
               )}
               <a
-                href="#"
+                href={AUTHOR_WEBSITE_URL}
+                target="_blank"
+                rel="noopener noreferrer me author"
                 className="hover:text-[var(--powder-signal)] transition-colors"
                 aria-label="Author website"
               >
                 WEBSITE
               </a>
             </div>
-
-            <a
-              href="#"
-              className="inline-block font-mono text-[11px] tracking-widest uppercase border-b pb-0.5 w-fit transition-opacity hover:opacity-70"
-              style={{
-                color: 'var(--mustard-dossier)',
-                borderColor: 'var(--mustard-dossier)',
-              }}
-            >
-              READ AUTHOR NOTES &rarr;
-            </a>
           </div>
         </div>
       </div>
@@ -939,28 +1023,31 @@ function AuthorSection({ data }: { data: NovelData }) {
 }
 
 // --------------------------------------------------------------------------
-// Section 9 — The Purchase (format comparison 5/3/4 asymmetric)
+// Section 7 — The Purchase (2 formats × 3 channels each)
+// Audiobook removed. Paperback and Ebook each list all three canonical
+// purchase channels (Amazon, Flipkart, Notion Press) with direct links.
 // --------------------------------------------------------------------------
+interface ChannelLink {
+  label: string;
+  href: string;
+}
+
 interface FormatCardProps {
   label: string;
   specs: readonly string[];
   price: string;
-  ctaLabel: string;
-  ctaHref: string;
+  channels: readonly ChannelLink[];
   coverSrc?: string;
   recommended?: boolean;
-  primary?: boolean;
 }
 
 const FormatCard: FC<FormatCardProps> = ({
   label,
   specs,
   price,
-  ctaLabel,
-  ctaHref,
+  channels,
   coverSrc,
   recommended,
-  primary,
 }) => (
   <div
     className="relative h-full flex flex-col gap-6 p-8 border"
@@ -979,7 +1066,7 @@ const FormatCard: FC<FormatCardProps> = ({
       </div>
     )}
 
-    <div className="flex flex-col gap-2 mt-auto">
+    <div className="flex flex-col gap-2">
       <span
         className="font-display text-4xl"
         style={{ color: 'var(--bone-text)' }}
@@ -995,30 +1082,38 @@ const FormatCard: FC<FormatCardProps> = ({
       </p>
     </div>
 
-    <a
-      href={ctaHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-block px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all duration-200 text-center"
-      style={
-        primary
-          ? { backgroundColor: 'var(--mustard-dossier)', color: 'var(--obsidian-void)' }
-          : { border: '1px solid var(--powder-signal)', color: 'var(--powder-signal)' }
-      }
-    >
-      {ctaLabel} &rarr;
-    </a>
+    {/* Three per-channel CTAs stacked */}
+    <div className="flex flex-col gap-2 mt-auto">
+      {channels.map((ch, idx) => (
+        <a
+          key={ch.label}
+          href={ch.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-6 py-3 font-mono text-xs tracking-widest uppercase transition-all duration-200 text-center"
+          style={
+            idx === 0
+              ? { backgroundColor: 'var(--mustard-dossier)', color: 'var(--obsidian-void)' }
+              : { border: '1px solid var(--powder-signal)', color: 'var(--powder-signal)' }
+          }
+        >
+          BUY ON {ch.label} &rarr;
+        </a>
+      ))}
+    </div>
   </div>
 );
 
 const RETAILER_LINKS = [
-  { label: 'AMAZON', href: AMAZON_URL },
-  { label: 'KINDLE', href: AMAZON_URL },
-  { label: 'AUDIBLE', href: 'https://www.audible.in' },
-  { label: 'KOBO', href: 'https://www.kobo.com' },
-  { label: 'APPLE BOOKS', href: 'https://books.apple.com' },
-  { label: 'BARNES & NOBLE', href: 'https://www.barnesandnoble.com' },
+  { label: 'AMAZON KINDLE', href: AMAZON_URL },
+  { label: 'NOTION PRESS', href: NOTION_PRESS_URL },
 ] as const;
+
+const PURCHASE_CHANNELS: readonly ChannelLink[] = [
+  { label: 'AMAZON', href: AMAZON_URL },
+  { label: 'FLIPKART', href: FLIPKART_URL },
+  { label: 'NOTION PRESS', href: NOTION_PRESS_URL },
+];
 
 function PurchaseSection() {
   const formats: FormatCardProps[] = [
@@ -1026,27 +1121,15 @@ function PurchaseSection() {
       label: 'PAPERBACK',
       specs: ['374 PAGES', '6\u2033 \u00D7 9\u2033', 'MATTE FINISH'] as string[],
       price: '\u20B9599 \u00B7 $14.99',
-      ctaLabel: 'BUY PAPERBACK',
-      ctaHref: AMAZON_URL,
+      channels: PURCHASE_CHANNELS,
       coverSrc: '/images/novel-cover.png',
       recommended: true,
-      primary: true,
     },
     {
       label: 'EBOOK',
       specs: ['374 PAGES', 'ALL DEVICES', 'INSTANT'] as string[],
       price: '\u20B9299 \u00B7 $6.99',
-      ctaLabel: 'BUY EBOOK',
-      ctaHref: AMAZON_URL,
-      primary: false,
-    },
-    {
-      label: 'AUDIOBOOK',
-      specs: ['17 HR 42 MIN', 'UNABRIDGED', 'AUTHOR NARRATED'] as string[],
-      price: '\u20B9699 \u00B7 $19.99',
-      ctaLabel: 'LISTEN ON AUDIBLE',
-      ctaHref: 'https://www.audible.in',
-      primary: false,
+      channels: PURCHASE_CHANNELS,
     },
   ];
 
@@ -1069,20 +1152,13 @@ function PurchaseSection() {
           HOW WILL YOU READ IT?
         </h2>
 
-        {/* Asymmetric 5/3/4 format cards */}
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 md:col-span-5">
-            <FormatCard {...formats[0]} />
-          </div>
-          <div className="col-span-12 md:col-span-3">
-            <FormatCard {...formats[1]} />
-          </div>
-          <div className="col-span-12 md:col-span-4">
-            <FormatCard {...formats[2]} />
-          </div>
+        {/* Two-format side-by-side grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1000px]">
+          <FormatCard {...formats[0]} />
+          <FormatCard {...formats[1]} />
         </div>
 
-        {/* Retailer pill grid */}
+        {/* Retailer pills — only the two canonical surfaces left standing */}
         <div className="mt-12 flex flex-wrap gap-3">
           {RETAILER_LINKS.map((r) => (
             <a
@@ -1106,104 +1182,33 @@ function PurchaseSection() {
 }
 
 // --------------------------------------------------------------------------
-// Section 10 — Final Hero CTA Strip
-// --------------------------------------------------------------------------
-function FinalCtaSection() {
-  return (
-    <section
-      className="py-20 border-t relative overflow-hidden"
-      style={{
-        backgroundColor: 'var(--obsidian-deep)',
-        borderColor: 'var(--navy-signal)',
-      }}
-    >
-      {/* Fracture red pattern overlay at 0.025 opacity */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(45deg, rgba(180,40,40,0.025) 0px, rgba(180,40,40,0.025) 1px, transparent 1px, transparent 8px)',
-        }}
-      />
-
-      <div className="relative max-w-[1440px] mx-auto px-8 z-10">
-        <div className="grid grid-cols-12 gap-8 items-center">
-          {/* LEFT col-span-4 — small floating book cover */}
-          <div className="col-span-12 lg:col-span-4 flex justify-center">
-            <div className="relative w-48">
-              <div
-                className="absolute inset-0 scale-125 blur-3xl pointer-events-none"
-                aria-hidden="true"
-                style={{ backgroundColor: 'rgba(241,194,50,0.15)' }}
-              />
-              <Image
-                src="/images/novel-cover.png"
-                alt="Mahabharatvarsh"
-                width={200}
-                height={300}
-                className="relative shadow-2xl"
-                style={{ transform: 'rotate(-4deg)' }}
-              />
-            </div>
-          </div>
-
-          {/* RIGHT col-span-8 */}
-          <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
-            <EyebrowLabel segments={['ONE LAST THING']} />
-
-            <h2
-              className="font-display leading-none"
-              style={{ fontSize: '80px', color: 'var(--bone-text)' }}
-            >
-              THE DOSSIER IS WAITING.
-            </h2>
-
-            <p
-              className="text-lg max-w-[48ch]"
-              style={{ color: 'var(--steel-text)' }}
-            >
-              Four hundred and eighty pages. Your clearance has been granted.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href={AMAZON_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-10 py-5 font-mono text-base tracking-widest uppercase font-bold transition-all duration-200 hover:brightness-110"
-                style={{
-                  backgroundColor: 'var(--mustard-dossier)',
-                  color: 'var(--obsidian-void)',
-                }}
-              >
-                BUY NOW ON AMAZON &rarr;
-              </a>
-              <a
-                href="#awaits"
-                className="inline-block px-10 py-5 font-mono text-base tracking-widest uppercase border transition-all duration-200 hover:opacity-80"
-                style={{
-                  borderColor: 'var(--powder-signal)',
-                  color: 'var(--powder-signal)',
-                }}
-              >
-                EMAIL ME WHEN IT DROPS
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// --------------------------------------------------------------------------
 // Inner component — must be inside a Suspense boundary (useSearchParams)
 // --------------------------------------------------------------------------
 function NovelPageInner() {
   const data = novelData as NovelData;
   const searchParams = useSearchParams();
   const verifiedStatus = searchParams.get('verified') as VerifiedStatus;
+
+  // Cross-tab signal: when the user lands here via the email verification
+  // link (?verified=success), broadcast so any home tab with the open dossier
+  // modal can reset and close itself. Storage write is the fallback for
+  // browsers without BroadcastChannel support.
+  useEffect(() => {
+    if (verifiedStatus !== 'success') return;
+    try {
+      if (typeof BroadcastChannel !== 'undefined') {
+        const channel = new BroadcastChannel('bharatvarsh-dossier-verify');
+        channel.postMessage({ type: 'verified', at: Date.now() });
+        channel.close();
+      }
+      window.localStorage.setItem(
+        'bharatvarsh_dossier_verified',
+        new Date().toISOString()
+      );
+    } catch {
+      // localStorage / BroadcastChannel may be unavailable (private mode etc.)
+    }
+  }, [verifiedStatus]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--obsidian-void)' }}>
@@ -1222,20 +1227,14 @@ function NovelPageInner() {
       {/* S5 — The Operatives */}
       <OperativesSection />
 
-      {/* S6 — What Awaits You (WhatAwaitsSection preserved) */}
-      <WhatAwaitsWrapper data={data} verifiedStatus={verifiedStatus} />
+      {/* S6 — Inside the Dossier (in-world quotes + themes, no fake press) */}
+      <InsideTheDossierSection data={data} />
 
-      {/* S7 — Press & Praise */}
-      <PressSection data={data} />
-
-      {/* S8 — The Author */}
+      {/* S7 — The Author */}
       <AuthorSection data={data} />
 
-      {/* S9 — The Purchase */}
+      {/* S8 — The Purchase */}
       <PurchaseSection />
-
-      {/* S10 — Final CTA Strip */}
-      <FinalCtaSection />
     </div>
   );
 }
