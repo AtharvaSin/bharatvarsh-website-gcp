@@ -512,6 +512,170 @@ export const ForumContent: FC = () => {
         </div>
       </section>
 
+      {/* ─── Section 3 — All Transmissions (complete field log) ──────────────────
+          Grid of every seeded thread. Previously only 5 of 9 rendered (the
+          hero-right feed was hard-capped at `threads.slice(0, 5)`); this
+          section surfaces the full log as cards regardless of pinned state
+          so nothing from the seed file is silently dropped.
+      */}
+      <section
+        className="py-24 border-t"
+        style={{ backgroundColor: 'var(--obsidian-deep)', borderColor: 'var(--navy-signal)' }}
+      >
+        <div className="max-w-[1440px] mx-auto px-8">
+          <EyebrowLabel
+            segments={[
+              'COMPLETE FIELD LOG',
+              isLoading
+                ? 'INDEXING...'
+                : `${pagination?.total ?? threads.length} TRANSMISSIONS`,
+              'ALL CHANNELS',
+            ]}
+            className="mb-6"
+          />
+          <h2
+            className="font-display mb-4"
+            style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--bone-text)' }}
+          >
+            ALL TRANSMISSIONS.
+          </h2>
+          <p
+            className="mb-12 max-w-[65ch] text-sm leading-relaxed"
+            style={{ color: 'var(--steel-text)' }}
+          >
+            Every thread currently on record, newest first. The hero feed shows
+            only the five most-recent transmissions — this is the full archive.
+          </p>
+
+          {isLoading ? (
+            <p
+              className="font-mono uppercase text-[11px] tracking-[0.18em]"
+              style={{ color: 'var(--shadow-text)' }}
+            >
+              ◦ INDEXING FIELD LOG ◦
+            </p>
+          ) : threads.length === 0 ? (
+            <p
+              className="font-mono uppercase text-[11px] tracking-[0.18em]"
+              style={{ color: 'var(--shadow-text)' }}
+            >
+              NO DECLASSIFIED TRANSMISSIONS ON FILE.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {threads.map((thread, index) => {
+                const topic = thread.tags?.[0];
+                const author = thread.author?.name ?? 'ANONYMOUS';
+                return (
+                  <Link
+                    key={thread.id}
+                    href={`/forum/thread/${thread.id}`}
+                    className="group relative flex flex-col p-6 border transition-colors"
+                    style={{
+                      backgroundColor: 'var(--obsidian-panel)',
+                      borderColor: 'var(--navy-signal)',
+                    }}
+                  >
+                    {/* Case number + pinned / locked badges */}
+                    <div className="flex items-start justify-between gap-3 mb-4">
+                      <span
+                        className="font-mono text-[10px] uppercase tracking-[0.18em]"
+                        style={{ color: 'var(--shadow-text)' }}
+                      >
+                        CASE #{String(index + 1).padStart(3, '0')}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {thread.isPinned && (
+                          <span
+                            className="font-mono text-[9px] uppercase tracking-[0.14em] px-2 py-0.5 border"
+                            style={{
+                              borderColor: 'var(--mustard-dossier)',
+                              color: 'var(--mustard-dossier)',
+                            }}
+                          >
+                            PINNED
+                          </span>
+                        )}
+                        {thread.isLocked && (
+                          <span
+                            className="font-mono text-[9px] uppercase tracking-[0.14em] px-2 py-0.5 border"
+                            style={{
+                              borderColor: 'var(--redaction)',
+                              color: 'var(--redaction)',
+                            }}
+                          >
+                            LOCKED
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Topic badge (first tag only) */}
+                    {topic && (
+                      <div className="mb-3">
+                        <TopicBadge name={topic.name} color={topic.color} />
+                      </div>
+                    )}
+
+                    {/* Title */}
+                    <h3
+                      className="font-display text-xl uppercase tracking-wide leading-tight mb-3 transition-colors group-hover:opacity-100"
+                      style={{ color: 'var(--bone-text)' }}
+                    >
+                      {thread.title}
+                    </h3>
+
+                    {/* Excerpt */}
+                    {thread.excerpt && (
+                      <p
+                        className="text-[13px] leading-relaxed mb-5 line-clamp-3"
+                        style={{ color: 'var(--steel-text)' }}
+                      >
+                        {thread.excerpt}
+                      </p>
+                    )}
+
+                    {/* Footer — author + replies + time */}
+                    <div
+                      className="mt-auto pt-4 border-t flex items-center justify-between gap-3 flex-wrap"
+                      style={{ borderColor: 'var(--navy-signal)' }}
+                    >
+                      <span
+                        className="font-mono text-[10px] uppercase tracking-[0.14em]"
+                        style={{ color: 'var(--shadow-text)' }}
+                      >
+                        {author.toUpperCase()}
+                      </span>
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="font-mono text-[10px] uppercase tracking-[0.14em]"
+                          style={{ color: 'var(--shadow-text)' }}
+                        >
+                          {thread.postCount} {thread.postCount === 1 ? 'REPLY' : 'REPLIES'}
+                        </span>
+                        <span
+                          className="font-mono text-[10px] uppercase tracking-[0.14em]"
+                          style={{ color: 'var(--mustard-dossier)' }}
+                        >
+                          {forumTimeAgo(thread.createdAt)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Mustard border-hover accent */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 pointer-events-none border opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ borderColor: 'var(--mustard-dossier)' }}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* ─── Section 4 — Code of Conduct ──────────────────────────────────────── */}
       <section
         className="py-24 border-t"

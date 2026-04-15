@@ -2,18 +2,23 @@
 
 import { FC } from 'react';
 import ReactMarkdown, { Components } from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeSanitize from 'rehype-sanitize';
 import { cn } from '@/shared/utils';
+
+// NOTE: remark-gfm and rehype-sanitize are intentionally NOT used here.
+// react-markdown@8 is pinned to unified v10 (HAST v2 / mdast v3), but the
+// installed remark-gfm@4 and rehype-sanitize@6 emit HAST v3 / mdast v4
+// nodes. Mixing them throws at runtime when the tree crosses the version
+// boundary. ReactMarkdown's `skipHtml` option below gives us the
+// sanitisation we'd otherwise want from rehype-sanitize: raw HTML in the
+// markdown body is dropped instead of rendered. If GFM features (tables,
+// strikethrough, task lists) are needed later, downgrade the plugins to
+// remark-gfm@3 / rehype-sanitize@5 — or upgrade react-markdown to v9.
 
 /**
  * Classified Chronicle markdown renderer — single source of truth for
  * how forum bodies (threads + replies) render. Consumed by ThreadDetail
  * and PostCard so visual language stays identical across list → detail →
  * replies.
- *
- * - remark-gfm: GitHub Flavored Markdown (tables, strikethrough, task lists, autolinks)
- * - rehype-sanitize: strip unsafe HTML from user-submitted content before render
  *
  * Density presets tune font sizes, margins, and header weight:
  * - 'thread': main post body. Larger type, wider spacing.
@@ -24,7 +29,6 @@ import { cn } from '@/shared/utils';
  * - Inline `code` → mono chip; fenced ```code``` → dossier block with mustard stripe
  * - `em` → Fraunces italic in powder-signal (pullquote voice)
  * - blockquote → mustard-dossier left stripe + obsidian-deep ground
- * - `~~strikethrough~~` → black [REDACTED] bar (on-brand Easter egg)
  * - `<hr>` → dashed mustard rule at 40% opacity
  */
 
@@ -94,20 +98,6 @@ function buildComponents(density: Density): Components {
       <em className="font-serif italic" style={{ color: 'var(--powder-signal)' }}>
         {children}
       </em>
-    ),
-
-    // GFM strikethrough → black [REDACTED] bar
-    del: ({ children }) => (
-      <span
-        className="inline-block px-1 select-none"
-        style={{
-          backgroundColor: 'var(--bone-text)',
-          color: 'transparent',
-        }}
-        aria-label="redacted"
-      >
-        {children}
-      </span>
     ),
 
     // Blockquote — mustard-dossier left stripe, obsidian-deep ground, body italic
@@ -218,51 +208,13 @@ function buildComponents(density: Density): Components {
       </span>
     ),
 
-    // GFM tables — thin navy-signal borders, mono uppercase column headers
-    table: ({ children }) => (
-      <div className="my-5 overflow-x-auto">
-        <table
-          className="w-full border-collapse text-sm"
-          style={{ borderColor: 'var(--navy-signal)' }}
-        >
-          {children}
-        </table>
-      </div>
-    ),
-    thead: ({ children }) => (
-      <thead
-        style={{
-          backgroundColor: 'var(--obsidian-deep)',
-          borderBottom: '1px solid var(--mustard-dossier)',
-        }}
-      >
-        {children}
-      </thead>
-    ),
-    tbody: ({ children }) => <tbody>{children}</tbody>,
-    tr: ({ children }) => (
-      <tr style={{ borderBottom: '1px solid var(--navy-signal)' }}>{children}</tr>
-    ),
-    th: ({ children }) => (
-      <th
-        className="text-left font-mono uppercase text-[10px] tracking-[0.18em] px-3 py-2"
-        style={{ color: 'var(--mustard-dossier)' }}
-      >
-        {children}
-      </th>
-    ),
-    td: ({ children }) => (
-      <td className="px-3 py-2 text-sm" style={{ color: 'var(--steel-text)' }}>
-        {children}
-      </td>
-    ),
   };
 }
 
 /**
  * DossierMarkdown — Classified Chronicle markdown renderer for the forum.
- * Centralises remark-gfm + rehype-sanitize + component overrides so every
- * forum body renders with the same voice.
+ * Centralises the component override map so every forum body renders with
+ * the same voice. Raw HTML in the body is dropped via `skipHtml`.
  */
 export const DossierMarkdown: FC<DossierMarkdownProps> = ({
   body,
@@ -273,11 +225,7 @@ export const DossierMarkdown: FC<DossierMarkdownProps> = ({
 
   return (
     <div className={cn('dossier-markdown max-w-none', className)}>
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeSanitize]}
-        components={components}
-      >
+      <ReactMarkdown skipHtml components={components}>
         {body}
       </ReactMarkdown>
     </div>

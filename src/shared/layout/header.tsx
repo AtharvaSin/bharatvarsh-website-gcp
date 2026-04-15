@@ -67,13 +67,13 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
               className="flex items-center gap-2 group"
               aria-label="Bharatvarsh home"
             >
-              <span
+              {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no optimisation benefit */}
+              <img
+                src="/images/brand/bharatsena-logo-mustard.svg"
+                alt=""
                 aria-hidden="true"
-                style={{ fontFamily: 'var(--font-devanagari)' }}
-                className="text-2xl md:text-3xl text-[var(--mustard-dossier)] opacity-90 group-hover:opacity-100 transition-opacity"
-              >
-                भा
-              </span>
+                className="w-7 h-7 md:w-8 md:h-8 opacity-90 group-hover:opacity-100 transition-opacity"
+              />
               <span className="font-display text-2xl md:text-3xl tracking-wide text-[var(--bone-text)] group-hover:text-[var(--mustard-dossier)] transition-colors">
                 BHARATVARSH
               </span>

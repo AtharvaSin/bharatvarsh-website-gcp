@@ -460,7 +460,7 @@ export function LoreContent() {
               color: 'var(--bone-text)',
             }}
           >
-            THE HANDS OF ORDER.
+            THE CADRE OF ORDER.
           </h2>
 
           {/* ------------- OPERATIVES MASONRY ------------- */}
@@ -747,7 +747,7 @@ export function LoreContent() {
                 color: 'var(--bone-text)',
               }}
             >
-              THE GEOGRAPHY OF ORDER.
+              WHERE THE CHRONICLE WALKS.
             </h2>
 
             {/* Horizontal scroll rail */}
@@ -859,7 +859,7 @@ export function LoreContent() {
                 color: 'var(--bone-text)',
               }}
             >
-              THE ARSENAL OF ORDER.
+              STANDARD ISSUE.
             </h2>
 
             <div className="grid grid-cols-3 gap-6">

@@ -496,47 +496,72 @@ export function HomeContent() {
                 >
                   MEET BHOOMI
                 </h3>
-                <p style={{ color: 'var(--steel-text)' }}>
-                  Ask the in-world AI anything. Bhoomi speaks for the regime,
-                  the resistance, and everything in between.
-                </p>
 
-                {/* Clearance indicator */}
-                <div
-                  className="mt-4 px-4 py-3 border-l-2 flex items-center gap-3"
-                  style={{
-                    backgroundColor: 'var(--obsidian-void)',
-                    borderLeftColor: 'var(--mustard-dossier)',
-                  }}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="inline-block w-2 h-2 rounded-full animate-pulse flex-shrink-0"
-                    style={{ backgroundColor: 'var(--declassified)' }}
-                  />
-                  <div className="font-mono uppercase text-[10px] tracking-[0.18em]" style={{ color: 'var(--shadow-text)' }}>
-                    <span style={{ color: 'var(--bone-text)' }}>CLEARANCE:</span> VISITOR{' '}
-                    <span style={{ color: 'var(--mustard-dossier)' }}>▪</span> SESSION READY{' '}
-                    <span style={{ color: 'var(--mustard-dossier)' }}>▪</span> BHOOMI{' '}
-                    <span style={{ color: 'var(--declassified)' }}>ONLINE</span>
+                <div className="flex gap-6 items-start">
+                  <div className="flex-1 min-w-0">
+                    <p style={{ color: 'var(--steel-text)' }}>
+                      Ask the in-world AI anything. Bhoomi speaks for the regime,
+                      the resistance, and everything in between.
+                    </p>
+
+                    {/* Clearance indicator */}
+                    <div
+                      className="mt-4 px-4 py-3 border-l-2 flex items-center gap-3"
+                      style={{
+                        backgroundColor: 'var(--obsidian-void)',
+                        borderLeftColor: 'var(--mustard-dossier)',
+                      }}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="inline-block w-2 h-2 rounded-full animate-pulse flex-shrink-0"
+                        style={{ backgroundColor: 'var(--declassified)' }}
+                      />
+                      <div className="font-mono uppercase text-[10px] tracking-[0.18em]" style={{ color: 'var(--shadow-text)' }}>
+                        <span style={{ color: 'var(--bone-text)' }}>CLEARANCE:</span> VISITOR{' '}
+                        <span style={{ color: 'var(--mustard-dossier)' }}>▪</span> SESSION READY{' '}
+                        <span style={{ color: 'var(--mustard-dossier)' }}>▪</span> BHOOMI{' '}
+                        <span style={{ color: 'var(--declassified)' }}>ONLINE</span>
+                      </div>
+                    </div>
+
+                    <Link href="/bhoomi" className="mt-6 inline-block">
+                      <button
+                        className="font-mono uppercase"
+                        style={{
+                          border: '1px solid var(--powder-signal)',
+                          color: 'var(--bone-text)',
+                          padding: '0.5rem 1.25rem',
+                          fontSize: '11px',
+                          letterSpacing: '0.18em',
+                          background: 'transparent',
+                        }}
+                      >
+                        START THE INTERROGATION →
+                      </button>
+                    </Link>
+                  </div>
+
+                  {/* Bhoomi portrait thumbnail — same moment/scene as the /bhoomi avatar hero */}
+                  <div
+                    className="flex-shrink-0 relative hidden sm:block"
+                    style={{ transform: 'rotate(-3deg)', marginTop: '0.25rem' }}
+                  >
+                    <Image
+                      src="/images/bhoomi/bhoomi-home-cta.webp"
+                      alt="Bhoomi at an Indrapur rooftop parapet at civic dusk"
+                      width={170}
+                      height={227}
+                      className="block"
+                      style={{
+                        display: 'block',
+                        boxShadow:
+                          '0 24px 48px rgba(241,194,50,0.18), 0 0 40px rgba(51,99,153,0.32)',
+                        border: '1px solid var(--navy-signal)',
+                      }}
+                    />
                   </div>
                 </div>
-
-                <Link href="/bhoomi" className="mt-6 inline-block">
-                  <button
-                    className="font-mono uppercase"
-                    style={{
-                      border: '1px solid var(--powder-signal)',
-                      color: 'var(--bone-text)',
-                      padding: '0.5rem 1.25rem',
-                      fontSize: '11px',
-                      letterSpacing: '0.18em',
-                      background: 'transparent',
-                    }}
-                  >
-                    START THE INTERROGATION →
-                  </button>
-                </Link>
               </div>
             </div>
           </div>
@@ -1487,27 +1512,16 @@ export function HomeContent() {
 
             {/* Distribution channel cards — 5/3/4 split */}
             <div className="grid grid-cols-12 gap-6 mt-10">
-              {/* Card 1 — Notion Press (Featured) */}
+              {/* Card 1 — Notion Press */}
               <div
-                className="col-span-12 md:col-span-5 p-6 flex flex-col justify-between relative"
+                className="col-span-12 md:col-span-4 p-6 flex flex-col justify-between"
                 style={{
                   borderTop: '1px solid var(--navy-signal)',
                   backgroundColor: 'var(--obsidian-panel)',
                   minHeight: '280px',
                 }}
               >
-                {/* DIRECT stamp */}
-                <div
-                  className="absolute top-4 left-4 font-mono uppercase text-[9px] tracking-[0.18em] px-2 py-1 border border-dashed"
-                  style={{
-                    color: 'var(--mustard-dossier)',
-                    borderColor: 'var(--mustard-dossier)',
-                    transform: 'rotate(-4deg)',
-                  }}
-                >
-                  DIRECT
-                </div>
-                <div className="mt-8">
+                <div>
                   <div
                     className="font-display"
                     style={{ fontSize: '2.5rem', color: 'var(--bone-text)', lineHeight: 1.1 }}
@@ -1544,7 +1558,7 @@ export function HomeContent() {
 
               {/* Card 2 — Amazon */}
               <div
-                className="col-span-12 md:col-span-3 p-6 flex flex-col justify-between"
+                className="col-span-12 md:col-span-4 p-6 flex flex-col justify-between"
                 style={{
                   borderTop: '1px solid var(--navy-signal)',
                   backgroundColor: 'var(--obsidian-panel)',
@@ -1572,14 +1586,13 @@ export function HomeContent() {
                   className="mt-6 self-start"
                 >
                   <button
-                    className="font-mono uppercase"
+                    className="inline-flex items-center gap-2 font-mono uppercase"
                     style={{
-                      border: '1px solid var(--powder-signal)',
-                      color: 'var(--bone-text)',
-                      padding: '0.5rem 1.25rem',
+                      background: 'var(--mustard-dossier)',
+                      color: 'var(--obsidian-void)',
+                      padding: '0.75rem 1.5rem',
                       fontSize: '11px',
                       letterSpacing: '0.18em',
-                      background: 'transparent',
                     }}
                   >
                     BUY ON AMAZON →
@@ -1617,14 +1630,13 @@ export function HomeContent() {
                   className="mt-6 self-start"
                 >
                   <button
-                    className="font-mono uppercase"
+                    className="inline-flex items-center gap-2 font-mono uppercase"
                     style={{
-                      border: '1px solid var(--powder-signal)',
-                      color: 'var(--bone-text)',
-                      padding: '0.5rem 1.25rem',
+                      background: 'var(--mustard-dossier)',
+                      color: 'var(--obsidian-void)',
+                      padding: '0.75rem 1.5rem',
                       fontSize: '11px',
                       letterSpacing: '0.18em',
-                      background: 'transparent',
                     }}
                   >
                     BUY ON FLIPKART →

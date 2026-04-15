@@ -13,11 +13,11 @@
 | Priority | Count | Category | Status |
 |---|---|---|---|
 | **P0** — critical (entities exist in lore data, currently rendering broken `<img>`) | 3 pairs | Chars: Surya ☒, Kaali ☒ · Tech: HUD Monocle ☒ | **3/3 ✅** |
-| **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone ☒, Mysuru ☒ · Faction: Tribhuj · Tech: The Mesh ☒ | 3/4 |
-| **P2** — low (optional or edge cases) | 2 pairs | Char: Bhoomi AI · Tech: Neural Diodes | ☐ |
+| **P1** — important (placeholder rendering, breaks layout density) | 4 pairs | Locations: Treaty Zone ☒, Mysuru ☒ · Faction: Tribhuj ☒ · Tech: The Mesh ☒ | **4/4 ✅** |
+| **P2** — low (optional or edge cases) | 1 pair | Char: Bhoomi ☒ (rescoped + delivered 2026-04-14) | **1/1 ✅** |
 | **P3** — nice-to-have upgrades | 4 items | Animated hero · Kahaan dossier banner · Dispatch gap-fill · Richer operative art | ☐ |
 
-**Total required pairs (P0–P2): 9 pairs = 18 `.webp` files**
+**Total required pairs (P0–P2): 8 pairs = 16 `.webp` files** (Neural Diodes dropped from pending-art 2026-04-14 — lore entry preserved, will re-render placeholder until/unless reinstated)
 
 ## File-format expectations
 
@@ -87,17 +87,15 @@ Match the format/quality of existing production assets (e.g. `public/images/char
 - **Art direction:** Historical city with surviving pre-mesh architecture. Heritage but compromised — layer modern surveillance infrastructure subtly over a traditional cityscape.
 - **Consumers:** Same as Treaty Zone.
 
-### ☐ 6. Tribhuj — faction illustrated art
+### ☒ 6. Tribhuj — faction illustrated art (DELIVERED 2026-04-14 — NEW TRIBHUJ canon, Army-run cut-outs)
 - **Paths:**
-  - `public/images/factions/tribhuj-card.webp`
-  - `public/images/factions/tribhuj-banner.webp`
-- **Note:** The Tribhuj **sigil SVG** is already at `/public/images/brand/factions/tribhuj.svg` (copied from the content-pipelines brand pack 2026-04-13). Only the illustrated card + banner are missing.
-- **Art direction (locked per `project_tribhuj_impostor_visual_identity.md` memory):**
-  - Cyberpunk aesthetic
-  - Charcoal + maroon palette
-  - Borderlands × Blade Runner crossover
-  - **NO cyan, NO religious iconography**
-- **Consumers:** `/lore` factions section (currently only Bharatsena + Akakpen are fully visible; Tribhuj renders in the all-filter view with a placeholder), `/lore` dossier modal.
+  - `public/images/factions/tribhuj-card.webp` (450×600, 5-op portrait — Sthir, Jwala, Adil center, Aarush, Jeraya)
+  - `public/images/factions/tribhuj-banner.webp` (1600×900, full 7-op lineup — Salmaan, Aarush, Sthir, Adil, Jwala, Raaka, Jeraya)
+- **Canon source:** `knowledge-base/bharatvarsh-source-text/New Tribhuj Report.txt` (Phase 3). Finish rule: navy `#0B2D5A` body → neon-pink `#FF2D6C` reactive edge + halo.
+- **Canonical references preserved:** `content-pipelines/bharatvarsh/assets/brand/factions/new-tribhuj/reference/faction-{portrait-5op,landscape-7op}.png`
+- **SVG brand marks:** `public/images/brand/factions/new-tribhuj.svg` (reactive), `new-tribhuj-mark-navy.svg`, `new-tribhuj-mark-pink.svg`. Original covenantal `tribhuj.svg` preserved separately as the pre-ban ghost mark.
+- **Disambiguation:** This is the **NEW Tribhuj** (Army-run fear brand from the manuscript), NOT the older Impostor Tribhuj brainstorm. See memory `project_three_tribhujs_disambiguation.md` before re-generating.
+- **Consumers:** `/lore` factions section, `/lore` dossier modal.
 
 ### ☒ 7. The Mesh — tech (DELIVERED 2026-04-14)
 - **Paths:**
@@ -113,24 +111,19 @@ Match the format/quality of existing production assets (e.g. `public/images/char
 
 ## P2 — Low priority (optional or edge cases)
 
-### ☐ 8. Bhoomi AI — character card (OPTIONAL)
-- **Paths:**
-  - `public/images/characters/bhoomi-card.webp`
-  - `public/images/characters/bhoomi-banner.webp`
-- **Art direction:** **NOT humanoid.** An abstract living `भूमि` glyph rendered cinematically:
-  - Mustard Dossier `#F1C232` glyph core
-  - Navy Core `#0B2742` inner gradient glow
-  - 3 concentric pulsing ring outlines at 10–20% opacity
-  - Dark dystopian ambient background
-- **Why optional:** The `/bhoomi` page renders the avatar via CSS-rendered text (giant `भूमि` glyph in `font-[var(--font-devanagari)]`) which looks great. A card/banner is only needed if you want Bhoomi to appear as a selectable lore entity in the Lore grid — which currently does NOT have a bhoomi entry in `lore-items.json`. If you want Bhoomi listed with the other operatives, you'd also need to add a lore-items entry.
-- **Consumers:** `/lore` grid (after data entry), `/lore` modal, `/bhoomi` Bhoomi Knows rail (currently shows the other 6 operatives only).
+### ☒ 8. Bhoomi — hero portrait + home CTA (DELIVERED 2026-04-14 — rescoped from abstract glyph to literal character, "Regime's Child" archetype)
+- **Delivered paths:**
+  - `public/images/bhoomi/bhoomi-avatar-hero.webp` (800×1200, 2:3 portrait) — plugged into `/bhoomi` page avatar panel (`src/app/bhoomi/page.tsx`)
+  - `public/images/bhoomi/bhoomi-home-cta.webp` (450×600, 3:4) — plugged into Home Path 03 "MEET BHOOMI" card (`src/features/home/HomeContent.tsx`)
+- **Canon rescope:** The original brief called for an abstract glyph treatment because the `/bhoomi` page's CSS-rendered Devanagari `भूमि` already looked strong. After a 10-question brainstorm on 2026-04-14, we rescoped Bhoomi as a literal 18-year-old southern-Bharatvarsh woman in a Bharatsena civic-admin cadet uniform ("Regime's Child" archetype), standing at an Indrapur rooftop parapet at blue-hour civic dusk, caught in the "Inquiry" pose — body facing the city, head just turned back toward the viewer. Four locked uncanny beats encode her non-humanness: `भूमि` etched in the parapet stone, her shadow is the silhouette of a much older woman, wind lifts her tunic hem but her braid/kajal/chip do not move, and one district of Indrapur below glows a half-stop warmer than the rest (the focus of her attention).
+- **Canon memory:** `project_bhoomi_visual_canon.md` (full decision audit, palette, scene, pose, uncanny beats locked).
+- **Reference PNGs:** `content-pipelines/bharatvarsh/assets/brand/bhoomi/reference/bhoomi-portrait-hero.png` + `bhoomi-wide-establishing.png` preserved at full res.
+- **Nano Banana prompts:** `content-pipelines/bharatvarsh/prompts/bhoomi-rooftop-composite.md` (preserved for future iterations).
+- **Code integration notes:** `/bhoomi` avatar panel — giant CSS glyph replaced with hero portrait; three concentric pulsing rings retained as ghost whisper at 0.06–0.09 opacity (was 0.10–0.15); chrome overlays (caps stack, pullquote, status LEDs) all preserved. Home Path 03 card restructured from single-column to flex-row with the portrait thumbnail on the right, rotated -3deg, mustard+navy box-shadow, hidden on mobile.
+- **Consumers working:** `/bhoomi` page avatar panel ✅, Home page Path 03 card ✅. No `/lore` grid entry was added (deliberate — the `/bhoomi` page is her stage, not the grid).
 
-### ☐ 9. Neural Diodes — tech
-- **Paths:**
-  - `public/images/misc/neural-diodes-card.webp`
-  - `public/images/misc/neural-diodes-banner.webp`
-- **Art direction:** Biometric implant device, surgical precision. Clinical white surfaces paired with dark mustard LEDs. Lab-style product photography aesthetic (not action).
-- **Consumers:** `/lore` tech grid, `/lore` dossier modal.
+### ~~☐ 9. Neural Diodes — tech~~ **DROPPED 2026-04-14**
+- Lore entry retained in `src/content/data/lore-items.json` (neural-diodes remains a canonical tech item in the world). Only removed from the pending-art checklist — no dedicated card/banner will be produced in this pass. The `/lore` tech grid will continue to show whatever placeholder the component falls back to for this entity.
 
 ---
 
