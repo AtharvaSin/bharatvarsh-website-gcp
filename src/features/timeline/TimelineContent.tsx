@@ -7,6 +7,7 @@ import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import { cn } from '@/shared/utils';
 import timelineRaw from '@/content/data/timeline.json';
 import loreRaw from '@/content/data/lore-items.json';
+import { CharacterDossierModal, type CharacterDossierItem } from '@/features/timeline/components/character-dossier-modal';
 
 // ─── Data normalisation ──────────────────────────────────────────────────────
 
@@ -40,6 +41,10 @@ interface LoreItem {
   name: string;
   nameDevanagari?: string;
   category: string;
+  subtype?: string;
+  tagline?: string;
+  description?: string;
+  classification?: 'declassified' | 'classified' | string;
   media?: { card?: string; banner?: string };
 }
 
@@ -106,8 +111,7 @@ const ERAS: Era[] = [
   },
   {
     id: 'mesh-era',
-    name: 'JAAL YUG',
-    devanagari: 'जाल युग',
+    name: 'THE MESH',
     years: '1985–2022',
     eventIds: [8],
     blurb:
@@ -127,30 +131,105 @@ const ERAS: Era[] = [
   },
 ];
 
-// ─── Full chronology beats (15 nodes) ────────────────────────────────────────
+// ─── Three-Track Chronology Ledger ──────────────────────────────────────────
+// Three parallel tracks carrying the canonical beats from BHARATVARSH_TIMELINE.md.
+// Events are positioned proportionally along a shared 1717 → 2025 time axis.
+// Turning-point vertical bars at 1717 / 1985 / 2025 span all three tracks to
+// show how every political pivot rippled into character fates and technology.
 
-const CHRONO_BEATS = [
-  { year: '1717', label: 'TREATY', turning: false },
-  { year: '1750', label: 'GUILDS', turning: false },
-  { year: '1790', label: 'REFORM', turning: false },
-  { year: '1820', label: 'PRESS', turning: false },
-  { year: '1850', label: 'DIVERGENCE', turning: false },
-  { year: '1875', label: 'UNIONS', turning: false },
-  { year: '1905', label: 'CONCORD', turning: false },
-  { year: '1930', label: 'REPUBLIC', turning: false },
-  { year: '1960', label: 'REDACTION', turning: true },
-  { year: '1975', label: 'CLEAN CITY', turning: false },
-  { year: '1980', label: 'BHOOMI', turning: false },
-  { year: '1985', label: 'BOMBINGS', turning: true },
-  { year: '2000', label: 'CASE 0042', turning: false },
-  { year: '2015', label: 'UNSEALING', turning: false },
-  { year: '2022', label: 'THE CRACK', turning: true },
+const TIMELINE_START = 1717;
+const TIMELINE_END = 2025;
+const TIMELINE_SPAN = TIMELINE_END - TIMELINE_START;
+
+function yearToPct(year: number): number {
+  return ((year - TIMELINE_START) / TIMELINE_SPAN) * 100;
+}
+
+interface TrackEvent {
+  year: number;
+  label: string;
+  turning?: boolean;
+}
+
+const POLITICAL_TRACK: TrackEvent[] = [
+  { year: 1717, label: 'REFUSAL', turning: true },
+  { year: 1918, label: 'WWI ALLY' },
+  { year: 1945, label: 'UN VETO' },
+  { year: 1947, label: 'NO PARTITION' },
+  { year: 1985, label: 'ARMY DECREE', turning: true },
+  { year: 2025, label: '20-10 BOMBINGS', turning: true },
 ];
+
+const CHARACTER_TRACK: TrackEvent[] = [
+  { year: 1970, label: 'RUDRA BORN' },
+  { year: 1990, label: 'TRIBHUJ FOUNDED' },
+  { year: 1999, label: 'KAHAAN BORN' },
+  { year: 2003, label: 'RUDRA EXILES' },
+  { year: 2021, label: 'AFRICA FRACTURE' },
+  { year: 2025, label: 'RETURN' },
+];
+
+const TECH_TRACK: TrackEvent[] = [
+  { year: 1850, label: 'RAILWAYS' },
+  { year: 1990, label: 'GREEN-TECH' },
+  { year: 2003, label: 'MESH P1' },
+  { year: 2010, label: 'MESH P3' },
+  { year: 2015, label: 'KACHA' },
+];
+
+const TURNING_YEARS = [1717, 1985, 2025];
+
+// ─── Track marker (helper for the three-track ledger) ───────────────────────
+
+function TrackMarker({ ev, trackTop }: { ev: TrackEvent; trackTop: number }) {
+  const size = ev.turning ? 14 : 8;
+  const color = ev.turning ? 'var(--mustard-dossier)' : 'var(--bone-text)';
+  return (
+    <div
+      className="absolute flex flex-col items-center pointer-events-none"
+      style={{
+        top: trackTop - size / 2,
+        left: `${yearToPct(ev.year)}%`,
+        transform: 'translateX(-50%)',
+      }}
+    >
+      <div
+        className="rounded-full"
+        style={{
+          width: size,
+          height: size,
+          backgroundColor: color,
+          boxShadow: ev.turning
+            ? '0 0 0 4px color-mix(in srgb, var(--mustard-dossier) 25%, transparent)'
+            : 'none',
+        }}
+      />
+      <div
+        className="absolute flex flex-col items-center whitespace-nowrap"
+        style={{ top: size + 6 }}
+      >
+        <span
+          className="font-mono text-[9px] uppercase tracking-[0.15em]"
+          style={{ color }}
+        >
+          {ev.year}
+        </span>
+        <span
+          className="font-mono text-[8px] uppercase tracking-[0.1em] mt-0.5"
+          style={{ color: 'var(--shadow-text)' }}
+        >
+          {ev.label}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export function TimelineContent() {
   const [activeEra, setActiveEra] = useState<string>('mesh-era');
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterDossierItem | null>(null);
   const eraContentRef = useRef<HTMLDivElement>(null);
   const beatStripRef = useRef<HTMLDivElement>(null);
 
@@ -165,8 +244,8 @@ export function TimelineContent() {
     eraContentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function scrollToDivergenceEra() {
-    setActiveEra('divergence');
+  function scrollTo1717() {
+    setActiveEra('enlightenment');
     eraContentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -200,7 +279,7 @@ export function TimelineContent() {
           {/* LEFT — headline */}
           <div className="col-span-12 lg:col-span-7">
             <EyebrowLabel
-              segments={['CHRONOLOGY', '1717 → 2032', '315 YEARS', 'POINT OF DIVERGENCE INSIDE']}
+              segments={['CHRONOLOGY', '1717 → 2025', '308 YEARS', 'FROM REFUSAL TO FRACTURE']}
             />
 
             <div
@@ -227,13 +306,13 @@ export function TimelineContent() {
               className="mt-6 text-base leading-relaxed max-w-[65ch]"
               style={{ color: 'var(--steel-text)' }}
             >
-              A reformist treaty in 1717. A point of divergence in 1850. Three centuries of an
+              A refused charter in 1717. A military takeover in 1985. Three centuries of an
               India that never was. Walk the beats. Every era has a file. Every file has a scar.
             </p>
 
             <div className="flex flex-wrap gap-4 mt-8">
               <button
-                onClick={scrollToDivergenceEra}
+                onClick={scrollTo1717}
                 className="font-mono uppercase text-[11px] tracking-[0.18em] px-6 py-3 border"
                 style={{
                   backgroundColor: 'var(--mustard-dossier)',
@@ -241,7 +320,7 @@ export function TimelineContent() {
                   color: 'var(--obsidian-void)',
                 }}
               >
-                JUMP TO POINT OF DIVERGENCE →
+                JUMP TO 1717 →
               </button>
               <button
                 onClick={scrollToEraContent}
@@ -266,47 +345,26 @@ export function TimelineContent() {
                 style={{ backgroundColor: 'var(--navy-signal)' }}
               />
 
-              {/* Mustard highlight at 1850 (~30% down = top-[150px]) */}
+              {/* Mustard highlight at 1717 (the refusal, top of the timeline) */}
               <div
                 className="absolute left-1/2 -translate-x-1/2 w-1 h-10"
-                style={{ top: '150px', backgroundColor: 'var(--mustard-dossier)' }}
+                style={{ top: '0px', backgroundColor: 'var(--mustard-dossier)' }}
+              />
+              {/* Mustard highlight at 1985 (army takeover, ~87% down) */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 w-1 h-10"
+                style={{ top: '420px', backgroundColor: 'var(--mustard-dossier)' }}
               />
 
-              {/* Diverging paths below 1850 */}
-              <div
-                className="absolute"
-                style={{
-                  top: '190px',
-                  left: 'calc(50% - 1px)',
-                  width: '1px',
-                  height: '60px',
-                  background: `linear-gradient(to bottom-right, var(--navy-signal), transparent)`,
-                  transform: 'rotate(-12deg)',
-                  transformOrigin: 'top center',
-                }}
-              />
-              <div
-                className="absolute"
-                style={{
-                  top: '190px',
-                  left: 'calc(50% - 1px)',
-                  width: '1px',
-                  height: '60px',
-                  background: `linear-gradient(to bottom-left, var(--navy-signal), transparent)`,
-                  transform: 'rotate(12deg)',
-                  transformOrigin: 'top center',
-                }}
-              />
-
-              {/* Year notches */}
+              {/* Year notches — 1717 and 1985 are the two pivots, rest are context */}
               {[
-                { year: '1717', pct: 0 },
-                { year: '1850', pct: 30 },
-                { year: '1910', pct: 50 },
-                { year: '1975', pct: 70 },
-                { year: '1985', pct: 80 },
-                { year: '2022', pct: 100 },
-              ].map(({ year, pct }) => (
+                { year: '1717', pct: 0, pivot: true },
+                { year: '1918', pct: 20, pivot: false },
+                { year: '1947', pct: 35, pivot: false },
+                { year: '1975', pct: 55, pivot: false },
+                { year: '1985', pct: 87, pivot: true },
+                { year: '2025', pct: 100, pivot: false },
+              ].map(({ year, pct, pivot }) => (
                 <div
                   key={year}
                   className="absolute flex items-center gap-2"
@@ -318,7 +376,7 @@ export function TimelineContent() {
                   />
                   <span
                     className="font-mono uppercase text-[10px] tracking-[0.18em] whitespace-nowrap"
-                    style={{ color: year === '1850' ? 'var(--mustard-dossier)' : 'var(--shadow-text)' }}
+                    style={{ color: pivot ? 'var(--mustard-dossier)' : 'var(--shadow-text)' }}
                   >
                     {year}
                   </span>
@@ -398,8 +456,8 @@ export function TimelineContent() {
             />
 
             <div
-              className="mt-4 font-display leading-[0.85]"
-              style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)', color: 'var(--bone-text)' }}
+              className="mt-4 font-display leading-[0.85] break-words"
+              style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', color: 'var(--bone-text)' }}
             >
               {activeEraObj.name}
             </div>
@@ -551,105 +609,7 @@ export function TimelineContent() {
         </div>
       </section>
 
-      {/* ── Section 4: Point of Divergence Callout ────────────────────────── */}
-      <section
-        className="py-24 border-t relative overflow-hidden"
-        style={{ backgroundColor: 'var(--obsidian-deep)', borderColor: 'var(--navy-signal)' }}
-      >
-        {/* Fracture overlay */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(45deg, var(--redaction) 0 1px, transparent 1px 20px)',
-            opacity: 0.025,
-          }}
-        />
-
-        {/* Diagonal mustard dashed line */}
-        <div
-          aria-hidden="true"
-          className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden"
-        >
-          <div
-            style={{
-              position: 'absolute',
-              top: '-20%',
-              left: '-10%',
-              width: '1px',
-              height: '150%',
-              background: 'repeating-linear-gradient(to bottom, var(--mustard-dossier) 0 8px, transparent 8px 16px)',
-              transform: 'rotate(35deg)',
-              transformOrigin: 'top left',
-              opacity: 0.3,
-            }}
-          />
-        </div>
-
-        <div className="max-w-[1440px] mx-auto px-8 relative z-10 grid grid-cols-12 gap-8 items-center">
-          {/* LEFT — rotated year */}
-          <div className="col-span-12 lg:col-span-4 flex flex-col items-start">
-            <div
-              className="font-display leading-none select-none"
-              style={{
-                fontSize: '200px',
-                color: 'var(--mustard-dossier)',
-                transform: 'rotate(-4deg)',
-                transformOrigin: 'bottom left',
-                lineHeight: 1,
-              }}
-            >
-              1850
-            </div>
-            <div
-              className="mt-2 text-[2rem]"
-              style={{
-                fontFamily: 'var(--font-devanagari)',
-                color: 'var(--powder-signal)',
-              }}
-            >
-              विभाजन
-            </div>
-          </div>
-
-          {/* RIGHT — content */}
-          <div className="col-span-12 lg:col-span-8">
-            <EyebrowLabel
-              segments={['POINT OF DIVERGENCE', 'WHERE THE TIMELINE FORKED']}
-            />
-
-            <div
-              className="mt-4 font-display leading-[0.9]"
-              style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', color: 'var(--bone-text)' }}
-            >
-              THE FRACTURE POINT.
-            </div>
-
-            <p
-              className="mt-6 text-base leading-relaxed max-w-[65ch]"
-              style={{ color: 'var(--steel-text)' }}
-            >
-              In the year the British Crown reached for formal authority, the subcontinent reached
-              back. The 1850 Reform Accord was drafted and signed within 43 days. What followed was
-              not the empire history records. It was the regime that built itself in its absence.
-            </p>
-
-            <Link
-              href="/lore"
-              className="inline-block mt-6 font-mono uppercase text-[11px] tracking-[0.18em] px-6 py-3 border transition-colors hover:opacity-80"
-              style={{
-                borderColor: 'var(--bone-text)',
-                color: 'var(--bone-text)',
-              }}
-            >
-              READ THE DIVERGENCE DOSSIER →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Section 5: Full Chronology Beat Strip ─────────────────────────── */}
+      {/* ── Section 4: Three-Track Chronology Ledger ──────────────────────── */}
       <section
         ref={beatStripRef}
         className="py-24 border-t overflow-x-auto"
@@ -657,57 +617,119 @@ export function TimelineContent() {
       >
         <div className="max-w-[1440px] mx-auto px-8">
           <EyebrowLabel
-            segments={['FULL CHRONOLOGY', 'EVERY BEAT', '315 YEARS COMPRESSED']}
+            segments={['THREE LEDGERS', 'POLITICAL · CHARACTER · TECHNOLOGY', '1717 → 2025']}
           />
 
-          <div className="relative mt-12 pb-8" style={{ minWidth: '900px' }}>
-            {/* Horizontal connector line */}
-            <div
-              className="absolute top-[calc(50%+4px)] left-0 right-0 h-px"
-              style={{ backgroundColor: 'var(--navy-signal)' }}
-            />
+          <div
+            className="mt-4 font-display leading-[0.9]"
+            style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--bone-text)' }}
+          >
+            THE LEDGERS.
+          </div>
 
-            <div className="relative flex justify-between items-center gap-0">
-              {CHRONO_BEATS.map((beat) => (
-                <div key={beat.year} className="flex flex-col items-center gap-2 relative z-10">
-                  {/* Year label above */}
-                  <span
-                    className="font-mono text-[10px] tracking-[0.18em] whitespace-nowrap"
-                    style={{ color: 'var(--shadow-text)' }}
-                  >
-                    {beat.year}
-                  </span>
+          <p
+            className="mt-4 max-w-[65ch] text-sm leading-relaxed"
+            style={{ color: 'var(--steel-text)' }}
+          >
+            Three parallel records. Political acts on top — the decisions made
+            in rooms the public never entered. Character beats in the middle —
+            when the people who live in these pages drew breath, or lost it.
+            Technology underneath — the machines that outlived both. Mustard
+            bars mark the three moments when the whole ledger jolted.
+          </p>
 
-                  {/* Node dot */}
+          {/* The three-track grid */}
+          <div
+            className="relative mt-16"
+            style={{ minWidth: '1000px' }}
+          >
+            <div className="flex">
+              {/* Label column */}
+              <div className="flex-shrink-0 w-32 pr-4 relative" style={{ height: '380px' }}>
+                <div
+                  className="absolute right-4 font-mono text-[10px] uppercase tracking-[0.18em]"
+                  style={{ top: '56px', color: 'var(--shadow-text)' }}
+                >
+                  POLITICAL
+                </div>
+                <div
+                  className="absolute right-4 font-mono text-[10px] uppercase tracking-[0.18em]"
+                  style={{ top: '176px', color: 'var(--shadow-text)' }}
+                >
+                  CHARACTER
+                </div>
+                <div
+                  className="absolute right-4 font-mono text-[10px] uppercase tracking-[0.18em]"
+                  style={{ top: '296px', color: 'var(--shadow-text)' }}
+                >
+                  TECHNOLOGY
+                </div>
+              </div>
+
+              {/* Track content area */}
+              <div className="relative flex-1" style={{ height: '380px' }}>
+                {/* Turning point vertical bars — span all three tracks */}
+                {TURNING_YEARS.map((year) => (
                   <div
-                    className={cn('rounded-full', beat.turning ? 'w-4 h-4' : 'w-3 h-3')}
+                    key={`bar-${year}`}
+                    className="absolute top-6 bottom-6 w-px pointer-events-none"
                     style={{
+                      left: `${yearToPct(year)}%`,
                       backgroundColor: 'var(--mustard-dossier)',
-                      boxShadow: beat.turning
-                        ? '0 0 0 4px color-mix(in srgb, var(--mustard-dossier) 25%, transparent)'
-                        : 'none',
+                      opacity: 0.35,
                     }}
                   />
-
-                  {/* Word label below */}
+                ))}
+                {/* Turning point year labels at top */}
+                {TURNING_YEARS.map((year) => (
                   <span
-                    className="font-display text-[10px] uppercase tracking-[0.1em] whitespace-nowrap"
+                    key={`turnlabel-${year}`}
+                    className="absolute -translate-x-1/2 font-mono text-[11px] uppercase tracking-[0.18em] whitespace-nowrap"
                     style={{
-                      color: beat.turning ? 'var(--mustard-dossier)' : 'var(--bone-text)',
+                      top: '-8px',
+                      left: `${yearToPct(year)}%`,
+                      color: 'var(--mustard-dossier)',
                     }}
                   >
-                    {beat.label}
+                    {year}
                   </span>
-                </div>
-              ))}
+                ))}
+
+                {/* Track lines */}
+                <div
+                  className="absolute left-0 right-0 h-px"
+                  style={{ top: '60px', backgroundColor: 'var(--navy-signal)' }}
+                />
+                <div
+                  className="absolute left-0 right-0 h-px"
+                  style={{ top: '180px', backgroundColor: 'var(--navy-signal)' }}
+                />
+                <div
+                  className="absolute left-0 right-0 h-px"
+                  style={{ top: '300px', backgroundColor: 'var(--navy-signal)' }}
+                />
+
+                {/* POLITICAL events */}
+                {POLITICAL_TRACK.map((ev) => (
+                  <TrackMarker key={`pol-${ev.year}-${ev.label}`} ev={ev} trackTop={60} />
+                ))}
+                {/* CHARACTER events */}
+                {CHARACTER_TRACK.map((ev) => (
+                  <TrackMarker key={`char-${ev.year}-${ev.label}`} ev={ev} trackTop={180} />
+                ))}
+                {/* TECHNOLOGY events */}
+                {TECH_TRACK.map((ev) => (
+                  <TrackMarker key={`tech-${ev.year}-${ev.label}`} ev={ev} trackTop={300} />
+                ))}
+              </div>
             </div>
           </div>
 
           <p
-            className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em]"
+            className="mt-8 font-mono text-[10px] uppercase tracking-[0.18em]"
             style={{ color: 'var(--shadow-text)' }}
           >
-            DRAG TO SCRUB ▪ CLICK A NODE TO JUMP
+            MUSTARD BARS = TURNING POINTS ▪ 1717 REFUSAL ▪ 1985 ARMY DECREE ▪ 2025 FRACTURE
           </p>
         </div>
       </section>
@@ -733,7 +755,7 @@ export function TimelineContent() {
             WHO WAS WATCHING.
           </div>
 
-          {/* Horizontal scroll rail */}
+          {/* Horizontal scroll rail — cards open the dossier modal on click */}
           <div
             className="flex gap-5 mt-8 overflow-x-auto snap-x snap-mandatory pb-4"
             style={{ scrollbarColor: 'var(--navy-signal) transparent' }}
@@ -741,18 +763,24 @@ export function TimelineContent() {
             {characterItems.map((item) => {
               const cardSrc =
                 item.media?.card ?? `https://picsum.photos/seed/${item.id}-card/450/600`;
+              const isClassified = item.classification === 'classified';
 
               return (
-                <div
+                <button
                   key={item.id}
-                  className="relative flex-shrink-0 snap-start border overflow-hidden"
+                  type="button"
+                  onClick={() => setSelectedCharacter(item as CharacterDossierItem)}
+                  aria-label={`Open dossier for ${item.name}`}
+                  className="relative flex-shrink-0 snap-start border overflow-hidden cursor-pointer group transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mustard-dossier)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--obsidian-deep)]"
                   style={{
                     width: '220px',
                     aspectRatio: '3 / 4',
                     backgroundColor: 'var(--obsidian-panel)',
                     borderColor: 'var(--navy-signal)',
                     borderLeftWidth: '4px',
-                    borderLeftColor: 'var(--mustard-dossier)',
+                    borderLeftColor: isClassified
+                      ? 'var(--redaction)'
+                      : 'var(--mustard-dossier)',
                   }}
                 >
                   <Image
@@ -765,6 +793,23 @@ export function TimelineContent() {
                         `https://picsum.photos/seed/${item.id}-fallback/450/600`;
                     }}
                   />
+
+                  {/* Tier classification stamp — top-right corner */}
+                  <div
+                    className="absolute top-2 right-2 font-mono text-[9px] uppercase tracking-[0.15em] px-2 py-1 border"
+                    style={{
+                      borderColor: isClassified
+                        ? 'var(--redaction)'
+                        : 'var(--mustard-dossier)',
+                      color: isClassified
+                        ? 'var(--redaction)'
+                        : 'var(--mustard-dossier)',
+                      backgroundColor:
+                        'color-mix(in srgb, var(--obsidian-void) 72%, transparent)',
+                    }}
+                  >
+                    {isClassified ? 'S2 ▪ CLASSIFIED' : 'S1 ▪ DECLASSIFIED'}
+                  </div>
 
                   {/* Devanagari watermark overlay */}
                   {item.nameDevanagari && (
@@ -783,9 +828,9 @@ export function TimelineContent() {
                     </div>
                   )}
 
-                  {/* Name bar at bottom */}
+                  {/* Name bar at bottom + open-file hint on hover */}
                   <div
-                    className="absolute bottom-0 left-0 right-0 px-3 py-2"
+                    className="absolute bottom-0 left-0 right-0 px-3 py-2 text-left"
                     style={{ backgroundColor: 'color-mix(in srgb, var(--obsidian-void) 80%, transparent)' }}
                   >
                     <div
@@ -794,8 +839,14 @@ export function TimelineContent() {
                     >
                       {item.name}
                     </div>
+                    <div
+                      className="font-mono text-[9px] uppercase tracking-[0.15em] mt-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ color: 'var(--mustard-dossier)' }}
+                    >
+                      OPEN FILE &rarr;
+                    </div>
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>
@@ -974,6 +1025,14 @@ export function TimelineContent() {
           </div>
         </div>
       </section>
+
+      {/* Character dossier modal — overlay only, scroll position is preserved
+          because the backing section doesn't unmount and body overflow is
+          locked while the modal is open. */}
+      <CharacterDossierModal
+        item={selectedCharacter}
+        onClose={() => setSelectedCharacter(null)}
+      />
     </>
   );
 }
