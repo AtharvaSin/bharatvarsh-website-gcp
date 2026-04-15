@@ -4,10 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useRef } from 'react';
 import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
+import { useSession } from '@/features/auth';
 import { cn } from '@/shared/utils';
 import timelineRaw from '@/content/data/timeline.json';
 import loreRaw from '@/content/data/lore-items.json';
-import { CharacterDossierModal, type CharacterDossierItem } from '@/features/timeline/components/character-dossier-modal';
 
 // ─── Data normalisation ──────────────────────────────────────────────────────
 
@@ -180,10 +180,79 @@ const TECH_TRACK: TrackEvent[] = [
 const TURNING_YEARS = [1717, 1985, 2025];
 
 // ─── Track marker (helper for the three-track ledger) ───────────────────────
+//
+// Labels are placed on a 4-slot staircase to prevent overlap when events
+// cluster in time:
+//
+//          above-far    (slot 3)  ── leader line ──┐
+//          above-near   (slot 1)                   │
+//   ─────────●────────────────────────●────────●───┴───── line
+//                          (slot 0)   below-near
+//                          (slot 2)   below-far ── leader line ──┐
+//
+// The parent sorts events chronologically and assigns slot = i % 4, so any
+// 4 consecutive events fan out to 4 distinct vertical positions even when
+// their dots are physically adjacent.
 
-function TrackMarker({ ev, trackTop }: { ev: TrackEvent; trackTop: number }) {
+type LabelSlot = 0 | 1 | 2 | 3;
+
+const NEAR_GAP = 8;
+const LABEL_H = 24;
+const FAR_EXTRA = 20;
+
+interface MarkerLayout {
+  labelTop: number;
+  showLeader: boolean;
+  leaderTop: number;
+  leaderHeight: number;
+}
+
+function getMarkerLayout(slot: LabelSlot, dotSize: number): MarkerLayout {
+  switch (slot) {
+    case 0: // below-near
+      return {
+        labelTop: dotSize + NEAR_GAP,
+        showLeader: false,
+        leaderTop: 0,
+        leaderHeight: 0,
+      };
+    case 1: // above-near
+      return {
+        labelTop: -(NEAR_GAP + LABEL_H),
+        showLeader: false,
+        leaderTop: 0,
+        leaderHeight: 0,
+      };
+    case 2: // below-far
+      return {
+        labelTop: dotSize + NEAR_GAP + FAR_EXTRA + LABEL_H,
+        showLeader: true,
+        leaderTop: dotSize,
+        leaderHeight: NEAR_GAP + FAR_EXTRA + LABEL_H,
+      };
+    case 3: // above-far
+      return {
+        labelTop: -(NEAR_GAP + LABEL_H + FAR_EXTRA + LABEL_H),
+        showLeader: true,
+        leaderTop: -(NEAR_GAP + FAR_EXTRA + LABEL_H),
+        leaderHeight: NEAR_GAP + FAR_EXTRA + LABEL_H,
+      };
+  }
+}
+
+function TrackMarker({
+  ev,
+  trackTop,
+  slot,
+}: {
+  ev: TrackEvent;
+  trackTop: number;
+  slot: LabelSlot;
+}) {
   const size = ev.turning ? 14 : 8;
   const color = ev.turning ? 'var(--mustard-dossier)' : 'var(--bone-text)';
+  const layout = getMarkerLayout(slot, size);
+
   return (
     <div
       className="absolute flex flex-col items-center pointer-events-none"
@@ -204,9 +273,21 @@ function TrackMarker({ ev, trackTop }: { ev: TrackEvent; trackTop: number }) {
             : 'none',
         }}
       />
+      {/* Leader line — connects far-slot labels back to the dot for visual association */}
+      {layout.showLeader && (
+        <div
+          className="absolute left-1/2 -translate-x-1/2 w-px"
+          style={{
+            top: layout.leaderTop,
+            height: layout.leaderHeight,
+            backgroundColor: color,
+            opacity: 0.45,
+          }}
+        />
+      )}
       <div
         className="absolute flex flex-col items-center whitespace-nowrap"
-        style={{ top: size + 6 }}
+        style={{ top: layout.labelTop }}
       >
         <span
           className="font-mono text-[9px] uppercase tracking-[0.15em]"
@@ -229,7 +310,7 @@ function TrackMarker({ ev, trackTop }: { ev: TrackEvent; trackTop: number }) {
 
 export function TimelineContent() {
   const [activeEra, setActiveEra] = useState<string>('mesh-era');
-  const [selectedCharacter, setSelectedCharacter] = useState<CharacterDossierItem | null>(null);
+  const { isAuthenticated } = useSession();
   const eraContentRef = useRef<HTMLDivElement>(null);
   const beatStripRef = useRef<HTMLDivElement>(null);
 
@@ -638,36 +719,39 @@ export function TimelineContent() {
             bars mark the three moments when the whole ledger jolted.
           </p>
 
-          {/* The three-track grid */}
+          {/* The three-track grid.
+              Track positions: 90 / 270 / 450 (180px spacing).
+              Container height 540 to fit the 4-slot label staircase
+              (labels can extend ~76px above the dot and ~84px below). */}
           <div
             className="relative mt-16"
             style={{ minWidth: '1000px' }}
           >
             <div className="flex">
               {/* Label column */}
-              <div className="flex-shrink-0 w-32 pr-4 relative" style={{ height: '380px' }}>
+              <div className="flex-shrink-0 w-32 pr-4 relative" style={{ height: '540px' }}>
                 <div
                   className="absolute right-4 font-mono text-[10px] uppercase tracking-[0.18em]"
-                  style={{ top: '56px', color: 'var(--shadow-text)' }}
+                  style={{ top: '86px', color: 'var(--shadow-text)' }}
                 >
                   POLITICAL
                 </div>
                 <div
                   className="absolute right-4 font-mono text-[10px] uppercase tracking-[0.18em]"
-                  style={{ top: '176px', color: 'var(--shadow-text)' }}
+                  style={{ top: '266px', color: 'var(--shadow-text)' }}
                 >
                   CHARACTER
                 </div>
                 <div
                   className="absolute right-4 font-mono text-[10px] uppercase tracking-[0.18em]"
-                  style={{ top: '296px', color: 'var(--shadow-text)' }}
+                  style={{ top: '446px', color: 'var(--shadow-text)' }}
                 >
                   TECHNOLOGY
                 </div>
               </div>
 
               {/* Track content area */}
-              <div className="relative flex-1" style={{ height: '380px' }}>
+              <div className="relative flex-1" style={{ height: '540px' }}>
                 {/* Turning point vertical bars — span all three tracks */}
                 {TURNING_YEARS.map((year) => (
                   <div
@@ -698,28 +782,44 @@ export function TimelineContent() {
                 {/* Track lines */}
                 <div
                   className="absolute left-0 right-0 h-px"
-                  style={{ top: '60px', backgroundColor: 'var(--navy-signal)' }}
+                  style={{ top: '90px', backgroundColor: 'var(--navy-signal)' }}
                 />
                 <div
                   className="absolute left-0 right-0 h-px"
-                  style={{ top: '180px', backgroundColor: 'var(--navy-signal)' }}
+                  style={{ top: '270px', backgroundColor: 'var(--navy-signal)' }}
                 />
                 <div
                   className="absolute left-0 right-0 h-px"
-                  style={{ top: '300px', backgroundColor: 'var(--navy-signal)' }}
+                  style={{ top: '450px', backgroundColor: 'var(--navy-signal)' }}
                 />
 
-                {/* POLITICAL events */}
-                {POLITICAL_TRACK.map((ev) => (
-                  <TrackMarker key={`pol-${ev.year}-${ev.label}`} ev={ev} trackTop={60} />
+                {/* POLITICAL events — slot = i % 4 cycles
+                    [below-near, above-near, below-far, above-far] */}
+                {POLITICAL_TRACK.map((ev, i) => (
+                  <TrackMarker
+                    key={`pol-${ev.year}-${ev.label}`}
+                    ev={ev}
+                    trackTop={90}
+                    slot={(i % 4) as LabelSlot}
+                  />
                 ))}
                 {/* CHARACTER events */}
-                {CHARACTER_TRACK.map((ev) => (
-                  <TrackMarker key={`char-${ev.year}-${ev.label}`} ev={ev} trackTop={180} />
+                {CHARACTER_TRACK.map((ev, i) => (
+                  <TrackMarker
+                    key={`char-${ev.year}-${ev.label}`}
+                    ev={ev}
+                    trackTop={270}
+                    slot={(i % 4) as LabelSlot}
+                  />
                 ))}
                 {/* TECHNOLOGY events */}
-                {TECH_TRACK.map((ev) => (
-                  <TrackMarker key={`tech-${ev.year}-${ev.label}`} ev={ev} trackTop={300} />
+                {TECH_TRACK.map((ev, i) => (
+                  <TrackMarker
+                    key={`tech-${ev.year}-${ev.label}`}
+                    ev={ev}
+                    trackTop={450}
+                    slot={(i % 4) as LabelSlot}
+                  />
                 ))}
               </div>
             </div>
@@ -736,6 +836,7 @@ export function TimelineContent() {
 
       {/* ── Section 6: Connected Files Rail (operatives) ──────────────────── */}
       <section
+        id="who-was-watching"
         className="py-24 border-t"
         style={{ backgroundColor: 'var(--obsidian-deep)', borderColor: 'var(--navy-signal)' }}
       >
@@ -755,7 +856,11 @@ export function TimelineContent() {
             WHO WAS WATCHING.
           </div>
 
-          {/* Horizontal scroll rail — cards open the dossier modal on click */}
+          {/* Horizontal scroll rail — cards link DIRECTLY to /lore?item=<id>.
+              The lore page handles the modal open via deep link, and its
+              origin-aware close handler returns the user back to /timeline
+              (this exact section) when they close the dossier. No more
+              in-between modal — the lore page IS the dossier surface. */}
           <div
             className="flex gap-5 mt-8 overflow-x-auto snap-x snap-mandatory pb-4"
             style={{ scrollbarColor: 'var(--navy-signal) transparent' }}
@@ -764,12 +869,119 @@ export function TimelineContent() {
               const cardSrc =
                 item.media?.card ?? `https://picsum.photos/seed/${item.id}-card/450/600`;
               const isClassified = item.classification === 'classified';
+              const isLocked = isClassified && !isAuthenticated;
 
+              // Classified variant — silhouette + sign-in CTA, no face leak.
+              if (isLocked) {
+                return (
+                  <Link
+                    key={item.id}
+                    href="/auth/signin?callbackUrl=/timeline%23who-was-watching"
+                    aria-label={`${item.name} — classified. Sign in to unseal.`}
+                    className="relative flex-shrink-0 snap-start border overflow-hidden cursor-pointer group transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mustard-dossier)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--obsidian-deep)]"
+                    style={{
+                      width: '220px',
+                      aspectRatio: '3 / 4',
+                      backgroundColor: 'var(--obsidian-panel)',
+                      borderColor: 'var(--mustard-dossier)',
+                      borderLeftWidth: '4px',
+                      borderLeftColor: 'var(--mustard-dossier)',
+                    }}
+                  >
+                    <Image
+                      src={cardSrc}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      style={{
+                        filter:
+                          'grayscale(100%) brightness(0.18) contrast(1.3) blur(2px)',
+                      }}
+                      aria-hidden="true"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src =
+                          `https://picsum.photos/seed/${item.id}-fallback/450/600`;
+                      }}
+                    />
+                    {/* Navy/obsidian redaction wash */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0"
+                      style={{
+                        background:
+                          'radial-gradient(ellipse at 50% 35%, rgba(11,39,66,0.55) 0%, rgba(15,20,25,0.92) 70%)',
+                      }}
+                    />
+                    {/* Rotated dashed CLASSIFIED stamp */}
+                    <div
+                      className="absolute top-2 left-2 font-mono uppercase tracking-[0.22em] text-[8px] px-1.5 py-0.5 border border-dashed"
+                      style={{
+                        color: 'var(--mustard-dossier)',
+                        borderColor: 'var(--mustard-dossier)',
+                        transform: 'rotate(-4deg)',
+                        backgroundColor: 'rgba(15,20,25,0.65)',
+                      }}
+                    >
+                      CLASSIFIED
+                    </div>
+                    {/* Center redaction block */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 px-3 text-center">
+                      <div
+                        className="font-mono uppercase tracking-[0.22em] text-[8px]"
+                        style={{ color: 'var(--mustard-dossier)', opacity: 0.9 }}
+                      >
+                        CLEARANCE · LVL 5
+                      </div>
+                      <div
+                        className="font-display leading-none"
+                        style={{
+                          fontSize: '1rem',
+                          color: 'var(--bone-text)',
+                          backgroundColor: 'var(--redaction)',
+                          padding: '0.15rem 0.5rem',
+                          letterSpacing: '0.1em',
+                        }}
+                      >
+                        [REDACTED]
+                      </div>
+                      <div
+                        className="font-mono uppercase tracking-[0.18em] text-[7px] max-w-[85%] leading-relaxed mt-0.5"
+                        style={{ color: 'var(--powder-signal)' }}
+                      >
+                        IDENTITY WITHHELD
+                      </div>
+                    </div>
+                    {/* Bottom strip — name placeholder + sign-in CTA */}
+                    <div
+                      className="absolute bottom-0 left-0 right-0 px-3 py-2 text-left border-t"
+                      style={{
+                        borderColor: 'var(--mustard-dossier)',
+                        backgroundColor:
+                          'color-mix(in srgb, var(--obsidian-void) 85%, transparent)',
+                      }}
+                    >
+                      <div
+                        className="font-mono uppercase text-[11px] tracking-[0.18em]"
+                        style={{ color: 'var(--shadow-text)' }}
+                      >
+                        ????????
+                      </div>
+                      <div
+                        className="font-mono text-[8px] uppercase tracking-[0.18em] mt-1"
+                        style={{ color: 'var(--mustard-dossier)' }}
+                      >
+                        SIGN IN TO UNSEAL &rarr;
+                      </div>
+                    </div>
+                  </Link>
+                );
+              }
+
+              // Declassified (or authenticated viewer) — direct deep link to /lore.
               return (
-                <button
+                <Link
                   key={item.id}
-                  type="button"
-                  onClick={() => setSelectedCharacter(item as CharacterDossierItem)}
+                  href={`/lore?item=${item.id}`}
                   aria-label={`Open dossier for ${item.name}`}
                   className="relative flex-shrink-0 snap-start border overflow-hidden cursor-pointer group transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mustard-dossier)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--obsidian-deep)]"
                   style={{
@@ -846,7 +1058,7 @@ export function TimelineContent() {
                       OPEN FILE &rarr;
                     </div>
                   </div>
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -869,9 +1081,11 @@ export function TimelineContent() {
           </div>
 
           <div className="grid grid-cols-12 gap-6 mt-10">
-            {/* PATH A — Historian's */}
+            {/* PATH A — Historian's → /timeline (the chronology itself).
+                Wider featured card (6 cols) — Path B and Path C share the
+                remaining 6 cols equally (3 each). */}
             <div
-              className="col-span-12 lg:col-span-5 border p-8 flex flex-col gap-4"
+              className="col-span-12 lg:col-span-6 border p-8 flex flex-col gap-4"
               style={{
                 backgroundColor: 'var(--obsidian-panel)',
                 borderColor: 'var(--navy-signal)',
@@ -885,17 +1099,18 @@ export function TimelineContent() {
                 THE HISTORIAN&apos;S PATH
               </div>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--steel-text)' }}>
-                Read chronologically with timeline context open in a second tab. Recommended for
-                world-builders and first-time readers of alternate history.
+                Start with the chronology. Walk three centuries from the 1717 refusal to
+                the 2025 fracture — every charter, every coup, every quiet decision the
+                public never saw. Build the world before you meet the people in it.
               </p>
               <div
                 className="font-mono text-[10px] uppercase tracking-[0.18em] mt-auto"
                 style={{ color: 'var(--shadow-text)' }}
               >
-                ~480 PAGES ▪ ~24 HOURS
+                308 YEARS ▪ 9 ERAS ▪ ~30 MIN BRIEF
               </div>
               <Link
-                href="/novel"
+                href="/timeline"
                 className="inline-block font-mono uppercase text-[11px] tracking-[0.18em] px-5 py-2.5 text-center border transition-opacity hover:opacity-80"
                 style={{
                   backgroundColor: 'var(--mustard-dossier)',
@@ -903,19 +1118,19 @@ export function TimelineContent() {
                   color: 'var(--obsidian-void)',
                 }}
               >
-                CHOOSE THIS PATH →
+                WALK THE TIMELINE →
               </Link>
             </div>
 
-            {/* PATH B — Thriller's */}
+            {/* PATH B — Thriller's → /novel */}
             <div
-              className="col-span-12 lg:col-span-3 border p-8 flex flex-col gap-4"
+              className="col-span-12 lg:col-span-3 sm:col-span-6 border p-8 flex flex-col gap-4"
               style={{
                 backgroundColor: 'var(--obsidian-panel)',
                 borderColor: 'var(--navy-signal)',
               }}
             >
-              <EyebrowLabel segments={['PATH B', 'FOR THRILLERS']} />
+              <EyebrowLabel segments={['PATH B', 'FOR THRILLER READERS']} />
               <div
                 className="font-display leading-tight"
                 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', color: 'var(--bone-text)' }}
@@ -923,14 +1138,15 @@ export function TimelineContent() {
                 THE THRILLER&apos;S PATH
               </div>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--steel-text)' }}>
-                Read straight through. Discover the timeline as Kahaan does — one revelation at a
-                time.
+                Open the file cold. The case unfolds the way Kahaan finds it — one lead,
+                one dead end, one secret that refuses to stay sealed. No prep. No spoilers.
+                Just the dossier in your hand and the floor giving way underneath.
               </p>
               <div
                 className="font-mono text-[10px] uppercase tracking-[0.18em] mt-auto"
                 style={{ color: 'var(--shadow-text)' }}
               >
-                ~480 PAGES ▪ ~18 HOURS
+                374 PAGES ▪ ~18 HOURS
               </div>
               <Link
                 href="/novel"
@@ -940,13 +1156,13 @@ export function TimelineContent() {
                   color: 'var(--bone-text)',
                 }}
               >
-                CHOOSE THIS PATH →
+                OPEN THE NOVEL →
               </Link>
             </div>
 
-            {/* PATH C — Archivist's */}
+            {/* PATH C — Archivist's → /lore */}
             <div
-              className="col-span-12 lg:col-span-4 border p-8 flex flex-col gap-4"
+              className="col-span-12 lg:col-span-3 sm:col-span-6 border p-8 flex flex-col gap-4"
               style={{
                 backgroundColor: 'var(--obsidian-panel)',
                 borderColor: 'var(--navy-signal)',
@@ -960,24 +1176,25 @@ export function TimelineContent() {
                 THE ARCHIVIST&apos;S PATH
               </div>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--steel-text)' }}>
-                Read the timeline first, then the novel. Recommended for returning readers and lore
-                enthusiasts.
+                Pull every file before you read a single page. Operatives, factions,
+                locations, classified tech — the whole dossier laid open. Recommended for
+                completionists, returning readers, and anyone who reads the appendix first.
               </p>
               <div
                 className="font-mono text-[10px] uppercase tracking-[0.18em] mt-auto"
                 style={{ color: 'var(--shadow-text)' }}
               >
-                ~1 DAY PREP ▪ ~480 PAGES
+                21 FILES ▪ ~45 MIN BROWSE
               </div>
               <Link
-                href="/novel"
+                href="/lore"
                 className="inline-block font-mono uppercase text-[11px] tracking-[0.18em] px-5 py-2.5 text-center border transition-opacity hover:opacity-80"
                 style={{
                   borderColor: 'var(--bone-text)',
                   color: 'var(--bone-text)',
                 }}
               >
-                CHOOSE THIS PATH →
+                ENTER THE ARCHIVE →
               </Link>
             </div>
           </div>
@@ -1026,13 +1243,6 @@ export function TimelineContent() {
         </div>
       </section>
 
-      {/* Character dossier modal — overlay only, scroll position is preserved
-          because the backing section doesn't unmount and body overflow is
-          locked while the modal is open. */}
-      <CharacterDossierModal
-        item={selectedCharacter}
-        onClose={() => setSelectedCharacter(null)}
-      />
     </>
   );
 }
