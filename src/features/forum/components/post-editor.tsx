@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import { Send } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { Textarea } from '@/shared/ui/textarea';
+import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import { cn } from '@/shared/utils';
 import { useSession } from '@/features/auth';
 import { FORUM_LIMITS } from '../constants';
@@ -15,7 +16,11 @@ interface PostEditorProps {
   className?: string;
 }
 
-/** Editor for composing a reply to a thread. Requires authentication. */
+/**
+ * Classified Chronicle reply editor. Dashed mustard frame, mono eyebrow
+ * "TRANSMIT RESPONSE", authed users see the textarea, unauthed see a
+ * "sign the manifest" gate matching the landing's manifest framing.
+ */
 export const PostEditor: FC<PostEditorProps> = ({
   threadId,
   parentId,
@@ -31,12 +36,28 @@ export const PostEditor: FC<PostEditorProps> = ({
     return (
       <div
         className={cn(
-          'p-4 rounded-lg border border-[var(--obsidian-600)] bg-[var(--obsidian-800)]/50 text-center',
-          className
+          'p-6 border-2 border-dashed text-center',
+          className,
         )}
+        style={{
+          borderColor: 'var(--mustard-dossier)',
+          backgroundColor: 'var(--obsidian-panel)',
+        }}
       >
-        <p className="text-sm text-[var(--text-muted)]">
-          Sign in to join the discussion
+        <div
+          className="font-mono text-[10px] uppercase tracking-[0.22em] mb-2"
+          style={{ color: 'var(--mustard-dossier)' }}
+        >
+          CLEARANCE REQUIRED
+        </div>
+        <p
+          className="font-display leading-[1.1]"
+          style={{
+            fontSize: 'clamp(1.25rem, 2.4vw, 1.75rem)',
+            color: 'var(--bone-text)',
+          }}
+        >
+          SIGN THE MANIFEST TO TRANSMIT.
         </p>
       </div>
     );
@@ -69,20 +90,38 @@ export const PostEditor: FC<PostEditorProps> = ({
   };
 
   return (
-    <div className={cn('space-y-3', className)}>
+    <div
+      className={cn('p-5 border-l-4', className)}
+      style={{
+        backgroundColor: 'var(--obsidian-panel)',
+        borderLeftColor: 'var(--mustard-dossier)',
+        borderTop: '1px solid var(--navy-signal)',
+        borderRight: '1px solid var(--navy-signal)',
+        borderBottom: '1px solid var(--navy-signal)',
+      }}
+    >
+      <EyebrowLabel segments={['TRANSMIT RESPONSE']} className="mb-3" />
       <Textarea
         value={body}
         onChange={(e) => setBody(e.target.value)}
-        placeholder="Write your reply..."
+        placeholder="TRANSMIT YOUR RESPONSE. MARKDOWN ACCEPTED."
         autoResize
         maxLength={FORUM_LIMITS.POST_BODY_MAX}
-        className="min-h-[100px]"
+        className="min-h-[120px] font-sans"
       />
       {error && (
-        <p className="text-sm text-[var(--status-alert)]">{error}</p>
+        <p
+          className="font-mono text-[10px] uppercase tracking-[0.18em] mt-3"
+          style={{ color: 'var(--redaction)' }}
+        >
+          {error}
+        </p>
       )}
-      <div className="flex items-center justify-between">
-        <span className="text-xs text-[var(--text-muted)]">
+      <div className="flex items-center justify-between mt-4">
+        <span
+          className="font-mono text-[10px] uppercase tracking-[0.18em]"
+          style={{ color: 'var(--shadow-text)' }}
+        >
           {body.length}/{FORUM_LIMITS.POST_BODY_MAX}
         </span>
         <Button
@@ -93,7 +132,7 @@ export const PostEditor: FC<PostEditorProps> = ({
           disabled={!body.trim()}
           icon={<Send className="w-4 h-4" />}
         >
-          Reply
+          TRANSMIT →
         </Button>
       </div>
     </div>

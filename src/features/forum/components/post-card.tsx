@@ -1,7 +1,6 @@
 'use client';
 
 import { FC } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { MoreHorizontal, Flag } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import {
@@ -15,6 +14,7 @@ import { UserBadge } from './user-badge';
 import { ReportDialog } from './report-dialog';
 import { QuarantineNotice } from './quarantine-notice';
 import { ContentStatusBadge } from './content-status-badge';
+import { DossierMarkdown } from './markdown-renderer';
 import type { PostView } from '../types';
 
 interface PostCardProps {
@@ -28,7 +28,7 @@ interface PostCardProps {
  */
 function timeAgo(dateStr: string): string {
   const seconds = Math.floor(
-    (Date.now() - new Date(dateStr).getTime()) / 1000
+    (Date.now() - new Date(dateStr).getTime()) / 1000,
   );
   if (seconds < 60) return 'just now';
   const minutes = Math.floor(seconds / 60);
@@ -40,17 +40,42 @@ function timeAgo(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString();
 }
 
-/** Displays a single forum reply post with author info and nested indent for replies. */
+/**
+ * Classified Chronicle reply card. Renders inside PostList as a
+ * counter-signal transmission. When post.parentId is set, gets a
+ * mustard-dossier left stripe + "COUNTER-SIGNAL TO PRIOR TRANSMISSION"
+ * header to signal it's a nested reply.
+ */
 export const PostCard: FC<PostCardProps> = ({ post, className }) => {
+  const isReply = Boolean(post.parentId);
+
   return (
     <div
       className={cn(
-        'p-4 rounded-lg border border-[var(--obsidian-600)] bg-[var(--obsidian-800)]/50',
-        post.parentId && 'ml-8 border-l-2 border-l-[var(--obsidian-600)]',
-        className
+        'p-5 border-l-4',
+        isReply && 'ml-8',
+        className,
       )}
+      style={{
+        backgroundColor: 'var(--obsidian-panel)',
+        borderLeftColor: isReply
+          ? 'var(--mustard-dossier)'
+          : 'var(--navy-signal)',
+        borderTop: '1px solid var(--navy-signal)',
+        borderRight: '1px solid var(--navy-signal)',
+        borderBottom: '1px solid var(--navy-signal)',
+      }}
     >
-      <div className="flex gap-3">
+      {isReply && (
+        <div
+          className="font-mono text-[9px] uppercase tracking-[0.22em] mb-3"
+          style={{ color: 'var(--mustard-dossier)' }}
+        >
+          ▸ COUNTER-SIGNAL TO PRIOR TRANSMISSION
+        </div>
+      )}
+
+      <div className="flex gap-4">
         <UserAvatar
           name={post.author.name}
           image={post.author.image}
@@ -59,25 +84,41 @@ export const PostCard: FC<PostCardProps> = ({ post, className }) => {
           className="shrink-0 mt-0.5"
         />
         <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-[var(--text-primary)]">
-                {post.author.name || 'Anonymous'}
+          <div className="flex items-start justify-between mb-3 gap-3">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span
+                className="font-mono text-[11px] uppercase tracking-[0.18em]"
+                style={{ color: 'var(--bone-text)' }}
+              >
+                {post.author.name || 'ANONYMOUS'}
               </span>
               <UserBadge role={post.author.role} />
               <ContentStatusBadge status={post.status} />
-              <span className="text-xs text-[var(--text-muted)]">
+              <span
+                className="font-mono text-[10px] uppercase tracking-[0.15em]"
+                style={{ color: 'var(--shadow-text)' }}
+              >
                 {timeAgo(post.createdAt)}
               </span>
               {post.updatedAt !== post.createdAt && (
-                <span className="text-xs text-[var(--text-muted)] italic">
-                  (edited)
+                <span
+                  className="font-mono text-[9px] uppercase tracking-[0.15em]"
+                  style={{ color: 'var(--shadow-text)' }}
+                >
+                  [EDITED]
                 </span>
               )}
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="p-1 rounded text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--obsidian-700)] transition-colors">
+                <button
+                  className="p-1 border transition-colors"
+                  style={{
+                    borderColor: 'var(--navy-signal)',
+                    color: 'var(--shadow-text)',
+                  }}
+                  aria-label="Post actions"
+                >
                   <MoreHorizontal className="w-3.5 h-3.5" />
                 </button>
               </DropdownMenuTrigger>
@@ -95,28 +136,8 @@ export const PostCard: FC<PostCardProps> = ({ post, className }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <QuarantineNotice status={post.status} className="mb-2" />
-          <div className="max-w-none">
-            <ReactMarkdown
-              components={{
-                h3: ({ children }) => <h3 className="text-base font-semibold text-[var(--mustard-500)] mt-4 mb-2">{children}</h3>,
-                p: ({ children }) => <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-2">{children}</p>,
-                strong: ({ children }) => <strong className="font-semibold text-[var(--text-primary)]">{children}</strong>,
-                em: ({ children }) => <em className="italic text-[var(--powder-400)]">{children}</em>,
-                blockquote: ({ children }) => (
-                  <blockquote className="border-l-3 border-[var(--mustard-500)] pl-4 my-3 py-1 bg-[var(--obsidian-900)]/50 rounded-r">{children}</blockquote>
-                ),
-                ul: ({ children }) => <ul className="list-disc list-inside space-y-1 mb-2 text-sm text-[var(--text-secondary)]">{children}</ul>,
-                ol: ({ children }) => <ol className="list-decimal list-inside space-y-1 mb-2 text-sm text-[var(--text-secondary)]">{children}</ol>,
-                li: ({ children }) => <li className="text-sm text-[var(--text-secondary)]">{children}</li>,
-                code: ({ children }) => (
-                  <code className="bg-[var(--obsidian-900)] text-[var(--mustard-400)] px-1.5 py-0.5 rounded text-xs font-mono">{children}</code>
-                ),
-              }}
-            >
-              {post.body}
-            </ReactMarkdown>
-          </div>
+          <QuarantineNotice status={post.status} className="mb-3" />
+          <DossierMarkdown body={post.body} density="reply" />
         </div>
       </div>
     </div>

@@ -6,21 +6,27 @@ import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import { useSession } from '@/features/auth';
 import { useThreads } from './hooks/use-threads';
 import { useTopics } from './hooks/use-topics';
-import type { ThreadListItem, SortOption } from './types';
+import { TopicBadge } from './components/topic-badge';
+import type { ThreadListItem, SortOption, TopicView } from './types';
 
-// ─── Placeholder stats — TODO: wire to useThreads() pagination + user count ──
-const PLACEHOLDER_OPERATIVES = '8,472';
-const PLACEHOLDER_TRANSMISSIONS = '12,039';
+/** Compact relative time label for the compact feeds in this view. */
+function forumTimeAgo(dateStr: string): string {
+  const seconds = Math.floor(
+    (Date.now() - new Date(dateStr).getTime()) / 1000,
+  );
+  if (seconds < 60) return 'JUST NOW';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}M AGO`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}H AGO`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}D AGO`;
+  const months = Math.floor(days / 30);
+  return `${months}MO AGO`;
+}
 
-const TICKER_ITEMS = [
-  'NEW THEORY: THE MIRROR ROOM IS BHOOMI\'S PAST',
-  'FAN ART: INDRAPUR AT NIGHT',
-  'CH 19 SPOILER THREAD',
-  'Q&A THURSDAY WITH ATHARVA',
-  'KAHAAN SIGHTING IN CH 21 DRAFT LEAK?',
-  'TRIBHUJ LORE DIG: WHO BUILT THE FIRST NODE',
-];
-const TICKER_TEXT = TICKER_ITEMS.map((t) => `${t} ▪ `).join('') + TICKER_ITEMS.map((t) => `${t} ▪ `).join('');
+// The top banner stats + marquee are now data-driven — computed from
+// useThreads() and useTopics() inside the component. No hardcoded fake counts.
 
 const SORT_LABELS: { label: string; value: SortOption }[] = [
   { label: 'HOTTEST', value: 'popular' },
@@ -28,25 +34,14 @@ const SORT_LABELS: { label: string; value: SortOption }[] = [
   { label: 'MOST REPLIES', value: 'unanswered' },
 ];
 
-const OPERATIVE_CARDS = [
-  { username: 'FIELD_AGENT_KAHAAN_12', rank: 'LVL 14 ▪ VETERAN', posts: '142 POSTS THIS MONTH ▪ ACTIVE NOW', seed: 1 },
-  { username: 'ARCHIVIST_RUDRA_04', rank: 'LVL 11 ▪ ANALYST', posts: '98 POSTS THIS MONTH ▪ ACTIVE 3H AGO', seed: 2 },
-  { username: 'DOSSIER_DIGGER', rank: 'LVL 9 ▪ FIELD AGENT', posts: '87 POSTS THIS MONTH ▪ ACTIVE NOW', seed: 3 },
-  { username: 'MESH_NODE_WATCHER', rank: 'LVL 7 ▪ RECRUIT', posts: '61 POSTS THIS MONTH ▪ ACTIVE 1H AGO', seed: 4 },
-  { username: 'THEORY_WEAVER_JWALA', rank: 'LVL 12 ▪ VETERAN', posts: '112 POSTS THIS MONTH ▪ ACTIVE NOW', seed: 5 },
-  { username: 'BHARATSENA_WATCHER', rank: 'LVL 8 ▪ FIELD AGENT', posts: '54 POSTS THIS MONTH ▪ ACTIVE 6H AGO', seed: 6 },
-  { username: 'AKAKPEN_SPOTTER', rank: 'LVL 6 ▪ RECRUIT', posts: '39 POSTS THIS MONTH ▪ ACTIVE 2H AGO', seed: 7 },
-  { username: 'LORE_KEEPER_ADIL', rank: 'LVL 13 ▪ VETERAN', posts: '127 POSTS THIS MONTH ▪ ACTIVE NOW', seed: 8 },
-];
-
+// Aligned with the four Ground Rules in the seeded Welcome to the Archives
+// thread (prisma/forum-seed-threads.ts, Thread 1). Single source of truth for
+// the rules of engagement.
 const CONDUCT_RULES = [
-  'TRANSMISSIONS ARE PUBLIC. WRITE WITH INTENT.',
-  'SPOILERS BELONG IN THE SPOILER CHANNEL. NOT IN THE HEADLINES.',
-  'FAN ART IS PROTECTED. RESPECT IT.',
-  'AUTHOR Q&A IS A PRIVILEGE. ASK LIKE A READER, NOT A HECKLER.',
-  'NO HARASSMENT. NO DOXXING. NO REAL-WORLD POLITICS.',
-  'CITE YOUR SOURCES. CHAPTER AND PAGE NUMBERS.',
-  'BHOOMI IS THE ARBITER. HER CALLS ARE FINAL.',
+  'SPOILERS WRAP IN [CLASSIFIED] TAGS. WARN BEFORE YOU REVEAL.',
+  'ATTACK THE ARGUMENT. NEVER THE PERSON BEHIND IT.',
+  'NO REAL-WORLD POLITICAL MAPPING. THIS IS A FICTION ABOUT 1717.',
+  'EVERY POST ADDS SOMETHING — A QUESTION, OBSERVATION, THEORY, OR COUNTERPOINT.',
 ];
 
 /** Converts a date string into a relative time label. */
@@ -72,6 +67,9 @@ export const ForumContent: FC = () => {
     <div className="min-h-screen" style={{ backgroundColor: 'var(--obsidian-void)' }}>
 
       {/* ─── Live Network Banner ─────────────────────────────────────────────── */}
+      {/* Data-driven: thread count + topic count come from the API, and the
+          marquee streams the actual latest thread titles instead of hardcoded
+          placeholder headlines. */}
       <style>{`
         @keyframes forum-marquee {
           from { transform: translateX(0); }
@@ -83,7 +81,7 @@ export const ForumContent: FC = () => {
         style={{ backgroundColor: 'var(--obsidian-deep)', borderColor: 'var(--navy-signal)' }}
       >
         <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-between gap-6 overflow-hidden">
-          {/* LEFT: pulsing dot + operative count */}
+          {/* LEFT: pulsing dot + real counts */}
           <div className="flex items-center gap-3 shrink-0">
             <span
               className="w-2 h-2 rounded-full animate-pulse"
@@ -92,24 +90,35 @@ export const ForumContent: FC = () => {
             <EyebrowLabel
               segments={[
                 'FIELD NETWORK ACTIVE',
-                `${PLACEHOLDER_OPERATIVES} OPERATIVES ONLINE`,
-                `${PLACEHOLDER_TRANSMISSIONS} TRANSMISSIONS TODAY`,
+                `${pagination?.total ?? 0} TRANSMISSIONS`,
+                `${topics.length} CHANNELS`,
               ]}
             />
           </div>
-          {/* RIGHT: scrolling ticker */}
+          {/* RIGHT: scrolling ticker — real latest thread titles */}
           <div className="overflow-hidden flex-1 min-w-0">
-            <div
-              className="flex whitespace-nowrap"
-              style={{ animation: 'forum-marquee 40s linear infinite' }}
-            >
-              <span
-                className="font-mono uppercase text-[11px] tracking-[0.15em]"
-                style={{ color: 'var(--steel-text)' }}
+            {threads.length > 0 && (
+              <div
+                className="flex whitespace-nowrap"
+                style={{ animation: 'forum-marquee 60s linear infinite' }}
               >
-                {TICKER_TEXT}
-              </span>
-            </div>
+                <span
+                  className="font-mono uppercase text-[11px] tracking-[0.15em]"
+                  style={{ color: 'var(--steel-text)' }}
+                >
+                  {(() => {
+                    const titles = threads
+                      .slice(0, 8)
+                      .map((t) => t.title.toUpperCase());
+                    // Double the list so the marquee loops seamlessly
+                    const stream = [...titles, ...titles]
+                      .map((t) => `${t} ▪ `)
+                      .join('');
+                    return stream;
+                  })()}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -197,126 +206,155 @@ export const ForumContent: FC = () => {
                 </Link>
               )}
               <a
-                href="#hottest-transmissions"
+                href="#channels"
                 className="inline-flex items-center gap-2 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] transition-opacity hover:opacity-80"
                 style={{
                   border: '1px solid var(--navy-signal)',
                   color: 'var(--steel-text)',
                 }}
               >
-                BROWSE RECENT →
+                BROWSE CHANNELS →
               </a>
             </div>
           </div>
 
-          {/* RIGHT col-span-5: radial network pulse visualization */}
+          {/* RIGHT col-span-5: LATEST TRANSMISSIONS feed (data-driven).
+              Replaces the previous fake "LIVE NETWORK PULSE" radial graph —
+              which was 12 random dots with hardcoded post counts and a "YOU"
+              center node that meant nothing. This feed instead surfaces the
+              real top transmissions so readers can step into the conversation
+              directly from the hero without scrolling or clicking filters. */}
           <div className="hidden lg:block col-span-5">
             <div
-              className="relative h-[500px] rounded-lg"
+              className="border-l-4"
               style={{
-                border: '1px solid var(--navy-signal)',
+                borderLeftColor: 'var(--mustard-dossier)',
+                borderTop: '1px solid var(--navy-signal)',
+                borderRight: '1px solid var(--navy-signal)',
+                borderBottom: '1px solid var(--navy-signal)',
                 backgroundColor: 'var(--obsidian-panel)',
               }}
             >
-              {/* Surveillance grid overlay */}
+              {/* Header */}
               <div
-                aria-hidden="true"
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(var(--navy-signal) 1px, transparent 1px), linear-gradient(90deg, var(--navy-signal) 1px, transparent 1px)',
-                  backgroundSize: '40px 40px',
-                  opacity: 0.06,
-                }}
-              />
-
-              {/* Center node: YOU */}
-              <div
-                className="absolute font-mono text-[10px] tracking-wider text-center"
-                style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                className="px-5 py-4 border-b"
+                style={{ borderBottomColor: 'var(--navy-signal)' }}
               >
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center mb-1 mx-auto font-mono text-[10px] uppercase tracking-wider border-2"
-                  style={{
-                    backgroundColor: 'var(--mustard-dossier)',
-                    borderColor: 'var(--mustard-dossier)',
-                    color: 'var(--obsidian-void)',
-                  }}
-                >
-                  YOU
-                </div>
-                {/* Pulse ring */}
-                <div
-                  className="absolute inset-0 rounded-full animate-ping"
-                  style={{
-                    border: '2px solid var(--mustard-dossier)',
-                    opacity: 0.3,
-                  }}
+                <EyebrowLabel
+                  segments={[
+                    'INCOMING',
+                    'LATEST TRANSMISSIONS',
+                    pagination?.total
+                      ? `${pagination.total} IN ARCHIVE`
+                      : '—',
+                  ]}
                 />
               </div>
 
-              {/* Outer nodes — 12 nodes at varied positions */}
-              {[
-                { top: '8%', left: '44%', posts: 42, active: true },
-                { top: '14%', left: '72%', posts: 18 },
-                { top: '28%', left: '85%', posts: 7, active: true },
-                { top: '52%', left: '88%', posts: 31 },
-                { top: '74%', left: '78%', posts: 14 },
-                { top: '86%', left: '56%', posts: 9 },
-                { top: '82%', left: '30%', posts: 23, active: true },
-                { top: '70%', left: '10%', posts: 5 },
-                { top: '50%', left: '5%', posts: 11 },
-                { top: '28%', left: '12%', posts: 38 },
-                { top: '14%', left: '28%', posts: 17 },
-                { top: '36%', left: '20%', posts: 6 },
-              ].map((node, i) => (
+              {/* Feed */}
+              {isLoading ? (
                 <div
-                  key={i}
-                  className="absolute"
-                  style={{ top: node.top, left: node.left, transform: 'translate(-50%, -50%)' }}
+                  className="p-8 text-center font-mono text-[10px] uppercase tracking-[0.22em]"
+                  style={{ color: 'var(--shadow-text)' }}
                 >
-                  <div
-                    className="relative w-8 h-8 rounded-full flex items-center justify-center font-mono text-[9px]"
-                    style={{
-                      backgroundColor: 'var(--obsidian-deep)',
-                      border: `1px solid ${node.active ? 'var(--mustard-dossier)' : 'var(--navy-signal)'}`,
-                      color: node.active ? 'var(--mustard-dossier)' : 'var(--steel-text)',
-                    }}
-                  >
-                    {node.posts}
-                    {node.active && (
-                      <span
-                        className="absolute inset-0 rounded-full animate-ping"
-                        style={{
-                          border: '1px solid var(--mustard-dossier)',
-                          opacity: 0.4,
-                        }}
-                      />
-                    )}
-                  </div>
+                  DECRYPTING FEED…
                 </div>
-              ))}
+              ) : threads.length === 0 ? (
+                <div
+                  className="p-8 text-center font-mono text-[10px] uppercase tracking-[0.22em]"
+                  style={{ color: 'var(--shadow-text)' }}
+                >
+                  NO TRANSMISSIONS YET. BE THE FIRST.
+                </div>
+              ) : (
+                <div className="flex flex-col">
+                  {threads.slice(0, 5).map((thread) => (
+                    <Link
+                      key={thread.id}
+                      href={`/forum/thread/${thread.id}`}
+                      className="group block px-5 py-4 border-b transition-colors"
+                      style={{
+                        borderBottomColor: 'var(--navy-signal)',
+                      }}
+                    >
+                      {/* Top row: topic pill + pinned marker */}
+                      <div className="flex items-center gap-2 mb-2">
+                        {thread.isPinned && (
+                          <span
+                            className="font-mono text-[9px] uppercase tracking-[0.18em]"
+                            style={{ color: 'var(--mustard-dossier)' }}
+                          >
+                            ▸ PINNED
+                          </span>
+                        )}
+                        {thread.tags.slice(0, 1).map((tag) => (
+                          <TopicBadge
+                            key={tag.slug}
+                            name={tag.name}
+                            color={tag.color}
+                            maxChars={16}
+                          />
+                        ))}
+                      </div>
+                      {/* Title */}
+                      <div
+                        className="font-display leading-[1.15] line-clamp-2 mb-2 transition-colors"
+                        style={{
+                          fontSize: '1.125rem',
+                          color: 'var(--bone-text)',
+                        }}
+                      >
+                        {thread.title.toUpperCase()}
+                      </div>
+                      {/* Metadata */}
+                      <div
+                        className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[9px] uppercase tracking-[0.15em]"
+                        style={{ color: 'var(--shadow-text)' }}
+                      >
+                        <span>
+                          {thread.author.name || 'ANONYMOUS'}
+                        </span>
+                        <span>{forumTimeAgo(thread.createdAt)}</span>
+                        <span>{thread.postCount} REPLIES</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
 
-              {/* Label */}
-              <div
-                className="absolute bottom-4 left-4 font-mono text-[10px] uppercase tracking-widest"
-                style={{ color: 'var(--shadow-text)' }}
-              >
-                LIVE NETWORK PULSE ▪ {PLACEHOLDER_OPERATIVES} NODES
+              {/* Footer link */}
+              <div className="px-5 py-3 text-right">
+                <Link
+                  href="#channels"
+                  className="font-mono text-[10px] uppercase tracking-[0.22em] transition-opacity hover:opacity-80"
+                  style={{ color: 'var(--mustard-dossier)' }}
+                >
+                  BROWSE BY CHANNEL →
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Section 2 — Topic Categories ────────────────────────────────────── */}
+      {/* ─── Section 2 — Channels (real seeded topics) ───────────────────────── */}
+      {/* Previously this section hard-coded 6 fake topic cards with slugs like
+          `theories-deep-digs` that don't exist in the seeded DB — so every
+          click 404'd or showed empty results. It's now fully data-driven:
+          the channel with the most transmissions gets the featured card,
+          the rest stack next to it. Counts come from the API. */}
       <section
+        id="channels"
         className="py-24 border-t"
         style={{ backgroundColor: 'var(--obsidian-void)', borderColor: 'var(--navy-signal)' }}
       >
         <div className="max-w-[1440px] mx-auto px-8">
           <EyebrowLabel
-            segments={['TOPIC CATEGORIES', '6 CHANNELS', 'CHOOSE YOUR FREQUENCY']}
+            segments={[
+              'CHANNELS',
+              `${topics.length || '—'} ${topics.length === 1 ? 'CHANNEL' : 'CHANNELS'}`,
+              'CHOOSE YOUR FREQUENCY',
+            ]}
             className="mb-6"
           />
           <h2
@@ -326,775 +364,155 @@ export const ForumContent: FC = () => {
             WHERE ARE YOU TRANSMITTING FROM?
           </h2>
 
-          {/* Asymmetric masonry grid */}
-          <div className="grid grid-cols-12 gap-4">
-
-            {/* 01 — Large featured */}
-            <Link
-              href="/forum/topic/theories-deep-digs"
-              className="col-span-12 lg:col-span-6 group"
+          {topics.length === 0 ? (
+            <div
+              className="py-16 text-center border border-dashed"
+              style={{ borderColor: 'var(--navy-signal)' }}
             >
-              <div
-                className="relative p-8 h-full min-h-[280px] flex flex-col justify-between transition-opacity hover:opacity-90 border-t-2"
-                style={{
-                  backgroundColor: 'var(--obsidian-panel)',
-                  borderTopColor: 'var(--mustard-dossier)',
-                }}
+              <p
+                className="font-mono text-[10px] uppercase tracking-[0.22em]"
+                style={{ color: 'var(--shadow-text)' }}
               >
-                <div>
-                  <div
-                    className="font-mono text-4xl font-bold mb-4"
-                    style={{ color: 'var(--mustard-dossier)' }}
-                  >
-                    01
-                  </div>
-                  <h3
-                    className="font-display text-3xl mb-2"
-                    style={{ color: 'var(--bone-text)' }}
-                  >
-                    THEORIES &amp; DEEP DIGS
-                  </h3>
-                  <p
-                    className="font-sans text-sm mb-6"
-                    style={{ color: 'var(--shadow-text)' }}
-                  >
-                    Unpack the lore, connect the threads, crack the cipher.
-                  </p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span
-                    className="font-mono text-[10px] uppercase tracking-widest"
-                    style={{ color: 'var(--shadow-text)' }}
-                  >
-                    142 THREADS ▪ 1,284 POSTS ▪ ACTIVE 2 MIN AGO
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {['#3B82F6', '#8B5CF6', '#EC4899'].map((c, i) => (
-                      <div key={i} className="w-6 h-6 rounded-full border-2 border-[var(--obsidian-panel)]" style={{ backgroundColor: c }} />
-                    ))}
-                    <span
-                      className="ml-2 font-mono text-xs"
-                      style={{ color: 'var(--mustard-dossier)' }}
-                    >
-                      →
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            {/* 02 + 03 medium stacked */}
-            <div className="col-span-12 lg:col-span-3 flex flex-col gap-4">
-              {[
-                {
-                  num: '02',
-                  name: 'CHARACTER ANALYSIS',
-                  desc: 'Dissect motivations, arcs, and contradictions.',
-                  stats: '98 THREADS ▪ 892 POSTS',
-                  slug: 'character-analysis',
-                },
-                {
-                  num: '03',
-                  name: 'LORE DIGS & ARCHIVES',
-                  desc: 'Historical record of in-world events.',
-                  stats: '76 THREADS ▪ 601 POSTS',
-                  slug: 'lore-digs-archives',
-                },
-              ].map((cat) => (
-                <Link key={cat.num} href={`/forum/topic/${cat.slug}`} className="group flex-1">
-                  <div
-                    className="relative p-6 h-full min-h-[120px] flex flex-col justify-between transition-opacity hover:opacity-90 border-t-2"
-                    style={{
-                      backgroundColor: 'var(--obsidian-panel)',
-                      borderTopColor: 'var(--navy-signal)',
-                    }}
-                  >
-                    <div>
-                      <div
-                        className="font-mono text-xl font-bold mb-2"
-                        style={{ color: 'var(--mustard-dossier)' }}
-                      >
-                        {cat.num}
-                      </div>
-                      <h3
-                        className="font-display text-xl mb-1"
-                        style={{ color: 'var(--bone-text)' }}
-                      >
-                        {cat.name}
-                      </h3>
-                      <p
-                        className="font-sans text-xs"
-                        style={{ color: 'var(--shadow-text)' }}
-                      >
-                        {cat.desc}
-                      </p>
-                    </div>
-                    <span
-                      className="font-mono text-[10px] uppercase tracking-widest mt-4 block"
-                      style={{ color: 'var(--shadow-text)' }}
-                    >
-                      {cat.stats}
-                    </span>
-                  </div>
-                </Link>
-              ))}
+                DECRYPTING CHANNELS…
+              </p>
             </div>
+          ) : (
+            (() => {
+              // Rank by threadCount so the busiest channel is featured.
+              const sortedTopics: TopicView[] = [...topics].sort(
+                (a, b) => (b.threadCount ?? 0) - (a.threadCount ?? 0),
+              );
+              const featured = sortedTopics[0];
+              const others = sortedTopics.slice(1);
 
-            {/* 04 + 05 + 06 small row */}
-            <div className="col-span-12 lg:col-span-3 flex flex-col gap-4">
-              {[
-                {
-                  num: '04',
-                  name: 'FAN ART',
-                  longName: 'FAN ART & VISUAL TRANSMISSIONS',
-                  desc: 'Community-created visuals from the world of Bharatvarsh.',
-                  stats: '112 THREADS ▪ 998 POSTS',
-                  slug: 'fan-art-visual-transmissions',
-                  badge: null,
-                },
-                {
-                  num: '05',
-                  name: 'Q&A',
-                  longName: 'Q&A WITH THE AUTHOR',
-                  desc: 'Direct channel to Atharva. Ask thoughtfully.',
-                  stats: '24 THREADS ▪ 312 POSTS',
-                  slug: 'qa-with-the-author',
-                  badge: { label: 'OFFICIAL', color: 'var(--mustard-dossier)' },
-                },
-                {
-                  num: '06',
-                  name: 'SPOILER ZONE',
-                  longName: 'SPOILER ZONE',
-                  desc: 'Beyond Chapter 19. Mark your transmissions.',
-                  stats: '42 THREADS ▪ 507 POSTS',
-                  slug: 'spoiler-zone',
-                  badge: { label: 'CH 19+ ONLY', color: 'var(--redaction)' },
-                },
-              ].map((cat) => (
-                <Link key={cat.num} href={`/forum/topic/${cat.slug}`} className="group flex-1">
-                  <div
-                    className="relative p-5 h-full min-h-[100px] flex flex-col justify-between transition-opacity hover:opacity-90 border-t-2"
-                    style={{
-                      backgroundColor: 'var(--obsidian-panel)',
-                      borderTopColor: 'var(--navy-signal)',
-                    }}
-                  >
-                    {cat.badge && (
-                      <span
-                        className="absolute top-3 right-3 font-mono text-[9px] uppercase tracking-wider px-2 py-0.5"
+              return (
+                <div className="grid grid-cols-12 gap-4">
+                  {/* FEATURED — busiest channel */}
+                  {featured && (
+                    <Link
+                      href={`/forum/topic/${featured.slug}`}
+                      className="col-span-12 lg:col-span-6 group"
+                    >
+                      <div
+                        className="relative p-8 h-full min-h-[280px] flex flex-col justify-between transition-opacity hover:opacity-90 border-t-2"
                         style={{
-                          backgroundColor: cat.badge.color + '22',
-                          color: cat.badge.color,
-                          border: `1px solid ${cat.badge.color}`,
-                          transform: 'rotate(1deg)',
+                          backgroundColor: 'var(--obsidian-panel)',
+                          borderTopColor: 'var(--mustard-dossier)',
                         }}
                       >
-                        {cat.badge.label}
-                      </span>
-                    )}
-                    <div>
-                      <div
-                        className="font-mono text-lg font-bold mb-1"
-                        style={{ color: 'var(--mustard-dossier)' }}
-                      >
-                        {cat.num}
+                        <div>
+                          <div
+                            className="font-mono text-4xl font-bold mb-4"
+                            style={{ color: 'var(--mustard-dossier)' }}
+                          >
+                            01
+                          </div>
+                          <h3
+                            className="font-display text-3xl uppercase mb-3 leading-tight"
+                            style={{ color: 'var(--bone-text)' }}
+                          >
+                            {featured.name}
+                          </h3>
+                          {featured.description && (
+                            <p
+                              className="font-sans text-sm mb-6 max-w-[50ch]"
+                              style={{ color: 'var(--shadow-text)' }}
+                            >
+                              {featured.description}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span
+                            className="font-mono text-[10px] uppercase tracking-widest"
+                            style={{ color: 'var(--shadow-text)' }}
+                          >
+                            {featured.threadCount}{' '}
+                            {featured.threadCount === 1
+                              ? 'TRANSMISSION'
+                              : 'TRANSMISSIONS'}{' '}
+                            ▪ FEATURED CHANNEL
+                          </span>
+                          <span
+                            className="font-mono text-xs transition-transform group-hover:translate-x-1"
+                            style={{ color: 'var(--mustard-dossier)' }}
+                          >
+                            ENTER →
+                          </span>
+                        </div>
                       </div>
-                      <h3
-                        className="font-display text-base mb-1"
-                        style={{ color: 'var(--bone-text)' }}
-                      >
-                        {cat.longName}
-                      </h3>
-                      <p
-                        className="font-sans text-[11px]"
-                        style={{ color: 'var(--shadow-text)' }}
-                      >
-                        {cat.desc}
-                      </p>
-                    </div>
-                    <span
-                      className="font-mono text-[10px] uppercase tracking-widest mt-3 block"
-                      style={{ color: 'var(--shadow-text)' }}
-                    >
-                      {cat.stats}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
+                    </Link>
+                  )}
 
-          {/* TopicNav — real data underneath */}
-          {topics.length > 0 && (
-            <div className="mt-8 pt-6 border-t" style={{ borderColor: 'var(--navy-signal)' }}>
-              <EyebrowLabel segments={['LIVE TOPIC FEED', `${topics.length} CHANNELS ACTIVE`]} className="mb-4" />
-              <nav className="flex flex-wrap gap-2">
-                <Link
-                  href="/forum"
-                  className="px-4 py-2 font-mono text-[11px] uppercase tracking-wider transition-opacity hover:opacity-80"
-                  style={{
-                    backgroundColor: 'var(--mustard-dossier)',
-                    color: 'var(--obsidian-void)',
-                  }}
-                >
-                  ALL TOPICS
-                </Link>
-                {topics.map((topic) => (
-                  <Link
-                    key={topic.slug}
-                    href={`/forum/topic/${topic.slug}`}
-                    className="px-4 py-2 font-mono text-[11px] uppercase tracking-wider transition-opacity hover:opacity-80"
-                    style={{
-                      border: '1px solid var(--navy-signal)',
-                      color: 'var(--steel-text)',
-                    }}
-                  >
-                    {topic.name}
-                    <span className="ml-2 opacity-60">{topic.threadCount}</span>
-                  </Link>
-                ))}
-              </nav>
-            </div>
+                  {/* OTHER CHANNELS — fills the right 6 cols in a responsive grid */}
+                  <div className="col-span-12 lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {others.map((topic, i) => {
+                      const num = String(i + 2).padStart(2, '0');
+                      return (
+                        <Link
+                          key={topic.slug}
+                          href={`/forum/topic/${topic.slug}`}
+                          className="group"
+                        >
+                          <div
+                            className="relative p-6 h-full min-h-[180px] flex flex-col justify-between transition-opacity hover:opacity-90 border-t-2"
+                            style={{
+                              backgroundColor: 'var(--obsidian-panel)',
+                              borderTopColor: 'var(--navy-signal)',
+                            }}
+                          >
+                            <div>
+                              <div
+                                className="font-mono text-2xl font-bold mb-2"
+                                style={{ color: 'var(--mustard-dossier)' }}
+                              >
+                                {num}
+                              </div>
+                              <h3
+                                className="font-display text-xl uppercase mb-2 leading-tight"
+                                style={{ color: 'var(--bone-text)' }}
+                              >
+                                {topic.name}
+                              </h3>
+                              {topic.description && (
+                                <p
+                                  className="font-sans text-xs"
+                                  style={{ color: 'var(--shadow-text)' }}
+                                >
+                                  {topic.description}
+                                </p>
+                              )}
+                            </div>
+                            <div className="flex items-center justify-between mt-4">
+                              <span
+                                className="font-mono text-[10px] uppercase tracking-widest"
+                                style={{ color: 'var(--shadow-text)' }}
+                              >
+                                {topic.threadCount}{' '}
+                                {topic.threadCount === 1
+                                  ? 'TRANSMISSION'
+                                  : 'TRANSMISSIONS'}
+                              </span>
+                              <span
+                                className="font-mono text-[10px] transition-transform group-hover:translate-x-1"
+                                style={{ color: 'var(--mustard-dossier)' }}
+                              >
+                                →
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })()
           )}
         </div>
       </section>
 
-      {/* ─── Section 3 — Hottest Transmissions ───────────────────────────────── */}
-      <section
-        id="hottest-transmissions"
-        className="py-24 border-t"
-        style={{ backgroundColor: 'var(--obsidian-deep)', borderColor: 'var(--navy-signal)' }}
-      >
-        <div className="max-w-[1440px] mx-auto px-8">
-          <EyebrowLabel segments={['HOTTEST TRANSMISSIONS', 'RIGHT NOW']} className="mb-6" />
-          <h2
-            className="font-display mb-12"
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--bone-text)' }}
-          >
-            WHAT&apos;S BEING DECODED.
-          </h2>
-
-          <div className="grid grid-cols-12 gap-8">
-
-            {/* LEFT: sticky sort filter rail */}
-            <aside className="col-span-12 lg:col-span-4 lg:sticky lg:top-24 lg:self-start">
-              <div
-                className="p-6 border-t-2"
-                style={{
-                  backgroundColor: 'var(--obsidian-panel)',
-                  borderTopColor: 'var(--mustard-dossier)',
-                }}
-              >
-                <div
-                  className="font-mono text-[10px] uppercase tracking-widest mb-4"
-                  style={{ color: 'var(--shadow-text)' }}
-                >
-                  SORT BY
-                </div>
-                <div className="flex flex-col gap-2">
-                  {SORT_LABELS.map((s) => (
-                    <button
-                      key={s.value}
-                      onClick={() => setSort(s.value)}
-                      className="text-left px-4 py-2.5 font-mono text-xs uppercase tracking-widest transition-all"
-                      style={{
-                        backgroundColor:
-                          sort === s.value
-                            ? 'var(--mustard-dossier)' + '22'
-                            : 'transparent',
-                        color:
-                          sort === s.value
-                            ? 'var(--mustard-dossier)'
-                            : 'var(--shadow-text)',
-                        borderLeft: `2px solid ${sort === s.value ? 'var(--mustard-dossier)' : 'transparent'}`,
-                      }}
-                    >
-                      {sort === s.value ? '▸ ' : ''}
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Thread stats */}
-                {pagination && (
-                  <div
-                    className="mt-6 pt-4 border-t font-mono text-[10px] uppercase tracking-widest space-y-1"
-                    style={{ borderColor: 'var(--navy-signal)', color: 'var(--shadow-text)' }}
-                  >
-                    <div>{pagination.total} TOTAL TRANSMISSIONS</div>
-                    <div>PAGE {pagination.page} OF {pagination.totalPages}</div>
-                  </div>
-                )}
-              </div>
-            </aside>
-
-            {/* RIGHT: thread list */}
-            <div className="col-span-12 lg:col-span-8">
-              {isLoading ? (
-                <div className="space-y-0">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="py-5 border-t animate-pulse"
-                      style={{ borderColor: 'var(--navy-signal)' }}
-                    >
-                      <div className="flex gap-4">
-                        <div
-                          className="w-10 h-10 rounded-full shrink-0"
-                          style={{ backgroundColor: 'var(--obsidian-panel)' }}
-                        />
-                        <div className="flex-1 space-y-2">
-                          <div
-                            className="h-4 w-3/4 rounded"
-                            style={{ backgroundColor: 'var(--obsidian-panel)' }}
-                          />
-                          <div
-                            className="h-3 w-full rounded"
-                            style={{ backgroundColor: 'var(--obsidian-panel)' }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : threads.length === 0 ? (
-                <div
-                  className="py-16 text-center font-mono text-sm uppercase tracking-widest"
-                  style={{ color: 'var(--shadow-text)' }}
-                >
-                  NO TRANSMISSIONS IN THIS CHANNEL YET. BE THE FIRST.
-                </div>
-              ) : (
-                <div className="flex flex-col">
-                  {threads.map((thread: ThreadListItem) => {
-                    const totalReactions =
-                      thread.reactionCounts.UPVOTE +
-                      thread.reactionCounts.INSIGHTFUL +
-                      thread.reactionCounts.FLAME -
-                      thread.reactionCounts.DOWNVOTE;
-                    return (
-                      <div
-                        key={thread.id}
-                        className="py-5 border-t"
-                        style={{ borderColor: 'var(--navy-signal)' }}
-                      >
-                        <div className="flex gap-4 items-start">
-
-                          {/* LEFT meta */}
-                          <div className="shrink-0 flex flex-col items-center gap-2 w-12">
-                            {thread.tags[0] && (
-                              <span
-                                className="font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 text-center leading-tight"
-                                style={{
-                                  backgroundColor: 'var(--mustard-dossier)' + '22',
-                                  color: 'var(--mustard-dossier)',
-                                  border: '1px solid var(--mustard-dossier)',
-                                  maxWidth: '48px',
-                                  wordBreak: 'break-word',
-                                }}
-                              >
-                                {thread.tags[0].name.slice(0, 8)}
-                              </span>
-                            )}
-                            <div
-                              className="text-center"
-                              style={{ color: totalReactions >= 0 ? 'var(--bone-text)' : 'var(--redaction)' }}
-                            >
-                              <div className="font-display text-2xl leading-none">
-                                {totalReactions > 0 ? '+' : ''}{totalReactions}
-                              </div>
-                              <div
-                                className="font-mono text-[9px] mt-0.5"
-                                style={{ color: 'var(--shadow-text)' }}
-                              >
-                                ▲
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* CENTER content */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start gap-2 mb-1">
-                              {thread.isPinned && (
-                                <span
-                                  className="font-mono text-[10px] uppercase tracking-wider px-1.5 py-0.5 shrink-0 mt-0.5"
-                                  style={{
-                                    backgroundColor: 'var(--mustard-dossier)' + '22',
-                                    color: 'var(--mustard-dossier)',
-                                    border: '1px solid var(--mustard-dossier)',
-                                  }}
-                                >
-                                  PINNED
-                                </span>
-                              )}
-                              {thread.isLocked && (
-                                <span
-                                  className="font-mono text-[10px] uppercase tracking-wider px-1.5 py-0.5 shrink-0 mt-0.5"
-                                  style={{
-                                    backgroundColor: 'var(--navy-signal)' + '44',
-                                    color: 'var(--shadow-text)',
-                                    border: '1px solid var(--navy-signal)',
-                                  }}
-                                >
-                                  LOCKED
-                                </span>
-                              )}
-                            </div>
-                            <h3
-                              className="font-sans font-semibold text-base leading-snug mb-1"
-                              style={{ color: 'var(--bone-text)' }}
-                            >
-                              {thread.title}
-                            </h3>
-                            {thread.excerpt && (
-                              <p
-                                className="font-sans text-sm line-clamp-1"
-                                style={{ color: 'var(--shadow-text)' }}
-                              >
-                                {thread.excerpt}
-                              </p>
-                            )}
-                            <div
-                              className="flex items-center gap-4 mt-2 font-mono text-[10px] uppercase tracking-wider"
-                              style={{ color: 'var(--shadow-text)' }}
-                            >
-                              <span>{thread.author.name || 'ANONYMOUS'}</span>
-                              <span>{timeAgo(thread.createdAt)}</span>
-                              <span>{thread.postCount} REPLIES</span>
-                              <span>{thread.viewCount} VIEWS</span>
-                            </div>
-                          </div>
-
-                          {/* RIGHT action */}
-                          <div className="shrink-0 flex flex-col items-end gap-2">
-                            <Link
-                              href={`/forum/thread/${thread.id}`}
-                              className="font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-opacity hover:opacity-80"
-                              style={{ color: 'var(--mustard-dossier)' }}
-                            >
-                              JOIN TRANSMISSION →
-                            </Link>
-                            <button
-                              className="opacity-40 hover:opacity-80 transition-opacity"
-                              aria-label="Bookmark thread"
-                              style={{ color: 'var(--steel-text)' }}
-                            >
-                              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 1H13V15L7 11L1 15V1Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* Pagination */}
-              {pagination && pagination.totalPages > 1 && (
-                <div
-                  className="flex items-center justify-center gap-2 mt-8 pt-6 border-t"
-                  style={{ borderColor: 'var(--navy-signal)' }}
-                >
-                  <button
-                    onClick={() => setPage(pagination.page - 1)}
-                    disabled={pagination.page <= 1}
-                    className="px-4 py-2 font-mono text-[11px] uppercase tracking-wider disabled:opacity-30 transition-opacity hover:opacity-80"
-                    style={{
-                      border: '1px solid var(--navy-signal)',
-                      color: 'var(--steel-text)',
-                    }}
-                  >
-                    ← PREV
-                  </button>
-                  {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
-                    .filter((p) => Math.abs(p - pagination.page) <= 2)
-                    .map((p) => (
-                      <button
-                        key={p}
-                        onClick={() => setPage(p)}
-                        className="w-9 h-9 font-mono text-[11px] uppercase tracking-wider transition-all"
-                        style={{
-                          backgroundColor:
-                            p === pagination.page
-                              ? 'var(--mustard-dossier)'
-                              : 'transparent',
-                          color:
-                            p === pagination.page
-                              ? 'var(--obsidian-void)'
-                              : 'var(--shadow-text)',
-                          border: `1px solid ${p === pagination.page ? 'var(--mustard-dossier)' : 'var(--navy-signal)'}`,
-                        }}
-                      >
-                        {p}
-                      </button>
-                    ))}
-                  <button
-                    onClick={() => setPage(pagination.page + 1)}
-                    disabled={pagination.page >= pagination.totalPages}
-                    className="px-4 py-2 font-mono text-[11px] uppercase tracking-wider disabled:opacity-30 transition-opacity hover:opacity-80"
-                    style={{
-                      border: '1px solid var(--navy-signal)',
-                      color: 'var(--steel-text)',
-                    }}
-                  >
-                    NEXT →
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Section 4 — Featured Community Transmission ──────────────────────── */}
-      <section
-        className="py-24 border-t"
-        style={{ backgroundColor: 'var(--obsidian-void)', borderColor: 'var(--navy-signal)' }}
-      >
-        <div className="max-w-[1440px] mx-auto px-8">
-          <EyebrowLabel segments={['FEATURED TRANSMISSION', 'CURATED BY BHOOMI']} className="mb-6" />
-          <h2
-            className="font-display mb-12"
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--bone-text)' }}
-          >
-            THIS WEEK&apos;S MOST DISSECTED POST.
-          </h2>
-
-          <div
-            className="grid grid-cols-12 gap-0 border"
-            style={{ borderColor: 'var(--navy-signal)', backgroundColor: 'var(--obsidian-panel)' }}
-          >
-            {/* LEFT: image */}
-            <div className="col-span-12 lg:col-span-4 relative">
-              <div className="relative w-full aspect-video lg:aspect-auto lg:h-full min-h-[240px] overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/images/characters/kahaan-banner.webp"
-                  alt="Kahaan in his father's uniform — community fan art"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-                {/* Fallback */}
-                <div
-                  className="absolute inset-0 flex items-center justify-center font-mono text-[11px] uppercase tracking-widest"
-                  style={{ backgroundColor: 'var(--obsidian-deep)', color: 'var(--shadow-text)' }}
-                >
-                  FAN ART PLACEHOLDER
-                </div>
-                {/* PINNED stamp */}
-                <span
-                  className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-wider px-2 py-1 z-10"
-                  style={{
-                    backgroundColor: 'var(--mustard-dossier)',
-                    color: 'var(--obsidian-void)',
-                    transform: 'rotate(-2deg)',
-                  }}
-                >
-                  PINNED BY AUTHOR
-                </span>
-              </div>
-            </div>
-
-            {/* RIGHT: content */}
-            <div className="col-span-12 lg:col-span-8 p-8 flex flex-col justify-between">
-              <div>
-                <EyebrowLabel
-                  segments={['[FAN ART]', 'POSTED 2026.04.11', '2,482 UPVOTES', '184 REPLIES']}
-                  className="mb-4"
-                />
-                <h3
-                  className="font-display text-2xl md:text-3xl mb-4"
-                  style={{ color: 'var(--bone-text)' }}
-                >
-                  KAHAAN IN HIS FATHER&apos;S UNIFORM — A PAINTING
-                </h3>
-                <p
-                  className="font-sans text-sm leading-relaxed mb-3"
-                  style={{ color: 'var(--steel-text)' }}
-                >
-                  I spent three weeks on this. The posture references Chapter 7 when Kahaan
-                  picks up the medal from the floor. The HUD monocle is on the left eye —
-                  cyan glow, not white. The scar on the right cheek catches the light from
-                  Indrapur&apos;s grid towers in the background.
-                </p>
-                <p
-                  className="font-sans text-sm leading-relaxed mb-6"
-                  style={{ color: 'var(--steel-text)' }}
-                >
-                  What I wanted to capture: the weight of wearing something you didn&apos;t
-                  choose. The uniform doesn&apos;t fit. It&apos;s deliberate.
-                </p>
-
-                {/* Author row */}
-                <div
-                  className="flex items-center gap-3 mb-6 pb-6 border-b"
-                  style={{ borderColor: 'var(--navy-signal)' }}
-                >
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center font-mono text-[10px]"
-                    style={{ backgroundColor: 'var(--mustard-dossier)', color: 'var(--obsidian-void)' }}
-                  >
-                    FR
-                  </div>
-                  <div>
-                    <div
-                      className="font-mono text-[11px] uppercase tracking-wider"
-                      style={{ color: 'var(--bone-text)' }}
-                    >
-                      OP: FIELD_AGENT_RUDRA_07
-                    </div>
-                    <div
-                      className="font-mono text-[10px] uppercase tracking-wider"
-                      style={{ color: 'var(--shadow-text)' }}
-                    >
-                      LVL 12 ▪ VETERAN
-                    </div>
-                  </div>
-                </div>
-
-                {/* Top comments */}
-                <div className="space-y-3 mb-6">
-                  {[
-                    { user: 'THEORY_WEAVER_04', text: 'The medal detail is from Ch 7 pg 3. I see you.' },
-                    { user: 'MESH_NODE_WATCHER', text: 'Left eye monocle. Canon accurate. Respect.' },
-                    { user: 'DOSSIER_DIGGER', text: 'That background is Indrapur\'s Grid District. The towers are exact.' },
-                  ].map((c, i) => (
-                    <div
-                      key={i}
-                      className="flex gap-2 items-start pl-4 border-l-2"
-                      style={{ borderColor: 'var(--navy-signal)' }}
-                    >
-                      <div
-                        className="w-5 h-5 rounded-full shrink-0 flex items-center justify-center font-mono text-[8px]"
-                        style={{
-                          backgroundColor: ['#3B82F6', '#8B5CF6', '#EC4899'][i],
-                          color: 'white',
-                        }}
-                      >
-                        {c.user[0]}
-                      </div>
-                      <div>
-                        <span
-                          className="font-mono text-[9px] uppercase tracking-wider mr-2"
-                          style={{ color: 'var(--mustard-dossier)' }}
-                        >
-                          {c.user}
-                        </span>
-                        <span
-                          className="font-sans text-xs"
-                          style={{ color: 'var(--shadow-text)' }}
-                        >
-                          {c.text}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA row */}
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/forum/thread/featured"
-                  className="inline-flex items-center gap-2 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] font-semibold transition-opacity hover:opacity-80"
-                  style={{
-                    backgroundColor: 'var(--mustard-dossier)',
-                    color: 'var(--obsidian-void)',
-                  }}
-                >
-                  READ FULL TRANSMISSION →
-                </Link>
-                <Link
-                  href="/forum/thread/featured#reply"
-                  className="inline-flex items-center gap-2 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] transition-opacity hover:opacity-80"
-                  style={{
-                    border: '1px solid var(--navy-signal)',
-                    color: 'var(--steel-text)',
-                  }}
-                >
-                  REPLY TO THIS THREAD
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Section 5 — Active Operatives Rail ───────────────────────────────── */}
-      <section
-        className="py-24 border-t"
-        style={{ backgroundColor: 'var(--obsidian-deep)', borderColor: 'var(--navy-signal)' }}
-      >
-        <div className="max-w-[1440px] mx-auto px-8">
-          <EyebrowLabel
-            segments={['ACTIVE OPERATIVES', 'TOP CONTRIBUTORS THIS WEEK']}
-            className="mb-6"
-          />
-          <h2
-            className="font-display mb-12"
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--bone-text)' }}
-          >
-            WHO&apos;S ON PATROL.
-          </h2>
-
-          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-            {OPERATIVE_CARDS.map((op) => (
-              <div
-                key={op.seed}
-                className="shrink-0 w-48 flex flex-col border-l-4 overflow-hidden"
-                style={{
-                  backgroundColor: 'var(--obsidian-panel)',
-                  border: `1px solid var(--navy-signal)`,
-                  borderLeft: '4px solid var(--mustard-dossier)',
-                  aspectRatio: '3/4',
-                }}
-              >
-                <div className="flex-1 relative overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`https://picsum.photos/seed/operative-${op.seed}/400/600`}
-                    alt={op.username}
-                    className="w-full h-full object-cover opacity-60"
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        'linear-gradient(to top, var(--obsidian-panel) 0%, transparent 60%)',
-                    }}
-                  />
-                </div>
-                <div className="p-3">
-                  <div
-                    className="font-mono text-[9px] uppercase tracking-wider mb-1 leading-tight"
-                    style={{ color: 'var(--bone-text)' }}
-                  >
-                    {op.username}
-                  </div>
-                  <div
-                    className="font-mono text-[9px] uppercase tracking-wider mb-1"
-                    style={{ color: 'var(--mustard-dossier)' }}
-                  >
-                    {op.rank}
-                  </div>
-                  <div
-                    className="font-mono text-[8px] uppercase tracking-wider leading-tight"
-                    style={{ color: 'var(--shadow-text)' }}
-                  >
-                    {op.posts}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Section 6 — Code of Conduct ──────────────────────────────────────── */}
+      {/* ─── Section 4 — Code of Conduct ──────────────────────────────────────── */}
       <section
         className="py-24 border-t"
         style={{ backgroundColor: 'var(--obsidian-void)', borderColor: 'var(--navy-signal)' }}
@@ -1120,7 +538,7 @@ export const ForumContent: FC = () => {
                 }}
                 aria-hidden="true"
               >
-                07
+                04
               </div>
               <div
                 className="font-mono text-[11px] uppercase tracking-widest mt-2"
@@ -1167,35 +585,49 @@ export const ForumContent: FC = () => {
         <div className="max-w-[1440px] mx-auto px-8">
           <div className="grid grid-cols-12 gap-8 items-center">
 
-            {/* LEFT: stacked avatars */}
-            <div className="col-span-12 lg:col-span-5 flex items-center justify-center lg:justify-start">
-              <div className="relative h-20 flex items-center">
-                {['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B'].map((c, i) => (
-                  <div
-                    key={i}
-                    className="absolute w-14 h-14 rounded-full border-2 flex items-center justify-center font-mono text-xs font-bold"
-                    style={{
-                      left: `${i * 32}px`,
-                      backgroundColor: c,
-                      borderColor: 'var(--obsidian-deep)',
-                      color: 'white',
-                      zIndex: 5 - i,
-                    }}
-                  >
-                    {['F', 'A', 'D', 'M', 'L'][i]}
-                  </div>
-                ))}
+            {/* LEFT: stylized clearance stamp — no fake user counts, no fake
+                avatars. Just a dossier-tile that visually balances the CTA. */}
+            <div className="col-span-12 lg:col-span-4 flex items-center justify-center lg:justify-start">
+              <div
+                className="relative border-2 border-dashed p-8 text-center"
+                style={{
+                  borderColor: 'var(--mustard-dossier)',
+                  backgroundColor: 'var(--obsidian-panel)',
+                  transform: 'rotate(-2deg)',
+                  minWidth: '260px',
+                }}
+              >
                 <div
-                  className="absolute font-mono text-[10px] uppercase tracking-widest whitespace-nowrap"
-                  style={{ left: `${5 * 32 + 8}px`, color: 'var(--shadow-text)' }}
+                  className="font-mono text-[10px] uppercase tracking-[0.22em] mb-3"
+                  style={{ color: 'var(--shadow-text)' }}
                 >
-                  +{PLACEHOLDER_OPERATIVES} MORE
+                  REQUEST FORM
+                </div>
+                <div
+                  className="font-display leading-[0.95]"
+                  style={{
+                    fontSize: 'clamp(2rem, 4vw, 2.75rem)',
+                    color: 'var(--bone-text)',
+                  }}
+                >
+                  CLEARANCE
+                  <br />
+                  PENDING.
+                </div>
+                <div
+                  className="font-mono text-[9px] uppercase tracking-[0.22em] mt-4 pt-3 border-t"
+                  style={{
+                    borderColor: 'var(--mustard-dossier)',
+                    color: 'var(--mustard-dossier)',
+                  }}
+                >
+                  AWAITING SIGNATURE ▪ FIELD CODE
                 </div>
               </div>
             </div>
 
             {/* RIGHT: CTA */}
-            <div className="col-span-12 lg:col-span-7">
+            <div className="col-span-12 lg:col-span-8">
               <EyebrowLabel segments={['READY TO TRANSMIT?']} className="mb-4" />
               <h2
                 className="font-display mb-4"
@@ -1222,7 +654,7 @@ export const ForumContent: FC = () => {
                   REQUEST OPERATIVE PROFILE →
                 </Link>
                 <a
-                  href="#hottest-transmissions"
+                  href="#channels"
                   className="inline-flex items-center gap-2 px-8 py-4 font-mono text-xs uppercase tracking-[0.15em] transition-opacity hover:opacity-80"
                   style={{
                     border: '1px solid var(--navy-signal)',

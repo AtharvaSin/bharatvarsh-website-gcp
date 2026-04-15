@@ -24,7 +24,12 @@ const reactions = [
   { type: 'FLAME' as const, icon: Flame, label: 'Fire' },
 ];
 
-/** A row of reaction buttons with counts, gated behind authentication. */
+/**
+ * A row of reaction buttons with counts, gated behind authentication.
+ * Unauthenticated users still see the counts (so they can read the field's
+ * sentiment); only the click is gated. Classified Chronicle treatment:
+ * hard-rect mono chips, mustard-dossier active state, border-based idle.
+ */
 export const ReactionBar: FC<ReactionBarProps> = ({
   counts,
   onReact,
@@ -34,26 +39,43 @@ export const ReactionBar: FC<ReactionBarProps> = ({
   const { isAuthenticated } = useSession();
 
   return (
-    <div className={cn('flex items-center gap-1', className)}>
-      {reactions.map(({ type, icon: Icon, label }) => (
-        <button
-          key={type}
-          onClick={() => onReact(type)}
-          disabled={disabled || !isAuthenticated}
-          title={isAuthenticated ? label : 'Sign in to react'}
-          className={cn(
-            'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors',
-            'border border-[var(--obsidian-600)]',
-            counts[type] > 0
-              ? 'text-[var(--mustard-500)] bg-[var(--mustard-500)]/10 border-[var(--mustard-500)]/30'
-              : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--obsidian-700)]',
-            'disabled:opacity-40 disabled:pointer-events-none'
-          )}
-        >
-          <Icon className="w-3.5 h-3.5" />
-          {counts[type] > 0 && <span>{counts[type]}</span>}
-        </button>
-      ))}
+    <div className={cn('flex items-center gap-2', className)}>
+      {reactions.map(({ type, icon: Icon, label }) => {
+        const count = counts[type];
+        const hasCount = count > 0;
+
+        return (
+          <button
+            key={type}
+            onClick={() => onReact(type)}
+            disabled={disabled || !isAuthenticated}
+            title={isAuthenticated ? label : 'Sign in to react'}
+            aria-label={`${label} (${count})`}
+            className={cn(
+              'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none border font-mono text-[10px] uppercase tracking-[0.18em] transition-colors',
+              'disabled:pointer-events-none',
+            )}
+            style={
+              hasCount
+                ? {
+                    color: 'var(--mustard-dossier)',
+                    borderColor: 'var(--mustard-dossier)',
+                    backgroundColor: 'color-mix(in srgb, var(--mustard-dossier) 15%, transparent)',
+                  }
+                : {
+                    color: 'var(--shadow-text)',
+                    borderColor: 'var(--navy-signal)',
+                    backgroundColor: 'transparent',
+                  }
+            }
+          >
+            <Icon className="w-3.5 h-3.5" />
+            {/* Always show counts when non-zero, even for unauthenticated
+                readers — lets them see how the field is voting. */}
+            {hasCount && <span>{count}</span>}
+          </button>
+        );
+      })}
     </div>
   );
 };
