@@ -4,6 +4,7 @@ import { FC, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import dispatchData from '@/content/data/dispatches.json';
+import { Dispatch, hasAnyPublishedUrl, primaryDispatchUrl } from '@/features/dispatches/types';
 
 type AngleFilter = 'all' | 'bharatsena' | 'akakpen' | 'tribhuj';
 type ChannelFilter = 'all' | 'declassified_report' | 'graffiti_photo' | 'news_article';
@@ -40,10 +41,11 @@ export const DispatchesContent: FC = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>('newest');
   const [dateRange, setDateRange] = useState<DateRangeFilter>('all');
 
-  const dispatches = dispatchData.dispatches;
+  const dispatches = dispatchData.dispatches as Dispatch[];
 
   const filteredDispatches = useMemo(() => {
-    const result = dispatches.filter((d) => {
+    const result = dispatches.filter((d: Dispatch) => {
+      if (!hasAnyPublishedUrl(d)) return false;   // A1 visibility rule
       if (angleFilter !== 'all' && d.storyAngle !== angleFilter) return false;
       if (channelFilter !== 'all' && d.contentChannel !== channelFilter) return false;
       return true;
@@ -58,12 +60,17 @@ export const DispatchesContent: FC = () => {
     return result;
   }, [angleFilter, channelFilter, sortOrder, dispatches]);
 
-  const featuredDispatch = dispatches[0];
-  const breakingCards = dispatches.slice(0, 3);
+  // Hero + breaking cards must also respect A1 — derive from the filtered+sorted list.
+  const publishedDispatches = useMemo(
+    () => dispatches.filter((d: Dispatch) => hasAnyPublishedUrl(d)),
+    [dispatches],
+  );
+  const featuredDispatch = publishedDispatches[0];
+  const breakingCards = publishedDispatches.slice(0, 3);
   const chapterLinkedDispatches = filteredDispatches.slice(0, 4);
 
   const countByAngle = (angle: AngleFilter): number =>
-    dispatches.filter((d) => d.storyAngle === angle).length;
+    publishedDispatches.filter((d) => d.storyAngle === angle).length;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--obsidian-void)' }}>
@@ -282,7 +289,7 @@ export const DispatchesContent: FC = () => {
                     }
               }
             >
-              ALL ({dispatches.length})
+              ALL ({publishedDispatches.length})
             </button>
             {angleOptions.slice(1).map((opt) => (
               <button
@@ -456,12 +463,21 @@ export const DispatchesContent: FC = () => {
                   ))}
                 </div>
 
-                <span
-                  className="font-mono uppercase text-[11px] tracking-[0.18em] cursor-pointer hover:opacity-70 transition-opacity"
-                  style={{ color: 'var(--mustard-dossier)' }}
-                >
-                  READ FULL INTERCEPT →
-                </span>
+                {(() => {
+                  const url = primaryDispatchUrl(featuredDispatch);
+                  if (!url) return null;
+                  return (
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono uppercase text-[11px] tracking-[0.18em] cursor-pointer hover:opacity-70 transition-opacity"
+                      style={{ color: 'var(--mustard-dossier)' }}
+                    >
+                      READ FULL INTERCEPT →
+                    </a>
+                  );
+                })()}
               </div>
             </div>
           </div>
@@ -639,12 +655,21 @@ export const DispatchesContent: FC = () => {
                         ) : (
                           <span />
                         )}
-                        <span
-                          className="font-mono uppercase text-[10px] tracking-[0.18em] cursor-pointer hover:opacity-70 transition-opacity"
-                          style={{ color: 'var(--mustard-dossier)' }}
-                        >
-                          READ →
-                        </span>
+                        {(() => {
+                          const url = primaryDispatchUrl(dispatch);
+                          if (!url) return null;
+                          return (
+                            <a
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-mono uppercase text-[10px] tracking-[0.18em] cursor-pointer hover:opacity-70 transition-opacity"
+                              style={{ color: 'var(--mustard-dossier)' }}
+                            >
+                              READ →
+                            </a>
+                          );
+                        })()}
                       </div>
                     </div>
                   </div>
