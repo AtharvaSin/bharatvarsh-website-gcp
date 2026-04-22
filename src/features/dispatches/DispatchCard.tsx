@@ -6,20 +6,7 @@ import { motion } from 'framer-motion';
 import { Instagram, Twitter, Facebook } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Badge } from '@/shared/ui/badge';
-
-interface Dispatch {
-  id: string;
-  topic: string;
-  hook: string;
-  caption: string;
-  storyAngle: string;
-  distillationFilter: string;
-  contentChannel: string;
-  channels: string[];
-  scheduledDate: string;
-  status: string;
-  image: string | null;
-}
+import { Dispatch, DispatchPlatform } from '@/features/dispatches/types';
 
 interface DispatchCardProps {
   dispatch: Dispatch;
@@ -137,11 +124,23 @@ export const DispatchCard: FC<DispatchCardProps> = ({ dispatch, index }) => {
             {formattedDate}
           </span>
           <div className="flex items-center gap-2">
-            {dispatch.channels.map((channel) => {
-              const Icon = platformIcons[channel];
-              return Icon ? (
-                <Icon key={channel} className="w-3.5 h-3.5 text-[var(--text-muted)] opacity-60" />
-              ) : null;
+            {(['instagram', 'twitter', 'facebook'] as DispatchPlatform[]).map((platform) => {
+              const url = dispatch.publishedUrls?.[platform];
+              if (!url) return null;
+              const Icon = platformIcons[platform];
+              if (!Icon) return null;
+              return (
+                <a
+                  key={platform}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View this dispatch on ${platform}`}
+                  className="text-[var(--text-muted)] opacity-60 hover:opacity-100 hover:text-[var(--mustard-dossier)] transition-opacity"
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                </a>
+              );
             })}
           </div>
         </div>
