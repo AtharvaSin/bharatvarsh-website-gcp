@@ -109,7 +109,7 @@ But here is the thing that keeps nagging at me -- these two Tribhujs do not look
 
 ### The Original Tribhuj (pre-2003)
 
-Founded by Rudra in the 1990s as a civilian democracy movement. Unified scattered protector cells across religious and caste lines -- each prong of the geometric trident representing a different faith pointing toward common purpose. The movement came "tantalisingly close" to forcing national elections. It refused to swear by caste, creed, or linguistic bloc.
+An ancient ascetic martial order that predates the dictatorship -- Rudra did not found it, he commanded it. By the early 1980s the order had become the loudest publicly-known voice for elected governance -- a peaceful pro-democracy movement so principled it was declared treasonous in 1984 alongside religion and caste. Through the conflict-and-underground years (1980-2003), Rudra kept the order operating across religious and caste lines -- each prong of the geometric trident representing a different faith pointing toward common purpose. The movement came "tantalisingly close" to forcing national elections. It refused to swear by caste, creed, or linguistic bloc.
 
 Its core principle: *"Security exists to protect, never to dominate."*
 
@@ -189,7 +189,7 @@ But I want to know how *you* would answer it.`,
 
 Rudra Rathore is one of the most compelling characters in the novel. Born in a Tribhuj monastery during the communal violence of the 1970s. Raised by saffron-robed tutors who paired archery drills with multi-faith scripture. As a teenager, he physically interposed himself between warring mobs, ushering women and children into stone-lined vaults while streets ran with blood.
 
-In the 1990s he unified scattered protector cells into modern Tribhuj -- a secular democracy movement so effective it nearly forced national elections. The geometric trident became a symbol of hope on slum walls across the country.
+By the early 1980s, as commander of the Tribhuj -- the ancient ascetic order he did not found but was raised by -- he led it through open conflict with the consolidating military government, becoming the most effective secular pro-democracy movement the regime had ever faced. After the 1984 ban, he kept the outlawed order alive underground for nearly two more decades. It came tantalisingly close to forcing national elections. The geometric trident became a symbol of hope on slum walls across the country.
 
 And then the Bharatsena out-manoeuvred him. The Teesta Treaty pulled the ground from under his movement. His popular support collapsed. And Rudra's response was to formally disband Tribhuj, walk beyond the snow-capped border into Nepal, and spend the next **twenty years** tending mountain terraces and teaching village children sling-shot geometry.
 

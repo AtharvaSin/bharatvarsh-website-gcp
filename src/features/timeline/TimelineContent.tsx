@@ -156,13 +156,13 @@ const POLITICAL_TRACK: TrackEvent[] = [
   { year: 1918, label: 'WWI ALLY' },
   { year: 1945, label: 'UN VETO' },
   { year: 1947, label: 'NO PARTITION' },
+  { year: 1984, label: 'TRIBHUJ BANNED', turning: true },
   { year: 1985, label: 'ARMY DECREE', turning: true },
   { year: 2025, label: '20-10 BOMBINGS', turning: true },
 ];
 
 const CHARACTER_TRACK: TrackEvent[] = [
   { year: 1970, label: 'RUDRA BORN' },
-  { year: 1990, label: 'TRIBHUJ FOUNDED' },
   { year: 1999, label: 'KAHAAN BORN' },
   { year: 2003, label: 'RUDRA EXILES' },
   { year: 2021, label: 'AFRICA FRACTURE' },
