@@ -247,13 +247,14 @@ export function HomeContent() {
             />
           </div>
 
-          {/* RIGHT — character portrait */}
+          {/* RIGHT — triumvirate hero (Kahaan foreground, Rudra midground, Pratap deep background) */}
           <div className="hidden md:block col-span-5 relative min-h-[70vh]">
             <Image
-              src="/images/characters/kahaan-banner.webp"
-              alt="Kahaan — Bharatsena Captain"
+              src="/images/home/hero-triumvirate.webp"
+              alt="The Triumvirate — Kahaan, Rudra, Pratap inside Indrapur HQ"
               fill
-              className="object-cover object-center"
+              sizes="(min-width: 768px) 42vw, 100vw"
+              className="object-cover object-left"
               priority
             />
             {/* Gradient fade left */}
