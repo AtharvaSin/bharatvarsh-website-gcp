@@ -2,12 +2,18 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { useBhoomiStore } from './store';
 import { ChatInterface } from './chat-interface';
 import { cn } from '@/shared/utils';
 
 export function BhoomiWidget() {
+    const pathname = usePathname();
     const { isOpen, toggle, close } = useBhoomiStore();
+
+    // The /bhoomi page IS the Bhoomi interrogation hub — the floating bubble
+    // would compete with the page-level chat panel. Hide it there.
+    if (pathname === '/bhoomi') return null;
 
     return (
         <div className="fixed bottom-8 right-6 z-50 flex flex-col items-end pointer-events-none">

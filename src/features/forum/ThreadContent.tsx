@@ -2,8 +2,9 @@
 
 import { FC } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, MessageSquare } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { cn } from '@/shared/utils';
+import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import { Skeleton } from '@/shared/ui/skeleton';
 import { ThreadDetail } from './components/thread-detail';
 import { PostList } from './components/post-list';
@@ -16,7 +17,12 @@ interface ThreadContentProps {
   className?: string;
 }
 
-/** Full thread view composition: header, body, reactions, replies list, and reply editor. */
+/**
+ * Full thread view composition in Classified Chronicle voice.
+ * Shell: FIELD NETWORK eyebrow + RETURN TO FIELD back link.
+ * Content: ThreadDetail (header + body + reactions).
+ * Replies: COUNTER-SIGNALS section with PostList + PostEditor or lock stamp.
+ */
 export const ThreadContent: FC<ThreadContentProps> = ({
   threadId,
   className,
@@ -34,33 +40,59 @@ export const ThreadContent: FC<ThreadContentProps> = ({
     refetch: refetchPosts,
   } = usePosts(threadId);
 
+  // ── Loading state ─────────────────────────────────────────────────
   if (threadLoading) {
     return (
-      <div className="min-h-screen bg-[var(--obsidian-900)]">
-        <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12 space-y-6">
-          <Skeleton className="h-8 w-48" />
+      <div
+        className="min-h-screen"
+        style={{ backgroundColor: 'var(--obsidian-void)' }}
+      >
+        <div className="max-w-[1240px] mx-auto px-8 py-16 space-y-6">
+          <Skeleton className="h-4 w-64" />
           <Skeleton className="h-12 w-3/4" />
-          <Skeleton className="h-64 w-full rounded-lg" />
+          <Skeleton className="h-64 w-full" />
         </div>
       </div>
     );
   }
 
+  // ── Error / Not found ─────────────────────────────────────────────
   if (threadError || !thread) {
     return (
-      <div className="min-h-screen bg-[var(--obsidian-900)] flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-xl font-semibold text-[var(--text-primary)]">
-            Thread not found
-          </h2>
-          <p className="text-[var(--text-muted)] mt-2">
-            {threadError || 'This thread may have been deleted.'}
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: 'var(--obsidian-void)' }}
+      >
+        <div className="text-center max-w-md px-8">
+          <div
+            className="font-display leading-none select-none mb-4"
+            style={{
+              fontSize: '180px',
+              color: 'var(--mustard-dossier)',
+              lineHeight: 1,
+            }}
+            aria-hidden="true"
+          >
+            404
+          </div>
+          <EyebrowLabel
+            segments={['TRANSMISSION NOT FOUND']}
+            className="mb-3 justify-center"
+          />
+          <p
+            className="font-sans text-base mb-6"
+            style={{ color: 'var(--steel-text)' }}
+          >
+            {threadError ||
+              'This channel has been sealed or the file has been removed from the archive.'}
           </p>
           <Link
             href="/forum"
-            className="text-[var(--mustard-500)] hover:underline mt-4 inline-block"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] transition-opacity hover:opacity-80"
+            style={{ color: 'var(--mustard-dossier)' }}
           >
-            Back to Forum
+            <ArrowLeft className="w-4 h-4" />
+            RETURN TO FIELD
           </Link>
         </div>
       </div>
@@ -68,24 +100,56 @@ export const ThreadContent: FC<ThreadContentProps> = ({
   }
 
   return (
-    <div className={cn('min-h-screen bg-[var(--obsidian-900)]', className)}>
-      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        <Link
-          href="/forum"
-          className="inline-flex items-center gap-1 text-sm text-[var(--text-muted)] hover:text-[var(--text-secondary)] mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Forum
-        </Link>
+    <div
+      className={cn('min-h-screen', className)}
+      style={{ backgroundColor: 'var(--obsidian-void)' }}
+    >
+      <div className="max-w-[1240px] mx-auto px-8 py-16">
+        {/* ── Top rail: eyebrow + back link ──────────────────────────── */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
+          <EyebrowLabel
+            segments={['FIELD NETWORK', 'TRANSMISSION INDEX']}
+          />
+          <Link
+            href="/forum"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] transition-opacity hover:opacity-80"
+            style={{ color: 'var(--mustard-dossier)' }}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            RETURN TO FIELD
+          </Link>
+        </div>
 
+        {/* ── Main thread ────────────────────────────────────────────── */}
         <ThreadDetail thread={thread} />
 
-        {/* Replies Section */}
-        <div className="mt-8 space-y-4">
-          <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)]">
-            <MessageSquare className="w-5 h-5" />
-            Replies ({thread.postCount})
+        {/* ── Counter-signals (replies) section ──────────────────────── */}
+        <div className="mt-20">
+          <EyebrowLabel
+            segments={[
+              'COUNTER-SIGNALS',
+              `${thread.postCount} ${thread.postCount === 1 ? 'TRANSMISSION' : 'TRANSMISSIONS'}`,
+            ]}
+            className="mb-4"
+          />
+          <h2
+            className="font-display uppercase leading-[0.95] tracking-tight mb-4"
+            style={{
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              color: 'var(--bone-text)',
+            }}
+          >
+            COUNTER-SIGNALS.
           </h2>
+          <p
+            className="font-serif italic mb-10"
+            style={{
+              color: 'var(--powder-signal)',
+              fontSize: 'clamp(1rem, 1.6vw, 1.25rem)',
+            }}
+          >
+            The field responds.
+          </p>
 
           <PostList
             posts={posts}
@@ -94,21 +158,37 @@ export const ThreadContent: FC<ThreadContentProps> = ({
             onPageChange={setPage}
           />
 
-          {/* Reply Editor */}
-          {!thread.isLocked ? (
-            <div className="mt-6 pt-6 border-t border-[var(--obsidian-600)]">
-              <h3 className="text-sm font-medium text-[var(--text-primary)] mb-3">
-                Write a Reply
-              </h3>
+          {/* ── Reply editor or locked stamp ─────────────────────────── */}
+          <div className="mt-10">
+            {!thread.isLocked ? (
               <PostEditor threadId={threadId} onSubmit={refetchPosts} />
-            </div>
-          ) : (
-            <div className="mt-6 p-4 rounded-lg bg-[var(--obsidian-800)] border border-[var(--obsidian-600)] text-center">
-              <p className="text-sm text-[var(--text-muted)]">
-                This thread is locked. No new replies can be added.
-              </p>
-            </div>
-          )}
+            ) : (
+              <div
+                className="p-8 border-2 border-dashed text-center"
+                style={{
+                  borderColor: 'var(--redaction)',
+                  backgroundColor: 'var(--obsidian-panel)',
+                  transform: 'rotate(-1deg)',
+                }}
+              >
+                <div
+                  className="font-mono text-[10px] uppercase tracking-[0.22em] mb-2"
+                  style={{ color: 'var(--redaction)' }}
+                >
+                  CHANNEL LOCKED
+                </div>
+                <p
+                  className="font-display leading-[1.1]"
+                  style={{
+                    fontSize: 'clamp(1.5rem, 2.8vw, 2rem)',
+                    color: 'var(--bone-text)',
+                  }}
+                >
+                  NO NEW TRANSMISSIONS.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

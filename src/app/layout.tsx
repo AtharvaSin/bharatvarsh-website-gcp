@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Bebas_Neue, Crimson_Pro, Noto_Sans_Devanagari } from 'next/font/google';
+import { Anton, Fraunces, Rozha_One, IBM_Plex_Mono, Noto_Sans_Devanagari } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { Header } from '@/shared/layout/header';
 import { Footer } from '@/shared/layout/footer';
@@ -10,29 +10,45 @@ import { EventTrackingProvider } from '@/components/tracking/EventTrackingProvid
 import { WebSiteJsonLd } from '@/components/seo/json-ld';
 import './globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
+// Bharatvarsh Classified Chronicle type system (Option B — Brutalist Classified Briefing)
+// - Display: Anton (condensed brutalist caps, replaces Bebas Neue)
+// - Body: General Sans (loaded via Fontshare CDN @import in globals.css)
+// - Serif + italic: Fraunces (variable, covers both roles)
+// - Devanagari: Rozha One (display weight) with Noto Sans Devanagari as body fallback
+// - Mono: IBM Plex Mono (institutional document feel, replaces JetBrains Mono)
 
-const bebasNeue = Bebas_Neue({
+const anton = Anton({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-bebas',
+  variable: '--font-anton',
 });
 
-const crimsonPro = Crimson_Pro({
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-fraunces',
+});
+
+const rozhaOne = Rozha_One({
+  weight: '400',
+  subsets: ['devanagari', 'latin'],
+  display: 'swap',
+  variable: '--font-rozha-one',
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-crimson',
+  variable: '--font-ibm-plex-mono',
 });
 
 const notoSansDevanagari = Noto_Sans_Devanagari({
   subsets: ['devanagari'],
   display: 'swap',
-  variable: '--font-devanagari',
+  variable: '--font-noto-devanagari',
 });
 
 export const viewport: Viewport = {
@@ -111,7 +127,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${bebasNeue.variable} ${crimsonPro.variable} ${notoSansDevanagari.variable} overflow-x-hidden w-full`}
+      className={`${anton.variable} ${fraunces.variable} ${rozhaOne.variable} ${ibmPlexMono.variable} ${notoSansDevanagari.variable} overflow-x-hidden w-full`}
     >
       <body
         className="min-h-screen bg-[var(--obsidian-900)] text-[var(--text-primary)] antialiased overflow-x-hidden w-full"

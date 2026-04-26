@@ -4,6 +4,17 @@ const nextConfig: NextConfig = {
   /** Enable standalone output for Docker/Cloud Run deployment */
   output: 'standalone',
 
+  /** Remote image hosts — GCS bucket for dispatch hero images */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        pathname: '/bharatvarsh-website-assets/**',
+      },
+    ],
+  },
+
   /** Security headers for all routes (Phase 7) */
   headers: async () => [
     {

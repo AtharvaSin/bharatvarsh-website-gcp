@@ -4,6 +4,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 import { Twitter, Instagram, Facebook, Mail } from 'lucide-react';
 import { cn } from '@/shared/utils';
+import { DocumentStamp } from '@/shared/ui/DocumentStamp';
 
 interface FooterProps {
   className?: string;
@@ -45,24 +46,34 @@ export const Footer: FC<FooterProps> = ({ className }) => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
           <div className="md:col-span-1">
-            <Link href="/" className="inline-block">
-              <span className="font-display text-2xl tracking-wide text-[var(--powder-300)]">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 group"
+              aria-label="Bharatvarsh home"
+            >
+              <span
+                aria-hidden="true"
+                style={{ fontFamily: 'var(--font-devanagari)' }}
+                className="text-2xl text-[var(--mustard-dossier)] opacity-90 group-hover:opacity-100 transition-opacity"
+              >
+                भा
+              </span>
+              <span className="font-display text-2xl tracking-wide text-[var(--bone-text)]">
                 BHARATVARSH
               </span>
             </Link>
-            <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
-              An alternate reality thriller where truth is more dangerous than
-              any weapon.
+            <p className="mt-4 text-sm text-[var(--steel-text)] leading-relaxed">
+              A dystopian chronicle of the subcontinent that wasn&rsquo;t.
             </p>
-            <p className="mt-4 text-sm text-[var(--text-muted)] font-serif italic">
+            <p className="mt-4 text-sm text-[var(--powder-signal)] font-serif italic">
               &ldquo;What would you sacrifice for the truth?&rdquo;
             </p>
           </div>
 
           {/* Explore Links */}
           <div>
-            <h4 className="text-sm font-semibold text-[var(--powder-400)] uppercase tracking-wider mb-4">
-              Explore
+            <h4 className="font-mono uppercase text-[11px] tracking-[0.18em] text-[var(--mustard-dossier)] mb-4">
+              EXPLORE
             </h4>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
@@ -80,8 +91,8 @@ export const Footer: FC<FooterProps> = ({ className }) => {
 
           {/* About Links */}
           <div>
-            <h4 className="text-sm font-semibold text-[var(--powder-400)] uppercase tracking-wider mb-4">
-              About
+            <h4 className="font-mono uppercase text-[11px] tracking-[0.18em] text-[var(--mustard-dossier)] mb-4">
+              ABOUT
             </h4>
             <ul className="space-y-3">
               {footerLinks.about.map((link) => (
@@ -99,8 +110,8 @@ export const Footer: FC<FooterProps> = ({ className }) => {
 
           {/* Connect Links */}
           <div>
-            <h4 className="text-sm font-semibold text-[var(--powder-400)] uppercase tracking-wider mb-4">
-              Connect
+            <h4 className="font-mono uppercase text-[11px] tracking-[0.18em] text-[var(--mustard-dossier)] mb-4">
+              CONNECT
             </h4>
             <ul className="space-y-3">
               {footerLinks.connect.map((link) => {
@@ -124,23 +135,24 @@ export const Footer: FC<FooterProps> = ({ className }) => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-[var(--obsidian-700)] mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[var(--text-muted)]">
-            &copy; {new Date().getFullYear()} Bharatvarsh. All rights reserved.
+        <div className="border-t border-[var(--navy-signal)] mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="font-mono uppercase text-[10px] tracking-[0.18em] text-[var(--shadow-text)]">
+            &copy; {new Date().getFullYear()} BHARATVARSH &nbsp;&#9642;&nbsp; ALL DOSSIERS RESERVED
           </p>
           <div className="flex items-center gap-6">
             <Link
               href="#privacy"
-              className="text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
+              className="font-mono uppercase text-[10px] tracking-[0.18em] text-[var(--shadow-text)] hover:text-[var(--bone-text)] transition-colors"
             >
-              Privacy Policy
+              PRIVACY
             </Link>
             <Link
               href="#terms"
-              className="text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
+              className="font-mono uppercase text-[10px] tracking-[0.18em] text-[var(--shadow-text)] hover:text-[var(--bone-text)] transition-colors"
             >
-              Terms of Use
+              TERMS
             </Link>
+            <DocumentStamp docId="BVR-0001" revision="REV 27" />
           </div>
         </div>
       </div>

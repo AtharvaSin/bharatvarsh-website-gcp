@@ -2,6 +2,7 @@
 
 import { FC } from 'react';
 import { AlertTriangle, ShieldX } from 'lucide-react';
+import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import { cn } from '@/shared/utils';
 
 interface QuarantineNoticeProps {
@@ -9,25 +10,35 @@ interface QuarantineNoticeProps {
   className?: string;
 }
 
-/** Displays a contextual banner when content is quarantined or removed by moderation. */
+/** Displays a Classified Chronicle moderation banner when content is quarantined or removed. */
 export const QuarantineNotice: FC<QuarantineNoticeProps> = ({ status, className }) => {
   if (status === 'QUARANTINED') {
     return (
       <div
         className={cn(
-          'flex items-start gap-3 p-4 rounded-lg border',
-          'bg-[var(--status-warning)]/10 border-[var(--status-warning)]/30',
-          className
+          'flex items-start gap-3 p-4 border-l-4',
+          className,
         )}
+        style={{
+          backgroundColor: 'var(--obsidian-deep)',
+          borderLeftColor: 'var(--status-warning)',
+          borderTop: '1px solid var(--status-warning)',
+          borderRight: '1px solid var(--status-warning)',
+          borderBottom: '1px solid var(--status-warning)',
+        }}
       >
-        <AlertTriangle className="w-5 h-5 text-[var(--status-warning)] shrink-0 mt-0.5" />
-        <div>
-          <p className="text-sm font-medium text-[var(--status-warning)]">
-            This content is under review
-          </p>
-          <p className="text-xs text-[var(--text-muted)] mt-1">
-            Our moderation system has flagged this content for review. It will be
-            visible once approved by a moderator.
+        <AlertTriangle
+          className="w-5 h-5 shrink-0 mt-0.5"
+          style={{ color: 'var(--status-warning)' }}
+        />
+        <div className="flex-1">
+          <EyebrowLabel
+            segments={['CONTENT UNDER REVIEW', 'AWAITING MODERATION']}
+            className="mb-2"
+          />
+          <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--steel-text)' }}>
+            Mesh heuristics flagged this transmission for review. It will surface
+            publicly once cleared by a moderator.
           </p>
         </div>
       </div>
@@ -38,19 +49,29 @@ export const QuarantineNotice: FC<QuarantineNoticeProps> = ({ status, className 
     return (
       <div
         className={cn(
-          'flex items-start gap-3 p-4 rounded-lg border',
-          'bg-[var(--status-alert)]/10 border-[var(--status-alert)]/30',
-          className
+          'flex items-start gap-3 p-4 border-l-4',
+          className,
         )}
+        style={{
+          backgroundColor: 'var(--obsidian-deep)',
+          borderLeftColor: 'var(--redaction)',
+          borderTop: '1px solid var(--redaction)',
+          borderRight: '1px solid var(--redaction)',
+          borderBottom: '1px solid var(--redaction)',
+        }}
       >
-        <ShieldX className="w-5 h-5 text-[var(--status-alert)] shrink-0 mt-0.5" />
-        <div>
-          <p className="text-sm font-medium text-[var(--status-alert)]">
-            This content has been removed
-          </p>
-          <p className="text-xs text-[var(--text-muted)] mt-1">
-            This content was removed by a moderator for violating community
-            guidelines.
+        <ShieldX
+          className="w-5 h-5 shrink-0 mt-0.5"
+          style={{ color: 'var(--redaction)' }}
+        />
+        <div className="flex-1">
+          <EyebrowLabel
+            segments={['TRANSMISSION REMOVED', 'MODERATOR ORDER']}
+            className="mb-2"
+          />
+          <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--steel-text)' }}>
+            This transmission was pulled from the channel for violating field
+            protocols.
           </p>
         </div>
       </div>

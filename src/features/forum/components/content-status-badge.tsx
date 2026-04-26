@@ -16,11 +16,11 @@ interface StatusConfig {
 }
 
 const STATUS_CONFIG: Record<string, StatusConfig> = {
-  PUBLISHED: { label: 'Published', color: 'var(--status-success)', icon: Check },
-  QUARANTINED: { label: 'Under Review', color: 'var(--status-warning)', icon: Clock },
-  REMOVED: { label: 'Removed', color: 'var(--status-alert)', icon: ShieldX },
-  DELETED: { label: 'Deleted', color: 'var(--text-muted)', icon: Trash2 },
-  DRAFT: { label: 'Draft', color: 'var(--text-muted)', icon: Clock },
+  PUBLISHED: { label: 'PUBLISHED', color: 'var(--declassified)', icon: Check },
+  QUARANTINED: { label: 'UNDER REVIEW', color: 'var(--status-warning)', icon: Clock },
+  REMOVED: { label: 'REMOVED', color: 'var(--redaction)', icon: ShieldX },
+  DELETED: { label: 'DELETED', color: 'var(--shadow-text)', icon: Trash2 },
+  DRAFT: { label: 'DRAFT', color: 'var(--shadow-text)', icon: Clock },
 };
 
 /** Displays a small status badge for content moderation state. Hidden for published content. */
@@ -37,13 +37,13 @@ export const ContentStatusBadge: FC<ContentStatusBadgeProps> = ({ status, classN
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border',
+        'inline-flex items-center gap-1 px-2 py-0.5 rounded-none text-[9px] font-mono uppercase tracking-[0.18em] border',
         className
       )}
       style={{
         color: config.color,
-        borderColor: `color-mix(in srgb, ${config.color} 30%, transparent)`,
-        backgroundColor: `color-mix(in srgb, ${config.color} 10%, transparent)`,
+        borderColor: config.color,
+        backgroundColor: `color-mix(in srgb, ${config.color} 12%, transparent)`,
       }}
     >
       <Icon className="w-3 h-3" />

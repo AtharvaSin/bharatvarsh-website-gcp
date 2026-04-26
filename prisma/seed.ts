@@ -115,7 +115,17 @@ async function main(): Promise<void> {
   console.log(`  Created ${TEST_USERS.length} test users.`);
 
   // --- Forum seed threads ---
-  console.log('Seeding forum threads...');
+  // Wipe-and-reseed strategy: every run of `npm run db:seed` deletes ALL
+  // threads previously authored by the admin user and recreates the canonical
+  // 9 from prisma/forum-seed-threads.ts. This guarantees that the live forum
+  // always matches the file — old seed content (from earlier iterations of
+  // forum-seed-threads.ts) gets removed instead of lingering forever because
+  // its slug already exists in the DB.
+  //
+  // SAFETY NOTE: real users post under their own user accounts, not the
+  // admin@bharatvarsh.dev account. This wipe ONLY targets admin-authored
+  // threads, which are exclusively the seeded canonical set.
+  console.log('Seeding forum threads (wipe-and-reseed)...');
 
   const adminUser = await prisma.user.findUnique({
     where: { email: 'admin@bharatvarsh.dev' },
@@ -124,20 +134,40 @@ async function main(): Promise<void> {
     throw new Error('Admin user not found — cannot seed threads');
   }
 
+  // Step 1: delete all admin-authored threads. Cascades drop their tag links,
+  // posts, reactions, and view counters per the schema's onDelete: Cascade.
+  // Reports have an optional Thread FK without an explicit onDelete cascade,
+  // so detach them first to avoid an FK constraint failure on databases where
+  // the migration recorded NO ACTION instead of SET NULL.
+  const adminThreadIds = await prisma.thread.findMany({
+    where: { authorId: adminUser.id },
+    select: { id: true },
+  });
+  if (adminThreadIds.length > 0) {
+    await prisma.report.updateMany({
+      where: { threadId: { in: adminThreadIds.map((t) => t.id) } },
+      data: { threadId: null },
+    });
+  }
+  const wiped = await prisma.thread.deleteMany({
+    where: { authorId: adminUser.id },
+  });
+  if (wiped.count > 0) {
+    console.log(`  Wiped ${wiped.count} stale admin-authored thread(s).`);
+  }
+
+  // Step 2: re-insert every thread from forum-seed-threads.ts.
+  let created = 0;
+  let skippedNoTopic = 0;
   for (const thread of forumSeedThreads) {
     const slug = slugify(thread.title);
-    const existing = await prisma.thread.findUnique({ where: { slug } });
-    if (existing) {
-      console.log(`  Skipped (exists): ${thread.title}`);
-      continue;
-    }
 
-    // Resolve topic IDs from slugs
     const topics = await prisma.topic.findMany({
       where: { slug: { in: thread.topicSlugs } },
     });
     if (topics.length === 0) {
       console.warn(`  Skipped (no matching topics): ${thread.title}`);
+      skippedNoTopic++;
       continue;
     }
 
@@ -155,9 +185,10 @@ async function main(): Promise<void> {
         },
       },
     });
+    created++;
     console.log(`  Created: ${thread.title} [${thread.topicSlugs.join(', ')}]${thread.isPinned ? ' (pinned)' : ''}`);
   }
-  console.log(`  Processed ${forumSeedThreads.length} forum threads.`);
+  console.log(`  Processed ${forumSeedThreads.length} forum threads — created ${created}, skipped ${skippedNoTopic}.`);
 
   console.log('Seed complete.');
 }

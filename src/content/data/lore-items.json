@@ -16,22 +16,22 @@
           "id": "h1",
           "x": 65,
           "y": 25,
-          "label": "OPTICAL HUD IMPLANT",
-          "description": "Class-4 Tactical Overlay"
+          "label": "HUD MONOCLE",
+          "description": "Neural-diode HUD lattice. Floats over the left eye."
         },
         {
           "id": "h2",
           "x": 30,
           "y": 60,
           "label": "NEURAL MAG-HOLSTER",
-          "description": "Standard Issue Sidearm Mount"
+          "description": "Twin pistols controlled via neural implant."
         }
       ],
       "traits": [
-        "Dutiful",
-        "Analytical",
-        "Conflicted",
-        "Brave"
+        "Ambitious",
+        "Tactical",
+        "Sardonic",
+        "Conflicted"
       ],
       "media": {
         "card": "/images/characters/kahaan-card.webp",
@@ -46,9 +46,9 @@
       "nameDevanagari": "रुद्र",
       "category": "characters",
       "classification": "declassified",
-      "subtype": "Deuteragonist",
-      "tagline": "Disciplined warrior. Grey Trident legacy.",
-      "description": "The Mountain Shadow. Rudra wields the Old Trident—battered iron, heavier than sin, and utterly unlike the [REDACTED] symbols of the new terrorists. A pacifist by doctrine, he carries the silence of the Himalayas into the noise of the city. He fights not to destroy, but to correct.",
+      "subtype": "The Mountain Shadow",
+      "tagline": "He led the Tribhuj the day the army outlawed it. He has been in exile ever since.",
+      "description": "The Mountain Shadow. Rudra was leading the Tribhuj on the morning the army's Year-Turn Decree declared every creed of choice illegal. He did not flee. He did not fight a war he could not win without civilian blood. He disbanded what the state could see of his order, went into the Nepal hills, and answered to no title but dada for twenty years. Then a bomber claimed his order's name — and a promise pulled him out of silence.",
       "quote": "The mountain does not hate the wind. It simply endures.",
       "quoteAuthor": "Rudra",
       "hotspots": [
@@ -56,15 +56,15 @@
           "id": "r1",
           "x": 80,
           "y": 40,
-          "label": "OLD IRON TRIDENT",
-          "description": "Pre-Mesh Artifact"
+          "label": "WORKING-IRON TRIDENT",
+          "description": "Battered, weight-forward. Tool first, weapon second."
         }
       ],
       "traits": [
-        "Loyal",
-        "Disciplined",
-        "Intuitive",
-        "Secretive"
+        "Laconic",
+        "Tactical",
+        "Protective",
+        "Non-Lethal"
       ],
       "media": {
         "card": "/images/characters/rudra-card.webp",
@@ -79,9 +79,9 @@
       "nameDevanagari": "प्रताप",
       "category": "characters",
       "classification": "declassified",
-      "subtype": "Antagonist",
-      "tagline": "Order requires sacrifice. He decides who pays.",
-      "description": "The Smiling Architect of Order. With a regulation-neat chevron moustache and the Director's Signet on his right hand, Pratap doesn't just enforce the Mesh—he designed it. He views the [REDACTED] bombings not as a tragedy, but as an audit. Order requires sacrifice, and he has the ledger.",
+      "subtype": "Supreme Commander",
+      "tagline": "The hand that built the Mesh.",
+      "description": "Forty-seven years of service, seven administrations, zero ceded. The Smiling Architect of Order — regulation-neat chevron moustache, the Director's Signet on his right hand — is the iron spine that held Bharatvarsh together after the Republic failed. The Mesh is his design. The Quieting is his legacy. The newspapers call him the last unbroken promise of the 1985 Decree.",
       "quote": "Chaos is a choice. Order is a responsibility.",
       "quoteAuthor": "General Pratap",
       "hotspots": [
@@ -90,14 +90,35 @@
           "x": 20,
           "y": 75,
           "label": "DIRECTOR'S SIGNET",
-          "description": "Authority Level: Absolute"
+          "description": "Right hand. Ashoka-wheel and triangular wings engraved in brushed steel. Issued only to the Supreme Commander."
+        },
+        {
+          "id": "p2",
+          "x": 52,
+          "y": 18,
+          "label": "CHEVRON MOUSTACHE",
+          "description": "Regulation-neat. Squared ends. Never crosses the lip line. Fine silver along the edge for age readability."
+        },
+        {
+          "id": "p3",
+          "x": 48,
+          "y": 55,
+          "label": "NAVY OFFICER'S COAT",
+          "description": "Powder-blue shirt beneath an open navy great-coat. Large emblem centred on the back. Small emblem, left shoulder. Right shoulder text-only."
+        },
+        {
+          "id": "p4",
+          "x": 78,
+          "y": 68,
+          "label": "COMMANDER'S OMNI-HANDLE",
+          "description": "Pen-length baton in the inner-coat sheath. Telescopes. A twist locks it into a 14cm punch-dagger. Reads as a stylus in public; a last-ditch blade in the war room."
         }
       ],
       "traits": [
-        "Ruthless",
-        "Calculating",
+        "Disciplined",
+        "Strategic",
         "Patriotic",
-        "Authoritative"
+        "Unyielding"
       ],
       "media": {
         "card": "/images/characters/pratap-card.webp",
@@ -112,14 +133,44 @@
       "nameDevanagari": "हना",
       "category": "characters",
       "classification": "declassified",
-      "subtype": "Ally",
-      "tagline": "The East remembers what the Mesh forgot",
-      "description": "The Moral Lens. Left-handed and sharp as her chin-length wedge bob, Hana bridges the gap between Indrapur's glass towers and the silent, snowy East. She knows the treaty zones better than the map-makers, and she knows that not all truth survives the upload.",
+      "subtype": "Major, Northern Plains Command",
+      "tagline": "The only officer who can tell Kahaan 'no' — and does.",
+      "description": "The Moral Lens. Ops-Two to Kahaan's Ops-One. Left-handed, chin-length wedge bob, Olympic-grade marksmanship earned at a firing range where she once stalked the dawn shift trying to break a record her war-hero father had set. She did. He said, 'Good grouping.' Comrades speak of 'two Hanas' — the one who returns fire in three-word sentences and the one who sneaks contraband storybooks to the quartermaster's children. Both are real. The mask is a timing device.",
+      "hotspots": [
+        {
+          "id": "hn1",
+          "x": 50,
+          "y": 18,
+          "label": "WEDGE BOB",
+          "description": "Chin-length, side-swept fringe, tapered wedge at the nape. On duty she tucks the left side behind her ear so the scope reads clean."
+        },
+        {
+          "id": "hn2",
+          "x": 28,
+          "y": 55,
+          "label": "BRACE-COMM",
+          "description": "Left wrist. She is left-hand dominant. When it wakes it throws a small blue-white map pane across her forearm."
+        },
+        {
+          "id": "hn3",
+          "x": 70,
+          "y": 60,
+          "label": "FIELD-DRESSING KIT",
+          "description": "Compact, clean white. The 'moral first' prop — her hand reaches it before the holster, even under pressure."
+        },
+        {
+          "id": "hn4",
+          "x": 82,
+          "y": 82,
+          "label": "PRECISION RIFLE",
+          "description": "Matte charcoal body, mid-weight barrel, low-profile scope. Advanced but restrained — precision over aggression."
+        }
+      ],
       "traits": [
-        "Mysterious",
-        "Knowledgeable",
-        "Cautious",
-        "Determined"
+        "Disciplined",
+        "Humane",
+        "Direct",
+        "Conflicted"
       ],
       "media": {
         "card": "/images/characters/hana-card.webp",
@@ -134,14 +185,44 @@
       "nameDevanagari": "अर्शी",
       "category": "characters",
       "classification": "classified",
-      "subtype": "Mystery",
-      "tagline": "Some presences are felt before they're understood",
-      "description": "The Hidden Heir. Marked by the deep blue eyes of the Akakpen bloodline, she moves through the city like a glitch in the render. She carries a white-ceramic pulse gun and the weight of a broken treaty. Some presences are felt before they are understood.",
+      "subtype": "Princess of Akakpen",
+      "tagline": "Some names arrive before the body they belong to.",
+      "description": "Heir-apparent of the Akakpen while Queen Kaali lives. Raised inside the tribe's treaty hills — adopted daughter of Kaali under the law that made bloodline and choice legally identical. Cross-trained on sword, bow, mixed martial arts, and firearms; carries a compact pulse gun inside the waistband at four o'clock. Begins defiant. Ends authoritative. In early arc her chin lifts two degrees before she speaks; late arc she lets the stillness of her posture do the speaking for her.",
+      "hotspots": [
+        {
+          "id": "ar1",
+          "x": 52,
+          "y": 18,
+          "label": "THE BLUE GAZE",
+          "description": "Deep cool blue #0F2749. Almond, slight inner fold. The Akakpen heir mark."
+        },
+        {
+          "id": "ar2",
+          "x": 30,
+          "y": 38,
+          "label": "AKAKPEN KNOT",
+          "description": "Sash-clasp brooch in formal wardrobe; 80mm reflective heat-press on the field cloak. Monochrome. Princess-scale only — never the queen's gold ring."
+        },
+        {
+          "id": "ar3",
+          "x": 72,
+          "y": 70,
+          "label": "PULSE GUN",
+          "description": "Matte graphite chassis, white ceramic inlays, amber status LEDs. Carried IWB at 4 o'clock. Default mode: STUN."
+        },
+        {
+          "id": "ar4",
+          "x": 22,
+          "y": 80,
+          "label": "ALPINE CLOAK",
+          "description": "White winter cloak with balaclava and reflective goggles parked on the crown. Charcoal soft-armor beneath. Mountain boots with integrated steel teeth."
+        }
+      ],
       "traits": [
-        "Enigmatic",
-        "Significant",
-        "Connected",
-        "Unknown"
+        "Composed",
+        "Defiant",
+        "Disciplined",
+        "Sovereign-in-waiting"
       ],
       "media": {
         "card": "/images/characters/arshi-card.webp",
@@ -155,9 +236,41 @@
       "name": "Indrapur HQ",
       "category": "locations",
       "classification": "declassified",
-      "subtype": "Military",
-      "tagline": "The nerve center of absolute authority",
-      "description": "The Oval Fortress. Inside, the Elliptical Glass Map-Table glows with real-time data, watched over by the Tri-Anchor Wall. Here, in the cold light of the command panes, the silence is the ultimate luxury. Access is absolute; shadows are forbidden.",
+      "subtype": "National Capital · Directorate Seat",
+      "tagline": "The seat of the Directorate. The city that sleeps under drones.",
+      "description": "Indrapur \u2014 formerly known as Indraprastha \u2014 is the national capital of Bharatvarsh and the top-floor home of the General Directorate. General Pratap runs the state from a glass-walled command aerie above the city, beneath a triangle of wall icons that never moves: a Chandragupta portrait, a live national map, a framed constitutional preamble. At night, the avenues fall silent and the curfew drones paint slow white cones over the empty boulevards. The curfew breaks at six AM like a rotten plank under a foot.",
+      "quote": "Indrapur slept under the exacting discipline of its curfew drones, whose slow, patient circuits painted the avenues with cones of white.",
+      "quoteAuthor": "THE CHRONICLE, NIGHT 0",
+      "hotspots": [
+        {
+          "id": "in1",
+          "x": 52,
+          "y": 18,
+          "label": "TOP-FLOOR COMMAND AERIE",
+          "description": "Glass-walled office of General Pratap, raised above the city. A raised-platform chair. A triangle of framed icons on the wall: Chandragupta portrait, national map, constitutional preamble."
+        },
+        {
+          "id": "in2",
+          "x": 72,
+          "y": 48,
+          "label": "THE DIRECTOR'S DESK",
+          "description": "The only surface from which the state actually issues orders. Pratap leans lightly against its edge; his right hand drifts to the signet on his index finger when he is pretending to consider something."
+        },
+        {
+          "id": "in3",
+          "x": 28,
+          "y": 58,
+          "label": "THE WALL MAP",
+          "description": "A live national map. His index finger lands on it first, then on the preamble, then on the visitor. The order is fixed. The visitor learns to cross the distance to speak."
+        },
+        {
+          "id": "in4",
+          "x": 80,
+          "y": 82,
+          "label": "CURFEW DRONE CORRIDOR",
+          "description": "Cones of white light, slow and patient, from 9 PM to 6 AM. No permit, no exit. The avenues below read as geometry until daybreak."
+        }
+      ],
       "traits": [
         "Fortress Architecture",
         "Total Surveillance",
@@ -176,14 +289,46 @@
       "name": "Lakshmanpur",
       "category": "locations",
       "classification": "declassified",
-      "subtype": "Metropolis",
-      "tagline": "Industrial heartland where smoke meets surveillance",
-      "description": "Northern river-plain metropole defined by fog-prone winters and dense surveillance infrastructure. The industrial powerhouse of Bharatvarsh features foundries, manufacturing plants, and research facilities. The Mesh infrastructure here is exceptionally dense, monitoring both production quotas and worker movements. OxyPole towers stand at 60-80m intervals, scrubbing air and mounting hovercams. Efficiency defines daily life in this city of pale limestone and vertical gardens.",
+      "subtype": "Capital City of Uttar Pradesh",
+      "tagline": "The city where the chronicle\u2019s first stage was set.",
+      "description": "Lakshmanpur is the capital city of Uttar Pradesh \u2014 a Northern Plains bloc stronghold with dense Mesh coverage, an annual festive fortnight in October, and the widest pedestrian arenas in the country. On the last Friday of the festive fortnight, the city\u2019s open-air stages fill with families. On one such night, a woman steps up to a microphone, speaks the word Tribhuj out loud for the first time in almost half a century, and detonates everything about what the country thought it had settled. Everything the chronicle investigates begins here.",
+      "quote": "Lakshmanpur is the outlier for theatrics \u2014 stage, pamphlets, all the shouting about \u2018Tribhuj\u2019.",
+      "quoteAuthor": "MANAN, CASE BRIEFING",
+      "hotspots": [
+        {
+          "id": "la1",
+          "x": 48,
+          "y": 28,
+          "label": "THE ARENA STAGE",
+          "description": "The open-air stage of the annual festive fortnight. A microphone. A voice that does not match the programme. A word that has been a crime since 1984."
+        },
+        {
+          "id": "la2",
+          "x": 72,
+          "y": 58,
+          "label": "THE OVERPASS",
+          "description": "A hand-cart embedded in the side of a van as if the city had tried to absorb the blow with an organ it could spare. Lights running their program across a scene the program no longer applied to."
+        },
+        {
+          "id": "la3",
+          "x": 22,
+          "y": 60,
+          "label": "THE FOOD STALL CRATER",
+          "description": "Where a food stall had been. Bowls turned into shrapnel. A picture in the first forensic file Kahaan opens."
+        },
+        {
+          "id": "la4",
+          "x": 78,
+          "y": 22,
+          "label": "THE TRIAGE BAY",
+          "description": "A hospital receiving bay with its triage banners fluttering like flags who had lost their flagpoles. One of seven frames that make a single picture \u2014 coordination."
+        }
+      ],
       "traits": [
-        "Industrial Corridor",
+        "Regional Capital",
         "Dense Mesh Coverage",
-        "Worker Blocks",
-        "Research Campus"
+        "Festive Arenas",
+        "20-10 Origin Site"
       ],
       "media": {
         "card": "/images/locations/lakshmanpur-card.webp",
@@ -197,12 +342,44 @@
       "name": "Akakpen Tribe",
       "category": "factions",
       "classification": "declassified",
-      "subtype": "Resistance",
-      "tagline": "Where ancient ways resist modern control",
-      "description": "Semi-autonomous treaty people maintaining governance through the Queen's Council in the Eastern and Himalayan wilds. Operating under non-lethal first doctrine for tribe-versus-tribe disputes, lethal force reserved only for outside invaders. The Akakpen preserve traditions from before the Mesh, holding territories in no-fly valleys like Silent Throat and Knife-Wind Chute. Their autonomy represents a crack in the regime's absolute control—a reminder that alternatives exist.",
+      "subtype": "Treaty People",
+      "tagline": "The might of the east. The gate that boots do not open.",
+      "description": "The Akakpen tribe of the eastern hills of Arunachal. A semi-sovereign people whose treaty-won pocket of autonomy is the only stretch of ground the Directorate does not walk freely on. They are governed not from a palace but from a council chamber with a round table, seven chairs, and a map of the hills inked by hand — ridge by ridge, river by river, annotated with names and jokes and warnings that exist nowhere else. Their perimeter is electric, their doctrine is non-lethal by design, and their treaty is the reason the gate is still a gate.",
+      "quote": "The non-lethal saved us. I'm here because you showed restraint.",
+      "quoteAuthor": "PRINCESS ARSHI, TO THE ROUND TABLE",
+      "hotspots": [
+        {
+          "id": "ak1",
+          "x": 72,
+          "y": 18,
+          "label": "TIRED SAFFRON FLAG",
+          "description": "Flags a tired saffron fluttering off the porch rails of the capital cabins. Not green. Not deep-forest. The colour the Akakpen actually raise over their own roof."
+        },
+        {
+          "id": "ak2",
+          "x": 40,
+          "y": 55,
+          "label": "HAND-INKED HILL MAP",
+          "description": "Not the army's sterile satellite print. Ridge by ridge, river by river, inked by hand and annotated with names and jokes and warnings that existed nowhere else."
+        },
+        {
+          "id": "ak3",
+          "x": 76,
+          "y": 68,
+          "label": "NON-LETHAL DART",
+          "description": "A short leaf of feathered plastic. A small tube in the neck. The Akakpen pattern when they need men to stop without dying. Restraint by design."
+        },
+        {
+          "id": "ak4",
+          "x": 20,
+          "y": 28,
+          "label": "AKAKPEN KNOT",
+          "description": "Tribe insignia. Two nested mountain chevrons enclosing a hollow circle — mountain within mountain, life at the centre. Monochrome only. Worn at council carriage, never raised in place of the saffron."
+        }
+      ],
       "traits": [
         "Treaty Rights",
-        "Queen's Council",
+        "Round Table",
         "Non-Lethal Doctrine",
         "Cultural Preservation"
       ],
@@ -220,7 +397,39 @@
       "classification": "declassified",
       "subtype": "Government",
       "tagline": "Polite inevitability. Order through control.",
-      "description": "The ruling military directorate that has governed Bharatvarsh since the Year-Turn Decree of 1985. Operating through 'polite inevitability'—the governance philosophy that makes compliance feel natural. The Bharatsena maintains the surveillance state, controls the Mesh, and has delivered four decades of stability at the cost of civil liberties. Wrist-scans, hovercams, and checkpoint algorithms ensure total visibility. Curfew runs 21:00 to 06:00 in all metropoles.",
+      "description": "The continental military state that has governed Bharatvarsh for almost half a century. Its apex command body, the Directorate, runs the nation through martial tribunals while parliament sits ceremonial in its own chamber. Curfew drones paint the metropoles' avenues at night with cones of white. Hovercams ride the crowds. Brace-Comms handle the payments. The state presents itself abroad as peace-through-strength; it enforces itself at home through a polite inevitability that makes compliance feel natural.",
+      "quote": "Human nature does not prosper without supervision.",
+      "quoteAuthor": "GENERAL PRATAP",
+      "hotspots": [
+        {
+          "id": "bs1",
+          "x": 50,
+          "y": 28,
+          "label": "ASHOKA EMBLEM",
+          "description": "Twenty-four-spoke wheel framed by two triangular wings. Monochrome, bold black strokes on white, precise vertical symmetry. The mark on every coat, every banner, every signet ring."
+        },
+        {
+          "id": "bs2",
+          "x": 22,
+          "y": 58,
+          "label": "POWDER-BLUE / NAVY CODE",
+          "description": "Powder-blue shirt under open navy officer's over-coat. Large emblem centred on the back. Small emblem, left shoulder. Right shoulder text-only, plain block: the division call-sign."
+        },
+        {
+          "id": "bs3",
+          "x": 78,
+          "y": 22,
+          "label": "CURFEW DRONE",
+          "description": "Slow, patient circuits over the metropoles from nightfall to daybreak. Cones of white light. 9 PM to 6 AM. No permit, no exit."
+        },
+        {
+          "id": "bs4",
+          "x": 78,
+          "y": 72,
+          "label": "HOVERCAM OVERWATCH",
+          "description": "Drone nests at forty metres. Hovercams looped above crowd surfaces. Med-corridors threaded through the fences. The army's first-minute grammar during any incident."
+        }
+      ],
       "traits": [
         "Absolute Authority",
         "Mesh Control",
@@ -239,10 +448,42 @@
       "name": "Bracecomm",
       "category": "tech",
       "classification": "declassified",
-      "subtype": "Device",
-      "tagline": "Command at your wrist. The Mesh in your sleeve.",
-      "description": "Sleeve-tile interface standard for military command communication. Integrated biometric authentication, secure encrypted channels, and real-time tactical data display. The device that makes the Mesh personal—every officer's lifeline to the command structure. Tile displays in cyan/blue-white at 30-50% opacity, auto-dismissing on interruption. Silent band operation ensures discretion in sensitive environments.",
-      "specifications": "Under-fabric sleeve nodes | Tile sizes: 80×160mm (call), 120×240mm (map) | Biometric-locked | Encrypted comm channels",
+      "subtype": "Wrist Command Sleeve",
+      "tagline": "The Mesh in your sleeve. The rule in your veins.",
+      "description": "The standard wrist-band device of Bharatvarsh. Brace-Comms replaced smartphones years ago; they project 2D tiles and 3D holograms above the sleeve, carry encrypted comm channels, and handle biometric payments. Their face is \u201Ca little square of authority.\u201D They pulse against the wrist for incoming bands, give a \u201Ctiny offended chirp\u201D when muted, and obey a hard rule in stealth zones: transmit and you get triangulated; cry and you get found.",
+      "specifications": "Under-fabric sleeve nodes | 2D tile + 3D holo projection | Biometric-locked | Encrypted channels (public \u00B7 patrol \u00B7 private)",
+      "quote": "Transmit and you get triangulated; cry and you get found.",
+      "quoteAuthor": "KAALI, IN THE DOWNED CONVOY",
+      "hotspots": [
+        {
+          "id": "bc1",
+          "x": 50,
+          "y": 42,
+          "label": "THE TILE FACE",
+          "description": "\u201CA little square of authority.\u201D 2D interface for calls, maps, and payments. Tile sizes: 80\u00D7160mm for a call, 120\u00D7240mm for a map."
+        },
+        {
+          "id": "bc2",
+          "x": 28,
+          "y": 60,
+          "label": "BIOMETRIC WRIST STRIP",
+          "description": "Reads the wearer\u2019s pulse, capillary pattern, and skin conductance. Unlocks on contact. Locks on removal. Cannot be borrowed."
+        },
+        {
+          "id": "bc3",
+          "x": 72,
+          "y": 30,
+          "label": "HOLO PROJECTOR",
+          "description": "3D holograms along with the 2D interface \u2014 the capability that retired civilian smartphones. Lead innovator: Junaid Steels."
+        },
+        {
+          "id": "bc4",
+          "x": 78,
+          "y": 72,
+          "label": "MUTE SEAM",
+          "description": "The seam along the inner band. Slide it and the device gives a \u201Ctiny offended chirp\u201D and stops transmitting. For stealth zones, drop it face-down in a drawer."
+        }
+      ],
       "media": {
         "card": "/images/misc/bracecomm-card.webp",
         "banner": "/images/misc/bracecomm-banner.webp"
@@ -255,10 +496,42 @@
       "name": "Dart",
       "category": "tech",
       "classification": "classified",
-      "subtype": "Weapon",
-      "tagline": "Silent. Precise. Non-lethal by design.",
-      "description": "Low-draw ballista system utilizing sleep-sap ammunition. Standard issue for Akakpen treaty enforcement, designed for incapacitation rather than lethality. The weapon of choice when the goal is capture, not kill. Mounted in observation rings at 60-90m perimeters, these devices embody the non-lethal first doctrine that governs tribal conflict resolution.",
-      "specifications": "10-15m effective range | Sleep-sap payload | Red cap safety trigger | Non-lethal designation",
+      "subtype": "Akakpen Non-Lethal Munition",
+      "tagline": "A short leaf of feathered plastic. A man on the ground.",
+      "description": "The Akakpen non-lethal dart. A small tube in the neck, a short leaf of feathered plastic still quivering lightly as if it was breathing. Standard perimeter issue across the eastern hills \u2014 because the tribe\u2019s doctrine forbids lethal force between people who share the valleys. A Directorate regular who wakes up in the pine-bed with a bruise on his neck and no memory of the last forty minutes has probably met one.",
+      "specifications": "Compact tube \u00B7 feathered plastic tail | Sleep-sap payload | Silent draw | Non-lethal first doctrine",
+      "quote": "The dart was one of theirs. Akakpen used the same pattern when they needed men to stop without dying.",
+      "quoteAuthor": "THE CHRONICLE, AT THE CRASH SITE",
+      "hotspots": [
+        {
+          "id": "dt1",
+          "x": 22,
+          "y": 50,
+          "label": "FEATHERED TAIL",
+          "description": "\u201CA short leaf of feathered plastic still quivering lightly as if it was breathing.\u201D The tell for a scene the Akakpen have already walked through."
+        },
+        {
+          "id": "dt2",
+          "x": 50,
+          "y": 42,
+          "label": "PAYLOAD CHAMBER",
+          "description": "Sleep-sap. The exact agent is a treaty-held secret. The effect is not: an adult soldier drops in under two seconds and does not remember the fall."
+        },
+        {
+          "id": "dt3",
+          "x": 72,
+          "y": 38,
+          "label": "NECK TUBE",
+          "description": "The thin metal needle that delivers the payload. Aim point: lateral neck. Wake-up point: a pine-bed, several hours later, with a headache and no story."
+        },
+        {
+          "id": "dt4",
+          "x": 80,
+          "y": 70,
+          "label": "RED-CAP SAFETY",
+          "description": "Pull cap, arm dart. The red cap is the only thing between a non-lethal kit and an accident. Akakpen council rules it is the drill master\u2019s first check, every morning."
+        }
+      ],
       "media": {
         "card": "/images/misc/akakpen-dart-card.webp",
         "banner": "/images/misc/akakpen-dart-banner.webp"
@@ -271,10 +544,42 @@
       "name": "Oxy Pole",
       "category": "tech",
       "classification": "declassified",
-      "subtype": "Infrastructure",
-      "tagline": "They scrub the air. They see everything.",
-      "description": "Air-scrub towers standing 8.5-9.2 meters tall, spaced at 60-80 meter intervals throughout urban zones. OxyPoles serve dual purpose: atmospheric purification and surveillance platform mounting. Graphite powder-coated aluminum masts support crown vanes and wash heads. Hovercams dock at their peaks. The infrastructure that makes the Mesh possible—and inescapable.",
-      "specifications": "8.5-9.2m height | 60-80m spacing | Air purification + surveillance mounts | Tri-mount: PA node, camera nest, environmental sensor",
+      "subtype": "Engineered Trees",
+      "tagline": "Tall, engineered trees that hum like low vows.",
+      "description": "\u201CTall, engineered trees that fed districts with oxygen and quiet \u2014 they hummed like low vows.\u201D Installed by the administration a couple of years before the chronicle begins. Their job is to convert carbon dioxide, scrub the air, and \u2014 quietly, in the same pole housings \u2014 carry the hovercam halos, the PA nodes, and the ambient sensors that make the Mesh breathable. Placards at their bases read: \u201CPlease stay away from these oxy-poles. Fiddling with them can affect their functionality.\u201D",
+      "specifications": "Crown vanes \u00B7 wash heads | Hovercam nest at peak | PA + environmental sensor housings | Harness-rigged for crown maintenance",
+      "quote": "Above, the oxy-poles \u2014 those tall, engineered trees that fed districts with oxygen and quiet \u2014 hummed like low vows.",
+      "quoteAuthor": "THE CHRONICLE, THE MORNING AFTER 20-10",
+      "hotspots": [
+        {
+          "id": "op1",
+          "x": 52,
+          "y": 14,
+          "label": "CROWN VANES",
+          "description": "The \u201Cengineered tree\u201D canopy. Catalytic fronds. CO\u2082 in, O\u2082 out. The sound the manuscript names is the humming of these vanes under load."
+        },
+        {
+          "id": "op2",
+          "x": 30,
+          "y": 26,
+          "label": "HOVERCAM NEST",
+          "description": "Docking halo for state hovercams. A pole is never just a pole. Every oxy-pole on every corner is also a perch."
+        },
+        {
+          "id": "op3",
+          "x": 72,
+          "y": 42,
+          "label": "PA NODE",
+          "description": "Public-address housing. The voice the state uses when it wants to remind the street that the curfew begins at nine."
+        },
+        {
+          "id": "op4",
+          "x": 58,
+          "y": 78,
+          "label": "BASE PLACARD",
+          "description": "\u201CPlease stay away from these oxy-poles. Fiddling with them can affect their functionality.\u201D The only ground-level UI the public ever sees."
+        }
+      ],
       "media": {
         "card": "/images/misc/oxy-pole-card.webp",
         "banner": "/images/misc/oxy-pole-banner.webp"
@@ -287,10 +592,42 @@
       "name": "Pulse Gun",
       "category": "tech",
       "classification": "classified",
-      "subtype": "Weapon",
-      "tagline": "Air becomes wall. Crowds become controlled.",
-      "description": "Air-curtain dispersal tool for crowd control operations. Generates targeted pressure waves to direct or disperse civilian gatherings without kinetic projectiles. Standard equipment for Mesh enforcement units. Part of the permitted non-lethal device set, deployed alongside fine water mist and 48-hour expirable dye markers. The tool of polite inevitability made physical.",
-      "specifications": "Air-curtain technology | Non-projectile crowd control | Variable intensity | Directional sound sweep (max 88 dB)",
+      "subtype": "Akakpen Princess-Grade Sidearm",
+      "tagline": "Carried inside the waistband. Default at STUN.",
+      "description": "The Akakpen princess-grade pulse gun. Matte graphite chassis, white ceramic inlays, tiny amber status LEDs. Compact enough to carry inside the waistband at four o\u2019clock. Selector modes: STUN, DISRUPT, LETHAL. Default at STUN for palace carry \u2014 the first time the selector moves past that setting is not a scene the chronicle permits you to read before you\u2019ve earned it. Princess Arshi carries one. A small Akakpen knot is engraved, monochrome and flat, on the grip panel.",
+      "specifications": "Matte graphite chassis \u00B7 white ceramic inlays | Amber status LEDs | Three modes (STUN \u00B7 DISRUPT \u00B7 LETHAL) | IWB 4-o'clock carry | 12 mm knot engraved on grip panel",
+      "quote": "Default mode: STUN. Palace carry.",
+      "quoteAuthor": "AKAKPEN SIDEARM DOCTRINE",
+      "hotspots": [
+        {
+          "id": "pg1",
+          "x": 30,
+          "y": 52,
+          "label": "GRAPHITE CHASSIS",
+          "description": "Matte graphite body. Low-snag, squared trigger guard, integral recoil sink. Built to vanish under a cloak or a council overdress."
+        },
+        {
+          "id": "pg2",
+          "x": 52,
+          "y": 45,
+          "label": "CERAMIC INLAY",
+          "description": "White ceramic inlays along the slide. The tribe\u2019s single design flourish \u2014 functional too, they dissipate heat from the pulse coils."
+        },
+        {
+          "id": "pg3",
+          "x": 74,
+          "y": 38,
+          "label": "AMBER STATUS LED",
+          "description": "Tiny amber telltales along the aft-left of the frame. STUN holds steady; DISRUPT pulses; LETHAL stays lit. If an amber dot is steady, talk fast."
+        },
+        {
+          "id": "pg4",
+          "x": 70,
+          "y": 70,
+          "label": "MODE SELECTOR",
+          "description": "Aft-left toggle. Three positions. The first two are governance. The third is last-resort. Council rules mandate a default return-to-STUN after any field deployment."
+        }
+      ],
       "media": {
         "card": "/images/misc/pulse-gun-card.webp",
         "banner": "/images/misc/pulse-gun-banner.webp"
@@ -304,32 +641,46 @@
       "nameDevanagari": "सूर्य",
       "category": "characters",
       "classification": "classified",
-      "subtype": "Operative",
-      "tagline": "He trusts nothing connected to the system",
-      "description": "The Ghost Operative. You won't find Surya in any active service file. His Brace-Comm runs dark—permanently—because he learned the hard way that everything connected can be turned against you. After the Guhyakas unit erased his service record and buried the men he served with, Surya vanished into the signal gaps of Bharatvarsh. Now he moves through the country like interference on a clean feed: matte graphite jacket, hands steady at his belt, collecting evidence with the patience of a man who knows that one photograph in daylight is worth more than a hundred bullets in the dark.",
+      "subtype": "Off-Record Operative",
+      "tagline": "The paper is clean. The world isn't.",
+      "description": "Major Surya carries no patronymic — unregistered at birth, raised at a range, handed a rifle before a surname rule existed to take. Lead of a classified Bharatsena strike cell called the Guhyakas. Warm-past missions for a handler he called mentor; cool-present memory of what those missions were actually for. He walked out of an interior detainment with a small metal tag in his pocket that he had been carrying, unknowing, for five years. His arc moves from Obedience to Conscience to Justice — earned in that order, without shortcut.",
       "quote": "Evidence doesn't need a rank. It just needs daylight.",
       "quoteAuthor": "Surya",
       "hotspots": [
         {
           "id": "s1",
-          "x": 45,
-          "y": 55,
-          "label": "DARK BRACE-COMM",
-          "description": "Display permanently OFF — trust nothing connected"
+          "x": 42,
+          "y": 28,
+          "label": "RED ARMBAND",
+          "description": "Moral-state indicator. Starts the chronicle muted. Saturates the night he clears the desert perimeter and refuses to turn back."
         },
         {
           "id": "s2",
-          "x": 70,
+          "x": 48,
+          "y": 56,
+          "label": "DARK BRACE-COMM",
+          "description": "Display runs dark permanently. Trust nothing connected."
+        },
+        {
+          "id": "s3",
+          "x": 72,
           "y": 35,
           "label": "SUPPRESSED CARBINE",
-          "description": "Micro-rail equipped, field-stripped daily"
+          "description": "Micro-rail, mid-weight, field-stripped daily. An off-record weapon for an off-record unit."
+        },
+        {
+          "id": "s4",
+          "x": 28,
+          "y": 80,
+          "label": "ADAPTIVE CAMO",
+          "description": "Guhyakas issue. Pattern drifts with ambient palette. No insignia, no rank, no name tape."
         }
       ],
       "traits": [
-        "Forensic Precision",
-        "Moral Absolutes",
-        "Operational Stealth",
-        "Institutionally Wounded"
+        "Forensic",
+        "Unyielding",
+        "Stealthy",
+        "Haunted"
       ],
       "media": {
         "card": "/images/characters/surya-card.webp",
@@ -344,32 +695,46 @@
       "nameDevanagari": "काली",
       "category": "characters",
       "classification": "declassified",
-      "subtype": "Matriarch",
-      "tagline": "Her word is binding covenant for an entire people",
-      "description": "The Wounded Queen. They brought her to the ICU on a stretcher but they could not take the throne from her voice. Kaali has led the Akakpen for decades—not from a palace, but from council fires and treaty tables, from rain-soaked mountain crossings and the quiet work of holding a multi-faith community together by sheer force of listening. Now she lies bandaged and breathing through a mask, her gold hair-ring placed carefully on the bedside tray. One emerald-green eye does all the work. When she whispers a promise to the old comrade she hasn't seen in years, the fog in the room shifts. Nations will move because of what she says next.",
+      "subtype": "Matriarch of the Akakpen",
+      "tagline": "Stillness that issues orders without rising.",
+      "description": "Queen of the Akakpen. Late fifties, upright spine, the unhurried economy of a body that learned early that authority is in what you do not say. Long grey hair with white streaks gathered by a gold queen's hair-ring — the tribe's single piece of sovereign hardware. Taught the bow and the short single-edge sword to her own heir, Arshi, across mountain field seasons that never made the state's records. In the novel's present she is in an ICU bed, half her head under bandage, a single green eye doing the work of a throne. One old promise, whispered through an oxygen mask, is enough to pull a hermit out of twenty years of exile.",
       "quote": "A queen does not command the mountain. She listens until the mountain speaks.",
       "quoteAuthor": "Kaali",
       "hotspots": [
         {
           "id": "k1",
           "x": 55,
-          "y": 30,
-          "label": "EMERALD COMMAND EYES",
-          "description": "The 'command line' — green eyes, never blue"
+          "y": 26,
+          "label": "EMERALD COMMAND EYE",
+          "description": "One green eye. Green, never blue. Steady, discerning, rarely widened — the Akakpen command line runs through it."
         },
         {
           "id": "k2",
           "x": 30,
-          "y": 65,
+          "y": 22,
           "label": "GOLD HAIR-RING",
-          "description": "Antique gold, satin finish — authority talisman"
+          "description": "Antique gold, satin finish. The queen's sole insignia. Gathers grey-and-white hair into a sleek ponytail. Removed in the ICU; placed on the bedside tray."
+        },
+        {
+          "id": "k3",
+          "x": 52,
+          "y": 72,
+          "label": "DIGNITY SHAWL",
+          "description": "A narrow dark-green shawl strip (#162B18) laid across the chest in ICU frames. Identity cue. Authority persists."
+        },
+        {
+          "id": "k4",
+          "x": 58,
+          "y": 45,
+          "label": "OXYGEN MASK",
+          "description": "Clear, softly fogging on exhale. Recovery posture. Her voice through it is still the slowest one in the room."
         }
       ],
       "traits": [
-        "Steel-Calm Authority",
-        "Maternal Wisdom",
-        "Promise Keeper",
-        "Dignified Vulnerability"
+        "Sovereign",
+        "Binding",
+        "Protective",
+        "Dignified"
       ],
       "media": {
         "card": "/images/characters/kaali-card.webp",
@@ -383,14 +748,46 @@
       "name": "The Treaty Zone",
       "category": "locations",
       "classification": "classified",
-      "subtype": "Territory",
-      "tagline": "Where the Mesh ends and the mountains remember",
-      "description": "The Mesh ends at the treeline. Beyond it, the Treaty Zone begins—a mountainous band where state troops halt at checkpoints and wait for tribal consent that may never come. In valleys called Silent Throat and Knife-Wind Chute, drone-jammers run permanently and radar screens show nothing but weather. The architecture here is wood and stone and slate, hand-mended and honest. Prayer flags hang stiff at altitude because the wind at four thousand metres doesn't flutter—it shears. Fog shafts through pine canopy. Frost glitters on rope fibres strung between sentinel trees. This is not a rebellion. It is a proof of concept: that a world without the Mesh is not only possible, but already forty years old.",
+      "subtype": "Semi-Sovereign \u00B7 Akakpen",
+      "tagline": "Where the Mesh ends and the treaty begins.",
+      "description": "The eastern hills of Arunachal \u2014 the semi-sovereign pocket won at the cost of decades of guerrilla stalemate and signed as the Treaty of the Eastern Hills. Ruled by a round table of seven chairs and a map of the hills inked by hand. Accessed through a gate whose perimeter grids will put a regular on the ground if he walks through without shield plates active. The Mesh halts at the treeline. The Directorate stops at the gate. Inside, the flags are a tired saffron and the council decides what happens next.",
+      "quote": "The Directorate does not fear the U.N., but they do fear optics across the hills.",
+      "quoteAuthor": "RUDRA",
+      "hotspots": [
+        {
+          "id": "tz1",
+          "x": 30,
+          "y": 22,
+          "label": "THE GATE · TRESPASS-GRIDS",
+          "description": "The Akakpen perimeter. Not ceremonial. These grids will put you on the ground if you walk through without shield plates active. Any Directorate regular who wants to parley stands at the mouth, carries shields, and talks first."
+        },
+        {
+          "id": "tz2",
+          "x": 68,
+          "y": 48,
+          "label": "THE ROUND TABLE",
+          "description": "The council chamber. Seven chairs. A room designed for listening. The only table in Bharatvarsh where the Directorate\u2019s writ does not arrive ahead of the guest."
+        },
+        {
+          "id": "tz3",
+          "x": 52,
+          "y": 76,
+          "label": "THE HAND-INKED HILL MAP",
+          "description": "Not the army\u2019s sterile satellite print. Ridge by ridge, river by river, inked by hand and annotated with names and jokes and warnings that existed nowhere else."
+        },
+        {
+          "id": "tz4",
+          "x": 80,
+          "y": 20,
+          "label": "TIRED SAFFRON FLAGS",
+          "description": "Wooden cabins raised slightly off the ground on stone piers. Shutters the colour of river mud. Flags a tired saffron fluttering off the porch rails. An administrative quarter that does not look like one from the outside."
+        }
+      ],
       "traits": [
         "Semi-Autonomous Governance",
-        "No-Fly Sanctuaries",
-        "Natural Material Language",
-        "Drone-Jammer Networks"
+        "Treaty of the Eastern Hills",
+        "Non-Lethal First",
+        "Mesh-Free Territory"
       ],
       "media": {
         "card": "/images/locations/treaty-zone-card.webp",
@@ -404,14 +801,46 @@
       "name": "Mysuru",
       "category": "locations",
       "classification": "declassified",
-      "subtype": "Metropolis",
-      "tagline": "Plateau tech-hub where software meets surveillance",
-      "description": "Mysuru sits on a plateau where the sun hits harder and the secrets run deeper. Peninsular Command's crown jewel is a city of basalt and dark glass, where the brightest engineers in Bharatvarsh build software and optics they will not be permitted to discuss for five to fifteen years. OxyPole crowns here carry dust-mesh louvers against the red laterite haze, and the UV-resistant coatings on every surface give the architecture a faintly iridescent sheen. The campus culture is civilian in dress code, military in clearance level. Breakthroughs happen behind biometric doors. Papers are written, classified, and locked before the ink dries.",
+      "subtype": "Plateau Tech-Hub \u00B7 Peninsular Command",
+      "tagline": "The plateau city the chronicle rides into at golden hour.",
+      "description": "Mysuru sits on a granitic shelf where the sun hits harder and the secrets run deeper. Peninsular Command\u2019s crown jewel \u2014 a city of basalt and laterite and dark glass, tri-script signage running English, Hindi and Telugu, engineers in civilian dress with military clearance. On the night of 20 October, fourteen synchronized detonations tear through its largest transit-mall. One of seven cities hit. The one where Kahaan sends his deputy, Rishaan, because the bomb placement looked like the work of a professional. It was.",
+      "quote": "It was an ode to the engineers that the building was still standing.",
+      "quoteAuthor": "THE CHRONICLE, AT JUNCTION MALL",
+      "hotspots": [
+        {
+          "id": "my1",
+          "x": 50,
+          "y": 32,
+          "label": "JUNCTION MALL",
+          "description": "A five-storey transit-hub shopping mall. Fourteen synchronized detonations across multiple floors. Gaping holes across the facade with black soot smeared around them. The building was still standing."
+        },
+        {
+          "id": "my2",
+          "x": 28,
+          "y": 62,
+          "label": "GRANITIC SHELF",
+          "description": "The plateau the city stands on. Tech-park terraces stepping down granite benches. Pergola-shaded transit forecourts. Matte ceramic plazas with basalt-inlay hover-lane chevrons."
+        },
+        {
+          "id": "my3",
+          "x": 74,
+          "y": 56,
+          "label": "TRI-SCRIPT SIGNAGE",
+          "description": "English. Hindi. Telugu. Three scripts, three weights, every streetside sign. The only metropole in the chronicle that posts its notices in the southern state\u2019s own letter-forms."
+        },
+        {
+          "id": "my4",
+          "x": 80,
+          "y": 22,
+          "label": "ARMY AIR STRIP",
+          "description": "Just outside the city. Golden hour approach \u2014 dark grey at the bottom, bright orange at the top. Where Rishaan\u2019s army jet lands the day after 20 October, into a staggered diamond escort and a matte charcoal Panthera waiting on the apron."
+        }
+      ],
       "traits": [
         "Software & Optics Hub",
         "Military R&D Campus",
-        "Basalt Architecture",
-        "High-Altitude Climate"
+        "Granite-Basalt Architecture",
+        "20-10 Bombing Site"
       ],
       "media": {
         "card": "/images/locations/mysuru-card.webp",
@@ -428,7 +857,7 @@
       "classification": "classified",
       "subtype": "Banned Movement",
       "tagline": "Democracy died in 1984. Its ghost carries a trident.",
-      "description": "Before 1984, the trident was a ballot paper. Tribhuj began as a civilian movement for elected governance—peaceful, principled, and inconvenient enough to be declared treasonous alongside religion, caste, and surnames in one sweeping decree. After the ban, the symbols didn't die. They went to the walls. Grey tridents scratched into alley plaster at 3 a.m. Pamphlets folded into chapati wrappers during Festival Fortnight. Basement meetings where the word 'election' was spoken like a prayer. Then, in October 2025, seven cities burned under a flag bearing the same trident. Whether the old movement and the new violence share anything beyond a symbol is the question that will tear Bharatvarsh apart.",
+      "description": "The Tribhuj is an ancient ascetic martial order that predates the dictatorship — not a modern reformation. Through the early 1980s, under Rudra's command, it became the loudest publicly-known voice for elected governance — peaceful, principled, and inconvenient enough to be declared treasonous alongside religion, caste, and surnames in one sweeping 1984 decree. After the ban, the symbols didn't die. They went to the walls. Grey tridents scratched into alley plaster at 3 a.m. Pamphlets folded into chapati wrappers during Festival Fortnight. Basement meetings where the word 'election' was spoken like a prayer. Rudra kept the order alive underground until the army's Teesta Treaty broke its popular support around 2003 — then it went dormant. Then, in October 2025, seven cities burned under a flag bearing the same trident — a separate, state-manufactured impostor brand calling itself the 'New Tribhuj.' Whether the original order and this new violence share anything beyond a symbol is the question that will tear Bharatvarsh apart.",
       "quote": "The trident was never a weapon. It was a ballot.",
       "quoteAuthor": "Pre-ban Tribhuj pamphlet",
       "traits": [
@@ -449,10 +878,42 @@
       "name": "The Mesh",
       "category": "tech",
       "classification": "declassified",
-      "subtype": "Infrastructure",
-      "tagline": "Omnipresent. Ambient. Inescapable.",
-      "description": "Nobody remembers when they stopped noticing the hovercams. The Mesh arrived in three phases over fifteen years, and by the time Phase III went live in 2015, surveillance had become weather—ambient, total, and unremarkable. Biometric wrist-scanners confirm your identity at every kiosk. Teardrop-shaped checkpoint masts read your gait at intersections. OxyPole sensor arrays cataloguing the air also cataloguing you. Micro-expression algorithms flag hesitation before you've finished the thought that caused it. The Mesh is not cruel. It is not loud. It is polite, inevitable, and everywhere. Forty years of perfect stability. The invoice is still being calculated.",
-      "specifications": "Phase I (2000-05): Biometric ID + checkpoints | Phase II (2006-10): Hovercam grid + Brace-Comm | Phase III (2011-15): Micro-expression AI + predictive routing",
+      "subtype": "National Surveillance Fabric",
+      "tagline": "Nobody remembers when they stopped noticing the hovercams.",
+      "description": "The Mesh is not a thing you can point to. It is the state of a city that has forgotten when it stopped noticing the hovercams. It is the curfew drones painting slow white cones across Indrapur from 9 PM to 6 AM, the oxy-poles humming on every corner, the wrist-scans at every kiosk, the Brace-Comms pulsing on every officer\u2019s wrist. It ends at the treeline of Arunachal. Everywhere else, it is weather \u2014 ambient, total, and unremarkable.",
+      "specifications": "Curfew drones \u00B7 hovercams \u00B7 wrist-scan checkpoints \u00B7 oxy-pole sensor halos | Brace-Comm routing layer | Ends at the treeline of Arunachal",
+      "quote": "Nobody remembers when they stopped noticing the hovercams.",
+      "quoteAuthor": "THE CHRONICLE, ON THE MESH",
+      "hotspots": [
+        {
+          "id": "ms1",
+          "x": 50,
+          "y": 18,
+          "label": "CURFEW DRONE",
+          "description": "Slow, patient circuits over the avenues of Indrapur from 9 PM to 6 AM. Cones of white light. The Mesh\u2019s nightly voice."
+        },
+        {
+          "id": "ms2",
+          "x": 22,
+          "y": 50,
+          "label": "OXY-POLE HALO",
+          "description": "Every corner. Every valley floor inside the treeline. Cameras and PA and environmental sensors wrapped around each engineered tree like a dark scarf."
+        },
+        {
+          "id": "ms3",
+          "x": 78,
+          "y": 50,
+          "label": "WRIST-SCAN CHECKPOINT",
+          "description": "Biometric gate at the mouth of every controlled lane. Pulse, capillary, gait \u2014 all read in one step. Curfew violators receive instant fines through the same reader."
+        },
+        {
+          "id": "ms4",
+          "x": 50,
+          "y": 82,
+          "label": "TREELINE EDGE",
+          "description": "The hard boundary. Everywhere the Mesh reaches, order is weather. Everywhere it does not, the Akakpen gate decides what happens next."
+        }
+      ],
       "traits": [
         "Three-Phase Deployment",
         "Biometric Integration",
@@ -471,24 +932,40 @@
       "name": "Neural Diodes",
       "category": "tech",
       "classification": "classified",
-      "subtype": "Augmentation",
-      "tagline": "Where the soldier ends and the weapon begins",
-      "description": "The scar behind Kahaan's right ear is small enough to miss. What it connects to is not. The neural-diode lattice lets him float twin pistols at shoulder height on faint electric-blue shimmer threads, pilot a scout motorcycle with a thought, and stream tactical data directly to his visual cortex. It is, by every military metric, a masterpiece. It is also slowly breaking him. EMPs knock out everything—weapons, vehicle, HUD—leaving him human and exposed mid-combat. Migraines arrive without warning. His nose bleeds during briefings. And in the quiet hours, he wonders whether the machine is a tool he uses or a system that is using him.",
-      "specifications": "Surgical diode scallop (right ear) | Mag-holster range: 2m | EMP-vulnerable | Side effects: migraines, tinnitus, transient paralysis",
+      "subtype": "Sub-Dermal Neural Lattice",
+      "tagline": "The faint surgical scallop behind his left ear.",
+      "description": "Major Kahaan\u2019s battlefield augmentation. A faint surgical scallop is hidden behind his left ear \u2014 the external mark of a sub-dermal diode lattice grafted during the African relief detail in 2021, under shellfire, as a last resort. The diodes let him float twin pistols at shoulder height on faint electric-blue shimmer threads, pilot a scout motorcycle by intent, and host readouts on a HUD that answers directly to his gaze. It is a masterpiece. It is also slowly breaking him. An EMP knocks out everything it touches. Migraines arrive without warning. A nose bleeds in briefings. In the quiet hours he wonders whether the machine is a tool he uses or a system that is using him.",
+      "specifications": "Sub-dermal lattice | Surgical scallop behind LEFT ear | Mag-holster range ~2m | EMP-vulnerable | Side effects: migraines, tinnitus, transient aphasia",
+      "quote": "He touched the faint surgical scallop hidden behind his left ear \u2014 the place where flesh had agreed to host a decision.",
+      "quoteAuthor": "THE CHRONICLE, CHAPTER 2",
       "hotspots": [
         {
           "id": "nd1",
-          "x": 75,
-          "y": 20,
-          "label": "DIODE SCALLOP",
-          "description": "Faint surgical scar behind right ear"
+          "x": 72,
+          "y": 22,
+          "label": "SURGICAL SCALLOP",
+          "description": "The faint curved scar behind Kahaan\u2019s LEFT ear. Small enough to miss. The only external trace of the lattice buried under the skin of his skull."
         },
         {
           "id": "nd2",
           "x": 40,
-          "y": 50,
+          "y": 48,
           "label": "SHIMMER THREADS",
-          "description": "Electric-blue magnetic link to floating weapons"
+          "description": "Faint electric-blue filaments that hover between his shoulder rig and his hands. The visible sign that the mag-holsters have woken up and the pistols are no longer under anyone\u2019s thumb."
+        },
+        {
+          "id": "nd3",
+          "x": 28,
+          "y": 62,
+          "label": "MAG-HOLSTER PISTOL",
+          "description": "One of twin sidearms that detach from the shoulder rig and float at shoulder height. Thought-pointed, thought-fired. Range of the lattice: about two metres off the body."
+        },
+        {
+          "id": "nd4",
+          "x": 68,
+          "y": 70,
+          "label": "DERMAL LATTICE",
+          "description": "A web of thin sub-dermal filaments that runs from the scallop down the neck to the shoulder rig. Lights up faintly under neon when the host is tense. Never supposed to be visible, and always a little bit visible anyway."
         }
       ],
       "traits": [
@@ -509,10 +986,42 @@
       "name": "HUD Monocle",
       "category": "tech",
       "classification": "classified",
-      "subtype": "Augmentation",
-      "tagline": "The blue tick that sees what flesh cannot",
-      "description": "It floats over the left eye like a thought made visible—a curved rectangular lens with no visible apparatus, projecting tiny electric-blue arcs and ticks that scroll too fast to read. The glyphs are deliberately illegible to onlookers; what they display is classified at the point of rendering. When the HUD activates, a soft blue wash spreads across the cheekbone and the surgical scar behind the ear glows faint cyan. In headquarters, the monocle stays dark—officers are expected to think with unassisted eyes. In the field, its activation is a signal: the human layer has invited the machine layer in, and the line between the two has begun to blur.",
-      "specifications": "Curved rectangular lens | Apparatus-less floating mount | Electric-blue glow | OFF in HQ, ON in field ops",
+      "subtype": "Ocular Overlay",
+      "tagline": "Wind speed: 0.5 km/h, NW. Elevation: \u22124\u00B0. Range: 187 m.",
+      "description": "The HUD \u2014 heads-up display, standard issue to Bharatvarsh officers in helmets and visors, augmented to an apparatus-less floating lens for those few whose neural-diode lattice can carry it. Manuscript-grade helmets paint icons across the visor like faint stars: on the right, a call glyph and a map slice; on the left, engine health, gear, fuel, a small pulsing dot that means nothing to anyone who isn\u2019t the wearer. A tap on the visor\u2019s temple throws ghost vectors into the air for only the host to see. A sniper at his kneel reads wind speed and range off the top right without ever lifting his eye.",
+      "specifications": "Helmet / visor overlay (standard) | Apparatus-less floating lens (augmented officers only) | Electric-blue glyph rendering | Temple-tap + gaze-intent input",
+      "quote": "Wind speed: 0.5 km/h, NW. Elevation: \u22124\u00B0. Range: 187 m.",
+      "quoteAuthor": "HUD READOUT, PROLOGUE",
+      "hotspots": [
+        {
+          "id": "hm1",
+          "x": 50,
+          "y": 28,
+          "label": "FLOATING LENS",
+          "description": "The blue-tick overlay \u2014 in the augmented variant, it sits in the air in front of the left eye with no visible mount. In the standard variant, it\u2019s painted onto the inside of a helmet visor."
+        },
+        {
+          "id": "hm2",
+          "x": 74,
+          "y": 40,
+          "label": "GLYPH STREAM",
+          "description": "Scrolling tactical data \u2014 call glyph, map slice, engine health, wind, elevation, range. The glyphs are deliberately illegible to onlookers; they render for the host only."
+        },
+        {
+          "id": "hm3",
+          "x": 28,
+          "y": 52,
+          "label": "TEMPLE-TAP POINT",
+          "description": "Tap the visor\u2019s temple and \u201Cthe helmet obligingly puts little ghost vectors into the air for only him to see. Green lines fan, intersect, remember gravity.\u201D"
+        },
+        {
+          "id": "hm4",
+          "x": 60,
+          "y": 72,
+          "label": "WAYPOINT DOT",
+          "description": "\u201CA small pulsing dot that meant nothing to anyone who wasn\u2019t him.\u201D Personal waypoint \u2014 an aim-point the HUD reserves for its host."
+        }
+      ],
       "traits": [
         "Tactical Data Overlay",
         "Apparatus-less Float",

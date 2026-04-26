@@ -2,177 +2,192 @@
   "meta": {
     "title": "Mesh Dispatches",
     "subtitle": "Intercepted transmissions. Declassified files. Fragments from a reality that refused to fall.",
-    "lastUpdated": "2026-03-27"
+    "lastUpdated": "2026-04-22"
   },
   "dispatches": [
+    {
+      "id": "BHV-20260506-001",
+      "topic": "General Pratap — 47 Years. One Vision.",
+      "hook": "47 years of service. Every war won by the man who never pulled a trigger himself.",
+      "caption": "DECLASSIFIED — DIRECTORATE PERSONNEL ARCHIVE, REF: GP-DPA/1978-01. SUBJECT: General Pratap. DESIGNATION: Supreme Commander, General Directorate. SERVICE: 47 years (unbroken). In 1978, a dying democracy signed its power to the army for one year. General Pratap was a young colonel then. He is the Supreme Commander now. The emergency never ended. Under his command: the Mesh was deployed, the caste system was dismantled, religion was regulated, green-tech exports reached 140 nations, and crime in urban zones approached zero. He is 85 years old. He looks 65. Anti-ageing serum — military-grade, 15 years before civilian release. His officers call him \"the Architect.\" His critics have not been heard from since 1984. Every system in Bharatvarsh — from the OxyPoles that clean the air to the Bracecomms that track the wrists — traces back to a single signature on a single directive. Psychological profile: [REDACTED]. Succession plan: [REDACTED]. welcometobharatvarsh.com",
+      "storyAngle": "bharatsena",
+      "distillationFilter": "novel_intro",
+      "contentChannel": "declassified_report",
+      "channels": [
+        "instagram",
+        "twitter",
+        "facebook"
+      ],
+      "scheduledDate": "2026-05-06",
+      "status": "rendered",
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260506-001.webp",
+      "publishedUrls": {
+        "twitter": "https://x.com/bharatvarshHQ/status/2046859285959966963"
+      }
+    },
     {
       "id": "BHV-20260503-001",
       "topic": "20-10: Seven Cities Burn",
       "hook": "Seven cities. Seven explosions. Zero warnings. The Mesh was watching. The Mesh saw nothing.",
-      "caption": "[BVN-24x7 BREAKING] October 20, 2025. 19:47 IST. Coordinated detonations confirmed across seven cities: Bhojpal. Mysuru. Gopakapattana. Jammu. Kathmandu. Kolkata. Lakshmanpur. Decoy devices drew first responders off-route before the real charges detonated \u2014 stations, markets, civic hubs. Hundreds confirmed dead. Thousands injured. The attackers invoked a name banned for almost half a century: TRIBHUJ. The Mesh \u2014 100% urban coverage, 98.6% Bracecomm adoption, emotional micro-expression recognition, algorithmic checkpoints at computed intervals \u2014 detected nothing. No chatter. No anomalies. No warnings. Who attacks a nation that watches everything?",
+      "caption": "[BVN-24x7 BREAKING] October 20, 2025. 19:47 IST. Coordinated detonations confirmed across seven cities: Bhojpal. Mysuru. Gopakapattana. Jammu. Kathmandu. Kolkata. Lakshmanpur. Decoy devices drew first responders off-route before the real charges detonated — stations, markets, civic hubs. Hundreds confirmed dead. Thousands injured. The attackers invoked a name banned for almost half a century: TRIBHUJ. The Mesh — 100% urban coverage, 98.6% Bracecomm adoption, emotional micro-expression recognition, algorithmic checkpoints at computed intervals — detected nothing. No chatter. No anomalies. No warnings. Who attacks a nation that watches everything? welcometobharatvarsh.com",
       "storyAngle": "tribhuj",
       "distillationFilter": "novel_intro",
       "contentChannel": "news_article",
-      "channels": ["instagram", "twitter", "facebook"],
+      "channels": [
+        "instagram",
+        "twitter",
+        "facebook"
+      ],
       "scheduledDate": "2026-05-03",
       "status": "rendered",
-      "image": "/images/dispatches/bhv-20260503-001.webp"
-    },
-    {
-      "id": "BHV-20260427-001",
-      "topic": "Bracecomm 4.0 \u2014 98.6% Adoption",
-      "hook": "The citizen who wears it is known. The citizen who is known is safe.",
-      "caption": "98.6% adoption. Zones 4 & 5: Zero Crime. The citizen who wears it is known. The citizen who is known is safe. \u2014 Dept. of Civic Harmony, October 15, 2025. What does a world without crime cost?",
-      "storyAngle": "bharatsena",
-      "distillationFilter": "med_mil_progress",
-      "contentChannel": "news_article",
-      "channels": ["instagram", "twitter", "facebook"],
-      "scheduledDate": "2026-04-27",
-      "status": "rendered",
-      "image": "/images/dispatches/bhv-20260427-001.webp"
-    },
-    {
-      "id": "BHV-20260421-001",
-      "topic": "Major Kahaan \u2014 Officer Profile",
-      "hook": "22 years. Zero infractions. Psychological profile: [REDACTED].",
-      "caption": "22 years. Zero infractions. Psychological profile: [REDACTED]. \u2014 DECLASSIFIED EXCERPT \u2014 The following personnel record was released under Directive 2026-D/03. SUBJECT: Major Kahaan. DESIGNATION: Senior Investigation Officer, Division Head. SERVICE NUMBER: MID-042-[REDACTED]. YEARS IN SERVICE: 22. COMMENDATIONS: 17. INFRACTIONS: 0. He graduated first in his cohort at the Bharatsena Advanced Training Institute. His specialisation: high-topology anomaly investigation. On 21 October 2025, seven cities burned simultaneously. The Mesh was watching. The Mesh saw nothing. Operation 20-10 was activated. Major Kahaan was assigned as Chief Investigative Officer with full Omega-level clearance.",
-      "storyAngle": "bharatsena",
-      "distillationFilter": "novel_intro",
-      "contentChannel": "declassified_report",
-      "channels": ["instagram", "twitter", "facebook"],
-      "scheduledDate": "2026-04-21",
-      "status": "rendered",
-      "image": "/images/dispatches/bhv-20260421-001.webp"
-    },
-    {
-      "id": "BHV-20260515-001",
-      "topic": "The Pamphlet Rain \u2014 Festival Fortnight",
-      "hook": "The band finished their set. Then the sky rained paper.",
-      "caption": "[BVN-24x7 \u2014 FOOTAGE RECOVERED] Lakshmanpur. Festival Fortnight, October 20, 2025. The open-mic stage. A band nobody recognised took the stage at 19:32. They played three songs. The crowd loved it. At 19:41, the lead singer raised his fist. The speakers cut. And from somewhere above the stage \u2014 from the lighting rigs, from the scaffolding, from places the Mesh should have been watching \u2014 thousands of pamphlets rained down on the crowd. Each one stamped with the Grey Trident.",
-      "storyAngle": "tribhuj",
-      "distillationFilter": "novel_intro",
-      "contentChannel": "news_article",
-      "channels": ["instagram", "twitter"],
-      "scheduledDate": "2026-05-15",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260515-001.webp"
-    },
-    {
-      "id": "BHV-20260512-001",
-      "topic": "Kaali \u2014 The Wounded Queen",
-      "hook": "37 years of unbroken leadership. ICU Bed 4. Oxygen mask. Half her face bandaged.",
-      "caption": "INTERCEPTED \u2014 BHARATSENA INTELLIGENCE BRIEF. SUBJECT: Kaali, designated Queen of Akakpen. STATUS: Critical \u2014 ICU, Treaty Zone field hospital. For 37 years, Kaali held the Eastern Treaty Zone together. Every trade negotiation, every ceasefire renewal, every dispute between mountain clans \u2014 her word was final. The Directorate's own analysts concede she accomplished through respect what the Mesh accomplishes through surveillance.",
-      "storyAngle": "akakpen",
-      "distillationFilter": "novel_intro",
-      "contentChannel": "declassified_report",
-      "channels": ["instagram", "twitter", "facebook"],
-      "scheduledDate": "2026-05-12",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260512-001.webp"
-    },
-    {
-      "id": "BHV-20260509-001",
-      "topic": "Hana \u2014 Overwatch",
-      "hook": "She sees everything from up here. The question is what she does with it.",
-      "caption": "Major Hana. Bharatsena. The only officer who can tell him \"No.\" She graduated top-three in long-range tactical operations. Her assignment: overwatch. Her vantage: rooftops, always. Her record: impeccable. Her opinion: the one thing the chain of command has never been able to classify.",
-      "storyAngle": "bharatsena",
-      "distillationFilter": "novel_intro",
-      "contentChannel": "graffiti_photo",
-      "channels": ["instagram", "twitter"],
-      "scheduledDate": "2026-05-09",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260509-001.webp"
-    },
-    {
-      "id": "BHV-20260506-001",
-      "topic": "General Pratap \u2014 47 Years. One Vision.",
-      "hook": "47 years of service. Every war won by the man who never pulled a trigger himself.",
-      "caption": "DECLASSIFIED \u2014 DIRECTORATE PERSONNEL ARCHIVE. SUBJECT: General Pratap. DESIGNATION: Supreme Commander, General Directorate. SERVICE: 47 years (unbroken). In 1978, a dying democracy signed its power to the army for one year. General Pratap was a young colonel then. He is the Supreme Commander now. The emergency never ended.",
-      "storyAngle": "bharatsena",
-      "distillationFilter": "novel_intro",
-      "contentChannel": "declassified_report",
-      "channels": ["instagram", "twitter", "facebook"],
-      "scheduledDate": "2026-05-06",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260506-001.webp"
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260503-001.webp",
+      "publishedUrls": {
+        "instagram": "https://www.instagram.com/p/DWdzljuCQ-8/"
+      }
     },
     {
       "id": "BHV-20260430-001",
-      "topic": "Rudra \u2014 The Mountain Shadow",
+      "topic": "Rudra — The Mountain Shadow",
       "hook": "Twenty years in the mountains. The army forgot him. The mountains didn't.",
-      "caption": "He disbanded the movement himself. Walked into the snow and answered to nothing but \"dada\" for twenty years. Tended terraces. Taught village children breath-control and sling-shot geometry. The Directorate marked him \"neutralised\" in 2003 and moved his file to deep archive. But the Eastern Treaty Zone still whispers his name when the cedar smoke rises.",
+      "caption": "He disbanded the movement himself. Walked into the snow and answered to nothing but \"dada\" for twenty years. Tended terraces. Taught village children breath-control and sling-shot geometry. The Directorate marked him \"neutralised\" in 2003 and moved his file to deep archive. But the Eastern Treaty Zone still whispers his name when the cedar smoke rises. The Grey Trident on his chest never faded. Neither did the promise. welcometobharatvarsh.com",
       "storyAngle": "akakpen",
       "distillationFilter": "novel_intro",
       "contentChannel": "graffiti_photo",
-      "channels": ["instagram", "twitter", "facebook"],
+      "channels": [
+        "instagram",
+        "twitter",
+        "facebook"
+      ],
       "scheduledDate": "2026-04-30",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260430-001.webp"
+      "status": "rendered",
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260430-001.webp",
+      "publishedUrls": {
+        "instagram": "https://www.instagram.com/p/DXY9cFaCVvM/",
+        "twitter": "https://x.com/bharatvarshHQ/status/2046532236217123155"
+      }
     },
     {
-      "id": "BHV-20260418-001",
-      "topic": "Basement Meditation Permits \u2014 Form R-17",
-      "hook": "Applications for private contemplation permits increased 340% this quarter.",
-      "caption": "[BVN-24x7 CIVIC DESK] Basement Meditation Permit applications rose 340% in Q3 2025, according to the Department of Civic Harmony. Under Directive 1984-R, citizens may apply for Form R-17 to conduct private contemplation in designated basement spaces. Processing time: 6-8 weeks. Approval rate: 23%.",
+      "id": "BHV-20260427-001",
+      "topic": "Bracecomm 4.0 — 98.6% Adoption. Zones 4 & 5: Zero Crime.",
+      "hook": "The citizen who wears it is known. The citizen who is known is safe.",
+      "caption": "98.6% adoption. Zones 4 & 5: Zero Crime. The citizen who wears it is known. The citizen who is known is safe. — Dept. of Civic Harmony, October 15, 2025. What does a world without crime cost? welcometobharatvarsh.com",
       "storyAngle": "bharatsena",
-      "distillationFilter": "living_without_religion",
+      "distillationFilter": "med_mil_progress",
       "contentChannel": "news_article",
-      "channels": ["twitter", "facebook"],
-      "scheduledDate": "2026-04-18",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260418-001.webp"
+      "channels": [
+        "instagram",
+        "twitter",
+        "facebook"
+      ],
+      "scheduledDate": "2026-04-27",
+      "status": "rendered",
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260427-001.webp",
+      "publishedUrls": {
+        "instagram": "https://www.instagram.com/p/DWZUaFmCcba/"
+      }
+    },
+    {
+      "id": "BHV-20260421-001",
+      "topic": "Major Kahaan — Officer Profile",
+      "hook": "22 years. Zero infractions. Psychological profile: [REDACTED].",
+      "caption": "22 years. Zero infractions. Psychological profile: [REDACTED]. — DECLASSIFIED EXCERPT — The following personnel record was released under Directive 2026-D/03. SUBJECT: Major Kahaan. DESIGNATION: Senior Investigation Officer, Division Head. SERVICE NUMBER: MID-042-[REDACTED]. YEARS IN SERVICE: 22. COMMENDATIONS: 17. INFRACTIONS: 0. He graduated first in his cohort at the Bharatsena Advanced Training Institute. His specialisation: high-topology anomaly investigation. On 21 October 2025, seven cities burned simultaneously. The Mesh was watching. The Mesh saw nothing. Operation 20-10 was activated. Major Kahaan was assigned as Chief Investigative Officer with full Omega-level clearance. 'He will find what we cannot find. He always has. Give him what he asks for.' welcometobharatvarsh.com",
+      "storyAngle": "bharatsena",
+      "distillationFilter": "novel_intro",
+      "contentChannel": "declassified_report",
+      "channels": [
+        "instagram",
+        "twitter",
+        "facebook"
+      ],
+      "scheduledDate": "2026-04-21",
+      "status": "rendered",
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260421-001.webp",
+      "publishedUrls": {
+        "instagram": "https://www.instagram.com/p/DWV9ep-CU6j/?img_index=1",
+        "twitter": "https://x.com/bharatvarshHQ/status/2037104904200917371"
+      }
     },
     {
       "id": "BHV-20260415-001",
-      "topic": "Trident on the Wall \u2014 Sector 7 Graffiti",
+      "topic": "Trident on the Wall — Sector 7 Graffiti",
       "hook": "The trident was painted sometime between 03:17 and 03:22. The Mesh was watching. It saw nothing.",
-      "caption": "[INCIDENT LOG \u2014 MESH ANOMALY] Sector 7, Lakshmanpur. A Grey Trident \u2014 symbol of the banned Tribhuj movement \u2014 appeared on the east wall of Block 14-C between 03:17 and 03:22 on October 18, 2025. Two days before the bombings. The Mesh was watching. Coverage: 100%. Sensor uptime: 100%. It saw nothing.",
+      "caption": "[INCIDENT LOG — MESH ANOMALY] Sector 7, Lakshmanpur. A Grey Trident — symbol of the banned Tribhuj movement — appeared on the east wall of Block 14-C between 03:17 and 03:22 on October 18, 2025. Two days before the bombings. The Mesh was watching. Coverage: 100%. Sensor uptime: 100%. It saw nothing. welcometobharatvarsh.com",
       "storyAngle": "tribhuj",
       "distillationFilter": "novel_intro",
       "contentChannel": "graffiti_photo",
-      "channels": ["instagram", "twitter"],
+      "channels": [
+        "instagram",
+        "twitter"
+      ],
       "scheduledDate": "2026-04-15",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260415-001.webp"
+      "status": "rendered",
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260415-001.webp",
+      "publishedUrls": {
+        "instagram": "https://www.instagram.com/p/DWRk37aiQXZ/",
+        "twitter": "https://x.com/bharatvarshHQ/status/2036815624060686589"
+      }
     },
     {
       "id": "BHV-20260412-001",
-      "topic": "1717 Divergence \u2014 The Charter That Was Never Signed",
-      "hook": "BHARATVARSH NATIONAL ARCHIVES \u2014 308 YEARS OF SOVEREIGNTY",
-      "caption": "[BVN-24x7 SPECIAL REPORT] On this day in 1717, Emperor Farrukhsiyar refused to sign the East India Company's trade charter \u2014 the document that would have opened the subcontinent to colonial extraction. The coast remained a doorway, not a wound. Three centuries later, Bharatvarsh holds a permanent UN Security Council seat and exports green technology to 140 nations.",
+      "topic": "1717 Divergence — The Charter That Was Never Signed",
+      "hook": "BHARATVARSH NATIONAL ARCHIVES — 308 YEARS OF SOVEREIGNTY",
+      "caption": "[BVN-24x7 SPECIAL REPORT] NATIONAL ARCHIVES RELEASE — 308 YEARS OF UNBROKEN SOVEREIGNTY. On this day in 1717, Emperor Farrukhsiyar refused to sign the East India Company's trade charter — the document that would have opened the subcontinent to colonial extraction. The coast remained a doorway, not a wound. Three centuries later, Bharatvarsh holds a permanent UN Security Council seat, co-developed the atom bomb as an equal partner, and exports green technology to 140 nations. Our GDP has never left the global top three. Historian-General Mehra notes: 'The refusal was not visionary. It was practical. Farrukhsiyar simply did not see the value in the deal.' The British Empire found its fortunes elsewhere. Bharatvarsh found its own. Full archive access: welcometobharatvarsh.com",
       "storyAngle": "bharatsena",
       "distillationFilter": "med_mil_progress",
       "contentChannel": "news_article",
-      "channels": ["twitter", "instagram", "facebook"],
+      "channels": [
+        "twitter",
+        "instagram",
+        "facebook"
+      ],
       "scheduledDate": "2026-04-12",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260412-001.webp"
+      "status": "rendered",
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260412-001.webp",
+      "publishedUrls": {
+        "instagram": "https://www.instagram.com/p/DWPCwf9CUI7/",
+        "twitter": "https://x.com/bharatvarshHQ/status/2036382861851500735"
+      }
     },
     {
       "id": "BHV-20260409-001",
-      "topic": "Drone-Jammer Valley \u2014 The Silence Above",
+      "topic": "Drone-Jammer Valley — The Silence Above",
       "hook": "Where the drones stop, the sky begins.",
-      "caption": "Where the drones stop, the sky begins. \u2014 scratched into a cedar trunk at the edge of the Treaty Zone.",
+      "caption": "Where the drones stop, the sky begins. — scratched into a cedar trunk at the edge of the Treaty Zone. welcometobharatvarsh.com",
       "storyAngle": "akakpen",
       "distillationFilter": "med_mil_progress",
       "contentChannel": "graffiti_photo",
-      "channels": ["instagram", "twitter"],
+      "channels": [
+        "instagram",
+        "twitter"
+      ],
       "scheduledDate": "2026-04-09",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260409-001.webp"
+      "status": "rendered",
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260409-001.webp",
+      "publishedUrls": {
+        "instagram": "https://www.instagram.com/reel/DWM-CHgk2Dz/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        "twitter": "https://x.com/bharatvarshHQ/status/2035971233368744025"
+      }
     },
     {
       "id": "BHV-20260406-001",
-      "topic": "Temple Repurposing Directive \u2014 Lakshmanpur Senate",
+      "topic": "Temple Repurposing Directive — Lakshmanpur Senate",
       "hook": "The Lakshmanpur Mandir was redesignated as Senate Chamber 7 in 1984. Attendance has improved.",
-      "caption": "DIRECTIVE 1984-R/07 \u2014 FACILITY REPURPOSING ORDER. The Lakshmanpur Mandir \u2014 sandstone shikhara, water-mirror forecourt, 340 years of continuous worship \u2014 was redesignated as Senate Chamber 7 on March 14, 1984. The forecourt now hosts security screening. The inner sanctum seats 220 legislators.",
+      "caption": "DIRECTIVE 1984-R/07 — FACILITY REPURPOSING ORDER. The Lakshmanpur Mandir — sandstone shikhara, water-mirror forecourt, 340 years of continuous worship — was redesignated as Senate Chamber 7 on March 14, 1984. The forecourt now hosts security screening. The inner sanctum seats 220 legislators. Attendance at senate sessions averages 94%. Attendance at prayer averaged 12% in the final decade. The Directorate considers this an improvement in civic utility. Structural modifications were minimal — the architecture was already built for congregation. A plaque at the entrance reads: 'This building serves the people. It always did.' Former devotees may apply for basement meditation permits (Form R-17, processing time: 6-8 weeks). welcometobharatvarsh.com",
       "storyAngle": "bharatsena",
       "distillationFilter": "living_without_religion",
       "contentChannel": "declassified_report",
-      "channels": ["instagram", "twitter", "facebook"],
+      "channels": [
+        "instagram",
+        "twitter",
+        "facebook"
+      ],
       "scheduledDate": "2026-04-06",
-      "status": "planned",
-      "image": "/images/dispatches/bhv-20260406-001.webp"
+      "status": "rendered",
+      "image": "https://storage.googleapis.com/bharatvarsh-website-assets/dispatches/bhv-20260406-001.webp",
+      "publishedUrls": {
+        "instagram": "https://www.instagram.com/p/DWKVNkVE97x/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        "twitter": "https://x.com/bharatvarshHQ/status/2035704336920252666"
+      }
     }
   ]
 }

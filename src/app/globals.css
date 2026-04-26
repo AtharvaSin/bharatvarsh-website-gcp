@@ -1,3 +1,4 @@
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -59,6 +60,21 @@
   --faction-resistance: #DC2626;
   --faction-republic: #3B82F6;
   --faction-guild: #F1C232;
+
+  /* Semantic aliases (Bharatvarsh Classified Chronicle — locked 2026-04-13) */
+  --obsidian-void: var(--obsidian-900);
+  --obsidian-deep: var(--obsidian-800);
+  --obsidian-panel: var(--obsidian-700);
+  --navy-core: var(--navy-900);
+  --navy-signal: var(--navy-600);
+  --mustard-dossier: var(--mustard-500);
+  --mustard-hot: var(--mustard-400);
+  --powder-signal: var(--powder-300);
+  --bone-text: var(--text-primary);
+  --steel-text: var(--text-secondary);
+  --shadow-text: var(--text-muted);
+  --redaction: var(--status-alert);
+  --declassified: var(--status-success);
 
   /* Gradients */
   --gradient-hero: linear-gradient(180deg, var(--obsidian-900) 0%, var(--navy-900) 100%);
@@ -167,12 +183,27 @@
   --color-event-governance: var(--event-governance);
   --color-event-era: var(--event-era);
 
-  /* Fonts */
-  --font-sans: 'Inter', 'Noto Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Bebas Neue', 'Anton', var(--font-sans);
-  --font-serif: 'Crimson Pro', 'Noto Serif', Georgia, serif;
-  --font-devanagari: 'Noto Sans Devanagari', 'Tiro Devanagari Hindi', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  /* Semantic aliases for Tailwind utilities (Bharatvarsh Classified Chronicle — locked 2026-04-13) */
+  --color-obsidian-void: var(--obsidian-void);
+  --color-obsidian-deep: var(--obsidian-deep);
+  --color-obsidian-panel: var(--obsidian-panel);
+  --color-navy-core: var(--navy-core);
+  --color-navy-signal: var(--navy-signal);
+  --color-mustard-dossier: var(--mustard-dossier);
+  --color-mustard-hot: var(--mustard-hot);
+  --color-powder-signal: var(--powder-signal);
+  --color-bone-text: var(--bone-text);
+  --color-steel-text: var(--steel-text);
+  --color-shadow-text: var(--shadow-text);
+  --color-redaction: var(--redaction);
+  --color-declassified: var(--declassified);
+
+  /* Fonts — Classified Chronicle Option B: Brutalist Classified Briefing (locked 2026-04-13) */
+  --font-sans: 'General Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Anton', 'General Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-devanagari: 'Rozha One', 'Noto Sans Devanagari', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
 }
 
 /* Base styles */
