@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { Suspense, useState, useMemo, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { LoreModal } from '@/features/lore';
@@ -78,10 +78,10 @@ function LockedOverlay({ locked }: LockedOverlayProps) {
 }
 
 // ---------------------------------------------------------------------------
-// Main component
+// Inner component — must be inside a Suspense boundary (useSearchParams)
 // ---------------------------------------------------------------------------
 
-export function LoreContent() {
+function LoreContentInner() {
   const [selectedItem, setSelectedItem] = useState<LoreItem | null>(null);
   const [hasHandledDeepLink, setHasHandledDeepLink] = useState(false);
   // Flag set when the modal was auto-opened from a /lore?item=<id> deep link.
@@ -1023,5 +1023,23 @@ export function LoreContent() {
         onClose={handleModalClose}
       />
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Main export — Suspense boundary required for useSearchParams
+// ---------------------------------------------------------------------------
+export function LoreContent() {
+  return (
+    <Suspense
+      fallback={
+        <div
+          className="min-h-screen"
+          style={{ backgroundColor: 'var(--obsidian-void)' }}
+        />
+      }
+    >
+      <LoreContentInner />
+    </Suspense>
   );
 }
