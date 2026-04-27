@@ -8,7 +8,6 @@ import { Menu, X } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui/button';
 import { SignInButton, UserMenu } from '@/features/auth';
-import { BhoomiNavTrigger } from '@/components/bhoomi/BhoomiNavTrigger';
 
 interface HeaderProps {
   transparent?: boolean;
@@ -78,9 +77,6 @@ export const Header: FC<HeaderProps> = ({ transparent = false, className }) => {
                 BHARATVARSH
               </span>
             </Link>
-            <div className="hidden md:block">
-              <BhoomiNavTrigger />
-            </div>
           </div>
 
           {/* Desktop Navigation */}

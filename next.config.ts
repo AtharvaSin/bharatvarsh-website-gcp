@@ -89,6 +89,17 @@ const nextConfig: NextConfig = {
       ],
     },
   ],
+
+  /** SEO-safe redirect from deprecated Bhoomi feature to Citizen Channel */
+  async redirects() {
+    return [
+      {
+        source: '/bhoomi',
+        destination: '/forum',
+        permanent: true, // Next.js maps permanent: true → 308 (SEO-equivalent to 301)
+      },
+    ];
+  },
 };
 
 export default nextConfig;

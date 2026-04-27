@@ -127,7 +127,7 @@ function getCampaignContent(campaignId: string, step: number, appUrl: string, as
         secondaryLinksHtml: `
           <a href="${appUrl}/lore">Lore hub</a><br>
           <a href="${appUrl}/timeline">Timeline</a><br>
-          <a href="${appUrl}/bhoomi">Ask Bhoomi</a>
+          <a href="${appUrl}/forum">Citizen Channel</a>
         `,
         appUrl,
         unsubscribeUrl

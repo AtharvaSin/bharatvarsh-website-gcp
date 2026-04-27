@@ -5,7 +5,6 @@ import { Header } from '@/shared/layout/header';
 import { Footer } from '@/shared/layout/footer';
 import { LayoutProvider } from '@/shared/layout/LayoutProvider';
 import { Providers } from './providers';
-import { BhoomiWidget } from '@/components/bhoomi/BhoomiWidget';
 import { EventTrackingProvider } from '@/components/tracking/EventTrackingProvider';
 import { WebSiteJsonLd } from '@/components/seo/json-ld';
 import './globals.css';
@@ -167,7 +166,6 @@ export default function RootLayout({
                 }}
               />
             </LayoutProvider>
-            <BhoomiWidget />
           </EventTrackingProvider>
         </Providers>
       </body>
