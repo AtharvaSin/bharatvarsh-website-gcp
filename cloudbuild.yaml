@@ -2,6 +2,13 @@
 # Trigger: push to main or staging branch
 # Phase 7: Canary deployment with traffic splitting
 
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/DATABASE_URL/versions/latest
+      env: 'DATABASE_URL'
+    - versionName: projects/$PROJECT_ID/secrets/DIRECT_DATABASE_URL/versions/latest
+      env: 'DIRECT_DATABASE_URL'
+
 steps:
   # Step 1: Install dependencies and run checks
   - name: 'node:20-alpine'
@@ -15,7 +22,7 @@ steps:
         echo "NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true" >> .env
         echo "NEXT_PUBLIC_RATE_LIMIT_ENABLED=true" >> .env
         echo "NEXT_PUBLIC_LIVEKIT_URL=${_LIVEKIT_URL}" >> .env
-        
+
         npm ci
         npx prisma generate
         npm run build
@@ -41,22 +48,19 @@ steps:
       - '--all-tags'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh'
 
-  # Step 3a: Build Agent Docker image
-  - name: 'gcr.io/cloud-builders/docker'
+  # Apply pending Prisma migrations to Cloud SQL before traffic flips.
+  # Uses DIRECT_DATABASE_URL (bypasses pooler — required for migrations).
+  - id: 'db-migrate'
+    name: 'node:20'
+    entrypoint: 'bash'
     args:
-      - 'build'
-      - '-t'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:${SHORT_SHA}'
-      - '-t'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:latest'
-      - 'agent-service'
-
-  # Step 3b: Push Agent Image
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - '--all-tags'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent'
+      - '-c'
+      - |
+        set -euo pipefail
+        npm ci --omit=dev
+        npx prisma generate
+        npx prisma migrate deploy
+    secretEnv: ['DATABASE_URL', 'DIRECT_DATABASE_URL']
 
   # Step 4: Deploy canary revision (no traffic)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -133,15 +137,15 @@ steps:
         # Retry loop for health check (max 5 attempts with 5s delay)
         MAX_RETRIES=5
         RETRY_COUNT=0
-        
+
         while [ $$RETRY_COUNT -lt $$MAX_RETRIES ]; do
           HTTP_STATUS=$$(curl -s -o /dev/null -w "%{http_code}" "$$CANARY_URL/api/health")
-          
+
           if [ "$$HTTP_STATUS" = "200" ]; then
             echo "Canary health check passed (HTTP 200)."
             exit 0
           fi
-          
+
           echo "Health check failed (HTTP $$HTTP_STATUS). Retrying ($$((RETRY_COUNT+1))/$$MAX_RETRIES)..."
           RETRY_COUNT=$$((RETRY_COUNT+1))
           sleep 5
@@ -196,42 +200,13 @@ steps:
 
         echo "Canary promoted to 100% traffic. Deployment complete."
 
-  # Step 9: Deploy Agent Service
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    id: 'deploy-agent'
-    entrypoint: 'gcloud'
-    args:
-      - 'run'
-      - 'deploy'
-      - '${_SERVICE_NAME}-agent'
-      - '--image'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:${SHORT_SHA}'
-      - '--region'
-      - '${_REGION}'
-      - '--platform'
-      - 'managed'
-      - '--allow-unauthenticated'
-      - '--min-instances'
-      - '1'
-      - '--max-instances'
-      - '1'
-      - '--memory'
-      - '512Mi'
-      - '--cpu'
-      - '1'
-      - '--no-cpu-throttling'
-      - '--set-secrets=LIVEKIT_API_KEY=LIVEKIT_API_KEY:latest,LIVEKIT_API_SECRET=LIVEKIT_API_SECRET:latest,OPENAI_API_KEY=OPENAI_API_KEY:latest,INTERNAL_API_SECRET=INTERNAL_API_SECRET:latest'
-      - '--set-env-vars=LIVEKIT_URL=${_LIVEKIT_URL},INTERNAL_API_URL=${_INTERNAL_API_URL}'
-
 substitutions:
   _REGION: us-central1
   _REPO_NAME: bharatvarsh
   _SERVICE_NAME: bharatvarsh-website
   _CLOUD_SQL_INSTANCE: 'bharatvarsh-website:us-central1:bharatvarsh-db'
-  _CLOUD_SQL_INSTANCE: 'bharatvarsh-website:us-central1:bharatvarsh-db'
   _CANARY_SOAK_SECONDS: '120'
   _LIVEKIT_URL: 'wss://bharatvarsh-website-ljazyvnb.livekit.cloud'
-  _INTERNAL_API_URL: 'https://welcometobharatvarsh.com/api/internal/rag'
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -239,5 +214,3 @@ options:
 images:
   - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:${SHORT_SHA}'
   - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:latest'
-  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:${SHORT_SHA}'
-  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh-agent:latest'
