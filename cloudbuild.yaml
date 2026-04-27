@@ -61,6 +61,8 @@ steps:
       - '-c'
       - |
         set -euo pipefail
+        # NOTE: in Cloud Build YAML, $VAR is a build substitution. Escape bash
+        # variables with $$ so they reach the shell verbatim.
         # Install cloud-sql-proxy (small static binary)
         curl -sSL -o /usr/local/bin/cloud-sql-proxy \
           https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.14.3/cloud-sql-proxy.linux.amd64
@@ -70,17 +72,17 @@ steps:
         cloud-sql-proxy --unix-socket /cloudsql \
           bharatvarsh-website:us-central1:bharatvarsh-db \
           > /tmp/csp.log 2>&1 &
-        PROXY_PID=$!
+        PROXY_PID=$$!
         # Wait up to 30s for the socket to appear
         SOCK="/cloudsql/bharatvarsh-website:us-central1:bharatvarsh-db/.s.PGSQL.5432"
-        for i in $(seq 1 30); do
-          if [ -S "$SOCK" ]; then
-            echo "Cloud SQL Proxy ready (waited ${i}s)"
+        for i in $$(seq 1 30); do
+          if [ -S "$$SOCK" ]; then
+            echo "Cloud SQL Proxy ready (waited $${i}s)"
             break
           fi
           sleep 1
         done
-        if [ ! -S "$SOCK" ]; then
+        if [ ! -S "$$SOCK" ]; then
           echo "ERROR: Cloud SQL Proxy did not become ready in 30s. Proxy log:"
           cat /tmp/csp.log
           exit 1
@@ -90,8 +92,8 @@ steps:
         npx prisma generate
         npx prisma migrate deploy
         # Cleanup
-        kill $PROXY_PID 2>/dev/null || true
-        wait $PROXY_PID 2>/dev/null || true
+        kill $$PROXY_PID 2>/dev/null || true
+        wait $$PROXY_PID 2>/dev/null || true
     secretEnv: ['DATABASE_URL', 'DIRECT_DATABASE_URL']
 
   # Step 4: Deploy canary revision (no traffic)
