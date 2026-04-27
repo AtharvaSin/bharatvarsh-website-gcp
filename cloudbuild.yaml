@@ -50,6 +50,10 @@ steps:
 
   # Apply pending Prisma migrations to Cloud SQL before traffic flips.
   # Uses DIRECT_DATABASE_URL (bypasses pooler — required for migrations).
+  # Cloud Build containers don't auto-mount Cloud SQL like Cloud Run does, so we
+  # run cloud-sql-proxy in-step on a Unix socket that matches the production
+  # /cloudsql/<INSTANCE> path that DATABASE_URL secret already references.
+  # Requires Cloud Build SA to have roles/cloudsql.client.
   - id: 'db-migrate'
     name: 'node:20'
     entrypoint: 'bash'
@@ -57,9 +61,37 @@ steps:
       - '-c'
       - |
         set -euo pipefail
+        # Install cloud-sql-proxy (small static binary)
+        curl -sSL -o /usr/local/bin/cloud-sql-proxy \
+          https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.14.3/cloud-sql-proxy.linux.amd64
+        chmod +x /usr/local/bin/cloud-sql-proxy
+        # Start proxy in background, listening on Unix socket dir matching prod
+        mkdir -p /cloudsql
+        cloud-sql-proxy --unix-socket /cloudsql \
+          bharatvarsh-website:us-central1:bharatvarsh-db \
+          > /tmp/csp.log 2>&1 &
+        PROXY_PID=$!
+        # Wait up to 30s for the socket to appear
+        SOCK="/cloudsql/bharatvarsh-website:us-central1:bharatvarsh-db/.s.PGSQL.5432"
+        for i in $(seq 1 30); do
+          if [ -S "$SOCK" ]; then
+            echo "Cloud SQL Proxy ready (waited ${i}s)"
+            break
+          fi
+          sleep 1
+        done
+        if [ ! -S "$SOCK" ]; then
+          echo "ERROR: Cloud SQL Proxy did not become ready in 30s. Proxy log:"
+          cat /tmp/csp.log
+          exit 1
+        fi
+        # Apply pending migrations
         npm ci --omit=dev
         npx prisma generate
         npx prisma migrate deploy
+        # Cleanup
+        kill $PROXY_PID 2>/dev/null || true
+        wait $PROXY_PID 2>/dev/null || true
     secretEnv: ['DATABASE_URL', 'DIRECT_DATABASE_URL']
 
   # Step 4: Deploy canary revision (no traffic)
