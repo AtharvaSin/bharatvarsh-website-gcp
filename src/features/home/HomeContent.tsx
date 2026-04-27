@@ -10,6 +10,8 @@ import { useSession } from '@/features/auth';
 import loreRaw from '@/content/data/lore-items.json';
 import dispatchesRaw from '@/content/data/dispatches.json';
 import novelData from '@/content/data/novel.json';
+import { CitizenChannelCTA } from './CitizenChannelCTA';
+import type { ForumStats } from './getForumStats';
 
 // ---------------------------------------------------------------------------
 // Types inferred from JSON shape
@@ -102,7 +104,11 @@ function FadeInSection({
 // HomeContent
 // ---------------------------------------------------------------------------
 
-export function HomeContent() {
+interface HomeContentProps {
+  stats: ForumStats | null;
+}
+
+export function HomeContent({ stats }: HomeContentProps) {
   const [dossierModalOpen, setDossierModalOpen] = useState(false);
   const { isAuthenticated } = useSession();
   const platforms = (novelData as { purchase: { platforms: Array<{ name: string; url: string; icon: string }> } }).purchase.platforms;
@@ -475,95 +481,8 @@ export function HomeContent() {
                 </div>
               </div>
 
-              {/* Path 03 */}
-              <div
-                className="relative border-t p-8"
-                style={{
-                  background: 'var(--obsidian-panel)',
-                  borderColor: 'var(--navy-signal)',
-                }}
-              >
-                <span
-                  aria-hidden="true"
-                  className="absolute top-8 right-8 font-display"
-                  style={{ fontSize: '4rem', color: 'var(--mustard-dossier)' }}
-                >
-                  03
-                </span>
-                <EyebrowLabel segments={['PATH 03', 'FOR THE CURIOUS']} />
-                <h3
-                  className="font-display mt-2 mb-3"
-                  style={{ fontSize: '3rem', color: 'var(--bone-text)' }}
-                >
-                  MEET BHOOMI
-                </h3>
-
-                <div className="flex gap-6 items-start">
-                  <div className="flex-1 min-w-0">
-                    <p style={{ color: 'var(--steel-text)' }}>
-                      Ask the in-world AI anything. Bhoomi speaks for the regime,
-                      the resistance, and everything in between.
-                    </p>
-
-                    {/* Clearance indicator */}
-                    <div
-                      className="mt-4 px-4 py-3 border-l-2 flex items-center gap-3"
-                      style={{
-                        backgroundColor: 'var(--obsidian-void)',
-                        borderLeftColor: 'var(--mustard-dossier)',
-                      }}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="inline-block w-2 h-2 rounded-full animate-pulse flex-shrink-0"
-                        style={{ backgroundColor: 'var(--declassified)' }}
-                      />
-                      <div className="font-mono uppercase text-[10px] tracking-[0.18em]" style={{ color: 'var(--shadow-text)' }}>
-                        <span style={{ color: 'var(--bone-text)' }}>CLEARANCE:</span> VISITOR{' '}
-                        <span style={{ color: 'var(--mustard-dossier)' }}>▪</span> SESSION READY{' '}
-                        <span style={{ color: 'var(--mustard-dossier)' }}>▪</span> BHOOMI{' '}
-                        <span style={{ color: 'var(--declassified)' }}>ONLINE</span>
-                      </div>
-                    </div>
-
-                    <Link href="/bhoomi" className="mt-6 inline-block">
-                      <button
-                        className="font-mono uppercase"
-                        style={{
-                          border: '1px solid var(--powder-signal)',
-                          color: 'var(--bone-text)',
-                          padding: '0.5rem 1.25rem',
-                          fontSize: '11px',
-                          letterSpacing: '0.18em',
-                          background: 'transparent',
-                        }}
-                      >
-                        START THE INTERROGATION →
-                      </button>
-                    </Link>
-                  </div>
-
-                  {/* Bhoomi portrait thumbnail — same moment/scene as the /bhoomi avatar hero */}
-                  <div
-                    className="flex-shrink-0 relative hidden sm:block"
-                    style={{ transform: 'rotate(-3deg)', marginTop: '0.25rem' }}
-                  >
-                    <Image
-                      src="/images/bhoomi/bhoomi-home-cta.webp"
-                      alt="Bhoomi at an Indrapur rooftop parapet at civic dusk"
-                      width={170}
-                      height={227}
-                      className="block"
-                      style={{
-                        display: 'block',
-                        boxShadow:
-                          '0 24px 48px rgba(241,194,50,0.18), 0 0 40px rgba(51,99,153,0.32)',
-                        border: '1px solid var(--navy-signal)',
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
+              {/* Citizen Channel CTA — replaces the prior Bhoomi hero card */}
+              <CitizenChannelCTA stats={stats} />
             </div>
           </div>
         </div>
