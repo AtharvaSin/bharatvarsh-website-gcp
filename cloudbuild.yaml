@@ -61,8 +61,8 @@ steps:
       - '-c'
       - |
         set -euo pipefail
-        # NOTE: in Cloud Build YAML, $VAR is a build substitution. Escape bash
-        # variables with $$ so they reach the shell verbatim.
+        # NOTE: bash variables in Cloud Build heredocs need double-dollar
+        # escapes so the YAML substitution layer doesn't grab them.
         # Install cloud-sql-proxy (small static binary)
         curl -sSL -o /usr/local/bin/cloud-sql-proxy \
           https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.14.3/cloud-sql-proxy.linux.amd64
