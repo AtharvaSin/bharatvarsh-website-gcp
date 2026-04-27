@@ -37,19 +37,18 @@ export function CitizenChannelCTA({ stats }: CitizenChannelCTAProps) {
           </ul>
         )}
 
-        <Link href="/forum" className="mt-6 inline-block">
-          <button
-            className="font-mono uppercase"
-            style={{
-              background: 'var(--mustard-dossier)',
-              color: 'var(--obsidian-900)',
-              padding: '0.75rem 1.25rem',
-              fontSize: '11px',
-              letterSpacing: '0.18em',
-            }}
-          >
-            Enter the Forum  →
-          </button>
+        <Link
+          href="/forum"
+          className="mt-6 inline-block font-mono uppercase"
+          style={{
+            background: 'var(--mustard-dossier)',
+            color: 'var(--obsidian-900)',
+            padding: '0.75rem 1.25rem',
+            fontSize: '11px',
+            letterSpacing: '0.18em',
+          }}
+        >
+          Enter the Forum <span aria-hidden="true">→</span>
         </Link>
       </div>
     </section>
