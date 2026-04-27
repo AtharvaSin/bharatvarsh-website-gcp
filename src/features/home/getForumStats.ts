@@ -9,7 +9,7 @@ export interface ForumStats {
 
 /**
  * Format a date as a relative time string (e.g., "2 hours ago").
- * Falls back to locale date string if relative calculation fails.
+ * Returns a locale date string for dates more than 7 days ago.
  */
 function formatRelativeTime(date: Date): string {
   const now = new Date();
@@ -54,7 +54,7 @@ export async function getForumStats(): Promise<ForumStats | null> {
       lastPostRelative: lastPost ? formatRelativeTime(lastPost.createdAt) : null,
     };
   } catch (err) {
-    console.error('[getForumStats] failed:', err);
+    console.error('[getForumStats] failed:', err instanceof Error ? err.message : String(err));
     return null;
   }
 }
