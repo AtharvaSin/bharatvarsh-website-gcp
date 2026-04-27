@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import { Users, UserPlus, Activity, MessageSquare } from 'lucide-react';
+import { Users, UserPlus, Activity } from 'lucide-react';
 import {
     AreaChart,
     Area,
@@ -21,7 +21,6 @@ interface OverviewData {
         totalUsers: number;
         newUsers: { value: number; trend: number };
         events: { value: number; trend: number };
-        aiSessions: { value: number; trend: number };
     };
     dailyTrend: { date: string; count: number }[];
     topEvents: { name: string; count: number }[];
@@ -47,8 +46,8 @@ export const OverviewDashboard: FC = () => {
     if (loading) {
         return (
             <div className="space-y-6 animate-pulse">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[...Array(3)].map((_, i) => (
                         <div
                             key={i}
                             className="h-28 rounded-xl bg-[var(--obsidian-800)]"
@@ -87,7 +86,7 @@ export const OverviewDashboard: FC = () => {
             </div>
 
             {/* KPI cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <StatCard
                     icon={<Users className="w-5 h-5" />}
                     label="Total Users"
@@ -104,12 +103,6 @@ export const OverviewDashboard: FC = () => {
                     label="Events (7d)"
                     value={kpis.events.value}
                     trend={kpis.events.trend}
-                />
-                <StatCard
-                    icon={<MessageSquare className="w-5 h-5" />}
-                    label="AI Sessions (7d)"
-                    value={kpis.aiSessions.value}
-                    trend={kpis.aiSessions.trend}
                 />
             </div>
 

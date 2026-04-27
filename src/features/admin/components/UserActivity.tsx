@@ -17,7 +17,6 @@ interface UserRow {
     role: string;
     createdAt: string;
     eventCount: number;
-    sessionCount: number;
 }
 
 const ROLE_BADGE: Record<string, string> = {
@@ -27,7 +26,7 @@ const ROLE_BADGE: Record<string, string> = {
     VISITOR: 'bg-[var(--obsidian-600)] text-[var(--text-muted)]',
 };
 
-type SortKey = 'createdAt' | 'eventCount' | 'sessionCount';
+type SortKey = 'createdAt' | 'eventCount';
 type SortDir = 'asc' | 'desc';
 
 export const UserActivity: FC = () => {
@@ -151,20 +150,13 @@ export const UserActivity: FC = () => {
                                 Events
                                 <SortIcon column="eventCount" />
                             </th>
-                            <th
-                                onClick={() => toggleSort('sessionCount')}
-                                className="text-left px-4 py-3 text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] cursor-pointer hover:text-[var(--text-secondary)]"
-                            >
-                                Sessions
-                                <SortIcon column="sessionCount" />
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {loading ? (
                             [...Array(5)].map((_, i) => (
                                 <tr key={i}>
-                                    <td colSpan={6} className="px-4 py-3">
+                                    <td colSpan={5} className="px-4 py-3">
                                         <div className="h-4 rounded bg-[var(--obsidian-700)] animate-pulse" />
                                     </td>
                                 </tr>
@@ -172,7 +164,7 @@ export const UserActivity: FC = () => {
                         ) : sortedUsers.length === 0 ? (
                             <tr>
                                 <td
-                                    colSpan={6}
+                                    colSpan={5}
                                     className="text-center text-[var(--text-muted)] py-16"
                                 >
                                     No users found.
@@ -222,14 +214,11 @@ export const UserActivity: FC = () => {
                                         <td className="px-4 py-3 text-xs text-[var(--text-secondary)] tabular-nums">
                                             {user.eventCount.toLocaleString()}
                                         </td>
-                                        <td className="px-4 py-3 text-xs text-[var(--text-secondary)] tabular-nums">
-                                            {user.sessionCount}
-                                        </td>
                                     </tr>
                                     {expandedId === user.id && (
                                         <tr key={`${user.id}-detail`}>
                                             <td
-                                                colSpan={6}
+                                                colSpan={5}
                                                 className="px-6 py-4 bg-[var(--obsidian-850)] border-l-2 border-[var(--powder-300)]"
                                             >
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -258,12 +247,6 @@ export const UserActivity: FC = () => {
                                                             Total events:{' '}
                                                             <span className="text-[var(--powder-300)]">
                                                                 {user.eventCount.toLocaleString()}
-                                                            </span>
-                                                        </p>
-                                                        <p className="text-[var(--text-muted)] mt-1">
-                                                            AI chat sessions:{' '}
-                                                            <span className="text-[var(--powder-300)]">
-                                                                {user.sessionCount}
                                                             </span>
                                                         </p>
                                                     </div>
