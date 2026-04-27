@@ -58,40 +58,27 @@ export async function GET(req: NextRequest) {
         prisma.user.count({ where }),
     ]);
 
-    // Enrich with event + session counts using raw queries
+    // Enrich with event counts using raw queries
     const userIds = users.map((u) => u.id);
 
     let eventCounts: { userId: string; count: bigint }[] = [];
-    let sessionCounts: { userId: string; count: bigint }[] = [];
 
     if (userIds.length > 0) {
-        [eventCounts, sessionCounts] = await Promise.all([
-            prisma.$queryRaw<{ userId: string; count: bigint }[]>`
+        eventCounts = await prisma.$queryRaw<{ userId: string; count: bigint }[]>`
         SELECT "userId", COUNT(*)::bigint AS count
         FROM "Event"
         WHERE "userId" = ANY(${userIds})
         GROUP BY "userId"
-      `,
-            prisma.$queryRaw<{ userId: string; count: bigint }[]>`
-        SELECT "userId", COUNT(*)::bigint AS count
-        FROM "AiChatSession"
-        WHERE "userId" = ANY(${userIds})
-        GROUP BY "userId"
-      `,
-        ]);
+      `;
     }
 
     const eventCountMap = new Map(
         eventCounts.map((r) => [r.userId, Number(r.count)]),
     );
-    const sessionCountMap = new Map(
-        sessionCounts.map((r) => [r.userId, Number(r.count)]),
-    );
 
     const data = users.map((u) => ({
         ...u,
         eventCount: eventCountMap.get(u.id) ?? 0,
-        sessionCount: sessionCountMap.get(u.id) ?? 0,
     }));
 
     return NextResponse.json({ data, total, page, pageSize });

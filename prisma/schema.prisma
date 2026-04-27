@@ -105,9 +105,6 @@ model User {
   moderationActions ModerationAction[] @relation("ModeratorActions")
   auditLogs         AuditLog[]
 
-  // AI Agent relations
-  aiChatSessions    AiChatSession[]
-
   @@index([email])
   @@index([role])
 }
@@ -384,39 +381,3 @@ model AuditLog {
   @@index([action, createdAt(sort: Desc)])
 }
 
-// ─── AI AGENT TRACKING ──────────────────────────────────────
-
-model AiChatSession {
-  id          String   @id @default(cuid())
-  userId      String?
-  visitorId   String?  // Cookie-based ID for anonymous tracking
-
-  spoilerMode String   @default("S1") // Spoiler mode at session start
-
-  startedAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  messages    AiChatMessage[]
-
-  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  @@index([userId])
-  @@index([startedAt(sort: Desc)])
-}
-
-model AiChatMessage {
-  id        String   @id @default(cuid())
-  sessionId String
-
-  role      String   // 'user' | 'assistant'
-  content   String   @db.Text
-
-  metadata  Json?    // Technical: latency, model, token count
-  analysis  Json?    // Analytical: sentiment, topics detected
-
-  createdAt DateTime @default(now())
-
-  session   AiChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-
-  @@index([sessionId, createdAt])
-}
