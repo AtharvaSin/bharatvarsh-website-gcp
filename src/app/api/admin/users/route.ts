@@ -1,7 +1,7 @@
 /**
  * GET /api/admin/users
  *
- * Paginated user list with event / session counts.  ADMIN‑only.
+ * Paginated user list with event counts.  ADMIN‑only.
  *
  * Query params:
  *   page     — 1‑based (default 1)
