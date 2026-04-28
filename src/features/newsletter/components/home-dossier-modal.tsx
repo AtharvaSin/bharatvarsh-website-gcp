@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import { useDossierForm } from '@/features/newsletter/hooks/use-dossier-form';
@@ -47,6 +47,15 @@ export const HomeDossierModal: FC<HomeDossierModalProps> = ({ isOpen, onClose })
     submit,
     reset,
   } = useDossierForm();
+
+  // Defer portal mount until after hydration. The portal target (document.body)
+  // is browser-only, so SSR returns null while CSR returns a div — that diff
+  // is the source of React #418. Render nothing until mounted on the client.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Hydration safety pattern
+    setMounted(true);
+  }, []);
 
   const dossierContent = (novelData as { dossier: DossierContent }).dossier;
 
@@ -110,7 +119,7 @@ export const HomeDossierModal: FC<HomeDossierModalProps> = ({ isOpen, onClose })
   // `transform`, `filter`, `perspective`, or `will-change: transform` —
   // which otherwise creates a new containing block and breaks
   // `position: fixed` positioning. HomeContent has such an ancestor.
-  if (typeof document === 'undefined') return null;
+  if (!mounted) return null;
 
   const overlay = (
     <div

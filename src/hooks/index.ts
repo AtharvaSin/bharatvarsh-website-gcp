@@ -10,9 +10,3 @@ export * from '@/shared/hooks';
 
 // Feature hooks (re-exported for backwards compatibility)
 export { useDossierForm } from '@/features/newsletter/hooks/use-dossier-form';
-export {
-  useTimelineScroll,
-  useScrollValues,
-  type UseTimelineScrollOptions,
-  type UseTimelineScrollReturn,
-} from '@/features/timeline/hooks/use-timeline-scroll';

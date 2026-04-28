@@ -2,9 +2,77 @@
 
 import { FC, useState, useMemo } from 'react';
 import Image from 'next/image';
+import { Instagram, Twitter, Facebook } from 'lucide-react';
 import { EyebrowLabel } from '@/shared/ui/EyebrowLabel';
 import dispatchData from '@/content/data/dispatches.json';
-import { Dispatch, hasAnyPublishedUrl, primaryDispatchUrl } from '@/features/dispatches/types';
+import {
+  Dispatch,
+  DispatchPlatform,
+  hasAnyPublishedUrl,
+  primaryDispatchUrl,
+  publishedPlatforms,
+} from '@/features/dispatches/types';
+
+const PLATFORM_ICONS: Record<DispatchPlatform, FC<{ className?: string }>> = {
+  instagram: Instagram,
+  twitter: Twitter,
+  facebook: Facebook,
+};
+
+const PLATFORM_LABELS: Record<DispatchPlatform, string> = {
+  instagram: 'Instagram',
+  twitter: 'X / Twitter',
+  facebook: 'Facebook',
+};
+
+interface ReadLinkProps {
+  dispatch: Dispatch;
+  label: string;
+  className?: string;
+}
+
+const ReadLink: FC<ReadLinkProps> = ({ dispatch, label, className = '' }) => {
+  const url = primaryDispatchUrl(dispatch);
+  if (!url) return null;
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Read intercept: ${dispatch.topic}`}
+      className={`font-mono uppercase tracking-[0.18em] cursor-pointer hover:opacity-70 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mustard-dossier)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--obsidian-void)] ${className}`}
+      style={{ color: 'var(--mustard-dossier)' }}
+    >
+      {label}
+    </a>
+  );
+};
+
+const PlatformIconStrip: FC<{ dispatch: Dispatch }> = ({ dispatch }) => {
+  const platforms = publishedPlatforms(dispatch);
+  if (platforms.length === 0) return null;
+  return (
+    <div className="flex items-center gap-2">
+      {platforms.map((platform) => {
+        const Icon = PLATFORM_ICONS[platform];
+        const url = dispatch.publishedUrls![platform]!;
+        return (
+          <a
+            key={platform}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${dispatch.topic} on ${PLATFORM_LABELS[platform]}`}
+            className="opacity-60 hover:opacity-100 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mustard-dossier)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--obsidian-panel)]"
+            style={{ color: 'var(--steel-text)' }}
+          >
+            <Icon className="w-3.5 h-3.5" />
+          </a>
+        );
+      })}
+    </div>
+  );
+};
 
 type AngleFilter = 'all' | 'bharatsena' | 'akakpen' | 'tribhuj';
 type ChannelFilter = 'all' | 'declassified_report' | 'graffiti_photo' | 'news_article';
@@ -463,21 +531,14 @@ export const DispatchesContent: FC = () => {
                   ))}
                 </div>
 
-                {(() => {
-                  const url = primaryDispatchUrl(featuredDispatch);
-                  if (!url) return null;
-                  return (
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono uppercase text-[11px] tracking-[0.18em] cursor-pointer hover:opacity-70 transition-opacity"
-                      style={{ color: 'var(--mustard-dossier)' }}
-                    >
-                      READ FULL INTERCEPT →
-                    </a>
-                  );
-                })()}
+                <ReadLink
+                  dispatch={featuredDispatch}
+                  label="READ FULL INTERCEPT →"
+                  className="text-[11px]"
+                />
+                <div className="mt-4">
+                  <PlatformIconStrip dispatch={featuredDispatch} />
+                </div>
               </div>
             </div>
           </div>
@@ -638,8 +699,8 @@ export const DispatchesContent: FC = () => {
                         )}
                       </div>
 
-                      {/* Read link + Devanagari ornament row */}
-                      <div className="flex items-end justify-between mt-4">
+                      {/* Footer row: ornament · platform icons · read link */}
+                      <div className="flex items-end justify-between mt-4 gap-3">
                         {hasOrnament ? (
                           <span
                             aria-hidden="true"
@@ -655,21 +716,14 @@ export const DispatchesContent: FC = () => {
                         ) : (
                           <span />
                         )}
-                        {(() => {
-                          const url = primaryDispatchUrl(dispatch);
-                          if (!url) return null;
-                          return (
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-mono uppercase text-[10px] tracking-[0.18em] cursor-pointer hover:opacity-70 transition-opacity"
-                              style={{ color: 'var(--mustard-dossier)' }}
-                            >
-                              READ →
-                            </a>
-                          );
-                        })()}
+                        <div className="flex items-center gap-3">
+                          <PlatformIconStrip dispatch={dispatch} />
+                          <ReadLink
+                            dispatch={dispatch}
+                            label="READ →"
+                            className="text-[10px]"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

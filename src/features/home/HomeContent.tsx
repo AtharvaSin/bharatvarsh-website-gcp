@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -111,6 +111,14 @@ interface HomeContentProps {
 export function HomeContent({ stats }: HomeContentProps) {
   const [dossierModalOpen, setDossierModalOpen] = useState(false);
   const { isAuthenticated } = useSession();
+  // Defer auth-conditional rendering until after hydration to keep SSR HTML
+  // deterministic. SSR/SSG can't see the session cookie; rendering the locked
+  // variant first and unlocking post-mount avoids React #418 hydration warnings.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Hydration safety pattern
+    setMounted(true);
+  }, []);
   const platforms = (novelData as { purchase: { platforms: Array<{ name: string; url: string; icon: string }> } }).purchase.platforms;
 
   return (
@@ -287,45 +295,6 @@ export function HomeContent({ stats }: HomeContentProps) {
           </div>
         </div>
 
-        {/* Dispatch ticker strip */}
-        <div
-          className="relative z-10 border-t border-b overflow-hidden py-3"
-          style={{
-            borderColor: 'var(--navy-signal)',
-            background: 'rgba(26, 31, 46, 0.8)',
-            backdropFilter: 'blur(4px)',
-          }}
-        >
-          <div
-            className="flex gap-6 whitespace-nowrap"
-            style={{ animation: 'marquee 40s linear infinite' }}
-          >
-            {[0, 1].map((dupe) => (
-              <span
-                key={dupe}
-                className="flex gap-6 items-center font-mono uppercase"
-                style={{
-                  fontSize: '11px',
-                  letterSpacing: '0.18em',
-                  color: 'var(--shadow-text)',
-                }}
-              >
-                <span>INCOMING</span>
-                <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>▪</span>
-                <span>INDRAPUR CURFEW EXTENDED</span>
-                <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>▪</span>
-                <span>MAGNA CARTA ANNIVERSARY</span>
-                <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>▪</span>
-                <span>SURVEILLANCE MESH UPDATE</span>
-                <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>▪</span>
-                <span>AKAKPEN BORDER INCIDENT</span>
-                <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)' }}>▪</span>
-                <span>CASE #0042 DECLASSIFIED</span>
-                <span aria-hidden="true" style={{ color: 'var(--mustard-dossier)', marginRight: '1.5rem' }}>▪</span>
-              </span>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* ================================================================
@@ -672,7 +641,7 @@ export function HomeContent({ stats }: HomeContentProps) {
           >
             {archiveItems.map((item) => {
               const isLocked =
-                item.classification === 'classified' && !isAuthenticated;
+                item.classification === 'classified' && (!mounted || !isAuthenticated);
 
               // Classified variant — silhouette card + sign-in CTA, no face leak.
               if (isLocked) {
@@ -1581,14 +1550,6 @@ export function HomeContent({ stats }: HomeContentProps) {
           </div>
         </div>
       </FadeInSection>
-
-      {/* Marquee keyframe */}
-      <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
-        }
-      `}</style>
 
       {/* Dossier lead magnet modal — triggered by hero primary CTA */}
       <HomeDossierModal

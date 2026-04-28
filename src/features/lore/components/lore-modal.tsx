@@ -606,17 +606,6 @@ const MESH_SPECS: DataChip[] = [
   { label: 'EDGE',       value: 'ENDS AT THE TREELINE' },
 ];
 
-const NEURAL_DIODES_SPECS: DataChip[] = [
-  { label: 'TYPE',          value: 'SUB-DERMAL NEURAL LATTICE' },
-  { label: 'FIELD-FITTED',  value: 'AFRICA \u00B7 2021 \u00B7 SHELLFIRE' },
-  { label: 'EXTERNAL MARK', value: 'SCALLOP BEHIND LEFT EAR' },
-  { label: 'MAG RANGE',     value: '~2 METRES' },
-  { label: 'LINKS',         value: 'PISTOLS \u00B7 BIKE \u00B7 HUD' },
-  { label: 'WEAKNESS',      value: 'EMP' },
-  { label: 'SIDE EFFECTS',  value: 'MIGRAINE \u00B7 TINNITUS \u00B7 APHASIA' },
-  { label: 'AUTH',          value: 'FIELD-OFFICER GRADE' },
-];
-
 const HUD_MONOCLE_SPECS: DataChip[] = [
   { label: 'TYPE',      value: 'OCULAR OVERLAY' },
   { label: 'STANDARD',  value: 'HELMET / VISOR HUD' },
@@ -634,7 +623,6 @@ const TECH_SPECS_BY_NAME: Record<string, DataChip[]> = {
   'Oxy Pole':      OXY_POLE_SPECS,
   'Pulse Gun':     PULSE_GUN_SPECS,
   'The Mesh':      MESH_SPECS,
-  'Neural Diodes': NEURAL_DIODES_SPECS,
   'HUD Monocle':   HUD_MONOCLE_SPECS,
 };
 
@@ -668,12 +656,6 @@ const MESH_USES: ChronicleScene[] = [
   { chapter: 'CH \u2014', title: 'THE TRESPASS THRESHOLD', summary: "A Directorate vehicle rolls past a treeline in the eastern hills. Every piece of state hardware on board goes quiet at once. The Mesh has ended." },
 ];
 
-const NEURAL_DIODES_USES: ChronicleScene[] = [
-  { chapter: 'CH 01', title: 'THE NIGHTMARE',  summary: "\u201COn the bed his twitching increased. The lattice on his forehead tightened. His eyelids strained as if they might force themselves open by will alone.\u201D The diodes translate a nightmare into a body-wide jolt." },
-  { chapter: 'CH 02', title: 'THE DRESS ROUTINE', summary: "\u201CHe touched the faint surgical scallop hidden behind his left ear, the place where flesh had agreed to host a decision.\u201D Then he sets his coat to hang just-so over the rest of the hardware." },
-  { chapter: 'CH \u2014', title: 'THE MAG-HOLSTER BLOOM', summary: "Two pistols detach from the shoulder rig and float to shoulder height on faint electric-blue shimmer threads. He does not look at them. They already know." },
-];
-
 const HUD_MONOCLE_USES: ChronicleScene[] = [
   { chapter: 'PROLOGUE', title: 'THE SNIPER NEST',  summary: "\u201CHe settled one knee, let out a breath, and read the numbers at the top right of his HUD. Wind speed: 0.5 km/h, NW. Elevation: \u22124\u00B0. Range: 187 m.\u201D" },
   { chapter: 'CH 02', title: 'THE BIKE WAKING',      summary: "\u201CThe HUD climbed the visor and laid icons like faint stars. On the right, the call glyph and a map slice; on the left, engine health, gear, fuel, a small pulsing dot that meant nothing to anyone who wasn\u2019t him.\u201D" },
@@ -686,7 +668,6 @@ const TECH_USES_BY_NAME: Record<string, ChronicleScene[]> = {
   'Oxy Pole':      OXY_POLE_USES,
   'Pulse Gun':     PULSE_GUN_USES,
   'The Mesh':      MESH_USES,
-  'Neural Diodes': NEURAL_DIODES_USES,
   'HUD Monocle':   HUD_MONOCLE_USES,
 };
 

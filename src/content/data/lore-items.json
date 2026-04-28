@@ -928,60 +928,6 @@
       "sortOrder": 19
     },
     {
-      "id": "neural-diodes",
-      "name": "Neural Diodes",
-      "category": "tech",
-      "classification": "classified",
-      "subtype": "Sub-Dermal Neural Lattice",
-      "tagline": "The faint surgical scallop behind his left ear.",
-      "description": "Major Kahaan\u2019s battlefield augmentation. A faint surgical scallop is hidden behind his left ear \u2014 the external mark of a sub-dermal diode lattice grafted during the African relief detail in 2021, under shellfire, as a last resort. The diodes let him float twin pistols at shoulder height on faint electric-blue shimmer threads, pilot a scout motorcycle by intent, and host readouts on a HUD that answers directly to his gaze. It is a masterpiece. It is also slowly breaking him. An EMP knocks out everything it touches. Migraines arrive without warning. A nose bleeds in briefings. In the quiet hours he wonders whether the machine is a tool he uses or a system that is using him.",
-      "specifications": "Sub-dermal lattice | Surgical scallop behind LEFT ear | Mag-holster range ~2m | EMP-vulnerable | Side effects: migraines, tinnitus, transient aphasia",
-      "quote": "He touched the faint surgical scallop hidden behind his left ear \u2014 the place where flesh had agreed to host a decision.",
-      "quoteAuthor": "THE CHRONICLE, CHAPTER 2",
-      "hotspots": [
-        {
-          "id": "nd1",
-          "x": 72,
-          "y": 22,
-          "label": "SURGICAL SCALLOP",
-          "description": "The faint curved scar behind Kahaan\u2019s LEFT ear. Small enough to miss. The only external trace of the lattice buried under the skin of his skull."
-        },
-        {
-          "id": "nd2",
-          "x": 40,
-          "y": 48,
-          "label": "SHIMMER THREADS",
-          "description": "Faint electric-blue filaments that hover between his shoulder rig and his hands. The visible sign that the mag-holsters have woken up and the pistols are no longer under anyone\u2019s thumb."
-        },
-        {
-          "id": "nd3",
-          "x": 28,
-          "y": 62,
-          "label": "MAG-HOLSTER PISTOL",
-          "description": "One of twin sidearms that detach from the shoulder rig and float at shoulder height. Thought-pointed, thought-fired. Range of the lattice: about two metres off the body."
-        },
-        {
-          "id": "nd4",
-          "x": 68,
-          "y": 70,
-          "label": "DERMAL LATTICE",
-          "description": "A web of thin sub-dermal filaments that runs from the scallop down the neck to the shoulder rig. Lights up faintly under neon when the host is tense. Never supposed to be visible, and always a little bit visible anyway."
-        }
-      ],
-      "traits": [
-        "Thought-Controlled Weapons",
-        "Vehicle Neural Piloting",
-        "EMP Vulnerability",
-        "Degradation Over Time"
-      ],
-      "media": {
-        "card": "/images/misc/neural-diodes-card.webp",
-        "banner": "/images/misc/neural-diodes-banner.webp"
-      },
-      "featured": false,
-      "sortOrder": 20
-    },
-    {
       "id": "hud-monocle",
       "name": "HUD Monocle",
       "category": "tech",
