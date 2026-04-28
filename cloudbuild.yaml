@@ -21,7 +21,6 @@ steps:
         echo "NEXT_PUBLIC_FORUM_ENABLED=true" >> .env
         echo "NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true" >> .env
         echo "NEXT_PUBLIC_RATE_LIMIT_ENABLED=true" >> .env
-        echo "NEXT_PUBLIC_LIVEKIT_URL=${_LIVEKIT_URL}" >> .env
 
         npm ci
         npx prisma generate
@@ -37,8 +36,6 @@ steps:
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/bharatvarsh:latest'
       - '--build-arg'
       - 'NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true'
-      - '--build-arg'
-      - 'NEXT_PUBLIC_LIVEKIT_URL=${_LIVEKIT_URL}'
       - '.'
 
   # Step 3: Push to Artifact Registry
@@ -126,7 +123,7 @@ steps:
       - '--no-traffic'
       - '--tag'
       - 'canary'
-      - '--set-secrets=RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,AUTH_SECRET=AUTH_SECRET:latest,NEXTAUTH_SECRET=AUTH_SECRET:latest,DATABASE_URL=DATABASE_URL:latest,DIRECT_DATABASE_URL=DIRECT_DATABASE_URL:latest,LIVEKIT_API_KEY=LIVEKIT_API_KEY:latest,LIVEKIT_API_SECRET=LIVEKIT_API_SECRET:latest,CRON_SECRET=CRON_SECRET:latest'
+      - '--set-secrets=RESEND_API_KEY=RESEND_API_KEY:latest,GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID:latest,GOOGLE_CLIENT_SECRET=GOOGLE_CLIENT_SECRET:latest,AUTH_SECRET=AUTH_SECRET:latest,NEXTAUTH_SECRET=AUTH_SECRET:latest,DATABASE_URL=DATABASE_URL:latest,DIRECT_DATABASE_URL=DIRECT_DATABASE_URL:latest,CRON_SECRET=CRON_SECRET:latest'
       - '--set-env-vars=AUTH_TRUST_HOST=true,AUTH_URL=https://welcometobharatvarsh.com,NEXTAUTH_URL=https://welcometobharatvarsh.com,VERTEX_AI_PROJECT=${PROJECT_ID},VERTEX_AI_LOCATION=${_REGION},NEXT_PUBLIC_AI_MODERATION_ENABLED=true'
 
   # Step 5: Route 10% traffic to canary
@@ -240,7 +237,6 @@ substitutions:
   _SERVICE_NAME: bharatvarsh-website
   _CLOUD_SQL_INSTANCE: 'bharatvarsh-website:us-central1:bharatvarsh-db'
   _CANARY_SOAK_SECONDS: '120'
-  _LIVEKIT_URL: 'wss://bharatvarsh-website-ljazyvnb.livekit.cloud'
 
 options:
   logging: CLOUD_LOGGING_ONLY
