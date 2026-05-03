@@ -30,7 +30,11 @@ const footerLinks = {
     },
     { label: 'Twitter/X', href: 'https://x.com/bharatvarshHQ', icon: Twitter },
     { label: 'Instagram', href: 'https://instagram.com/welcometobharatvarsh', icon: Instagram },
-    { label: 'Facebook', href: 'https://www.facebook.com/share/1CC6oYMykq/', icon: Facebook },
+    {
+      label: 'Facebook',
+      href: 'https://www.facebook.com/people/Welcome-to-Bharatvarsh/61579685923671/',
+      icon: Facebook,
+    },
   ],
 };
 

@@ -52,6 +52,11 @@ export function WebSiteJsonLd() {
                 },
                 description:
                     'Bharatvarsh is an immersive alternate-history universe created by Atharva Singh, exploring themes of surveillance, freedom, and truth in a reimagined India.',
+                sameAs: [
+                    'https://www.facebook.com/people/Welcome-to-Bharatvarsh/61579685923671/',
+                    'https://www.instagram.com/welcometobharatvarsh/',
+                    'https://x.com/bharatvarshHQ',
+                ],
             },
         ],
     };
